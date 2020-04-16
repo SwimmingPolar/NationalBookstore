@@ -2,6 +2,40 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ryan.mapper.DetailBookMapper">
 
+<select id="searchEBook" resultType="com.ryan.domain.EBookVO">
+	SELECT * FROM eBook WHERE book_num=#{book_num}
+</select>
+
+<select id="searchReview" resultType="com.ryan.domain.ReviewVO">
+	SELECT * FROM book_Review WHERE book_num=#{book_num}
+</select>
+
+<select id="interestbooks" resultType="com.ryan.domain.EBookVO">
+	SELECT * FROM 
+	(SELECT category FROM eBook WHERE category=#{category} ORDER BY DBMS_RANDOM.RANDOM) WHERE rownum <= 6 
+</select>
+
+<select id="bookLike" resultType="com.ryan.domain.BookLikeVO">
+	SELECT * FROM book_Like WHERE book_num=#{book_num}
+</select>
+
+<select id="bookGrade" resultType="com.ryan.domain.BookGradeVO">
+	SELECT * FROM book_ Grade WHERE book_num=#{book_num}
+</select>
+
+<select id="hashtag" resultType="com.ryan.domain.HashtagVO">
+	SELECT * FROM book_hashtag WHERE book_num=#{book_num}
+</select>
+
+<select id="likepeople" resultType="com.ryan.domain.MemberVO">
+	SELECT * FROM member WHERE member_id=#{member_id}
+</select>
+
+<select id="insertHashtag">
+	INSERT INTO book_hashtag VALUES(#{hash_num}, #{book_num}, #{hash_tag})
+</select>
+
+
 
 
 
