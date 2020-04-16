@@ -32,14 +32,13 @@
    <!-- hikari dataSource 를 mybatis sql 세션 생성하는곳에 주입 dataSource 사용. -->
    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
       <property name="dataSource" ref="dataSource"/>
-   	<property name="configuration">
-   	
-         <bean id="org.apache.ibatis.session.Configration">
-            <!-- 자동 카멜규칙 변환 -->
-            <property name="mapUnderscoreToComelCAse" value="true"/>
-         </bean>
-      </property><!-- sql = board_num -> java boardNum -->
-   </bean>         <!--  -->
+   	  <property name="configuration">
+         <bean class="org.apache.ibatis.session.Configuration">
+            <!-- 자동으로 카멜케이스 규칙으로 변환 -->
+            <property name="mapUnderscoreToCamelCase" value="true" />
+         </bean>         
+      </property>
+   </bean>         
    
 
    <mybatis-spring:scan base-package="com.ryan.mapper"/>

@@ -11,8 +11,11 @@
 </select>
 
 <select id="interestbooks" resultType="com.ryan.domain.EBookVO">
+	<![CDATA[
 	SELECT * FROM 
 	(SELECT category FROM eBook WHERE category=#{category} ORDER BY DBMS_RANDOM.RANDOM) WHERE rownum <= 6 
+	]]>
+	
 </select>
 
 <select id="bookLike" resultType="com.ryan.domain.BookLikeVO">

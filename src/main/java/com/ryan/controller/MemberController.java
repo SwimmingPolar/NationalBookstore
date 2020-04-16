@@ -21,16 +21,14 @@ public class MemberController {
 	@PostMapping("/signUp")
 	public String memberSignUp(MemberVO member) {
 		
-		if (service.memberSignUp(member))
-			return "회원가입 성공 페이지";
+		if (service.memberSignUp(member))return "회원가입 성공 페이지";
 		else return "회원가입 실패 페이지";		
 	}
 	
 	@RequestMapping("signUpCheck")
 	public @ResponseBody boolean signUpCheck(MemberVO member) {
 		
-		if(service.signUpCheck(member))
-			return true;
+		if(service.signUpCheck(member))	return true;
 		else return false;
 		
 	}

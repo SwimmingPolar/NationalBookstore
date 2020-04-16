@@ -1,5 +1,7 @@
 package com.ryan.service;
 
+import java.util.regex.Pattern;
+
 import org.springframework.stereotype.Service;
 
 import com.ryan.domain.MemberVO;
@@ -16,10 +18,12 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public boolean memberSignUp(MemberVO member) {
 		
+		//아이디
+		Pattern id = Pattern.compile("/^[a-z0-9]");
+		
 		int result = mapper.memberSignUp(member);
 				
-//		if (result == 1) return true;
-//		else return false;
+
 		return result == 1 ? true : false;
 	}
 	

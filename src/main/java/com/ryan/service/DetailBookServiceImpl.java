@@ -9,6 +9,7 @@ import com.ryan.domain.BookGradeVO;
 import com.ryan.domain.BookLikeVO;
 import com.ryan.domain.EBookVO;
 import com.ryan.domain.HashtagVO;
+import com.ryan.domain.MemberVO;
 import com.ryan.domain.ReviewVO;
 import com.ryan.mapper.DetailBookMapper;
 
