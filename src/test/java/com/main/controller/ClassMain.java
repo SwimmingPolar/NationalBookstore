@@ -8,8 +8,10 @@ import lombok.extern.log4j.Log4j;
 public class ClassMain {
 	
 	@Test
-	public void aa() {
-		
+
+	public void dsgfa() {
+		log.info("sadsada");
+
 	}
 	
 }
