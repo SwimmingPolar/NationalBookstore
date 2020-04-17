@@ -1,5 +1,6 @@
 package com.ryan.mapper;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.junit.Test;
@@ -21,21 +22,34 @@ public class MemberMapperTests {
 	@Setter(onMethod_ = {@Autowired})
 	private MemberMapper mapper;
 	
+//	@Test
+//	public void memberSignUpTests() {
+//		
+//		Date date = new Date();
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+//		
+//		MemberVO vo = new MemberVO();
+//		vo.setMemberId("abc1234@naver.com");
+//		vo.setMemberPw("abc1234");
+//		vo.setMemberNickName("홍길동");
+//		vo.setMemberZipcode("00872");
+//		vo.setMemberAddress("서울 특별시 종로구 종로동");
+//		vo.setMemberDaddress("단성빌딩");
+//		vo.setMemberTel("010-1111-1111");
+//		vo.setMemberAdmin(1);
+//		log.info("member Insert");
+//		log.info("리턴값: " + mapper.memberSignUp(vo)); // 1리턴
+//		
+//	}
+	
+	//아이디 중복체크
 	@Test
-	public void memberSignUpTests() {
+	public void signUpCheck() {
 		
 		MemberVO vo = new MemberVO();
-		vo.setMemberId("abc1234@naver.com");
-		vo.setMemberPw("abc1234");
-		vo.setMemberNickName("홍길동");
-		vo.setMemberZipcode("00872");
-		vo.setMemberAddress("서울 특별시 종로구 종로동");
-		vo.setMemberDaddress("단성빌딩");
-		vo.setMemberTel("010-1111-1111");
-		vo.setMemberSub(new Date());
-		vo.setMemberAdmin(1);
+		vo.setMemberId("abc1234@naver.cm");
 		
-		log.info(mapper.memberSignUp(vo));
+		log.info("리턴값: " + mapper.signUpCheck(vo));
 		
 	}
 	

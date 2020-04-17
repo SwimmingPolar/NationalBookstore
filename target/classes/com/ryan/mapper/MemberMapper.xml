@@ -3,7 +3,22 @@
 <mapper namespace="com.ryan.mapper.MemberMapper">
 	
 	<insert id="memberSignUp">
-		
+		INSERT INTO member
+		VALUES(
+		#{memberId},
+		#{memberPw},
+		#{memberNickName},
+		#{memberZipcode},
+		#{memberAddress},
+		#{memberDaddress},
+		#{memberTel},
+		sysdate,
+		#{memberAdmin}
+		)
 	</insert>
+	
+	<select id="signUpCheck" resultType="Integer">
+		SELECT count(*) FROM member WHERE member_Id = #{memberId}
+	</select>
 	
 </mapper>
