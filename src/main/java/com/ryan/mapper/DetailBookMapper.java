@@ -24,7 +24,7 @@ public interface DetailBookMapper {
 	public BookLikeVO bookLike(int booknumber); 
 	
 	//평점 조회
-	public BookGradeVO bookGrade(int booknumber);
+	public double bookGrade(int booknumber);
 	
 	//태그 조회
 	public HashtagVO hashtag(int booknumber);
@@ -35,4 +35,8 @@ public interface DetailBookMapper {
 	
 	//해쉬태그 입력
 	public int insertHashtag(HashtagVO vo);
+	
+	//평점 입력
+	public int insertGrade(BookGradeVO vo);
+	
 }

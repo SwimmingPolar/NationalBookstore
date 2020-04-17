@@ -22,23 +22,25 @@
 	SELECT * FROM book_Like WHERE book_num=#{book_num}
 </select>
 
-<select id="bookGrade" resultType="com.ryan.domain.BookGradeVO">
-	SELECT * FROM book_ Grade WHERE book_num=#{book_num}
+<select id="bookGrade" resultType="_double"> 
+	SELECT avg(grade_score) FROM book_ Grade WHERE book_num=#{book_num}
 </select>
 
 <select id="hashtag" resultType="com.ryan.domain.HashtagVO">
-	SELECT * FROM book_hashtag WHERE book_num=#{book_num}
+	SELECT * FROM book_hashtag WHERE book_num=#{book_num} ORDER BY hash_num DESC
 </select>
 
 <select id="likepeople" resultType="com.ryan.domain.MemberVO">
-	SELECT * FROM member WHERE member_id=#{member_id}
+	SELECT * FROM member WHERE member_id=#{member_id} ORDER BY like_num DESC
 </select>
 
-<select id="insertHashtag">
-	INSERT INTO book_hashtag VALUES(#{hash_num}, #{book_num}, #{hash_tag})
-</select>
+<insert id="insertHashtag" parameterType="com.ryan.domain.HashtagVO">
+	INSERT INTO book_hashtag VALUES(#{book_num}, #{hash_tag})
+</insert>
 
-
+<insert id="insertGrade" parameterType="com.ryan.domain.BookGradeVO">
+	INSERT INTO book_grade VALUES(#{member_id},#{book_num},#{grade_score})
+</insert>
 
 
 

@@ -1,12 +1,12 @@
 package com.ryan.controller;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ryan.domain.BookGradeVO;
 import com.ryan.domain.BookLikeVO;
 import com.ryan.domain.EBookVO;
 import com.ryan.domain.HashtagVO;
@@ -61,5 +61,19 @@ public class DetailBookController {
 	@Scheduled(cron = "0 0 00 * * ?") //매일 0시에 실행
 	public void resetInsert() { 
 		//태그 입력가능하게 설정
+	}
+	
+	
+	//평점 입력
+	@RequestMapping("/insertgrade")
+	public String insertGrade(BookGradeVO vo) {
+		int num = service.insertGrade(vo);
+		if(num==1) {
+			return "view";
+		}else {
+			log.info("입력실패");
+			return "view";
+		}
+
 	}
 }
