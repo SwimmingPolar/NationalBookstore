@@ -69,8 +69,7 @@ public class DetailBookServiceImpl implements DetailBookService{
 
 	@Override
 	public int insertGrade(BookGradeVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return mapper.insertGrade(vo);
 	}
 	
 	
