@@ -34,4 +34,5 @@ public class MemberVO {
     // 권한 
     private int memberAdmin;
 	
+    
 }

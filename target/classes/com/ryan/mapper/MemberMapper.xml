@@ -18,7 +18,16 @@
 	</insert>
 	
 	<select id="signUpCheck" resultType="Integer">
-		SELECT count(*) FROM member WHERE member_Id = #{memberId}
+		SELECT count(*) FROM member
+		<choose>
+			<when test="memberId != null">
+				WHERE member_id = #{memberId}
+			</when>
+			<when test="memberNickName != null">
+				WHERE member_nick_name = #{memberNickName}
+			</when>
+		</choose>
 	</select>
+	
 	
 </mapper>

@@ -1,5 +1,6 @@
 package com.ryan.service;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Service;
@@ -18,13 +19,25 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public boolean memberSignUp(MemberVO member) {
 		
-		//아이디
-		Pattern id = Pattern.compile("/^[a-z0-9]");
+		//아이디 이메일형식
+		Pattern id = Pattern.compile("^[\\d\\w]+@(=?.*?[\\w]+)[\\d\\w]*\\.[\\w]+(\\.[\\w]+){0,1}$");
+		Matcher idMatcher = id.matcher(member.getMemberId());
+		Pattern pw = Pattern.compile("^(?=.*?[^\\s])[\\w\\d]{4,}$");
+		Matcher pwMatcher = pw.matcher(member.getMemberPw());
+		Pattern nickName = Pattern.compile("^[a-z][\\d\\w]{3,11}");
+		Matcher nickMatcher = nickName.matcher(member.getMemberNickName());
 		
-		int result = mapper.memberSignUp(member);
-				
-
-		return result == 1 ? true : false;
+		if(!idMatcher.find())return false;
+		if(!pwMatcher.find()) return false;
+		if(!nickMatcher.find()) return false;
+		
+		try {
+			return mapper.memberSignUp(member) == 1 ? true : false;
+		} catch (Exception e) {
+			return false;
+		}
+		
+		
 	}
 	
 	

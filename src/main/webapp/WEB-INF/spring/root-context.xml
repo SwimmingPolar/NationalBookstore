@@ -42,7 +42,7 @@
    
 
    <mybatis-spring:scan base-package="com.ryan.mapper"/>
-   <context:component-scan base-package="com.ryan.service"/>   
-	
-
+   <context:component-scan base-package="com.ryan.service"/>
+   <context:component-scan base-package="com.ryan.function"/>
+   
 </beans>
