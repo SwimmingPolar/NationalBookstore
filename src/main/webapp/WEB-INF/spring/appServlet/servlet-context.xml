@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/mvc"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans:beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:task="http://www.springframework.org/schema/task"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
-		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
-	<annotation-driven />
-
+	<mvc:annotation-driven/>
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
-	<resources mapping="/resources/**" location="/resources/" />
+	<mvc:resources mapping="/resources/**" location="/resources/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -31,5 +30,25 @@
  	<task:scheduler id="gsScheduler" pool-size="10" />
  	<task:executor id="gsTaskExecutor" pool-size="10" />
  	<task:annotation-driven executor="gsTaskExecutor" scheduler="gsScheduler" /> 
+	
+	<!-- interceptor 설정 -->
+	<beans:bean id="cookieInterceptor" class="com.ryan.interceptor.CookieInterceptor"/>
+	<beans:bean id="loginSessionChkInterceptor" class="com.ryan.interceptor.LoginSessionChkInterceptor"/>
+	
+	<!-- 자동로그인 쿠키 확인 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<mvc:exclude-mapping path="/member/login"/>
+			<beans:ref bean="cookieInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path=""/> <!-- 로그인 유효성 검사할 페이지들 입력. -->
+			<beans:ref bean="loginSessionChkInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
 	
 </beans:beans>

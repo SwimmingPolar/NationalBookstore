@@ -3,6 +3,9 @@ package com.ryan.service;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Service;
 
 import com.ryan.domain.MemberVO;
@@ -44,6 +47,37 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public boolean signUpCheck(MemberVO member) {
 		return mapper.signUpCheck(member) == 1 ? true : false;
+	}
+
+
+	@Override
+	public boolean memberUpdate(MemberVO member) {
+		return mapper.memberUpdate(member) == 1 ? true : false;
+	}
+
+
+	@Override
+	public void addCookie(MemberVO member, HttpServletResponse response) {
+		
+		Cookie idCookie = new Cookie("ryanMemberId", member.getMemberId());
+		idCookie.setMaxAge(60*60*24*7);
+		Cookie nickNameCookie = new Cookie("ryanMemberNickName", member.getMemberNickName());
+		nickNameCookie.setMaxAge(60*60*24*7);
+		response.addCookie(idCookie);
+		response.addCookie(nickNameCookie);
+		
+	}
+
+
+	@Override
+	public boolean autoLogin(MemberVO member) {
+		return mapper.autoLogin(member) == 1 ? true : false;
+	}
+
+
+	@Override
+	public boolean memberSignIn(MemberVO member) {
+		return mapper.memberSignIn(member) == 1 ? true : false;
 	}
 	
 	

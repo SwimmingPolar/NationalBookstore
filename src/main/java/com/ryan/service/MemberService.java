@@ -1,5 +1,7 @@
 package com.ryan.service;
 
+import javax.servlet.http.HttpServletResponse;
+
 import com.ryan.domain.MemberVO;
 
 public interface MemberService {
@@ -8,5 +10,17 @@ public interface MemberService {
 	
 	//아이디 닉네임 체크
 	public boolean signUpCheck(MemberVO member);
+	
+	//회원정보수정
+	public boolean memberUpdate(MemberVO member);
+	
+	//자동로그인 체크시 쿠키생성
+	public void addCookie(MemberVO member, HttpServletResponse response);
+	
+	//서버접속시 쿠키확인후 쿠키데이터로 DB데이터 확인 로그인처리
+	public boolean autoLogin(MemberVO member);
+	
+	//로그인 유효성 검사
+	public boolean memberSignIn(MemberVO member);
 	
 }

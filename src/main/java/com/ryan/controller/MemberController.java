@@ -1,13 +1,11 @@
 package com.ryan.controller;
 
-import java.util.ArrayList;
-import java.util.Map;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,9 +21,11 @@ import com.ryan.service.EmailService;
 import com.ryan.service.MemberService;
 
 import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 
 @Controller
 @RequestMapping("/member/*")
+@Log4j
 public class MemberController {
 	
 	@Setter(onMethod_ = {@Autowired})
@@ -89,4 +89,34 @@ public class MemberController {
 		return false;
 	}
 	
+	@PostMapping("/update")
+	public String memberInfoUpdate(MemberVO member) {
+		
+		//AJax 처리.
+		if (memberService.memberUpdate(member)) {
+			log.info("controller member: " + member.getMemberPw());
+		} else {
+			log.info("member..!= null!");
+		}
+		return "업데이트 완료후 보여줄 페이지 경로";
+	}
+	
+	@PostMapping("/login")
+	public String memberLogin(@RequestParam("autoLogin") String autoLogin , MemberVO member , HttpServletResponse response) {
+		
+		if(memberService.memberSignIn(member)) {
+			if(autoLogin.equals("check")) {
+				memberService.addCookie(member, response);
+				return "메인";
+			}
+			return "메인";
+		} else {
+			return "login";
+		}
+		
+		
+		
+	}
+	
+	  
 }

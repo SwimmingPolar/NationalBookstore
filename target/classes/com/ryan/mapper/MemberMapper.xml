@@ -29,5 +29,29 @@
 		</choose>
 	</select>
 	
+	<update id="memberUpdate">
+		UPDATE member
+		<set>
+			<if test="memberPw != null || memberPw != ''">
+				member_pw = #{memberPw}
+			</if>
+			<if test="member_Nick">
+				
+			</if>
+		</set>
+		WHERE member_id = #{memberId}
+	</update>
+	
+	<!-- 로그인 -->
+	<select id="memberSignIn">
+		SELECT count(*) FROM member WHERE member_id = #{memberId} and member_pw =#{memberPw}
+	</select>
+	
+	<!-- 쿠키 로그인 확인 -->
+	<select id="autoLogin">
+		SELECT count(*) FROM member WHERE member_id = #{memberId} and member_nick_name = #{memberNickName}
+	</select>
+	
+	
 	
 </mapper>

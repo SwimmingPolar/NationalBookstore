@@ -9,4 +9,14 @@ public interface MemberMapper {
 	//아이디, 닉네임 중복체크
 	public int signUpCheck(MemberVO member);
 	
+	//회원정보수정
+	public int memberUpdate(MemberVO member);
+	
+	//자동 로그인 확인용
+	public int autoLogin(MemberVO member);
+	
+	//로그인
+	
+	public int memberSignIn(MemberVO member);
+	
 }
