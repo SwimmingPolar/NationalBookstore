@@ -18,4 +18,8 @@ public interface CartService {
 	public boolean remove(int cartNum);
 	//전체삭제
 	public boolean removeAll(HttpServletRequest request);
+	
+	//구매하기 체크한 상품들보내주기
+	public ArrayList<CartVO> cartBuyList(int[] cartNumArray);
+	
 }

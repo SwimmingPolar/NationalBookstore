@@ -3,7 +3,7 @@
 <mapper namespace="com.ryan.mapper.EmailMapper">
 	
 	<insert id="insertEmailCode">
-		<selectKey keyProperty="email" order="BEFORE" resultType="int">
+		<selectKey keyProperty="email_num" order="BEFORE" resultType="int">
 			SELECT EMAIL_CHECK_SEQ.nextval FROM dual
 		</selectKey>
 		INSERT INTO email_check (email_auth,email_code)

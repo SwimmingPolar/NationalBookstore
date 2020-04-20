@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ryan.domain.CartVO;
 import com.ryan.service.CartService;
@@ -74,7 +75,8 @@ public class CartController {
 	}
 	
 	@RequestMapping("/buy")
-	public String buy(@ModelAttribute("cartNum") int[] cartArr) {
+	public String buy(@RequestParam int[] cartNumArray , RedirectAttributes rttr) {
+		rttr.addFlashAttribute("cartBuyList", cartService.cartBuyList(cartNumArray));
 		return "redirect:/order/list";
 	}
 	

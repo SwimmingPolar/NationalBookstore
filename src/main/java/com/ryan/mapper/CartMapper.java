@@ -20,4 +20,7 @@ public interface CartMapper {
 	//전체삭제
 	public int removeAll(String memberEmail);
 	
+	//구하기 누른상품 구매페이지로
+	public ArrayList<CartVO> cartBuyList(int[] cartNumArray);
+	
 }

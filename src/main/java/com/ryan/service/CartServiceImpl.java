@@ -57,6 +57,11 @@ public class CartServiceImpl implements CartService {
 		return mapper.removeAll(member.getMemberEmail()) == 1 ? true : false;
 	}
 
+	@Override
+	public ArrayList<CartVO> cartBuyList(int[] cartNumArray) {
+		return mapper.cartBuyList(cartNumArray);
+	}
+
 	
 	
 	
