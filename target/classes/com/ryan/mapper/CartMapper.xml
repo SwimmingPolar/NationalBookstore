@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ryan.mapper.CartMapper">
+	
+	<insert id="insertCart">
+		INSERT INTO cart
+		(
+			book_num,
+			member_email,
+			book_count
+		)
+		VALUES
+		(
+			#{bookNum},
+			#{memberEmail},
+			#{bookCount}
+		)
+	</insert>
+	
+	<select id="getCartList" resultType="com.ryan.domain.CartVO" parameterType="String">
+		SELECT c.* , e.book_price FROM cart c, ebook e
+		WHERE c.book_num = e.book_num
+		and c.member_email = #{memberEmail}
+	</select>
+	
+	<!-- 수량 수정 -->
+	<update id="modifyCartCount">
+		UPDATE cart
+		SET book_count = #{bookCount}
+		WHERE cart_num = #{cartNum}
+	</update>
+	
+	<delete id="remove">
+		DELETE FROM cart
+		WHERE cart_num = #{cartNum}
+	</delete>
+	
+	<delete id="removeAll">
+		DELETE FROM cart
+		WHERE member_Email = #{memberEmail}
+	</delete>
+	
+</mapper>
