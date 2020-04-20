@@ -6,13 +6,13 @@
 		<selectKey keyProperty="email" order="BEFORE" resultType="int">
 			SELECT EMAIL_CHECK_SEQ.nextval FROM dual
 		</selectKey>
-		INSERT INTO email_check (member_email,email_code)
-		VALUES(#{memberEmail},#{emailCode})
+		INSERT INTO email_check (email_auth,email_code)
+		VALUES(#{emailAuth},#{emailCode})
 	</insert>
 	
 	<select id="authenticationCheck" resultType="int">
 		SELECT count(*) FROM email_check 
-		WHERE member_Email = #{memberEmail} and email_code = #{emailCode}
+		WHERE email_auth = #{emailAuth} and email_code = #{emailCode}
 	</select>
 	
 </mapper>

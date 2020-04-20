@@ -5,7 +5,7 @@
 	<insert id="memberSignUp">
 		INSERT INTO member
 		VALUES(
-		#{memberId},
+		#{memberEmail},
 		#{memberPw},
 		#{memberNickName},
 		#{memberZipcode},
@@ -21,7 +21,7 @@
 		SELECT count(*) FROM member
 		<choose>
 			<when test="memberId != null">
-				WHERE member_id = #{memberId}
+				WHERE member_email = #{memberEmail}
 			</when>
 			<when test="memberNickName != null">
 				WHERE member_nick_name = #{memberNickName}
@@ -35,28 +35,32 @@
 			<if test="memberPw != null || memberPw != ''">
 				member_pw = #{memberPw}
 			</if>
-			<if test="member_Nick">
-				
+			<if test="memberZipcode != null || memberZipcode != ''">
+				member_zipcode = #{memberZipcode}
 			</if>
+			<if test="memberAddress != null || memberAddress != ''">
+				member_address = #{memberAddress}
+			</if>
+			
 		</set>
-		WHERE member_id = #{memberId}
+		WHERE member_email = #{memberEmail}
 	</update>
 	
 	<!-- 로그인 -->
 	<select id="memberSignIn" resultType="int">
-		SELECT count(*) FROM member WHERE member_id = #{memberId} and member_pw = #{memberPw}
+		SELECT count(*) FROM member WHERE member_email = #{memberEmail} and member_pw = #{memberPw}
 	</select>
 	
 	<!-- 여기부터 쿠키 -->
 	
 	<!-- 자동로그인 체크시 회원의 닉네임을 가져옴 -->
 	<select id="getMemberNickName" resultType="String">
-		SELECT member_nick_name FROM member WHERE member_id = #{memberId}
+		SELECT member_nick_name FROM member WHERE member_email = #{memberEmail}
 	</select>
 	
 	<!-- 쿠키 로그인 확인 -->
 	<select id="autoLogin" resultType="int">
-		SELECT count(*) FROM member WHERE member_id = #{memberId} and member_nick_name = #{memberNickName}
+		SELECT count(*) FROM member WHERE member_email = #{memberEmail} and member_nick_name = #{memberNickName}
 	</select>
 	
 	

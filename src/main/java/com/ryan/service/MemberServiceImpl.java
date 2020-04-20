@@ -26,7 +26,7 @@ public class MemberServiceImpl implements MemberService {
 		
 		//아이디 이메일형식
 		Pattern id = Pattern.compile("^[\\d\\w]+@(=?.*?[\\w]+)[\\d\\w]*\\.[\\w]+(\\.[\\w]+){0,1}$");
-		Matcher idMatcher = id.matcher(member.getMemberId());
+		Matcher idMatcher = id.matcher(member.getMemberEmail());
 		Pattern pw = Pattern.compile("^(?=.*?[^\\s])[\\w\\d]{4,}$");
 		Matcher pwMatcher = pw.matcher(member.getMemberPw());
 		Pattern nickName = Pattern.compile("^[a-z][\\d\\w]{3,11}");
@@ -57,13 +57,13 @@ public class MemberServiceImpl implements MemberService {
 		return mapper.memberUpdate(member) == 1 ? true : false;
 	}
 
-
+	
 	@Override
 	public void addCookie(MemberVO member, HttpServletResponse response) {
 		
 		
-		Cookie idCookie = new Cookie("ryanMemberId", member.getMemberId());
-		log.info("쿠키에 저장될 회원아이디값: " + member.getMemberId());
+		Cookie idCookie = new Cookie("ryanMemberId", member.getMemberEmail());
+		log.info("쿠키에 저장될 회원아이디값: " + member.getMemberEmail());
 		idCookie.setMaxAge(60*60*24*7);
 		idCookie.setPath("/");
 		
@@ -83,7 +83,7 @@ public class MemberServiceImpl implements MemberService {
 		idCookie.setPath("/");
 		
 		Cookie nickNameCookie = new Cookie("ryanMemberNickName", null);
-		nickNameCookie.setMaxAge(60*60*24*7);
+		nickNameCookie.setMaxAge(0);
 		nickNameCookie.setPath("/");
 		
 		response.addCookie(idCookie);

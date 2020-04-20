@@ -22,25 +22,25 @@ public class MemberMapperTests {
 	@Setter(onMethod_ = {@Autowired})
 	private MemberMapper mapper;
 	
-	@Test
-	public void memberSignUpTests() {
-		
-		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-		
-		MemberVO vo = new MemberVO();
-		vo.setMemberId("abc12345@naver.com");
-		vo.setMemberPw("abc1234");
-		vo.setMemberNickName("홍길동1");
-		vo.setMemberZipcode("00872");
-		vo.setMemberAddress("서울 특별시 종로구 종로동");
-		vo.setMemberDaddress("단성빌딩");
-		vo.setMemberTel("010-1111-1111");
-		vo.setMemberAdmin(1);
-		log.info("member Insert");
-		log.info("리턴값: " + mapper.memberSignUp(vo)); // 1리턴
-		
-	}
+//	@Test
+//	public void memberSignUpTests() {
+//		
+//		Date date = new Date();
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+//		
+//		MemberVO vo = new MemberVO();
+//		vo.setMemberId("abc12345@naver.com");
+//		vo.setMemberPw("abc1234");
+//		vo.setMemberNickName("홍길동1");
+//		vo.setMemberZipcode("00872");
+//		vo.setMemberAddress("서울 특별시 종로구 종로동");
+//		vo.setMemberDaddress("단성빌딩");
+//		vo.setMemberTel("010-1111-1111");
+//		vo.setMemberAdmin(1);
+//		log.info("member Insert");
+//		log.info("리턴값: " + mapper.memberSignUp(vo)); // 1리턴
+//		
+//	}
 	
 	//아이디 중복체크
 //	@Test
@@ -52,5 +52,8 @@ public class MemberMapperTests {
 //		log.info("리턴값: " + mapper.signUpCheck(vo));
 //		
 //	}
+	
+	
+	
 	
 }

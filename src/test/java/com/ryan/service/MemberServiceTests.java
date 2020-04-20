@@ -1,5 +1,7 @@
 package com.ryan.service;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +34,7 @@ public class MemberServiceTests {
 	public void memberSignUp() {
 		
 		MemberVO vo = new MemberVO();
-		vo.setMemberId("abc1234123@naver.com");
+		vo.setMemberEmail("abc1234123@naver.com");
 		vo.setMemberPw("abc1234");
 		vo.setMemberNickName("홍길동123");
 		vo.setMemberZipcode("00872");
@@ -42,6 +44,7 @@ public class MemberServiceTests {
 		vo.setMemberAdmin(1);
 		
 		log.info(service.memberSignUp(vo));
+		
 		
 	}
 	

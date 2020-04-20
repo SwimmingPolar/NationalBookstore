@@ -73,7 +73,7 @@ public class EmailFunction {
 			
 			//받는사람
 			
-			InternetAddress to = new InternetAddress(email.getMemberEmail());
+			InternetAddress to = new InternetAddress(email.getEmailAuth());
 			
 			msg.setRecipient(Message.RecipientType.TO, to);
 			
