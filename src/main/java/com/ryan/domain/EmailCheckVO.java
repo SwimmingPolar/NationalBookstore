@@ -9,7 +9,7 @@ public class EmailCheckVO {
     private int emailNum;
 
     // 인증용 이메일 
-    private String memberEmail;
+    private String emailAuth;
 
     // 인증번호 
     private String emailCode;

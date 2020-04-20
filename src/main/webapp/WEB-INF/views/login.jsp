@@ -9,7 +9,7 @@
 <body>
 	
 	<form action="/member/login" method="post">
-		<input type="text" name="memberId"><br>
+		<input type="text" name="memberEmail"><br>
 		<input type="text" name="memberPw"><br>
 		<input type="checkbox" name="autoLogin" value="auto">
 		<input type="submit" value="ㅇㅇ">
