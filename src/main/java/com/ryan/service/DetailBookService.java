@@ -2,6 +2,9 @@ package com.ryan.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.ryan.domain.BookGradeVO;
 import com.ryan.domain.BookLikeVO;
 import com.ryan.domain.EBookVO;
@@ -33,8 +36,8 @@ public interface DetailBookService {
 	public MemberVO likepeople(String id);
 	
 	
-	//해쉬태그 입력
-	public int insertHashtag(HashtagVO vo);
+	//해쉬태그 쿠기
+	public void hashtagCookie(HashtagVO vo, HttpServletRequest request, HttpServletResponse response);
 	
 	
 	//평점입력

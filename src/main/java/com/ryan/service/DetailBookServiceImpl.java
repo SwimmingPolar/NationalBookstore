@@ -2,6 +2,10 @@ package com.ryan.service;
 
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +18,10 @@ import com.ryan.domain.ReviewVO;
 import com.ryan.mapper.DetailBookMapper;
 
 import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 
 @Service
+@Log4j
 public class DetailBookServiceImpl implements DetailBookService{
 
 	@Setter(onMethod_ = @Autowired)
@@ -60,11 +66,35 @@ public class DetailBookServiceImpl implements DetailBookService{
 		return mapper.likepeople(id);
 	}
 
-
-
+	
 	@Override
-	public int insertHashtag(HashtagVO vo) {
-		return mapper.insertHashtag(vo);		
+	public void hashtagCookie(HashtagVO vo, HttpServletRequest request, HttpServletResponse response) {
+		//bookNum + hashtag
+		Cookie[] cookies = request.getCookies();
+		boolean flag = false;
+		if(cookies != null) {
+			for(Cookie c : cookies) {
+				if(c.getName().equals(vo.getBookNum() + "hashtag")) {
+					flag = true;
+					break;
+				} 
+			}
+			if(!flag) {
+				mapper.insertHashtag(vo);
+				Cookie hashtagCookie = new Cookie(vo.getBookNum() + "hashtag", "insert");
+				hashtagCookie.setMaxAge(60*60*24);
+				hashtagCookie.setPath("/");
+				response.addCookie(hashtagCookie);
+			}
+		} else {
+			mapper.insertHashtag(vo);
+			Cookie hashtagCookie = new Cookie(vo.getBookNum() + "hashtag", "insert");
+			hashtagCookie.setMaxAge(60*60*24);
+			hashtagCookie.setPath("/");
+			response.addCookie(hashtagCookie);
+		}
+		
+		
 	}
 
 	@Override

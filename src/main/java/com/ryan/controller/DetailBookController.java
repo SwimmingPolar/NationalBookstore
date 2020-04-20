@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ryan.domain.BookGradeVO;
@@ -29,7 +30,7 @@ public class DetailBookController {
 	
 	//상세보기 페이지 
 	@RequestMapping("/search")
-	public String searchEBook(int booknumber, Model model) {
+	public String searchEBook(@RequestParam("booknumber") int booknumber, Model model) {
 		
 		EBookVO vo = service.searchEBook(booknumber);
 				
@@ -53,23 +54,11 @@ public class DetailBookController {
 	}
 	
 	@RequestMapping("/inserthashtag")
-	public String insertHashtag(HashtagVO vo, HttpServletRequest request, HttpServletResponse response) {
-		
-		
-		
-		
-/*		int num = service.insertHashtag(vo);
-		if(num==1) {
-			return "view";
-		}else {
-			log.info("입력실패");
-			return "view";
-		}*/
-		return "";
-	}
-	
+	public String insertHashtag(HashtagVO vo, HttpServletRequest request, HttpServletResponse response) {		
+		service.hashtagCookie(vo, request, response);
 
-	
+		return "view";
+	}
 	
 	//평점 입력
 	@RequestMapping("/insertgrade")
