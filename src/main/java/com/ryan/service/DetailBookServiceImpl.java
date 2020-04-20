@@ -103,14 +103,20 @@ public class DetailBookServiceImpl implements DetailBookService{
 	}
 
 	@Override
-	public int insertLike(BookLikeVO vo) {
-		return mapper.insertLike(vo);
+	public String insertLike(BookLikeVO vo, int booknumber) {
+		boolean flag = false;
+		
+		if(mapper.bookLike(booknumber).getMemberEmail()!=null) {
+			if(mapper.bookLike(booknumber).getMemberEmail().equals(vo.getMemberEmail())) {
+				mapper.deleteLike(vo);
+			}else {
+				mapper.insertLike(vo);
+				flag = true;
+			}			
+		}		
+		return mapper.bookLike(booknumber).getLikeNum()+" "+flag;
 	}
 
-	@Override
-	public int deleteLike(BookLikeVO vo) {
-		return mapper.deleteLike(vo);
-	}
 
 	@Override
 	public void updateBookLookUp(EBookVO vo, HttpServletRequest request, HttpServletResponse response) {

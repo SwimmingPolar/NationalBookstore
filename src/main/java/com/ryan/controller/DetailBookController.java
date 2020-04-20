@@ -51,7 +51,7 @@ public class DetailBookController {
 		model.addAttribute("hashtag", service.hashtag(booknumber));
 		
 		//좋아요 한 사람들 랜덤 조회
-		model.addAttribute("likepeople", service.likepeople(likevo.getMemberId()));
+		model.addAttribute("likepeople", service.likepeople(likevo.getMemberEmail()));
 		
 		return "view";				
 	}
@@ -78,16 +78,10 @@ public class DetailBookController {
 	
 	//좋아요 입력
 	@RequestMapping("/insertlike")
-	public @ResponseBody String insertLike(BookLikeVO vo) {
-		service.insertLike(vo);	
-		
-		return "view";
+	public @ResponseBody void insertLike(BookLikeVO vo, @RequestParam("booknumber") int booknumber) {
+		String result = service.insertLike(vo, booknumber);	
+		String[] aa = result.split(" ");
+								
 	}
 	
-	//좋아요 취소
-	@RequestMapping("/deletelike")
-	public @ResponseBody String deleteLike(BookLikeVO vo) {
-		service.deleteLike(vo);
-		return "view";
-	}
 }

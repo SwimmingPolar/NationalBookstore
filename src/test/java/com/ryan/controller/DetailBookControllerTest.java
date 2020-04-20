@@ -20,7 +20,7 @@ public class DetailBookControllerTest {
 	
 	@Setter(onMethod_ = {@Autowired})
 	private DetailBookService service;
-	
+/*	
 	@Test
 	public void searchEBook() {
 		log.info(service.searchEBook(1));
@@ -43,6 +43,15 @@ public class DetailBookControllerTest {
 		//좋아요 한 사람들 랜덤 조회
 		log.info(service.likepeople(likevo.getMemberId()));
 	
+	}
+*/	
+	@Test
+	public void insertLike() {
+		BookLikeVO vo = new BookLikeVO();
+		vo.setBookNum(1);
+		vo.setMemberEmail("abc1234@naver.com");
+		
+		log.info(service.insertLike(vo, 1));
 	}
 	
 

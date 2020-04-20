@@ -8,7 +8,7 @@ public class BookLikeVO {
     private int likeNum;
 
     // 회원아이디 
-    private String memberId;
+    private String memberEmail;
 
     // 책 번호 
     private int bookNum;
