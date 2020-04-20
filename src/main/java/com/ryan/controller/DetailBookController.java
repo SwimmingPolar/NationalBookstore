@@ -1,5 +1,8 @@
 package com.ryan.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
@@ -50,20 +53,22 @@ public class DetailBookController {
 	}
 	
 	@RequestMapping("/inserthashtag")
-	public String insertHashtag(HashtagVO vo) {
-		int num = service.insertHashtag(vo);
+	public String insertHashtag(HashtagVO vo, HttpServletRequest request, HttpServletResponse response) {
+		
+		
+		
+		
+/*		int num = service.insertHashtag(vo);
 		if(num==1) {
 			return "view";
 		}else {
 			log.info("입력실패");
 			return "view";
-		}
+		}*/
+		return "";
 	}
 	
-	@Scheduled(cron = "0 0 00 * * ?") //매일 0시에 실행
-	public void resetInsert() { 
-		//태그 입력가능하게 설정
-	}
+
 	
 	
 	//평점 입력

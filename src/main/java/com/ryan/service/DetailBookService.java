@@ -45,4 +45,6 @@ public interface DetailBookService {
 	
 	//좋아요 취소
 	public int deleteLike(BookLikeVO vo);
+	
+	
 }

@@ -38,8 +38,10 @@
 	<!-- 자동로그인 쿠키 확인 -->
 	<mvc:interceptors>
 		<mvc:interceptor>
+			<mvc:mapping path="/**/*"/>
 			<mvc:mapping path="/**"/>
 			<mvc:exclude-mapping path="/member/login"/>
+			<mvc:exclude-mapping path="/member/logout"/>
 			<beans:ref bean="cookieInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
