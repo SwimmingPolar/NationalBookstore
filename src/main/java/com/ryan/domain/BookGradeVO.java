@@ -8,7 +8,7 @@ public class BookGradeVO {
     private int gradeNum;
 
     // 회원 아이디 
-    private String memberId;
+    private String memberEmail;
 
     // 책 번호 
     private int bookNum;

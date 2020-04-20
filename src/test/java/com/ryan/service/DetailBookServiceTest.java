@@ -7,6 +7,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.ryan.domain.BookGradeVO;
+import com.ryan.domain.BookLikeVO;
+import com.ryan.mapper.DetailBookMapper;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -19,6 +21,8 @@ public class DetailBookServiceTest {
 	@Setter(onMethod_ = {@Autowired})
 	private DetailBookService service;
 	
+	@Setter(onMethod_ = {@Autowired})
+	private DetailBookMapper mapper;
 	
 //	@Test
 //	public void bookLike() {
@@ -79,4 +83,32 @@ public class DetailBookServiceTest {
 		log.info(service.searchEBook(1));
 	}
 	*/
+	
+
+	@Test
+	public void insertLike() {
+		boolean flag = false;
+		BookLikeVO vo = new BookLikeVO();
+		vo.setBookNum(1);
+		vo.setMemberEmail("abc1234@naver.com");
+		String check = "";
+		
+		if(mapper.bookLike(1).getMemberEmail() == null) {
+			log.info("확인");
+		}
+		
+	/*
+			if(mapper.bookLike(1).getMemberId().equals(vo.getMemberId())) {
+				mapper.deleteLike(vo);
+				check =  mapper.bookLike(vo.getBookNum()).getLikeNum()+" "+flag;
+			}else {
+				mapper.insertLike(vo);
+				flag = true;
+				check =  mapper.bookLike(vo.getBookNum()).getLikeNum()+" "+flag;
+			}	
+	*/
+
+	
+	}
+
 }

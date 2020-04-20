@@ -89,7 +89,7 @@ public class DetailBookMapperTest {
 	public void deleteLike() {
 		BookLikeVO vo = new BookLikeVO();
 		vo.setBookNum(1);
-		vo.setMemberId("abc1234@naver.com");
+		vo.setMemberEmail("abc1234@naver.com");
 		
 		log.info(mapper.deleteLike(vo));
 	}

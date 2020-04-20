@@ -13,7 +13,7 @@ public class ReviewVO {
     private int bookNum;
 
     // 회원아이디 
-    private String memberId;
+    private String memberEmail;
 
     // 제목 
     private String reviewTitle;
