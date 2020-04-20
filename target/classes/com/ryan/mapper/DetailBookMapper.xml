@@ -19,7 +19,10 @@
 </select>
 
 <select id="bookLike" resultType="com.ryan.domain.BookLikeVO">
-	SELECT * FROM book_Like WHERE book_num=#{bookNum}
+	<![CDATA[
+		SELECT sum(like_num) FROM book_Like WHERE book_num=#{bookNum}
+	]]>
+	
 </select>
 
 <select id="bookGrade" resultType="_double"> 
@@ -41,13 +44,20 @@
 </select>
 
 <insert id="insertHashtag" parameterType="com.ryan.domain.HashtagVO">
-	INSERT INTO book_hashtag VALUES(#{bookNum}, #{hashTag})
+	INSERT INTO book_hashtag (book_num, hash_tag) VALUES(#{bookNum}, #{hashTag})
 </insert>
 
 <insert id="insertGrade" parameterType="com.ryan.domain.BookGradeVO">
-	INSERT INTO book_grade VALUES(#{memberId},#{bookNum},#{gradeScore})
+	INSERT INTO book_grade (member_Id, book_Num, grade_score) VALUES(#{memberId},#{bookNum},#{gradeScore})
 </insert>
 
+<insert id="insertLike" parameterType="com.ryan.domain.BookLikeVO">
+	INSERT INTO book_like (member_Id, book_Num) VALUES( #{memberId}, #{bookNum})
+</insert>
+
+<delete id="deleteLike" parameterType="com.ryan.domain.BookLikeVO">
+	DELETE FROM book_like WHERE book_num = #{bookNum} and member_Id=#{memberId}
+</delete>
 
 
 

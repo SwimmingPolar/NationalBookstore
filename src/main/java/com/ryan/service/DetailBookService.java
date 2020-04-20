@@ -39,4 +39,10 @@ public interface DetailBookService {
 	
 	//평점입력
 	public int insertGrade(BookGradeVO vo);
+	
+	//좋아요 입력
+	public int insertLike(BookLikeVO vo);
+	
+	//좋아요 취소
+	public int deleteLike(BookLikeVO vo);
 }

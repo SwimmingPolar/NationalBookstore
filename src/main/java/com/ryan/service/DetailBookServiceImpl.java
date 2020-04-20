@@ -71,6 +71,16 @@ public class DetailBookServiceImpl implements DetailBookService{
 	public int insertGrade(BookGradeVO vo) {
 		return mapper.insertGrade(vo);
 	}
+
+	@Override
+	public int insertLike(BookLikeVO vo) {
+		return mapper.insertLike(vo);
+	}
+
+	@Override
+	public int deleteLike(BookLikeVO vo) {
+		return mapper.deleteLike(vo);
+	}
 	
 	
 	
