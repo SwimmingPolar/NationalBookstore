@@ -12,9 +12,11 @@ import com.ryan.domain.MemberVO;
 import com.ryan.mapper.MemberMapper;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
 
 @Service
 @AllArgsConstructor
+@Log4j
 public class MemberServiceImpl implements MemberService {
 	
 	private MemberMapper mapper;
@@ -59,15 +61,35 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void addCookie(MemberVO member, HttpServletResponse response) {
 		
+		
 		Cookie idCookie = new Cookie("ryanMemberId", member.getMemberId());
+		log.info("쿠키에 저장될 회원아이디값: " + member.getMemberId());
 		idCookie.setMaxAge(60*60*24*7);
+		idCookie.setPath("/");
+		
 		Cookie nickNameCookie = new Cookie("ryanMemberNickName", member.getMemberNickName());
 		nickNameCookie.setMaxAge(60*60*24*7);
+		nickNameCookie.setPath("/");
 		response.addCookie(idCookie);
 		response.addCookie(nickNameCookie);
-		
+		log.info("쿠키생성완료");
+		log.info(idCookie);
 	}
-
+	
+	@Override
+	public void removeCookie(HttpServletResponse response) {
+		Cookie idCookie = new Cookie("ryanMemberId", null);
+		idCookie.setMaxAge(0);
+		idCookie.setPath("/");
+		
+		Cookie nickNameCookie = new Cookie("ryanMemberNickName", null);
+		nickNameCookie.setMaxAge(60*60*24*7);
+		nickNameCookie.setPath("/");
+		
+		response.addCookie(idCookie);
+		response.addCookie(nickNameCookie);
+	}
+	
 
 	@Override
 	public boolean autoLogin(MemberVO member) {
@@ -79,6 +101,14 @@ public class MemberServiceImpl implements MemberService {
 	public boolean memberSignIn(MemberVO member) {
 		return mapper.memberSignIn(member) == 1 ? true : false;
 	}
+
+
+	@Override
+	public String getMemberNickName(MemberVO member) {
+		return mapper.getMemberNickName(member);
+	}
+
+
 	
 	
 

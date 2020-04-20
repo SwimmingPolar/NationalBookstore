@@ -27,31 +27,37 @@ public class CookieInterceptor extends HandlerInterceptorAdapter {
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
 		
+		log.info("쿠키 인터셉터의 멤버값 : " + member);
 		if(member == null) {
+			member = new MemberVO();
 			Cookie[] cookies = request.getCookies();
-			
-			for(Cookie c : cookies) {
-				if(c.getName().equals("ryanMemberId")) {
-					member.setMemberId(c.getValue());
-				}
-				if(c.getName().equals("ryanMemberNickName")) {
-					member.setMemberNickName(c.getValue());
+			log.info("쿠키의값: " + cookies);
+			if(cookies != null ) {
+				log.info("쿠키 확인 for 문 확인전");
+				for(Cookie c : cookies) {
+					log.info("쿠키 for문 돌아가는중");
+					log.info("현재 쿠키의 이름: " + c.getName());
+					if(c.getName().equals("ryanMemberId")) {
+						member.setMemberId(c.getValue());
+						log.info("쿠기값: " + c.getValue());
+					}
+					if(c.getName().equals("ryanMemberNickName")) {
+						member.setMemberNickName(c.getValue());
+						log.info("쿠키값: " + c.getValue());
+					}
 				}
 			}
+			
 			
 			if(member.getMemberId() != null && member.getMemberNickName() != null) {
 				if(service.autoLogin(member)) { // true 회원정보가 존재
-					session.setAttribute("ryanMember", member.getMemberId());
+					log.info("쿠키로 세션생성");
+					session.setAttribute("ryanMember", member);
 					return true;
-				} else {
-					response.sendRedirect("/member/login");
-					return false;
-				}
-			} else {
-				response.sendRedirect("/member/login");
-				return false;
-			}
-			
+				} 
+				
+			} 
+			return true;
 		} else {
 			return true;
 		}

@@ -43,12 +43,19 @@
 	</update>
 	
 	<!-- 로그인 -->
-	<select id="memberSignIn">
-		SELECT count(*) FROM member WHERE member_id = #{memberId} and member_pw =#{memberPw}
+	<select id="memberSignIn" resultType="int">
+		SELECT count(*) FROM member WHERE member_id = #{memberId} and member_pw = #{memberPw}
+	</select>
+	
+	<!-- 여기부터 쿠키 -->
+	
+	<!-- 자동로그인 체크시 회원의 닉네임을 가져옴 -->
+	<select id="getMemberNickName" resultType="String">
+		SELECT member_nick_name FROM member WHERE member_id = #{memberId}
 	</select>
 	
 	<!-- 쿠키 로그인 확인 -->
-	<select id="autoLogin">
+	<select id="autoLogin" resultType="int">
 		SELECT count(*) FROM member WHERE member_id = #{memberId} and member_nick_name = #{memberNickName}
 	</select>
 	

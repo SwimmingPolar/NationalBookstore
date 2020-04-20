@@ -15,13 +15,13 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class MainPageController {
 	
-//	@GetMapping("/")
-//	public String mainPage(HttpServletRequest request) {
-//		
-//		
-//		
-//		
-//		return "main";
-//	}
+	@GetMapping("/")
+	public String mainPage(HttpServletRequest request) {
+		
+		log.info("메인페이지 이동");
+		
+		
+		return "main";
+	}
 	
 }

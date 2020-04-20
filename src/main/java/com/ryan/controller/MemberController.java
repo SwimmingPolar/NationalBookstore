@@ -1,9 +1,9 @@
 package com.ryan.controller;
 
-import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -72,7 +72,7 @@ public class MemberController {
 		return false;
 	}
 		
-	//인증코드 5분
+	//인증코드 5분 지나면
 	@RequestMapping("미정")
 	public @ResponseBody Boolean sadsafoka() {
 		return false;
@@ -102,21 +102,48 @@ public class MemberController {
 	}
 	
 	@PostMapping("/login")
-	public String memberLogin(@RequestParam("autoLogin") String autoLogin , MemberVO member , HttpServletResponse response) {
-		
+	public String memberLogin(@RequestParam(required = false, name = "autoLogin") String autoLogin , MemberVO member ,HttpServletRequest request, HttpServletResponse response) {
+		log.info(autoLogin);
+		log.info(response + "response 주소값:");
 		if(memberService.memberSignIn(member)) {
-			if(autoLogin.equals("check")) {
+			if(autoLogin != null) {
+				member.setMemberNickName(memberService.getMemberNickName(member));
+				memberService.removeCookie(response);
+				log.info("쿠키생성시작..");
 				memberService.addCookie(member, response);
-				return "메인";
 			}
-			return "메인";
+			HttpSession session = request.getSession();
+			session.setAttribute("ryanMember", member);
+			return "main";
 		} else {
 			return "login";
 		}
-		
-		
-		
+
 	}
 	
-	  
+	@GetMapping("/login")
+	public String memberLoginasd() {
+		return "login";
+	}
+	
+	@GetMapping("/logout")
+	public String memew(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		
+		session.invalidate();
+		
+		return "main";
+	}
+	
+	@GetMapping("/test")
+	public String memgw() {
+		return "testPage";
+	}
+	
+//	//체크박스 예시 삭제예정
+//	@GetMapping("ex")
+//	public String ex0101(@RequestParam(required = false, name = "checkbox") String[] das) {
+//		return "ex11";
+//	}
+	
 }
