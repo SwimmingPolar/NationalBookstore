@@ -2,6 +2,9 @@ package com.ryan.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.ryan.domain.BookGradeVO;
 import com.ryan.domain.BookLikeVO;
 import com.ryan.domain.EBookVO;
@@ -46,5 +49,7 @@ public interface DetailBookService {
 	//좋아요 취소
 	public int deleteLike(BookLikeVO vo);
 	
+	// 조회수 증가
+	public void updateBookLookUp(EBookVO vo , HttpServletRequest request , HttpServletResponse response);
 	
 }

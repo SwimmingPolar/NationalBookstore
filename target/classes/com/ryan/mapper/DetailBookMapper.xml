@@ -59,6 +59,14 @@
 	DELETE FROM book_like WHERE book_num = #{bookNum} and member_Id=#{memberId}
 </delete>
 
+<!-- 현재 조회수  -->
 
+<!-- 조회수  -->
+<update id="updateBookLookUp">
+	UPDATE ebook 
+	SET 
+	book_lookup = book_lookup +1
+	WHERE book_num = #{bookNum}
+</update>
 
 </mapper>

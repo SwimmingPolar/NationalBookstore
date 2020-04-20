@@ -103,13 +103,10 @@ public class MemberController {
 	
 	@PostMapping("/login")
 	public String memberLogin(@RequestParam(required = false, name = "autoLogin") String autoLogin , MemberVO member ,HttpServletRequest request, HttpServletResponse response) {
-		log.info(autoLogin);
-		log.info(response + "response 주소값:");
 		if(memberService.memberSignIn(member)) {
 			if(autoLogin != null) {
 				member.setMemberNickName(memberService.getMemberNickName(member));
 				memberService.removeCookie(response);
-				log.info("쿠키생성시작..");
 				memberService.addCookie(member, response);
 			}
 			HttpSession session = request.getSession();
@@ -127,10 +124,11 @@ public class MemberController {
 	}
 	
 	@GetMapping("/logout")
-	public String memew(HttpServletRequest request) {
+	public String memew(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		
 		session.invalidate();
+		memberService.removeCookie(response);
 		
 		return "main";
 	}
