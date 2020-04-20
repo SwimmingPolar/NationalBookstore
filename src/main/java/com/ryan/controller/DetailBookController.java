@@ -30,9 +30,12 @@ public class DetailBookController {
 	
 	//상세보기 페이지 
 	@RequestMapping("/search")
-	public String searchEBook(@RequestParam("booknumber") int booknumber, Model model) {
-		
+	public String searchEBook(@RequestParam("booknumber") int booknumber, Model model, HttpServletRequest request, HttpServletResponse response) {
+	
 		EBookVO vo = service.searchEBook(booknumber);
+		
+		//조회수
+		service.updateBookLookUp(vo, request, response);
 				
 		model.addAttribute("bookdetail", vo);
 		

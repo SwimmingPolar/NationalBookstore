@@ -111,6 +111,39 @@ public class DetailBookServiceImpl implements DetailBookService{
 	public int deleteLike(BookLikeVO vo) {
 		return mapper.deleteLike(vo);
 	}
+
+	@Override
+	public void updateBookLookUp(EBookVO vo, HttpServletRequest request, HttpServletResponse response) {
+		
+		Cookie[] cookies = request.getCookies();
+		
+		boolean flag = false;
+		
+		if(cookies != null) {
+			for(Cookie c : cookies) {
+				if(c.getName().equals(vo.getBookNum() + "lookUp")) {
+					flag = true;
+				} 
+			}
+			
+			if(!flag) {
+				mapper.updateBookLookUp(vo);
+				Cookie bookLookUpCookie = new Cookie(vo.getBookNum()+ "lookUp", "update");
+				bookLookUpCookie.setMaxAge(60*5); // 300초  5분
+				bookLookUpCookie.setPath("/");
+				response.addCookie(bookLookUpCookie);
+			}
+				
+		} else {
+			mapper.updateBookLookUp(vo);
+			Cookie bookLookUpCookie = new Cookie(vo.getBookNum()+ "lookUp", "update");
+			bookLookUpCookie.setMaxAge(60*5); // 300초  5분
+			bookLookUpCookie.setPath("/");
+			response.addCookie(bookLookUpCookie);
+		}
+		
+	}
+
 	
 	
 	

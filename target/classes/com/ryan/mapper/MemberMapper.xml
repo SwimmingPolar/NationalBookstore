@@ -41,7 +41,12 @@
 			<if test="memberAddress != null || memberAddress != ''">
 				member_address = #{memberAddress}
 			</if>
-			
+			<if test="memberDaddress != null || memberDaddress != ''">
+				member_daddress = #{memberDaddress}
+			</if>
+			<if test="memberTel != null || memberTel != ''">
+				member_tel = #{memberTel}
+			</if>
 		</set>
 		WHERE member_email = #{memberEmail}
 	</update>

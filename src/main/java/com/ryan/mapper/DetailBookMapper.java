@@ -41,8 +41,11 @@ public interface DetailBookMapper {
 	
 	//좋아요 입력
 	public int insertLike(BookLikeVO vo);
-	
+
 	//좋아요 취소
 	public int deleteLike(BookLikeVO vo);
+	
+	//조회수 증가 
+	public int updateBookLookUp(EBookVO vo);
 	
 }

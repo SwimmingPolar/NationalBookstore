@@ -54,6 +54,11 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public boolean memberUpdate(MemberVO member) {
+		
+		Pattern pw = Pattern.compile("^(?=.*?[^\\s])[\\w\\d]{4,}$");
+		Matcher pwMatcher = pw.matcher(member.getMemberPw());
+		if(!pwMatcher.find()) return false;
+		
 		return mapper.memberUpdate(member) == 1 ? true : false;
 	}
 

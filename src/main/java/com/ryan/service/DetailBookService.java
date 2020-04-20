@@ -49,5 +49,7 @@ public interface DetailBookService {
 	//좋아요 취소
 	public int deleteLike(BookLikeVO vo);
 	
+	// 조회수 증가
+	public void updateBookLookUp(EBookVO vo , HttpServletRequest request , HttpServletResponse response);
 	
 }
