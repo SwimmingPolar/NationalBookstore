@@ -29,7 +29,7 @@ public class MemberMapperTests {
 //		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 //		
 //		MemberVO vo = new MemberVO();
-//		vo.setMemberId("abc12345@naver.com");
+//		vo.setMemberEmail("abc12345@naver.com");
 //		vo.setMemberPw("abc1234");
 //		vo.setMemberNickName("홍길동1");
 //		vo.setMemberZipcode("00872");
@@ -43,15 +43,15 @@ public class MemberMapperTests {
 //	}
 	
 	//아이디 중복체크
-//	@Test
-//	public void signUpCheck() {
-//		
-//		MemberVO vo = new MemberVO();
-//		vo.setMemberNickName("홍길동");
-//		
-//		log.info("리턴값: " + mapper.signUpCheck(vo));
-//		
-//	}
+	@Test
+	public void signUpCheck() {
+		
+		MemberVO vo = new MemberVO();
+		vo.setMemberNickName("홍길동");
+		log.info("실행");
+		log.info("리턴값: " + mapper.signUpCheck(vo));
+		log.info("ddsdaf");
+	}
 	
 	
 	

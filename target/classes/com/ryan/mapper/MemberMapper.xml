@@ -20,7 +20,7 @@
 	<select id="signUpCheck" resultType="Integer">
 		SELECT count(*) FROM member
 		<choose>
-			<when test="memberId != null">
+			<when test="memberEmail != null">
 				WHERE member_email = #{memberEmail}
 			</when>
 			<when test="memberNickName != null">
