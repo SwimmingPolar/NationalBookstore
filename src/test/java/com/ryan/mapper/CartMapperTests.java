@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.ryan.domain.CartVO;
+
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
@@ -33,13 +35,25 @@ public class CartMapperTests {
 //		
 //	}
 	
+//	@Test
+//	public void cartBuyList() {
+//		
+//		int[] cartNumList = {2,3,4,5};
+//		
+//		log.info("실행");
+//		mapper.cartBuyList(cartNumList).forEach(cart -> log.info(cart));
+//	}
+	
 	@Test
-	public void cartBuyList() {
+	public void cartInsert() {
 		
-		int[] cartNumList = {2,3,4,5};
+		CartVO cart = new CartVO();
+		cart.setBookNum(1);
+		cart.setMemberEmail("abc1234@naver.com");
+		cart.setBookCount(10);
 		
-		log.info("실행");
-		mapper.cartBuyList(cartNumList).forEach(cart -> log.info(cart));
+		int result = mapper.insertCart(cart);
+		log.info("리턴값: " + result);
 	}
 	
 }

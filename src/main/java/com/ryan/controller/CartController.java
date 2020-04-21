@@ -27,6 +27,10 @@ public class CartController {
 	@Setter(onMethod_ = {@Autowired})
 	private CartService cartService;
 	
+	/*
+	 else "실패" 가있는건 확인을 위하여 만듬
+	 */
+	
 	@PostMapping("insert")
 	public @ResponseBody Boolean insertCart(CartVO cart) {
 		
@@ -76,8 +80,9 @@ public class CartController {
 	
 	@RequestMapping("/buy")
 	public String buy(@RequestParam int[] cartNumArray , RedirectAttributes rttr) {
+		//cartNumArray 로 장바구니 정보 list 에 저장 
 		rttr.addFlashAttribute("cartBuyList", cartService.cartBuyList(cartNumArray));
-		return "redirect:/order/list";
+		return "redirect:/order/orderPage";
 	}
 	
 }

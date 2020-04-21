@@ -1,8 +1,14 @@
 package com.ryan.service;
 
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ryan.domain.MemberVO;
 import com.ryan.domain.OrderVO;
 import com.ryan.mapper.OrderMapper;
 
@@ -20,6 +26,17 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public int insertOrder(OrderVO order) {
 		return mapper.insertOrder(order);
+	}
+
+
+	@Override
+	public ArrayList<OrderVO> getOrderList(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		
+		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
+		
+		return mapper.getOrderList(member.getMemberEmail());
 	}
 	
 	

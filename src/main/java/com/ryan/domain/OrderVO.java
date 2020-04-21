@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class OrderVO {
     
-	// 주문번호 
+    // 주문번호 
     private int orderNumber;
 
     // 회원아이디 
