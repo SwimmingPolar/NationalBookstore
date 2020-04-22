@@ -1,5 +1,6 @@
 package com.ryan.mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ryan.domain.BookGradeVO;
@@ -15,22 +16,25 @@ public interface DetailBookMapper {
 	public EBookVO searchEBook(int booknumber);
 	
 	//상세보기 페이지 리뷰조회
-	public ReviewVO searchReview(int booknumber);	
+	public ArrayList<ReviewVO> searchReview(int booknumber);	
 	
 	//상세보기 페이지 관심책 불러오기
 	public List<EBookVO> interestbooks(String category);
 	
-	//좋아요 조회
-	public BookLikeVO bookLike(int booknumber); 
+	//좋아요 숫자 조회
+	public int bookLike(int booknumber);
+	
+	//좋아요 전체 조회
+	public ArrayList<BookLikeVO> bookLikeList(int booknumber);/////
 	
 	//평점 조회
 	public double bookGrade(int booknumber);
 	
 	//태그 조회
-	public HashtagVO hashtag(int booknumber);
+	public List<HashtagVO> hashtag(int booknumber);
 	
 	//좋아요 한 사람들
-	public MemberVO likepeople(String id);
+	public ArrayList<MemberVO> likepeople(int booknumber);
 	
 	
 	//해쉬태그 입력

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ryan.mapper.MyBookMapper">
+	<select id="readingBook" resultType="com.ryan.domain.MyLibVO">
+		SELECT * FROM mylib	WHERE member_email = #{memberEmail}	
+	</select>
+	
+	<delete id="deleteList" parameterType="com.ryan.domain.MyLibVO">
+		DELETE FROM mylib WHERE book_num = #{bookNum} and member_email=#{memberEmail}
+	</delete>
+	
+	<insert id="insertList" parameterType="com.ryan.domain.MyLibVO">
+		INSERT INTO mylib (member_email, book_num, sub_date) VALUES(#{memberEmail},#{bookNum},#{subDate})	
+	</insert>
+
+
+</mapper>

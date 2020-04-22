@@ -1,5 +1,6 @@
 package com.ryan.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,22 +19,22 @@ public interface DetailBookService {
 	public EBookVO searchEBook(int booknumber);
 	
 	//리뷰 조회
-	public ReviewVO searchReview(int booknumber);
+	public ArrayList<ReviewVO> searchReview(int booknumber);
 	
 	//관심 책 조회
 	public List<EBookVO> interestbooks(String category);
 	
 	//좋아요 조회
-	public BookLikeVO bookLike(int booknumber); 
+	public int bookLike(int booknumber); 
 	
 	//평점 조회
 	public double bookGrade(int booknumber);
 	
 	//태그 조회
-	public HashtagVO hashtag(int booknumber);
+	public List<HashtagVO> hashtag(int booknumber);
 	
 	//좋아요 한 사람들
-	public MemberVO likepeople(String id);
+	public ArrayList<MemberVO> likepeople(int booknumber);
 	
 	
 	//해쉬태그 쿠기
@@ -41,10 +42,10 @@ public interface DetailBookService {
 	
 	
 	//평점입력
-	public int insertGrade(BookGradeVO vo);
+	public double insertGrade(BookGradeVO vo);
 	
 	//좋아요 입력
-	public String insertLike(BookLikeVO vo, int booknumber);
+	public int insertLike(BookLikeVO vo, HttpServletRequest request, HttpServletResponse response);
 	
 	// 조회수 증가
 	public void updateBookLookUp(EBookVO vo , HttpServletRequest request , HttpServletResponse response);

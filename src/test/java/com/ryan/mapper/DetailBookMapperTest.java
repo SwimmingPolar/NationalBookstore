@@ -42,13 +42,13 @@ public class DetailBookMapperTest {
 	
 	*/
 	
-	/*
+	
 	@Test
 	public void likepeople() {
-		log.info(mapper.likepeople("abc1234@naver.com"));
+		log.info(mapper.likepeople(1));
 	}
 	
-	*/
+
 //	@Test
 //	public void insertHashtag() {
 //		HashtagVO vo = new HashtagVO();
@@ -71,20 +71,20 @@ public class DetailBookMapperTest {
 	}
 	
 	*/
-/*	
+/*
 	@Test
 	public void insertLike() {
 		BookLikeVO vo = new BookLikeVO();
 		
 		vo.setLikeNum(1);
 		vo.setBookNum(1);
-		vo.setMemberId("abc1234@naver.com");
+		vo.setMemberEmail("abc1234@naver.com");
 		
 		log.info(mapper.insertLike(vo));
 	}
-	
 	*/
-	
+
+	/*
 	@Test
 	public void deleteLike() {
 		BookLikeVO vo = new BookLikeVO();
@@ -92,5 +92,5 @@ public class DetailBookMapperTest {
 		vo.setMemberEmail("abc1234@naver.com");
 		
 		log.info(mapper.deleteLike(vo));
-	}
+	}*/
 }
