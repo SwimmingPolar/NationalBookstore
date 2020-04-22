@@ -51,7 +51,7 @@ public class DetailBookControllerTest {
 		vo.setBookNum(1);
 		vo.setMemberEmail("abc1234@naver.com");
 		
-		log.info(service.insertLike(vo, 1));
+	
 	}
 	
 

@@ -93,9 +93,7 @@ public class DetailBookServiceTest {
 		vo.setMemberEmail("abc1234@naver.com");
 		String check = "";
 		
-		if(mapper.bookLike(1).getMemberEmail() == null) {
-			log.info("확인");
-		}
+	
 		
 	/*
 			if(mapper.bookLike(1).getMemberId().equals(vo.getMemberId())) {

@@ -1,5 +1,6 @@
 package com.ryan.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -33,7 +34,7 @@ public class DetailBookServiceImpl implements DetailBookService{
 	}
 
 	@Override
-	public ReviewVO searchReview(int booknumber) {		//상세보기 리뷰 조회
+	public ArrayList<ReviewVO> searchReview(int booknumber) {		//상세보기 리뷰 조회
 		return mapper.searchReview(booknumber);
 	}
 
@@ -43,9 +44,8 @@ public class DetailBookServiceImpl implements DetailBookService{
 	}
 
 	@Override
-	public BookLikeVO bookLike(int booknumber) {	//좋아요 조회
-		// TODO Auto-generated method stub
-		return mapper.bookLike(booknumber);
+	public int bookLike(int booknumber) {	//좋아요 조회
+		return mapper.bookLike(booknumber); 
 	}
 
 	@Override
@@ -55,15 +55,15 @@ public class DetailBookServiceImpl implements DetailBookService{
 	}
 
 	@Override
-	public HashtagVO hashtag(int booknumber) {		//태그 조회
+	public List<HashtagVO> hashtag(int booknumber) {		//태그 조회
 		// TODO Auto-generated method stub
 		return mapper.hashtag(booknumber);
 	}
 
 	@Override
-	public MemberVO likepeople(String id) {
+	public ArrayList<MemberVO> likepeople(int booknumber) {
 		// TODO Auto-generated method stub
-		return mapper.likepeople(id);
+		return mapper.likepeople(booknumber);
 	}
 
 	
@@ -98,23 +98,30 @@ public class DetailBookServiceImpl implements DetailBookService{
 	}
 
 	@Override
-	public int insertGrade(BookGradeVO vo) {
-		return mapper.insertGrade(vo);
+	public double insertGrade(BookGradeVO vo) {
+		int num = mapper.insertGrade(vo);
+		if(num==1) {
+			log.info("insert Grade 성공");
+		}else {
+			log.info("insert Grade 실패");
+		}
+		return mapper.bookGrade(vo.getBookNum());
 	}
 
 	@Override
-	public String insertLike(BookLikeVO vo, int booknumber) {
-		boolean flag = false;
+	public int insertLike(BookLikeVO vo, HttpServletRequest request, HttpServletResponse response) {
+		ArrayList<BookLikeVO> list = mapper.bookLikeList(vo.getBookNum());
 		
-		if(mapper.bookLike(booknumber).getMemberEmail()!=null) {
-			if(mapper.bookLike(booknumber).getMemberEmail().equals(vo.getMemberEmail())) {
+		for(int i=0; i<list.size();i++) {
+			if(list.get(i).getMemberEmail().equals(vo.getMemberEmail()) && list.get(i).getBookNum()==vo.getBookNum()) {
 				mapper.deleteLike(vo);
+				return mapper.bookLike(vo.getBookNum());
 			}else {
 				mapper.insertLike(vo);
-				flag = true;
-			}			
-		}		
-		return mapper.bookLike(booknumber).getLikeNum()+" "+flag;
+				return mapper.bookLike(vo.getBookNum());
+			}
+		}
+		return 0;		
 	}
 
 
