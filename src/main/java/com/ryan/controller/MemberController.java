@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ryan.domain.EmailCheckVO;
 import com.ryan.domain.MemberVO;
@@ -135,7 +136,7 @@ public class MemberController {
 	
 	@GetMapping("/test")
 	public String memgw() {
-		return "testPage";
+		return "test";
 	}
 	
 //	//체크박스 예시 삭제예정
