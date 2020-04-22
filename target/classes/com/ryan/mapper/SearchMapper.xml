@@ -2,14 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ryan.mapper.SearchMapper">
 <select id="searchBook" resultType="com.ryan.domain.EBookVO" parameterType="java.util.Map">
-<![CDATA[
+	SELECT DISTINCT book_title
+	FROM (
 	SELECT * FROM eBook
-	WHERE book_title IN
-	<foreach collection="keywordList" item="item" index="index" separator=",">
-	#{item}
+	WHERE 
+	<foreach collection="array" item="keyword" index="index" separator="OR">
+	like book_title '%' || #{keyword} || '%'
 	</foreach>
-	
-	]]>
+	) ORDER BY book_title
 </select>
+
+
+
+
 
 </mapper>
