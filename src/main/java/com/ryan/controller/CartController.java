@@ -31,7 +31,7 @@ public class CartController {
 	 else "실패" 가있는건 확인을 위하여 만듬
 	 */
 	
-	@PostMapping("insert")
+	@PostMapping("/insert")
 	public @ResponseBody Boolean insertCart(CartVO cart) {
 		
 		if(cartService.insertCart(cart)) {

@@ -50,4 +50,13 @@
 			</foreach>
 	</select>
 	
+	<delete id="removeBuyBooks">
+		DELETE FROM cart
+		WHERE cart_num in
+		<foreach collection="param1" index="index" item="cartNum" open="(" close=")" separator=",">
+			#{cartNum.cartNum}
+		</foreach>
+		and member_Email = #{memberEmail}
+	</delete>
+	
 </mapper>

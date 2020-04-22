@@ -22,4 +22,7 @@ public interface CartService {
 	//구매하기 체크한 상품들보내주기
 	public ArrayList<CartVO> cartBuyList(int[] cartNumArray);
 	
+	//구매 완료하고 구매한상품 삭제
+	public void removeBuyCart(ArrayList<CartVO> cartBuyList, HttpServletRequest request);
+	
 }

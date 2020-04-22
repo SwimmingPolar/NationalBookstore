@@ -2,6 +2,8 @@ package com.ryan.mapper;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.ryan.domain.CartVO;
 
 public interface CartMapper {
@@ -22,5 +24,8 @@ public interface CartMapper {
 	
 	//구하기 누른상품 구매페이지로
 	public ArrayList<CartVO> cartBuyList(int[] cartNumArray);
+	
+	//구매한 내역 삭제 
+	public void removeBuyBooks(ArrayList<CartVO> cartBuyList , @Param("memberEmail") String memberEmail);
 	
 }

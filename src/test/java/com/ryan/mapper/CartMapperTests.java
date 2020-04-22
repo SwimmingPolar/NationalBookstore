@@ -44,16 +44,36 @@ public class CartMapperTests {
 //		mapper.cartBuyList(cartNumList).forEach(cart -> log.info(cart));
 //	}
 	
+//	@Test
+//	public void cartInsert() {
+//		
+//		CartVO cart = new CartVO();
+//		cart.setBookNum(1);
+//		cart.setMemberEmail("abc1234@naver.com");
+//		cart.setBookCount(10);
+//		
+//		int result = mapper.insertCart(cart);
+//		log.info("리턴값: " + result);
+//	}
+	
 	@Test
-	public void cartInsert() {
+	public void removeBuyCart() {
 		
-		CartVO cart = new CartVO();
-		cart.setBookNum(1);
-		cart.setMemberEmail("abc1234@naver.com");
-		cart.setBookCount(10);
+		String memberEmail = "abc1234@naver.com";
 		
-		int result = mapper.insertCart(cart);
-		log.info("리턴값: " + result);
+		ArrayList<CartVO> cartBuyList = new ArrayList<CartVO>();
+		
+		CartVO vo = new CartVO();
+		vo.setCartNum(2);
+		
+		CartVO vo1 = new CartVO();
+		vo1.setCartNum(4);
+		
+		cartBuyList.add(vo1);
+		cartBuyList.add(vo);
+		
+		mapper.removeBuyBooks(cartBuyList, memberEmail);
+		
 	}
 	
 }

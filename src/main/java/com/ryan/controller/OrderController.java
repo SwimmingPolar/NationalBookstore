@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ryan.domain.CartVO;
 import com.ryan.domain.OrderVO;
+import com.ryan.service.CartService;
 import com.ryan.service.OrderObjectService;
 import com.ryan.service.OrderService;
 
@@ -30,6 +31,9 @@ public class OrderController {
 	@Setter(onMethod_ = {@Autowired})
 	private OrderObjectService objService;
 	
+	@Setter(onMethod_ = {@Autowired})
+	private CartService cartService;
+	
 	//결제하는 페이지
 	@RequestMapping("/orderPage")
 	public String movingOrderPage(@ModelAttribute("cartBuyList") ArrayList<CartVO> cartBuyList) {
@@ -39,13 +43,14 @@ public class OrderController {
 	
 	//결제신청 - > 완료
 	@RequestMapping("/order")
-	public String bookOrder(OrderVO order, @RequestParam("cartBuyList") ArrayList<CartVO> cartBuyList) {
+	public String bookOrder(OrderVO order, @RequestParam("cartBuyList") ArrayList<CartVO> cartBuyList , HttpServletRequest request) {
 		//jsp request 로 한번더 보내줌
 		
-		//주문 상세 정보 입력, 주소등등 결제완료시
+		//주문 상세 정보 입력, 주소등등 결제완료시 
 		int orderNumber = orderService.insertOrder(order); // 주문번호 리턴
 		
 		if(objService.insertOrderObject(orderNumber, cartBuyList)) {
+			cartService.removeBuyCart(cartBuyList, request);
 			return "결제성공페이지";
 		} else {
 			return "실패";
