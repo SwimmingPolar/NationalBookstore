@@ -171,6 +171,13 @@
 			<version>${org.aspectj-version}</version>
 		</dependency>
 		
+		<!-- 한글오류 처리 -->
+		<dependency>
+   			<groupId>xerces</groupId>
+    		<artifactId>xercesImpl</artifactId>
+    		<version>2.9.1</version>
+		</dependency>
+		
 		
 	</dependencies>
 	<build>

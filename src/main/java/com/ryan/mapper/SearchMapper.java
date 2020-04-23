@@ -5,5 +5,7 @@ import java.util.HashMap;
 import com.ryan.domain.EBookVO;
 
 public interface SearchMapper {
-	public EBookVO searchBook(String [] temp);
+	public EBookVO typeWriter(String [] w);
+	
+	public EBookVO typeBookname(String [] bn);
 }

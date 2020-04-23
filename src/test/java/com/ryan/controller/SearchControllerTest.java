@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
 import org.springframework.web.context.WebApplicationContext;
@@ -38,12 +39,7 @@ public class SearchControllerTest {
 	
 	@Test
 	public void searchBook(Model model,HttpServletRequest request) {
-		String x="어쩌 지 이 렇    게 ";
-		String [] tmp=x.split("\\s+");
-		
-		for(int i=0;i<tmp.length;i++) {
-			System.out.println(tmp[i]);
-		}
+
 	}
 
 }
