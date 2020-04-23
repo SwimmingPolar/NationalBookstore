@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ryan.domain.MyLibVO;
+import com.ryan.domain.MyReadBookVO;
 import com.ryan.mapper.MyBookMapper;
 
 import lombok.Setter;
@@ -79,5 +80,32 @@ public class MyBookServiceImpl implements MyBookService{
 		return flag;
 
 	}
-		
+
+	@Override
+	public int insertReadBook(MyReadBookVO vo) {
+		// TODO Auto-generated method stub
+		ArrayList<MyReadBookVO> list = mapper.readBookList(vo);
+		int num=0;
+		for(MyReadBookVO read : list) {
+			if(read.getBookNum()==vo.getBookNum() && read.getMemberEmail().equals(vo.getMemberEmail())) {
+				return mapper.updateReadBook(vo);				
+			}else {
+				return mapper.insertReadBook(vo);
+			}
+		}
+		return num;
+	}
+
+	@Override
+	public ArrayList<MyReadBookVO> readBookList(MyReadBookVO vo) {
+		// TODO Auto-generated method stub
+		return mapper.readBookList(vo);
+	}
+
+	@Override
+	public ArrayList<MyReadBookVO> deleteReadBook(MyReadBookVO vo) {
+		// TODO Auto-generated method stub
+		mapper.deleteReadBook(vo);
+		return mapper.readBookList(vo);
+	}		
 }

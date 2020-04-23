@@ -28,7 +28,8 @@ public class SearchController {
 		 * i=0;test.hasMoreElements();i++) { String x=""+i+""; map.put(x,
 		 * test.nextElement()); }
 		 */
-
+		String [] temp = keyword.split("\\s+");
+		model.addAttribute("BookList", service.searchBookM(temp));
 		
 		
 		model.addAttribute("BookList", service.searchBookM(writer,bookname));

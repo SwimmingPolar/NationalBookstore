@@ -20,11 +20,11 @@ public class EmailServiceImpl implements EmailService {
 	
 	
 	@Override
-	public EmailCheckVO insertEmailCode(EmailCheckVO email) {
-		email.setEmailCode(mail.getRandomCode());
-		email.setEmailNum(mapper.insertEmailCode(email));
+	public boolean insertEmailCode(EmailCheckVO email) {
 		
-		return email;
+		email.setEmailCode(mail.getRandomCode());
+		
+		return mapper.insertEmailCode(email) == 1 ? true : false;
 	}
 
 
