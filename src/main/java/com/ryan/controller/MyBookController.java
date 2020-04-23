@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ryan.domain.MyLibVO;
+import com.ryan.domain.MyReadBookVO;
 import com.ryan.service.MyBookService;
 
 import lombok.Setter;
@@ -23,7 +24,7 @@ public class MyBookController {
 	@Setter(onMethod_ = {@Autowired})
 	private MyBookService service;
 	
-	@RequestMapping("/list")
+	@RequestMapping("/mylist")	//찜 책장
 	public String myBookList(MyLibVO vo, Model model) {
 		ArrayList<MyLibVO> list = service.readingBook(vo);
 		model.addAttribute("mybooklist", list);				
@@ -37,5 +38,16 @@ public class MyBookController {
 		return arraylist;
 	}
 	
+	@RequestMapping("/readbook") 	//읽은 책 조회
+	public String myReadBook(MyReadBookVO vo, Model model) {
+		model.addAttribute("readbooklist", service.readBookList(vo));
+		return "view";
+	}
+	
+	//읽은 책 목록에서 삭제하기
+	@RequestMapping("/deletereadbook")
+	public @ResponseBody ArrayList<MyReadBookVO> deleteReadBook(MyReadBookVO vo) {
+		return service.deleteReadBook(vo);
+	}
 	
 }

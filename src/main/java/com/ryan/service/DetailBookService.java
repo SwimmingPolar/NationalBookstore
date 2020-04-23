@@ -11,6 +11,7 @@ import com.ryan.domain.BookLikeVO;
 import com.ryan.domain.EBookVO;
 import com.ryan.domain.HashtagVO;
 import com.ryan.domain.MemberVO;
+import com.ryan.domain.MyReadBookVO;
 import com.ryan.domain.ReviewVO;
 
 public interface DetailBookService {
@@ -49,5 +50,8 @@ public interface DetailBookService {
 	
 	// 조회수 증가
 	public void updateBookLookUp(EBookVO vo , HttpServletRequest request , HttpServletResponse response);
+
+	//좋아요 눌렀는지 확인
+	public boolean checkLike(int booknumber, HttpServletRequest request);
 	
 }

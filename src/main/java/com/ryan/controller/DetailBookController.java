@@ -11,12 +11,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.ryan.domain.BookGradeVO;
 import com.ryan.domain.BookLikeVO;
 import com.ryan.domain.EBookVO;
 import com.ryan.domain.HashtagVO;
 import com.ryan.domain.MyLibVO;
+import com.ryan.domain.MyReadBookVO;
 import com.ryan.domain.ReviewVO;
 import com.ryan.service.DetailBookService;
 import com.ryan.service.MyBookService;
@@ -44,17 +46,19 @@ public class DetailBookController {
 		//조회수
 		service.updateBookLookUp(vo, request, response);
 				
-		model.addAttribute("bookdetail", vo);
+		model.addAttribute("bookdetail", vo); //책 정보- 상세정보
 		
-		model.addAttribute("bookreview", service.searchReview(booknumber));		//
+		model.addAttribute("bookreview", service.searchReview(booknumber));		//책 번호 - 리뷰
 		
-		model.addAttribute("booklist", service.interestbooks(vo.getCategory()));//
+		model.addAttribute("booklist", service.interestbooks(vo.getBookCategory()));// 카테고리 추천 도서
+
+		model.addAttribute("likecheck", service.checkLike(booknumber, request)); //좋아요 클릭 했는지 확인
 		
-		model.addAttribute("booklike", service.bookLike(booknumber));
+		model.addAttribute("booklike", service.bookLike(booknumber)); //좋아요 수
 		
-		model.addAttribute("bookgrade", service.bookGrade(booknumber));
+		model.addAttribute("bookgrade", service.bookGrade(booknumber)); //평점
 		
-		model.addAttribute("hashtag", service.hashtag(booknumber));//
+		model.addAttribute("hashtag", service.hashtag(booknumber));//해쉬태그 
 		
 		//좋아요 한 사람들 랜덤 조회
 		model.addAttribute("likepeople", service.likepeople(vo.getBookNum()));
@@ -81,16 +85,25 @@ public class DetailBookController {
 		return service.insertLike(vo, request, response);
 	}
 	
+	//찜 책장에 추가
 	@RequestMapping("/insertList")
 	public String insertList(Model model, MyLibVO vo) {
 		boolean flag = mservice.insertList(vo);
 		model.addAttribute("booklist", mservice.readingBook(vo));
 		if(flag) {			
-			model.addAttribute("message", "등록되었습니다.");
+			model.addAttribute("message", flag);
 		}else {
-			model.addAttribute("message", "이미 등록된 작품입니다.");
+			model.addAttribute("message", flag);
 		}
 		return "view";
+	}
+	
+	//읽은책 추가
+	@RequestMapping("/insertreadbook")
+	public String insertReadBook(MyReadBookVO vo) {
+		int num = mservice.insertReadBook(vo);
+		if(num==1) log.info("insert 완료");
+		return "원래있던 페이지";
 	}
 	
 }
