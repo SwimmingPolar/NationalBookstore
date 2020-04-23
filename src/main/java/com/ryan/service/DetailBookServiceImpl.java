@@ -3,9 +3,11 @@ package com.ryan.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.Session;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import com.ryan.domain.BookLikeVO;
 import com.ryan.domain.EBookVO;
 import com.ryan.domain.HashtagVO;
 import com.ryan.domain.MemberVO;
+import com.ryan.domain.MyReadBookVO;
 import com.ryan.domain.ReviewVO;
 import com.ryan.mapper.DetailBookMapper;
 
@@ -113,7 +116,7 @@ public class DetailBookServiceImpl implements DetailBookService{
 		ArrayList<BookLikeVO> list = mapper.bookLikeList(vo.getBookNum());
 		
 		for(int i=0; i<list.size();i++) {
-			if(list.get(i).getMemberEmail().equals(vo.getMemberEmail()) && list.get(i).getBookNum()==vo.getBookNum()) {
+			if(list.get(i).getMemberEmail().equals(vo.getMemberEmail())) {
 				mapper.deleteLike(vo);
 				return mapper.bookLike(vo.getBookNum());
 			}else {
@@ -155,6 +158,25 @@ public class DetailBookServiceImpl implements DetailBookService{
 			response.addCookie(bookLookUpCookie);
 		}
 		
+	}
+
+	@Override
+	public boolean checkLike(int booknumber, HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		ArrayList<BookLikeVO> list = mapper.bookLikeList(booknumber);
+		
+		MemberVO vo = (MemberVO) session.getAttribute("ryanMember");
+		
+		boolean flag = false;
+		
+		for(int i=0; i<list.size();i++) {
+			if(list.get(i).getMemberEmail().equals(vo.getMemberEmail())) {
+				flag = true;
+				return flag;
+			}
+		}		
+		return flag;
 	}
 
 	
