@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class EBookVO {
-	 // 책 고유번호 
+    // 책 고유번호 
     private int bookNum;
 
     // 책 이름 
@@ -16,18 +16,18 @@ public class EBookVO {
     private int bookCountry;
 
     // 카테고리 
-    private String category;
+    private String bookCategory;
 
     // 작가 
-    private String writer;
+    private String bookWriter;
 
     // 출판일자 
     private Date bookPbDate;
 
     // 출판사 
-    private String publisher;
+    private String bookPublisher;
 
-    // 썸네일 
+    // 섬네일 
     private String bookThumbnail;
 
     // 책 가격 
@@ -44,6 +44,5 @@ public class EBookVO {
 
     // 조회수 
     private int bookLookup;
-	
 	
 }

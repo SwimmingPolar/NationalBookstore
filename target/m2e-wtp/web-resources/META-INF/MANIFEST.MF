@@ -1,5 +1,10 @@
 Manifest-Version: 1.0
+<<<<<<< HEAD
 Built-By: swimmingPolar
 Build-Jdk: 1.8.0_241
+=======
+Built-By: itbank
+Build-Jdk: 1.8.0_231
+>>>>>>> c3b34c2405ef0c4ce4a89596f2ed0e7221b3b6be
 Created-By: Maven Integration for Eclipse
 

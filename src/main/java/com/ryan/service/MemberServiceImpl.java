@@ -27,7 +27,7 @@ public class MemberServiceImpl implements MemberService {
 		//아이디 이메일형식
 		Pattern id = Pattern.compile("^[\\d\\w]+@(=?.*?[\\w]+)[\\d\\w]*\\.[\\w]+(\\.[\\w]+){0,1}$");
 		Matcher idMatcher = id.matcher(member.getMemberEmail());
-		Pattern pw = Pattern.compile("^(?=.*?[^\\s])[\\w\\d]{4,}$");
+		Pattern pw = Pattern.compile("^(?=.*?[^\\s])[\\w\\d]{4,12}$");
 		Matcher pwMatcher = pw.matcher(member.getMemberPw());
 		Pattern nickName = Pattern.compile("^[a-z][\\d\\w]{3,11}");
 		Matcher nickMatcher = nickName.matcher(member.getMemberNickName());
@@ -48,7 +48,7 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public boolean signUpCheck(MemberVO member) {
-		return mapper.signUpCheck(member) == 1 ? true : false;
+		return mapper.signUpCheck(member) == 0 ? true : false;
 	}
 
 

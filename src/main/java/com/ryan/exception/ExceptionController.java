@@ -19,4 +19,10 @@ public class ExceptionController {
 		return "404";
 	}
 	
+	
+//	@ExceptionHandler(RuntimeException.class)
+//	@ResponseStatus(HttpStatus.BAD_REQUEST)
+//	public String handle400() {
+//		
+//	}
 }

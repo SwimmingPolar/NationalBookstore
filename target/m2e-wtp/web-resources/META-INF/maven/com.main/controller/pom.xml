@@ -163,15 +163,30 @@
 			<artifactId>javax.mail-api</artifactId>
 			<version>1.4.7</version>
 		</dependency>
-		
+
 		<!-- aop -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
 			<version>${org.aspectj-version}</version>
 		</dependency>
+
 		
-		
+		<!-- 한글오류 처리 -->
+		<dependency>
+   			<groupId>xerces</groupId>
+    		<artifactId>xercesImpl</artifactId>
+    		<version>2.9.1</version>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.4</version>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<plugins>
