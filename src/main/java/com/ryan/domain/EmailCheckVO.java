@@ -13,5 +13,4 @@ public class EmailCheckVO {
 
     // 인증번호 
     private String emailCode;
-	
 }

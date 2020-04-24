@@ -60,7 +60,7 @@ public class MemberServiceImpl implements MemberService {
 		Matcher pwMatcher = pw.matcher(member.getMemberPw());
 		if(!pwMatcher.find()) return false;
 		
-		return mapper.memberUpdate(member) == 1 ? true : false;
+		return mapper.memberUpdate(member) == 0 ? true : false;
 	}
 
 	

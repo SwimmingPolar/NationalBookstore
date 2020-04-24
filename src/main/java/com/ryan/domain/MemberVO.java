@@ -25,7 +25,7 @@ public class MemberVO {
     // 상세주소 
     private String memberDaddress;
 
-    // 전화번호 
+	// 전화번호 
     private String memberTel;
 
     // 구독 

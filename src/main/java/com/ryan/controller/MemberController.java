@@ -46,7 +46,7 @@ public class MemberController {
 	
 	@PostMapping("/signUp")
 	public String memberSignUp(MemberVO member) {
-		
+		log.info(member.getMemberEmail());
 		if (memberService.memberSignUp(member)) return "회원가입 성공 페이지";
 		else return "회원가입 실패 페이지";		
 	}
@@ -128,11 +128,6 @@ public class MemberController {
 
 	}
 	
-	@GetMapping("/login")
-	public String memberLoginasd() {
-		return "login";
-	}
-	
 	@GetMapping("/logout")
 	public String memew(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
@@ -142,8 +137,27 @@ public class MemberController {
 		
 		return "main";
 	}
+	@GetMapping("/email-signin")
+	public String getEmailLogin() {
+		return "email-signin";
+	}
+	@GetMapping("/signin")
+	public String getSignIn() {
+		return "signin";
+	}
+	@GetMapping("/signup")
+	public String getMemberSignUp() {
+		return "signup";
+	}
 	
+<<<<<<< HEAD
+	@GetMapping("/test")
+	public String memgw() {
+		return "home";
+	}
+=======
 	
+>>>>>>> c3b34c2405ef0c4ce4a89596f2ed0e7221b3b6be
 	
 //	//체크박스 예시 삭제예정
 //	@GetMapping("ex")
