@@ -1,0 +1,220 @@
+.container {
+  height: calc(100vh - 42px);
+  display: flex;
+  background-color: var(--gray-color);
+  justify-content: center;
+  align-items: center;
+  min-height: 525px;
+}
+
+.title-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--gray-color);
+  height: 42px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.175);
+}
+
+.title-bar a {
+  text-decoration: none;
+}
+
+.title-bar h2 {
+  color: var(--red-color);
+  font-family: 'Kaushan Script', cursive;
+  font-size: 28px;
+  opacity: 0.675;
+}
+
+.form-container {
+  width: 345px;
+}
+.form-container > div {
+  margin-bottom: 25px;
+}
+.form-container label {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 48px;
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+}
+.form-container label span.validated {
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  font-size: 18px;
+  color: #1abc9c;
+}
+.form-container label img {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 20px;
+}
+.form-container input {
+  width: 100%;
+  height: 100%;
+  padding: 15px 10px 0;
+  outline: 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  font-size: 13px;
+}
+.form-container input:focus {
+  border: 1px solid var(--main-color);
+  z-index: 2;
+}
+.form-container .placeholder {
+  position: absolute;
+  left: 10px;
+  top: 12px;
+  color: rgba(0, 0, 0, 0.45);
+  transition: 150ms cubic-bezier(0.4,0,0.2,1);
+  pointer-events: none;
+}
+.form-container input:focus ~ .placeholder {
+  color: var(--main-color);
+}
+.form-container input:focus ~ .placeholder {
+  transform: scale(0.8) translateX(-10%) translateY(-70%);
+}
+.form-container input:valid ~ .placeholder {
+  transform: scale(0.8) translateX(-10%) translateY(-70%);
+}
+.form-container .warning-msg {
+  display: none;
+  padding: 0 0 0 7px;
+  color: #e64938;
+  font-size: 14px;
+  font-family: 'Noto Sans KR', sans-serif;
+  padding-bottom: 11px;
+  opacity: 0.8;
+}
+.form-container .warning-msg > span {
+  font-weight: bold;
+  padding-right: 5px;
+}
+
+.email-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.email-container > label {
+  flex-basis: 79%;
+  margin-right: 1%;
+}
+.email-container > button {
+  flex-basis: 20%;
+  outline: none;
+  border: 0;
+  border-radius: 3px;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.15);
+  font-size: 18px;
+}
+.email-container > button:not(:disabled) {
+  background-color: rgba(0, 0, 0, 0.15);
+  background-color: var(--main-color);
+  box-shadow: 0 2px 7px -2px rgba(0, 153, 255, 0.65);
+  cursor: pointer;
+}
+
+.email-container > span {
+  flex-basis: 100%;
+}
+
+#passwd {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+#passwdConfirm {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+label[for="passwdConfirm"] {
+  margin-top: -1px;
+}
+.address-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.address-container > label[for="zipcode"] {
+  flex-basis: 69%;
+  margin-right: 1%;
+  margin-bottom: -1px;
+}
+.address-container > label[for="zipcode"] > input {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.address-container > label[for="zipcode"] > input:disabled {
+  background-color: #fff;
+  cursor: text;
+}
+.address-container > button {
+  flex-basis: 30%;
+  justify-self: flex-end;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  height: 44px;
+  background-color: var(--main-color);
+  color: #fff;
+  border-radius: 3px;
+  font-size: 14px;
+  box-shadow: 0 2px 5px -2px rgba(0, 153, 255, 1);
+  opacity: 0.8;
+}
+.address-container > button:hover {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
+}
+.address-container > label[for="roadAddress"] {
+  flex: 100%;
+}
+.address-container > label[for="roadAddress"] > input {
+  border-radius: 0;
+  border-top-right-radius: 6px;
+}
+.address-container > label[for="roadAddress"] > input:disabled {
+  background-color: #fff;
+  cursor: text;
+}
+.address-container > label[for="detailAddress"] {
+  flex: 100%;
+  margin-top: -1px;
+}
+.address-container > label[for="detailAddress"] > input {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+#tel::-webkit-inner-spin-button,
+#tel::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
+}
+
+.form-container button[type="submit"] {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  border-radius: 4px;
+  height: 45px;
+  font-size: 18px;
+  color: #fff;
+  margin-bottom: 18px;
+  transition: 0.4s ease;
+  background-color: rgba(0, 0, 0, 0.15)
+}
+
+.form-container button[type="submit"]:not(:disabled) {
+  background-color: rgba(0, 0, 0, 0.15);
+  background-color: var(--main-color);
+  box-shadow: 0 2px 7px -2px rgba(0, 153, 255, 0.65);
+  cursor: pointer;
+}
+.form-container button[type="submit"]:not(:disabled):hover {
+  box-shadow: 0 2px 6px -1px rgba(0, 153, 255, 0.85);
+}
