@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.ryan.domain.EmailCheckVO;
 import com.ryan.domain.MemberVO;
 import com.ryan.service.BookCategoryService;
 import com.ryan.service.EmailService;
+import com.ryan.service.InterestsService;
 import com.ryan.service.MemberService;
 
 import lombok.Setter;
@@ -38,6 +40,9 @@ public class MemberController {
 	
 	@Setter(onMethod_ = {@Autowired})
 	private BookCategoryService categoryService;
+	
+	@Setter(onMethod_ = {@Autowired})
+	private InterestsService interestsService;
 	
 	@PostMapping("/signUp")
 	public String memberSignUp(MemberVO member) {
@@ -156,11 +161,14 @@ public class MemberController {
 	}
 	
 	@PostMapping("/memberInterestsInsert")
-	public String memberInterestsInsert(@RequestParam(required = false, name = "categoryCheck") int[] categoryArray) {
+	public String memberInterestsInsert(@RequestParam(required = false, name = "categoryCheck") int[] categoryArray, HttpServletRequest request) {
 		
+		if(interestsService.insertInterests(categoryArray, request)) {
+			return "성공";
+		} else {
+			return "실패";
+		}
 		
-		
-		return "카테고리 등록 완료 페이지";
 	}
 	
 	

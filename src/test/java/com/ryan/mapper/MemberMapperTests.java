@@ -1,8 +1,5 @@
 package com.ryan.mapper;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,25 +19,25 @@ public class MemberMapperTests {
 	@Setter(onMethod_ = {@Autowired})
 	private MemberMapper mapper;
 	
-	@Test
-	public void memberSignUpTests() {
-		
-		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-		
-		MemberVO vo = new MemberVO();
-		vo.setMemberEmail("abc12345@naver.com");
-		vo.setMemberPw("abc1234");
-		vo.setMemberNickName("홍길동1");
-		vo.setMemberZipcode("00872");
-		vo.setMemberAddress("서울 특별시 종로구 종로동");
-		vo.setMemberDaddress("단성빌딩");
-		vo.setMemberTel("010-1111-1111");
-		vo.setMemberAdmin(1);
-		log.info("member Insert");
-		log.info("리턴값: " + mapper.memberSignUp(vo)); // 1리턴
-		
-	}
+//	@Test
+//	public void memberSignUpTests() {
+//		
+//		Date date = new Date();
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+//		
+//		MemberVO vo = new MemberVO();
+//		vo.setMemberEmail("abc12345@naver.com");
+//		vo.setMemberPw("abc1234");
+//		vo.setMemberNickName("홍길동1");
+//		vo.setMemberZipcode("00872");
+//		vo.setMemberAddress("서울 특별시 종로구 종로동");
+//		vo.setMemberDaddress("단성빌딩");
+//		vo.setMemberTel("010-1111-1111");
+//		vo.setMemberAdmin(1);
+//		log.info("member Insert");
+//		log.info("리턴값: " + mapper.memberSignUp(vo)); // 1리턴
+//		
+//	}
 	
 //	//아이디 중복체크
 //	@Test
@@ -53,7 +50,31 @@ public class MemberMapperTests {
 //		log.info("ddsdaf");
 //	}
 	
+	//로그인 - 완료
+//	@Test
+//	public void signInTest() {
+//		
+//		MemberVO member = new MemberVO();
+//		member.setMemberEmail("abc1234@naver.com");
+//		member.setMemberPw("aa");
+//		
+//		int result = mapper.memberSignIn(member);
+//		log.info("로그인 리턴값 : " +  result);
+//		
+//	}
 	
+	//회원정보 업데이트 -완료
+//	@Test
+//	public void memberUpdate() {
+//		
+//		MemberVO member = new MemberVO();
+//		member.setMemberEmail("abc1234@naver.com");
+//		member.setMemberZipcode("09090");
+//		int result = mapper.memberUpdate(member);
+//		
+//		log.info("업데이트 리턴 값: " + result);
+//		
+//	}
 	
 	
 }

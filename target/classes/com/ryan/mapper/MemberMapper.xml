@@ -32,19 +32,19 @@
 	<update id="memberUpdate">
 		UPDATE member
 		<set>
-			<if test="memberPw != null || memberPw != ''">
+			<if test="memberPw != null and memberPw != ''">
 				member_pw = #{memberPw}
 			</if>
-			<if test="memberZipcode != null || memberZipcode != ''">
+			<if test="memberZipcode != null and memberZipcode != ''">
 				member_zipcode = #{memberZipcode}
 			</if>
-			<if test="memberAddress != null || memberAddress != ''">
+			<if test="memberAddress != null and memberAddress != ''">
 				member_address = #{memberAddress}
 			</if>
-			<if test="memberDaddress != null || memberDaddress != ''">
+			<if test="memberDaddress != null and memberDaddress != ''">
 				member_daddress = #{memberDaddress}
 			</if>
-			<if test="memberTel != null || memberTel != ''">
+			<if test="memberTel != null and memberTel != ''">
 				member_tel = #{memberTel}
 			</if>
 		</set>

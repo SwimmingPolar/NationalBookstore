@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Service;
@@ -112,6 +113,9 @@ public class MemberServiceImpl implements MemberService {
 	public String getMemberNickName(MemberVO member) {
 		return mapper.getMemberNickName(member);
 	}
+
+
+	
 
 
 	

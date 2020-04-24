@@ -1,5 +1,6 @@
 package com.ryan.service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ryan.domain.MemberVO;
@@ -30,5 +31,7 @@ public interface MemberService {
 	
 	//로그인한 회원의 닉네임 획득
 	public String getMemberNickName(MemberVO member);
+	
+	
 	
 }
