@@ -14,7 +14,7 @@ public interface CartMapper {
 	public ArrayList<CartVO> getCartList(String memberEmail);
 	
 	//수량 수정
-	public int modifyCartCount(int bookCount , int cartNum);
+	public int modifyCartCount(@Param("bookCount") int bookCount ,@Param("cartNum") int cartNum);
 	
 	//1개 삭제
 	public int remove(int cartNum);
@@ -26,6 +26,6 @@ public interface CartMapper {
 	public ArrayList<CartVO> cartBuyList(int[] cartNumArray);
 	
 	//구매한 내역 삭제 
-	public void removeBuyBooks(ArrayList<CartVO> cartBuyList , @Param("memberEmail") String memberEmail);
+	public void removeBuyCartList(ArrayList<CartVO> cartBuyList , @Param("memberEmail") String memberEmail);
 	
 }

@@ -56,24 +56,34 @@ public class CartMapperTests {
 //		log.info("리턴값: " + result);
 //	}
 	
-	@Test
-	public void removeBuyCart() {
-		
-		String memberEmail = "abc1234@naver.com";
-		
-		ArrayList<CartVO> cartBuyList = new ArrayList<CartVO>();
-		
-		CartVO vo = new CartVO();
-		vo.setCartNum(2);
-		
-		CartVO vo1 = new CartVO();
-		vo1.setCartNum(4);
-		
-		cartBuyList.add(vo1);
-		cartBuyList.add(vo);
-		
-		mapper.removeBuyBooks(cartBuyList, memberEmail);
-		
-	}
+//	@Test
+//	public void removeBuyCart() {
+//		
+//		String memberEmail = "abc1234@naver.com";
+//		
+//		ArrayList<CartVO> cartBuyList = new ArrayList<CartVO>();
+//		
+//		CartVO vo = new CartVO();
+//		vo.setCartNum(2);
+//		
+//		CartVO vo1 = new CartVO();
+//		vo1.setCartNum(4);
+//		
+//		cartBuyList.add(vo1);
+//		cartBuyList.add(vo);
+//		
+//		mapper.removeBuyCartList(cartBuyList, memberEmail);
+//		
+//	}
+	
+//	//수량수정
+//	@Test
+//	public void modifyCartCountTest() {
+//		
+//		int result = mapper.modifyCartCount(1, 41);
+//		
+//		log.info("결과: " +  result);
+//		
+//	}
 	
 }

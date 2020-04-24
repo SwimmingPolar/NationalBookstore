@@ -150,14 +150,6 @@ public class MemberController {
 		return "signup";
 	}
 	
-<<<<<<< HEAD
-	@GetMapping("/test")
-	public String memgw() {
-		return "home";
-	}
-=======
-	
->>>>>>> c3b34c2405ef0c4ce4a89596f2ed0e7221b3b6be
 	
 //	//체크박스 예시 삭제예정
 //	@GetMapping("ex")

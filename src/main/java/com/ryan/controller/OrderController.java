@@ -50,7 +50,7 @@ public class OrderController {
 		int orderNumber = orderService.insertOrder(order); // 주문번호 리턴
 		
 		if(objService.insertOrderObject(orderNumber, cartBuyList)) {
-			cartService.removeBuyCart(cartBuyList, request);
+			cartService.removeBuyCartList(cartBuyList, request);
 			return "결제성공페이지";
 		} else {
 			return "실패";

@@ -63,12 +63,12 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public void removeBuyCart(ArrayList<CartVO> cartBuyList,  HttpServletRequest request) {
+	public void removeBuyCartList(ArrayList<CartVO> cartBuyList,  HttpServletRequest request) {
 		
 		HttpSession session = request.getSession();
 		
 		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
-		mapper.removeBuyBooks(cartBuyList, member.getMemberEmail());
+		mapper.removeBuyCartList(cartBuyList, member.getMemberEmail());
 	}
 
 	

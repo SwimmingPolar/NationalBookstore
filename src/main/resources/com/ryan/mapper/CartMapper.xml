@@ -50,7 +50,7 @@
 			</foreach>
 	</select>
 	
-	<delete id="removeBuyBooks">
+	<delete id="removeBuyCartList">
 		DELETE FROM cart
 		WHERE cart_num in
 		<foreach collection="param1" index="index" item="cartNum" open="(" close=")" separator=",">
