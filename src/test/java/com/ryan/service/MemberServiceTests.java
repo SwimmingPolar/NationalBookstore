@@ -30,21 +30,39 @@ public class MemberServiceTests {
 //	}
 	
 	//회원가입 테스트 공백, null
+//	@Test
+//	public void memberSignUp() {
+//		
+//		MemberVO vo = new MemberVO();
+//		vo.setMemberEmail("abc1234123@naver.com");
+//		vo.setMemberPw("abc1234");
+//		vo.setMemberNickName("홍길동123");
+//		vo.setMemberZipcode("00872");
+//		vo.setMemberAddress("종로종로");
+//		vo.setMemberDaddress("서울특별시 종로구 종로종로~");
+//		vo.setMemberTel("010-1111-1111");
+//		vo.setMemberAdmin(1);
+//		
+//		log.info(service.memberSignUp(vo));
+//		
+//		
+//	}
+	
+	//로그인
 	@Test
-	public void memberSignUp() {
+	public void memberSignInTest() {
 		
-		MemberVO vo = new MemberVO();
-		vo.setMemberEmail("abc1234123@naver.com");
-		vo.setMemberPw("abc1234");
-		vo.setMemberNickName("홍길동123");
-		vo.setMemberZipcode("00872");
-		vo.setMemberAddress("종로종로");
-		vo.setMemberDaddress("서울특별시 종로구 종로종로~");
-		vo.setMemberTel("010-1111-1111");
-		vo.setMemberAdmin(1);
+		MemberVO member = new MemberVO();
+		member.setMemberEmail("abc1234@naver.com");
+		member.setMemberPw("abc1234");
 		
-		log.info(service.memberSignUp(vo));
+		boolean result =  service.memberSignIn(member);
 		
+		if(result) {
+			log.info("로그인 성공 ");
+		} else {
+			log.info("로그인 실패");
+		}
 		
 	}
 	
