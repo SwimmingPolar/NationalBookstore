@@ -1,0 +1,336 @@
+/*Main Font:
+font-family: 'Kaushan Script', cursive;
+
+Article Choices:
+font-family: 'Roboto', sans-serif;
+font-family: 'Open Sans', sans-serif;
+font-family: 'Montserrat', sans-serif;
+
+Korean Font:
+font-family: 'Noto Sans KR', sans-serif;
+*/
+body > * {
+	width: 700px;
+	margin: 0 auto;
+}
+
+.div-title {
+	width: 100%;
+	position: fixed;
+	text-align: center;
+	background: var(--white-color);
+	font-family: var(--main-font);
+	color: red;
+	box-shadow: 0px 1px 1px -1px rgba(0, 0, 0, 1);
+}
+
+.div-title + div {
+	padding-top: 50px;
+}
+
+/* 검색바  */
+.search-bar {
+	display: flex;
+	height: 30px;
+}
+
+.search-bar > * {
+	border: none;
+	border-radius: 5px;
+	outline: none;
+	background: none;
+	box-shadow: 1px 1px 3px -1px rgba(0, 0,0 , 0.5);
+}
+
+.type {
+	flex-basis: 10%;
+	font-family: 'Noto Sans KR', sans-serif;
+	background: var(--white-color);
+	padding: 2px 9px;
+	cursor : pointer;
+	border: 1px solid rgba(0,0,0,0.3);
+	border-radius: 5px; 
+	outline : none;
+}
+
+.keyword {
+	flex-basis: 77%;
+	font-family: 'Noto Sans KR', sans-serif;
+	background-color: var(--white-color);
+	margin: 0 1.5%;
+	padding: 2px 9px;
+}
+
+.btn-search {
+	cursor: pointer;
+	flex-basis: 10%;
+	color: var(--white-color);
+	background-color: var(--main-color);
+}
+
+/* 카테고리 (통합검색, ebook, 종이책) */
+.category-list {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	margin: 6px 0px;
+	margin-bottom: 0px;
+	height: 30px;
+}
+
+.category-list > * {
+	cursor: pointer;
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size: 1em;
+	background: none;
+	border: none;
+	outline: none;
+	margin: 0 5px;
+}
+
+.btn-category.selected {
+	color: var(--main-color);
+}
+
+/* 검색 요약 */
+.search-summary {
+	display: flex;
+	align-items: center;
+	height: 30px;
+}
+
+.search-summary > * {
+	flex-basis: 33.3%;
+}
+
+.search-summary > div {
+	font-family: var(--korean-font);
+	font-size: 0.9em;
+}
+
+.scount {
+	display: flex;
+	justify-content: center;
+	align-items: baseline;
+	font-family: var(--korean-font);
+}
+
+.layout {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.layout > * {
+	cursor: pointer;
+	background: none;
+	outline: none;
+	border: 0;
+	font-size: 1.3em;
+	color: var(--gray-color);
+	margin: 0 2px;
+}
+
+.result-count {
+	color: var(--main-color);
+	margin: 0 2px;
+}
+
+/* 검색 결과 */
+.search-list {
+	display: flex;
+	flex-direction: column;
+	margin-top: 5px;
+}
+
+.category-belt { /* 카테고리 벨트 */
+	display: flex;
+	align-items: baseline;
+	cursor: pointer;
+	background: none;
+	height: 30px;
+	margin: 5px 0;
+}
+
+.category-belt > form {
+	display: flex;
+	width: 700px;
+	height: 30px;
+}
+
+.btn-category-belt {
+	flex-basis: 100%;
+	display: flex;
+	align-items: baseline;
+	cursor: pointer;
+	background: none;
+	outline: none;
+	border: 0;
+}
+
+.category-title {
+	flex-basis: 8%;
+	display: flex;
+	justify-content: flex-start;
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size: 1.5em;
+	font-weight: bold;
+}
+
+.category-count {
+	flex-basis: 10%;
+	display: flex;
+	justify-content: flex-start;
+	font-family: 'Noto Sans KR', sans-serif;
+	color: var(--main-color);
+	margin: 0 5px;
+}
+
+.btn-category-belt > span:last-child {
+	flex-basis: 82%;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.search-result { /* 책들 */
+	display: flex;
+	flex-direction: column;
+}
+
+.search {
+	display: flex;
+	border-radius: 5px;
+	box-shadow: 1px 1px 3px -1px rgba(0,0,0,0.5);
+	margin-bottom: 5px;
+}
+
+.book {
+	flex-basis: 80%;
+	display: flex;
+}
+
+.cover {
+	width: 120px;
+	height: 140px;
+	background: url("http://placehold.it/120X140.jpg");
+	border-radius: 5px 0 0 5px;
+	box-shadow: 1px 0px 1px -2px rgba(0, 0, 0, 0.5);
+}
+
+.info {
+	display: flex;
+	flex-direction: column;
+	padding: 10px;
+}
+
+.info * {
+	font-family: var(--korean-font);
+}
+
+.title {
+	font-size: 1.3em;
+}
+
+.info > div:nth-child(2) {
+	display: flex;
+	color: rgba(0, 0, 0, 0.4);
+	font-size: 1.1em;
+}
+
+.author::after {
+	content: "·";
+	margin: 0 3px;
+}
+
+.interact {
+	flex-basis: 20%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.interact > * {
+	cursor: pointer;
+	outline: none;
+	background: none;
+	border: 0;
+	border-radius: 5px;
+	color: var(--white-color);
+	font-family: var(--korean-font);
+	width: 100px;
+	height: 45px;
+}
+
+.btn-read {
+	background-color: var(--main-color);
+}
+
+.btn-purchase {
+	background-color: #0066CC;
+}
+
+/* ---------그리드 레이아웃---------- */
+
+.grid-layout {
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.grid-layout .search {
+	flex-basis: 22.3%;
+	flex-direction: column;
+	margin: 10px 1.75%;
+}
+
+.grid-layout .book {
+	flex-basis: 90%;
+	display: flex;
+	flex-direction: column;
+}
+
+.grid-layout .cover {
+	border-radius: 5px 5px 0px 0px;
+	width: 156.6px;
+	background: url("http://placehold.it/157X140.jpg");
+}
+
+.grid-layout .author::after {
+	content: "";
+}
+
+.grid-layout .search:first-child, .grid-layout .search:nth-child(4n+1) {
+	margin-left: 0px;
+}
+.grid-layout .search:nth-child(4n) {
+	margin-right: 0px;
+}
+
+.grid-layout .title {
+	font-size: 1em;
+}
+
+.grid-layout .author {
+	font-size: 0.8em;
+}
+
+.grid-layout .publisher {
+	display: none;
+}
+
+.grid-layout .interact {
+	flex-basis: 10%;
+	flex-direction: row;
+	justify-content: flex-end;
+	width: 100%;
+}
+
+.grid-layout .btn-read {
+	width: 100%;
+	margin: 0;
+	border-radius: 0 0 2px 2px;
+}
+
+.grid-layout .btn-purchase {
+	width: 100%;
+	margin: 0;
+	border-radius: 0 0 2px 2px;
+}
