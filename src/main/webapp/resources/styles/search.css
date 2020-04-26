@@ -18,10 +18,11 @@ body > * {
 	width: 100%;
 	position: fixed;
 	text-align: center;
-	background: var(--white-color);
+	background: #FFFFFF;
 	font-family: var(--main-font);
 	color: red;
 	box-shadow: 0px 1px 1px -1px rgba(0, 0, 0, 1);
+	z-index: 999;
 }
 
 .div-title + div {
@@ -185,6 +186,34 @@ body > * {
 	margin: 0 5px;
 }
 
+.to-cart {
+	flex-basis: 82%;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.btn-cart-outer {
+	cursor: pointer;
+	background: var(--gray-color);
+	padding: 5px;
+	border-radius: 5px;
+	color: rgba(0, 0, 0, 1);
+	font-size: 0.8em;
+	box-shadow: 1px 1px 1px -1px rgba(0,0,0,0.5);
+	
+}
+
+.btn-cart {
+	font-family: var(--korean-font);
+}
+
+@font-face {
+  font-family: "NotoSansKR";
+  src: url("../fonts/openSans/OpenSans-SemiBold.woff") format("woff");
+  unicode-range: U+0020-007E;
+  font-style: normal;
+}
+
 .btn-category-belt > span:last-child {
 	flex-basis: 82%;
 	display: flex;
@@ -268,6 +297,12 @@ body > * {
 	background-color: #0066CC;
 }
 
+.checkbox-cart {
+	width: 1.5em;
+	height: 1.5em;
+	margin: 10px;
+}
+
 /* ---------그리드 레이아웃---------- */
 
 .grid-layout {
@@ -285,6 +320,7 @@ body > * {
 	flex-basis: 90%;
 	display: flex;
 	flex-direction: column;
+	position:relative;
 }
 
 .grid-layout .cover {
@@ -333,4 +369,25 @@ body > * {
 	width: 100%;
 	margin: 0;
 	border-radius: 0 0 2px 2px;
+}
+
+.grid-layout .btn-list-cart {
+	display: none;
+}
+
+.grid-layout .book {
+	position: relative;
+}
+/* 임시 */
+.btn-grid-cart {
+	display: none;
+	width: 1.5em;
+	height: 1.5em;
+}
+
+.grid-layout .btn-grid-cart {
+	display: inline;
+	position: absolute;
+	left: 137.5px;
+	margin: 0;
 }
