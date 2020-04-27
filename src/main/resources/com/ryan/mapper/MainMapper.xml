@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ryan.mapper.MainMapper">
+	
+	<select id="getEbookList" resultType="com.ryan.domain.EBookVO">
+		SELECT * FROM ebook
+		
+		<choose>
+			<when test="param1.equals('book_title')">
+					WHERE
+				<foreach collection="param2" index="index" item="search" separator="or">
+					book_title LIKE  '%'||#{search}||'%'
+				</foreach>
+			</when>
+			<when test="param1.equals('book_writer')">
+				WHERE
+				<foreach collection="param2" index="index" item="search" separator="or">
+					book_writer LIKE '%' ||#{search}||'%'
+				</foreach>
+			</when>
+			<when test="param1.equals('book_publisher')">
+				WHERE
+				<foreach collection="param2" index="index" item="search" separator="or">
+					book_publisher LIKE '%' || #{search} || '%'
+				</foreach>
+			</when>
+		</choose>
+		and book_existence = 1
+	</select>
+	
+		<select id="getBookList" resultType="com.ryan.domain.EBookVO">
+		SELECT * FROM ebook
+		
+		<choose>
+			<when test="param1.equals('book_title')">
+					WHERE
+				<foreach collection="param2" index="index" item="search" separator="or">
+					book_title LIKE  '%'||#{search}||'%'
+				</foreach>
+			</when>
+			<when test="param1.equals('book_writer')">
+				WHERE
+				<foreach collection="param2" index="index" item="search" separator="or">
+					book_writer LIKE '%' ||#{search}||'%'
+				</foreach>
+			</when>
+			<when test="param1.equals('book_publisher')">
+				WHERE
+				<foreach collection="param2" index="index" item="search" separator="or">
+					book_publisher LIKE '%' || #{search} || '%'
+				</foreach>
+			</when>
+		</choose>
+		and book_existence = 0
+	</select>
+	
+</mapper>
