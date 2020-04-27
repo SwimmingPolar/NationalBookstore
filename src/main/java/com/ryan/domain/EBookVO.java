@@ -17,6 +17,8 @@ public class EBookVO {
 
     // 카테고리 
     private String bookCategory;
+    
+    private int categoryNum;
 
     // 작가 
     private String bookWriter;
@@ -44,5 +46,9 @@ public class EBookVO {
 
     // 조회수 
     private int bookLookup;
+    
+    //책 소개 추가
+    
+    //목차 추가
 	
 }

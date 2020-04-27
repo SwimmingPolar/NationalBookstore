@@ -22,31 +22,31 @@ public class DetailBookMapperTest {
 	
 	@Setter(onMethod_ = {@Autowired})
 	private DetailBookMapper mapper;
-	
-//	@Test
-//	public void bookLike() {
-//		log.info(mapper.bookLike(1));
-//	}
+/*	
+	@Test
+	public void bookLike() {
+		log.info(mapper.bookLike(197));
+	}*/
 	/*
 	@Test
 	public void bookGrade() {
 		log.info(mapper.bookGrade(1));
 	}
-	
-	
-	
-	@Test
-	public void  hashtag() {
-		log.info(mapper.hashtag(1));
-	}
-	
 	*/
 	
 	
 	@Test
-	public void likepeople() {
-		log.info(mapper.likepeople(1));
+	public void  hashtag() {
+		log.info(mapper.hashtag(197));
 	}
+	
+	
+	
+	
+//	@Test
+//	public void likepeople() {
+//		log.info(mapper.likepeople(1));
+//	}
 	
 
 //	@Test

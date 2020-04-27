@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,11 +52,11 @@
 </div>
     <!-- imageBox -->
     <div class="introWrite">
-    <h3> 책 제목 입력하는 곳입니다. </h3>
+    <h3> ${bookdetail.bookTitle} </h3>
     <ul>
-        <li> 저자이름 </li>
-        <li style="color:gray; "> 출판사 / 출판날짜 </li>
-        <li style="color:lightgray;""> 장르/분류 : 기술 > aa > bb </li>
+        <li> ${bookdetail.bookWriter} </li>
+        <li style="color:gray; "> ${bookdetail.bookPublisher } / ${bookdetail.bookPbDate } </li>
+        <li style="color:lightgray;"> 장르/분류 : ${bookdetail.bookCategory } > aa > bb </li>
     </ul> 
 
     <div class="choiceBtnOne">
@@ -73,22 +74,24 @@
             <i class="far fa-user-circle prof" ></i>
           
         </span>
-        <span class="likePeople2" style="color: black;">
-            좋아하는 사람들
+        <c:forEach var="p" items="${likepeople}">
+        <span class="likePeople2" style="color: black;">	<!-- 좋아요 한 사람들 -->
+            ${p.memberNickName } &nbsp;
         </span>
+        </c:forEach>
     </a>
         <span class="likeBtn">
             <div class="heartSoo">
-            <input type="text" value="0" id='countNum' size='5' >
+            <input type="text" value=${booklike} id='countNum' size='5' >
             </div>
             <div class="heartC">
             <!-- <c:if test="${id != null}"> -->
-            <form action="">
-                <input type="checkbox" id="heartClick">
+            <form action="/book/insertlike">
+                <input type="checkbox" id="heartClick">              
                 <label for="heartClick">
-                    <i class="far fa-heart" aria-hidden="true"></i>
-                    <i class="fa fa-heart" aria-hidden="true"></i>
-                </label>
+                	 <i class="fa fa-heart" aria-hidden="true"></i>
+                	<i class="far fa-heart" aria-hidden="true"></i>
+        		</label>
             </form>
           <!-- </c:if> -->
             </div>
@@ -117,26 +120,44 @@
     <div class="body-container"> 
 
         <div class="firstBox">
-            <h2>  # 감성태그 </h2>
+        	
+          	  <h2>  해시태그 </h2>
             
             <div class="hashtagDetail"> 
                 <div class="hashTag">
-
-                    <input type="checkbox" name="chkbox" id="chk1">
-                    <input type="checkbox" name="chkbox" id="chk2">
-                    <input type="checkbox" name="chkbox" id="chk3">
+                	<c:set var="count" value="${1 }" />
+					<c:forEach var="h" items="${hashtag}">
+						<c:if test="${count <= 5 }">		
+                	    <input type="checkbox" name="chkbox" id="chk1" value=${h.hashTag }>${h.hashTag }
+                	    </c:if>
+                	    <c:set var="count" value="${count+1 }"/>
+            		</c:forEach>
+            		
+           
+                <!--     <input type="checkbox" name="chkbox" id="chk3">
                     <input type="checkbox" name="chkbox" id="chk4">
                     <input type="checkbox" name="chkbox" id="chk5">
-                    <input type="checkbox" name="chkbox" id="chk6">
+                    <input type="checkbox" name="chkbox" id="chk6"> -->
                 </div>
-                <input type="text" name="emoTag" class="emoTag" placeholder ="해시태그를 입력해주세요 (최대 6자)">
-                <input type="button" value="남기기" class="inputBtn">
-            
+                <form action="/book/inserthashtag">
+                
+                <c:choose>
+                	<c:when test="${hashtagCookieCheck }">
+               	 		<input type="text" name="hashTag" class="emoTag" placeholder ="해시태그를 입력해주세요 (최대 6자)">
+               	 		 <input type="hidden" name="bookNum" value="${bookdetail.bookNum }">
+            		 	 <input type="submit" value="남기기" class="inputBtn">
+                	</c:when>
+                	<c:otherwise>
+               	 		<input type="text" name="hashTag" class="emoTag" placeholder ="해시태그는 24시간에 1번만 입력 가능합니다." readonly="readonly">
+                	</c:otherwise>
+                </c:choose>
+            	</form>
             </div> 
         </div>
         <div class="secondBox">
             <h2> 책소개 </h2>
             <div class="bookDetail">
+            <!-- 책 소개 부분 없음 -->
                 책소개하는 칸입니다. 
 
 ‘이 소설 자체가 순수한 마법’이라는 최고의 극찬을 받으며 2017년 뉴베리 수상의 영광을 차지한 작품이다. 고요하지만 위험한 숲속에 해마다 아기가 버려진다. 또한 매년 그런 아기를 구하러 오는 마녀가 있다. 그런데 이상하다. 마녀 잰은 유독 이번 아기에게 눈길을 빼앗긴다. 그러다가 그만 실수로 아기에게 달빛을 먹이고 만다. 사실 달빛에는 어마어마한 마법이 깃들어 있다.
@@ -162,7 +183,12 @@
         </div>
         <div class="fourthBox">
             <h2> 리뷰 </h2>
-            <div class="reviewDetail"> 리뷰하는 칸입니다. </div>
+           	<div class="reviewDetail">
+           	<c:forEach var="r" items="${bookreview}">	<!-- 리뷰 -->
+           		${r.reviewTitle }<br/>
+           		${r.reviewContent }
+           	</c:forEach>
+           	</div>
             <input type="button" value="더보기" class="moreChk3">
         </div>
 
@@ -253,10 +279,10 @@ $(function() {
 
     $('#heartClick').click(function() {
         $.ajax({
-            url: "heartGo.do",
+            url: "/insertlike",
             type: "get",
             data: {
-                id: '${id}'
+                booknumber: '${booknumber}'
                 
             },
 

@@ -20,31 +20,17 @@ public class DetailBookControllerTest {
 	
 	@Setter(onMethod_ = {@Autowired})
 	private DetailBookService service;
-/*	
+	
 	@Test
 	public void searchEBook() {
-		log.info(service.searchEBook(1));
-		log.info(service.searchReview(1));
-		
-		
-		EBookVO vo = service.searchEBook(1);		
 
 		
-		log.info(service.interestbooks(vo.getCategory()));
-		
-		log.info(service.bookLike(1));
-		BookLikeVO likevo = service.bookLike(1);		
+		log.info(service.hashtag(197));
 
-		
-		log.info(service.bookGrade(1));
-		
-		log.info(service.hashtag(1));
-		
-		//좋아요 한 사람들 랜덤 조회
-		log.info(service.likepeople(likevo.getMemberId()));
 	
 	}
-*/	
+
+	/*
 	@Test
 	public void insertLike() {
 		BookLikeVO vo = new BookLikeVO();
@@ -53,6 +39,6 @@ public class DetailBookControllerTest {
 		
 	
 	}
-	
+	*/
 
 }

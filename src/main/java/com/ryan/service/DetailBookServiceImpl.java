@@ -38,16 +38,19 @@ public class DetailBookServiceImpl implements DetailBookService{
 
 	@Override
 	public ArrayList<ReviewVO> searchReview(int booknumber) {		//상세보기 리뷰 조회
-		return mapper.searchReview(booknumber);
+		ArrayList<ReviewVO> list = mapper.searchReview(booknumber);
+		return list;
 	}
 
 	@Override
-	public List<EBookVO> interestbooks(String category) { 	//상세보기 관심책 불러오기
-		return mapper.interestbooks(category);
+	public List<EBookVO> interestbooks(int category) { 	//상세보기 관심책 불러오기
+		List<EBookVO> list = mapper.interestbooks(category);		
+		return list;
 	}
 
 	@Override
 	public int bookLike(int booknumber) {	//좋아요 조회
+
 		return mapper.bookLike(booknumber); 
 	}
 
@@ -59,19 +62,20 @@ public class DetailBookServiceImpl implements DetailBookService{
 
 	@Override
 	public List<HashtagVO> hashtag(int booknumber) {		//태그 조회
-		// TODO Auto-generated method stub
-		return mapper.hashtag(booknumber);
+		List<HashtagVO> list = mapper.hashtag(booknumber);		
+		return list;
 	}
 
 	@Override
 	public ArrayList<MemberVO> likepeople(int booknumber) {
 		// TODO Auto-generated method stub
-		return mapper.likepeople(booknumber);
+		ArrayList<MemberVO> list = mapper.likepeople(booknumber);
+		return list;
 	}
 
 	
 	@Override
-	public void hashtagCookie(HashtagVO vo, HttpServletRequest request, HttpServletResponse response) {
+	public boolean hashtagCookie(HashtagVO vo, HttpServletRequest request, HttpServletResponse response) {
 		//bookNum + hashtag
 		Cookie[] cookies = request.getCookies();
 		boolean flag = false;
@@ -88,6 +92,9 @@ public class DetailBookServiceImpl implements DetailBookService{
 				hashtagCookie.setMaxAge(60*60*24);
 				hashtagCookie.setPath("/");
 				response.addCookie(hashtagCookie);
+				return true;
+			}else {
+				return false;
 			}
 		} else {
 			mapper.insertHashtag(vo);
@@ -95,11 +102,12 @@ public class DetailBookServiceImpl implements DetailBookService{
 			hashtagCookie.setMaxAge(60*60*24);
 			hashtagCookie.setPath("/");
 			response.addCookie(hashtagCookie);
+			return true;
 		}
 		
 		
 	}
-
+/*
 	@Override
 	public double insertGrade(BookGradeVO vo) {
 		int num = mapper.insertGrade(vo);
@@ -110,21 +118,21 @@ public class DetailBookServiceImpl implements DetailBookService{
 		}
 		return mapper.bookGrade(vo.getBookNum());
 	}
-
+*/
 	@Override
-	public int insertLike(BookLikeVO vo, HttpServletRequest request, HttpServletResponse response) {
-		ArrayList<BookLikeVO> list = mapper.bookLikeList(vo.getBookNum());
-		
+	public int insertLike(int booknumber, HttpServletRequest request, HttpServletResponse response) {
+		ArrayList<BookLikeVO> list = mapper.bookLikeList(booknumber);
+		HttpSession session = request.getSession();	
+		BookLikeVO vo = (BookLikeVO) session.getAttribute("ryanmember");
+		vo.setBookNum(booknumber);
 		for(int i=0; i<list.size();i++) {
 			if(list.get(i).getMemberEmail().equals(vo.getMemberEmail())) {
 				mapper.deleteLike(vo);
-				return mapper.bookLike(vo.getBookNum());
 			}else {
 				mapper.insertLike(vo);
-				return mapper.bookLike(vo.getBookNum());
 			}
 		}
-		return 0;		
+		return mapper.bookLike(booknumber);		
 	}
 
 
@@ -177,6 +185,30 @@ public class DetailBookServiceImpl implements DetailBookService{
 			}
 		}		
 		return flag;
+	}
+
+	@Override
+	public boolean hashtagCookieCheck(int booknumber, HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		Cookie[] cookies = request.getCookies();
+		
+		boolean flag = false;
+		
+		if(cookies != null) {
+			for(Cookie c : cookies) {
+				if(c.getName().equals(booknumber+"hashtag")) {
+					flag=true;
+					break;
+				}
+			}
+			if(!flag) { // 쿠키가 없음	
+				return true;
+			}else {
+				return false;
+			}
+		} else {
+			return true;
+		}
 	}
 
 	

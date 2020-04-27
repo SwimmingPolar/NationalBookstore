@@ -11,16 +11,12 @@
 </select>
 
 <select id="interestbooks" resultType="com.ryan.domain.EBookVO">
-	<![CDATA[
-	SELECT * FROM 
-	(SELECT * FROM eBook WHERE book_category=#{bookCategory} ORDER BY DBMS_RANDOM.RANDOM) WHERE rownum <= 6 
-	]]>
-	
+	SELECT * FROM EBOOK WHERE category_num=#{categoryNum}
 </select>
 
-<select id="bookLike" resultType="com.ryan.domain.BookLikeVO">
+<select id="bookLike" resultType="_int">
 	<![CDATA[
-		SELECT sum(like_num) FROM book_Like WHERE book_num=#{bookNum}
+		SELECT NVL(sum(like_num),0) FROM book_Like WHERE book_num=#{bookNum}
 	]]>
 	
 </select>
@@ -31,7 +27,7 @@
 
 <select id="bookGrade" resultType="_double"> 
 	<![CDATA[
-		SELECT avg(grade_score) FROM book_Grade WHERE book_num=#{bookNum}
+		SELECT NVL(avg(grade_score),0) FROM book_Grade WHERE book_num=#{bookNum}
 	]]>
 </select>
 
@@ -50,11 +46,11 @@
 <insert id="insertHashtag" parameterType="com.ryan.domain.HashtagVO">
 	INSERT INTO book_hashtag (book_num, hash_tag) VALUES(#{bookNum}, #{hashTag})
 </insert>
-
+<!-- 
 <insert id="insertGrade" parameterType="com.ryan.domain.BookGradeVO">
 	INSERT INTO book_grade (member_Email, book_Num, grade_score) VALUES(#{memberEmail},#{bookNum},#{gradeScore})
 </insert>
-
+ -->
 <insert id="insertLike" parameterType="com.ryan.domain.BookLikeVO">
 	INSERT INTO book_like (member_Email, book_Num) VALUES( #{memberEmail}, #{bookNum})
 </insert>

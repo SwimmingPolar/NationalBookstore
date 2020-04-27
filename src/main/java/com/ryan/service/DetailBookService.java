@@ -23,7 +23,7 @@ public interface DetailBookService {
 	public ArrayList<ReviewVO> searchReview(int booknumber);
 	
 	//관심 책 조회
-	public List<EBookVO> interestbooks(String category);
+	public List<EBookVO> interestbooks(int category);
 	
 	//좋아요 조회
 	public int bookLike(int booknumber); 
@@ -39,14 +39,15 @@ public interface DetailBookService {
 	
 	
 	//해쉬태그 쿠기
-	public void hashtagCookie(HashtagVO vo, HttpServletRequest request, HttpServletResponse response);
+	public boolean hashtagCookie(HashtagVO vo, HttpServletRequest request, HttpServletResponse response);
 	
+	public boolean hashtagCookieCheck(int booknumber, HttpServletRequest request);
 	
 	//평점입력
-	public double insertGrade(BookGradeVO vo);
+//	public double insertGrade(BookGradeVO vo);
 	
 	//좋아요 입력
-	public int insertLike(BookLikeVO vo, HttpServletRequest request, HttpServletResponse response);
+	public int insertLike(int booknumber, HttpServletRequest request, HttpServletResponse response);
 	
 	// 조회수 증가
 	public void updateBookLookUp(EBookVO vo , HttpServletRequest request , HttpServletResponse response);
