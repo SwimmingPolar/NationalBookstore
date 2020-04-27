@@ -1,0 +1,383 @@
+a {
+
+    text-decoration: none;
+}
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.wrapper {
+    
+    width:700px;
+    margin:0 auto;
+    /* border:2px solid black; */
+    background-color:white;
+    /* position:fixed; */
+    /* left:0;
+    right:0;
+    top:0;
+    bottom:6rem; */
+    margin-bottom:100px;
+}
+
+.top-container{
+    /* border:2px solid pink; */
+    margin-top:20px;
+    width:100%;
+    /* height:300px; */
+    margin-bottom:10px;
+    display:flex;
+    flex-direction:row;
+    /* border:2px solid yellow; */
+}
+
+.body-container {
+    display:inline-block;
+    width:100%;
+    /* border:2px solid red; */
+    margin-top:20px;
+    background-color:#EEF0F4;
+}
+
+
+.imageBox img{
+    max-width: 100%;
+
+}
+
+.imageBox {
+    padding:10px;
+    margin-left:20px;
+    width: 240px;
+    height: 350px;
+    
+
+}
+
+
+.introWrite {
+    /* border:2px solid brown; */
+    width: 60%;
+    padding-left:20px;
+    margin-top:20px;
+    /* border:2px solid greenyellow; */
+}
+
+.introWrite h2 {
+    margin-top:20px;
+
+}
+
+
+.choiceBtn {
+    width: 100px;
+    height: 40px;
+    border-radius:5px;
+    margin:10px;
+    border:1px solid lightgray;
+    color:#a451f7;
+    /* font-weight: bold;
+    color:white; */
+    /* border:none; */
+    font-size:15px;
+    background-color:white;
+    margin-top: 80px;
+    margin-bottom: 10px;
+
+
+}
+
+.choiceBtn:active {
+    background-color:cornsilk;
+
+}
+
+li {
+    
+ font-style: normal;
+ list-style:none;
+ margin:8px 0px 5px 5px;
+
+}
+
+.bookDetail, .listDetail, .reviewDetail {
+    width: 100%;
+    /* border: 2px solid orange; */
+    margin: 10px 0 10px 0;
+    /* min-width: 320px; */
+    overflow: hidden;
+  line-height: 1.7em;
+  height:110px;
+
+
+}
+
+
+
+.firstBox, .secondBox, .thirdBox, .fourthBox {
+    background-color:#FFFFFF;
+    /* border:2px solid blue; */
+    margin:20px;
+    border-radius:10px;
+    padding:10px;
+    box-shadow: 0 0 10px rgba(0,0,0,.05);
+
+
+
+}
+
+
+.firstBox .emoTag {
+    width: 400px;
+    height: 50px;
+    font-size: 20px;
+    border-radius:5px;
+    padding-left: 10px;
+    margin:30px;
+
+}
+
+.bookDetail .inputBtn {
+    width:90px;
+    height:40px;
+    font-size:16px;
+  
+}
+
+.moreChk, .moreChk2, .moreChk3 {
+    
+    width:100%; 
+    height:50px;
+    background-color:#FAFFFF;
+    border-top:1px solid lightgray;
+    border-bottom:1px solid white;
+    border-left:1px solid white;
+    border-right:1px solid white;
+    font-size:20px;
+    background-color:lightgray;
+    color:white;
+    /* font-weight: bold; */
+    
+
+    
+    }
+
+
+.preview { 
+
+    margin: 10px 0px 0px 150px;
+
+}
+
+.likeChk {
+    margin:20px 0px 20px 0px;
+}
+
+.likeChk .likeBtn {
+    margin: 10px;
+    float:right;
+
+}
+
+header {
+
+    font-family: 'Kaushan Script', cursive;
+    color:red;
+    font-size:35px;
+    margin-bottom:20px;
+    border-bottom:1px solid lightgray;
+    padding:20px 20px 20px 600px;
+
+}
+
+.likeChk .likeP {
+  background-image: url('https://ofbxchnhqinp910256.cdn.ntruss.com/160/468c5f2….png?type=w&w=160&quality=100');
+  width:28px;
+  height:28px;
+
+}
+
+.footer a {
+
+    /* margin:60px; */
+    /* position:efixed; */
+    color:gray;
+    margin: 50px;
+    height:50px;
+   
+}
+
+.footer {
+
+    margin:0 auto;
+    position:fixed;
+    background: #e8e8e8;
+    left:0;
+    right:0;
+    bottom:0;
+    height:4rem;
+    z-index:40;
+    border-top: 1px solid #eee;
+    background: #fff;
+    font-size: 14px;
+
+}
+
+.ulStyle ul li {
+
+   display:inline;
+
+}
+
+.likeBtn input[type="text"] {
+    text-align: right;
+    margin-right:10px;
+    border:none;
+}
+
+
+.likeBtn input[type="checkbox"] {
+    display:none;
+
+}
+
+.likeBtn label {
+
+    position:relative;
+    width: 14px;
+    height:14px;
+    display:inline-block;
+
+}
+
+
+.likeBtn i {
+    position: absolute;
+    color:#dd5e46;
+}
+
+
+.likeBtn i:last-child {
+    opacity: 0;
+    transition:0.2s;
+
+}
+
+.likeBtn input[type="checkbox"]:checked + label i:last-child {
+    opacity:1;
+}
+
+.heartSoo {
+    width: 50px;
+    display: inline-block;
+}
+
+.heartC {
+    display: inline-block;
+    margin-left:20px;
+
+}
+
+
+.likePeople {
+    position: relative;
+    
+
+}
+
+.likePeople > i {
+    position:absolute;
+    font-size:28px;
+    border-radius: 50%;
+    color:lightgray;
+
+}
+
+.likePeople > i:nth-child(1) {
+    top:0px;
+    left:0px;
+    z-index: 1;
+    background-color: white;
+   
+}
+
+.likePeople > i:nth-child(2) {
+    top:0px;
+    left:15px;
+    z-index: 2;
+    background-color:white;
+ 
+    
+}
+
+.likePeople > i:nth-child(3) {
+    top:0px;
+    left: 30px;
+    z-index: 3;
+    background-color:white;
+  
+}
+
+
+.likePeople2 {
+
+   margin-left:60px;
+
+}
+
+.likeChk input[type="checkbox"] {
+    
+    display:none;
+}
+
+.modal {
+    display:none;
+    position:relative;
+    width:100%;
+    height:100%;
+    z-index: 1;
+
+}
+
+.modal h2 {
+    margin:0;
+
+}
+
+.modal button {
+display:inline-block;
+width:100px;
+
+}
+
+.modal .likeModalContent {
+    width:300px;
+    margin:100px auto;
+    padding:20px 10px;
+    background:#fff;
+    border:2px solid #666;
+}
+
+.modal .modalLayer {
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.5);
+    z-index:-1;
+
+}
+
+.preview i {
+    
+    font-size:23px;
+
+}
+
+.preview {
+
+        margin-top:20px;
+
+}
