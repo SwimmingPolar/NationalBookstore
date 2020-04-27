@@ -1,0 +1,30 @@
+package com.ryan.mapper;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import lombok.Setter;
+import lombok.extern.log4j.Log4j;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
+@Log4j
+public class MainMapperTests {
+	
+	@Setter(onMethod_ = {@Autowired})
+	private MainMapper mapper;
+	
+	@Test
+	public void mainMapperTest() {
+		
+		String[] arr = {"룬의","아이들"};
+		String type = "book_title";
+		
+		mapper.getSearchBookList(type, arr).forEach(ebook -> log.info(ebook));
+		
+	}
+	
+}

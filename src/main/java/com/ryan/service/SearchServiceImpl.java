@@ -16,20 +16,33 @@ public class SearchServiceImpl implements SearchService{
 
 	@Override
 	public ArrayList<EBookVO> searchBookM(String writer,String bookname) {
-		ArrayList <EBookVO> vo=new ArrayList <EBookVO>();
 		
-		if(writer.length()==0 && bookname.length()==0) {
+		ArrayList<EBookVO> vo=new ArrayList<EBookVO>();
+		if(writer!=null) {
+			if(writer.length()>0) {
+				String [] w=writer.split("\\s+");
+				//vo.addAll(mapper.typeWriter(w));
+				vo.addAll(mapper.typeWriter(w));
+				
+				System.out.println(vo.get(3).getBookTitle()+"제목");
+				System.out.println(vo.size()+"저자");
+				
+			}
+		}else if(bookname!=null) {
+			if(bookname.length()>0){
+				String [] bn=bookname.split("\\s+");
+				//vo.addAll(mapper.);
+				vo.addAll(mapper.typeBookname(bn));
+				//System.out.println(vo.get(3).getBookTitle());
+				System.out.println(vo.size()+"북네임");
+				System.out.println(vo.get(0).getBookTitle());
+
+			}
+		}else {
 			
-		}else if(writer.length()>0) {
-			String [] w=writer.split("\\s+");
-			vo.add(mapper.typeWriter(w));
-		}else if(bookname.length()>0) {
-			String [] bn=bookname.split("\\s+");
-			vo.add(mapper.typeWriter(bn));
 		}
 		return vo;
 	}
-
 	@Override
 	public ArrayList<PageVO> paging(PageVO pageInfo) {
 		// TODO Auto-generated method stub
