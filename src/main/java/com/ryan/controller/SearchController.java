@@ -1,6 +1,12 @@
 package com.ryan.controller;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
+=======
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+>>>>>>> branch 'master' of https://github.com/SwimmingPolar/NationalBookstore.git
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -9,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -67,4 +74,26 @@ public class SearchController {
 	public String sadsad() {
 		return "test";
 	}
+	
+	/////////////////////////////////////////////////////////////////이 밑으로는 수정 좀 헀습니다.
+	@RequestMapping(value="/main")
+	public String Testo() {
+		return "search";
+	}
+	@RequestMapping(value="/search", method= RequestMethod.GET)
+	public String search(@RequestParam("type") String type, @RequestParam("keyword") String keyword, Model model) throws ClassNotFoundException, SQLException {
+		
+		System.out.println("검색 실행(param1:"+type+",param2:"+keyword+")");
+		
+		HashMap<String, List<EBookVO>> result = new HashMap<String, List<EBookVO>>();
+		String[] keywordArr = keyword.split(" ");
+		
+		result.put("ebook", service.searchEbook(type, keywordArr));
+		result.put("paper", service.searchPaperbook(type, keywordArr));
+		
+		model.addAttribute("result", result);
+		
+		return "search";
+	}
+	
 }

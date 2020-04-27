@@ -22,7 +22,48 @@
 	</foreach>
 	) ORDER BY book_title
 </select>
-
-
-
+<!--@@@@@@@@@@@@@@@@@@@@@@@@@@@ 이 밑으로 제가 수정 좀 했습니다.   @@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
+	<select resultType="com.ryan.domain.EBookVO" id="searchEbook" >
+		SELECT * FROM EBOOK WHERE
+		<choose>
+			<when test="param1.equals('BOOK_TITLE')" >
+				<foreach collection="param2" index="index" item="search" separator="or">
+					BOOK_TITLE LIKE  '%'||#{search}||'%'
+				</foreach>
+			</when>
+			<when test="param1.equals('BOOK_WRITER')" >
+				<foreach collection="param2" index="index" item="search" separator="or" >
+					BOOK_WRITER LIKE '%'||#{search}||'%'
+				</foreach>
+			</when>
+			<when test="param1.equals('BOOK_PUBLISHER')" >
+				<foreach collection="param2" index="index" item="search" separator="or" >
+					BOOK_PUBLISHER LIKE '%'||#{search }||'%'
+				</foreach>
+			</when>
+		</choose>
+		AND BOOK_EXISTENCE LIKE 0
+	</select>
+	<!-- 종이책 검색 -->
+	<select resultType="com.ryan.domain.EBookVO" id="searchPaperbook" >
+		SELECT * FROM EBOOK WHERE
+		<choose>
+			<when test="param1.equals('BOOK_TITLE')" >
+				<foreach collection="param2" index="index" item="search" separator="or">
+					BOOK_TITLE LIKE  '%'||#{search}||'%'
+				</foreach>
+			</when>
+			<when test="param1.equals('BOOK_WRITER')" >
+				<foreach collection="param2" index="index" item="search" separator="or" >
+					BOOK_WRITER LIKE '%'||#{search}||'%'
+				</foreach>
+			</when>
+			<when test="param1.equals('BOOK_PUBLISHER')" >
+				<foreach collection="param2" index="index" item="search" separator="or" >
+					BOOK_PUBLISHER LIKE '%'||#{search }||'%'
+				</foreach>
+			</when>
+		</choose>
+		AND BOOK_EXISTENCE LIKE 1
+	</select>
 </mapper>

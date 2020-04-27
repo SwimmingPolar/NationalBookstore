@@ -13,8 +13,8 @@
 <!-- Fontawesome -->
 <script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
 <!-- css reset -->
-<link rel="stylesheet" type="text/css" href="../../resources/styles/reset.css" />
-<link rel="stylesheet" type="text/css" href="../../resources/styles/search.css" />
+<link rel="stylesheet" type="text/css" href="../resources/styles/reset.css" />
+<link rel="stylesheet" type="text/css" href="../resources/styles/search.css" />
 <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
 <%
 	String type = request.getParameter("type");
@@ -98,7 +98,7 @@
 	</div>
 	<div ></div>
 	<!-- 검색바 -->
-	<form action="/main/search" method="GET" >
+	<form action="/controller/search/search" method="GET" >
 		<div class="search-bar" >
 			<select class="type" name="type" >
 				<option value="BOOK_TITLE" >제목</option>
@@ -112,7 +112,7 @@
 	<!-- 검색 결과 요약 -->
 	<c:if test="${not empty param.keyword }" >
 		<!-- 카테고리 선택 -->
-		<form action="search.do" method="GET" >
+		<form action="/controller/search/search" method="GET" >
 			<div class="category-list" >
 				<input class="type" type="hidden" name="type" />
 				<input class="keyword" type="hidden" name="keyword" />
@@ -150,7 +150,7 @@
 					<div class="search-list">
 						<%-- 카테고리 벨트 --%>
 						<div class="category-belt" >
-							<form action="search.do" method="GET" >
+							<form action="/controller/search/search" method="GET" >
 								<input class="type" type="hidden" name="type" />
 								<input class="keyword" type="hidden" name="keyword" />
 								<button name="category" value="${list.getKey() }" class="btn-category-belt" >
@@ -240,14 +240,14 @@
 									<!-- 책 커버 -->
 									<img class="cover" />
 									<c:if test="${param.category eq 'paper' }" >
-										<input class="checkbox-cart btn-grid-cart" type="checkbox" name="cart" value="${book.BOOK_NUM }"/>
+										<input class="checkbox-cart btn-grid-cart" type="checkbox" name="cart" value="${book.bookNum }"/>
 									</c:if>
 									<!-- 책 정보 -->
 									<div class="info" >
-										<div class="title" >${book.BOOK_TITLE }</div>
+										<div class="title" >${book.bookTitle }</div>
 										<div>
-											<span class="author" >${book.BOOK_WRITER }</span>
-											<span class="publisher" >${book.BOOK_PUBLISHER }</span>
+											<span class="author" >${book.bookWriter }</span>
+											<span class="publisher" >${book.bookPublisher }</span>
 										</div>
 									</div>
 								</div>
@@ -258,7 +258,7 @@
 										</c:when>
 										<c:when test="${param.category eq 'paper' }" >
 											<button class="btn-purchase" >구매</button>
-											<input class="checkbox-cart btn-list-cart" type="checkbox" name="cart" value="${book.BOOK_NUM }" />
+											<input class="checkbox-cart btn-list-cart" type="checkbox" name="cart" value="${book.bookNum }" />
 										</c:when>
 									</c:choose>
 								</div>

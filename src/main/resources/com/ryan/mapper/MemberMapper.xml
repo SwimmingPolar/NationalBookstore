@@ -56,6 +56,8 @@
 		SELECT count(*) FROM member WHERE member_email = #{memberEmail} and member_pw = #{memberPw}
 	</select>
 	
+	<!-- 회원탈퇴 -->
+	
 	<!-- 여기부터 쿠키 -->
 	
 	<!-- 자동로그인 체크시 회원의 닉네임을 가져옴 -->
@@ -67,7 +69,6 @@
 	<select id="autoLogin" resultType="int">
 		SELECT count(*) FROM member WHERE member_email = #{memberEmail} and member_nick_name = #{memberNickName}
 	</select>
-	
 	
 	
 </mapper>

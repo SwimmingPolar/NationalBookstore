@@ -1,10 +1,16 @@
 package com.ryan.service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
+<<<<<<< HEAD
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+=======
+import org.apache.ibatis.session.SqlSession;
+>>>>>>> branch 'master' of https://github.com/SwimmingPolar/NationalBookstore.git
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +22,7 @@ import com.ryan.mapper.SearchMapper;
 public class SearchServiceImpl implements SearchService{
 	@Autowired
 	private SearchMapper mapper;
-
+	
 	@Override
 	public ArrayList<EBookVO> searchBookM(String writer,String bookname) {
 		ArrayList<EBookVO> vo=new ArrayList<EBookVO>();
@@ -77,5 +83,19 @@ public class SearchServiceImpl implements SearchService{
 		}
 		
 		return pagevo;
+	}
+	
+	/////////////////////////////////////이 아래로 제가 수정좀 했습니다.
+	//ebook 리스트 가져오기
+	@Override
+	public List<EBookVO> searchEbook(String type, String[] keyword) throws ClassNotFoundException, SQLException {
+		return mapper.searchEbook(type, keyword);
+		//return sqlSession.getMapper(SearchMapper.class).searchEbook(type, keyword);
+	}
+	//종이책 리스트 가져오기
+	@Override
+	public List<EBookVO> searchPaperbook(String type, String[] keyword) throws ClassNotFoundException, SQLException {
+		return mapper.searchPaperbook(type, keyword);
+		//return sqlSession.getMapper(SearchMapper.class).searchPaperbook(type, keyword);
 	}
 }

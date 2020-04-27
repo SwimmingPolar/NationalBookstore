@@ -23,7 +23,6 @@ public class MainMapperTests {
 		String[] arr = {"룬의","아이들"};
 		String type = "book_title";
 		
-		mapper.getSearchBookList(type, arr).forEach(ebook -> log.info(ebook));
 		
 	}
 	
