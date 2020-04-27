@@ -70,6 +70,7 @@ public class MemberController {
 	@RequestMapping("/emailAuthentication")
 	public @ResponseBody Map<String, Boolean> emailAuthenticationCodeSend(EmailCheckVO email) {
 		
+		log.info("컨트롤러" + email);
 		Map<String, Boolean> resultMap = new HashMap<String, Boolean>(); 
 		
 		if(emailService.insertEmailCode(email)) { // DB에 인증정보 입력성공시 PK 키 리턴.. 
@@ -114,7 +115,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/signin")
-	public String memberLogin(@RequestParam(required = false, name = "autoLogin") String autoLogin , MemberVO member ,HttpServletRequest request, HttpServletResponse response) {
+	public String memberLogin(@RequestParam(required = false, name = "rememberMe") String autoLogin , MemberVO member ,HttpServletRequest request, HttpServletResponse response) {
 		if(memberService.memberSignIn(member)) {
 			if(autoLogin != null) {
 				member.setMemberNickName(memberService.getMemberNickName(member));
@@ -123,6 +124,7 @@ public class MemberController {
 			}
 			HttpSession session = request.getSession();
 			session.setAttribute("ryanMember", member);
+			log.info(request.getRemoteAddr());
 			return "main";
 		} else {
 			return "login";
@@ -139,6 +141,7 @@ public class MemberController {
 		
 		return "main";
 	}
+	
 	@GetMapping("/email-signin")
 	public String getEmailLogin() {
 		return "email-signin";
@@ -175,6 +178,8 @@ public class MemberController {
 		}
 		
 	}
+	
+
 	
 //	@PutMapping
 //	@DeleteMapping

@@ -51,17 +51,17 @@ public class MemberMapperTests {
 //	}
 	
 	//로그인 - 완료
-	@Test
-	public void signInTest() {
-		
-		MemberVO member = new MemberVO();
-		member.setMemberEmail("abc1234@naver.com");
-		member.setMemberPw("abc1234");
-		
-		int result = mapper.memberSignIn(member);
-		log.info("로그인 리턴값 : " +  result);
-		
-	}
+//	@Test
+//	public void signInTest() {
+//		
+//		MemberVO member = new MemberVO();
+//		member.setMemberEmail("abc1234@naver.com");
+//		member.setMemberPw("abc1234");
+//		
+//		int result = mapper.memberSignIn(member);
+//		log.info("로그인 리턴값 : " +  result);
+//		
+//	}
 	
 	//회원정보 업데이트 -완료
 //	@Test
@@ -76,5 +76,13 @@ public class MemberMapperTests {
 //		
 //	}
 	
+	
+	//회원탈퇴
+	@Test
+	public void memberDelete() {
+		
+		
+		
+	}
 	
 }
