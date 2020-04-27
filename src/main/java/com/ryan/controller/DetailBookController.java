@@ -72,38 +72,33 @@ public class DetailBookController {
 
 		return "view";
 	}
-	
+/*	
 	//평점 입력
 	@RequestMapping("/insertgrade")
-	public @ResponseBody double insertGrade(BookGradeVO vo) {
-		return service.insertGrade(vo);
+	public @ResponseBody Double insertGrade(BookGradeVO vo) {
+		log.info("grade 실행");
+		double num = service.insertGrade(vo);
+		log.info(num);
+		return num;
 	}
+	*/
 	
 	//좋아요 입력
 	@RequestMapping("/insertlike")
-	public @ResponseBody int insertLike(BookLikeVO vo, HttpServletRequest request, HttpServletResponse response) {
-		return service.insertLike(vo, request, response);
+	public @ResponseBody int insertLike(@RequestParam("booknumber") int booknumber, HttpServletRequest request, HttpServletResponse response) {
+		return service.insertLike(booknumber, request, response);
 	}
 	
 	//찜 책장에 추가
 	@RequestMapping("/insertList")
-	public String insertList(Model model, MyLibVO vo) {
-		boolean flag = mservice.insertList(vo);
-		model.addAttribute("booklist", mservice.readingBook(vo));
-		if(flag) {			
-			model.addAttribute("message", flag);
-		}else {
-			model.addAttribute("message", flag);
-		}
-		return "view";
+	public @ResponseBody Boolean insertList(Model model, MyLibVO vo) {
+		return mservice.insertList(vo);
 	}
 	
 	//읽은책 추가
 	@RequestMapping("/insertreadbook")
-	public String insertReadBook(MyReadBookVO vo) {
-		int num = mservice.insertReadBook(vo);
-		if(num==1) log.info("insert 완료");
-		return "원래있던 페이지";
+	public @ResponseBody int insertReadBook(MyReadBookVO vo) {
+		return mservice.insertReadBook(vo);
 	}
 	
 }

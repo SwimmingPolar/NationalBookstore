@@ -14,5 +14,5 @@ public class BookGradeVO {
     private int bookNum;
 
     // 평점 
-    private int gradeScore;
+    private double gradeScore;
 }

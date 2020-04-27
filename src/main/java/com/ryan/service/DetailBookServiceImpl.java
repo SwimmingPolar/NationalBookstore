@@ -99,7 +99,7 @@ public class DetailBookServiceImpl implements DetailBookService{
 		
 		
 	}
-
+/*
 	@Override
 	public double insertGrade(BookGradeVO vo) {
 		int num = mapper.insertGrade(vo);
@@ -110,21 +110,21 @@ public class DetailBookServiceImpl implements DetailBookService{
 		}
 		return mapper.bookGrade(vo.getBookNum());
 	}
-
+*/
 	@Override
-	public int insertLike(BookLikeVO vo, HttpServletRequest request, HttpServletResponse response) {
-		ArrayList<BookLikeVO> list = mapper.bookLikeList(vo.getBookNum());
-		
+	public int insertLike(int booknumber, HttpServletRequest request, HttpServletResponse response) {
+		ArrayList<BookLikeVO> list = mapper.bookLikeList(booknumber);
+		HttpSession session = request.getSession();	
+		BookLikeVO vo = (BookLikeVO) session.getAttribute("ryanmember");
+		vo.setBookNum(booknumber);
 		for(int i=0; i<list.size();i++) {
 			if(list.get(i).getMemberEmail().equals(vo.getMemberEmail())) {
 				mapper.deleteLike(vo);
-				return mapper.bookLike(vo.getBookNum());
 			}else {
 				mapper.insertLike(vo);
-				return mapper.bookLike(vo.getBookNum());
 			}
 		}
-		return 0;		
+		return mapper.bookLike(booknumber);		
 	}
 
 

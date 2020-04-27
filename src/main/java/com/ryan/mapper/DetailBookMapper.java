@@ -41,7 +41,7 @@ public interface DetailBookMapper {
 	public int insertHashtag(HashtagVO vo);
 	
 	//평점 입력
-	public int insertGrade(BookGradeVO vo);
+//	public int insertGrade(BookGradeVO vo);
 	
 	//좋아요 입력
 	public int insertLike(BookLikeVO vo);
