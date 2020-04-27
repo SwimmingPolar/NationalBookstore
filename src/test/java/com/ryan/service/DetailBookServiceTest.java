@@ -36,11 +36,11 @@ public class DetailBookServiceTest {
 //	
 //	
 //	
-//	@Test
-//	public void  hashtag() {
-//		log.info(service.hashtag(1));
-//	}
-//	
+	@Test
+	public void  hashtag() {
+		log.info(service.hashtag(197));
+	}
+	
 //	
 	
 
@@ -84,7 +84,7 @@ public class DetailBookServiceTest {
 	}
 	*/
 	
-
+/*
 	@Test
 	public void insertLike() {
 		boolean flag = false;
@@ -93,7 +93,7 @@ public class DetailBookServiceTest {
 		vo.setMemberEmail("abc1234@naver.com");
 		String check = "";
 		
-	
+	*/
 		
 	/*
 			if(mapper.bookLike(1).getMemberId().equals(vo.getMemberId())) {
@@ -107,6 +107,6 @@ public class DetailBookServiceTest {
 	*/
 
 	
-	}
+	
 
 }

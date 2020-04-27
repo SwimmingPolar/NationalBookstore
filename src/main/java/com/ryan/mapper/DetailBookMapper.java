@@ -19,7 +19,7 @@ public interface DetailBookMapper {
 	public ArrayList<ReviewVO> searchReview(int booknumber);	
 	
 	//상세보기 페이지 관심책 불러오기
-	public List<EBookVO> interestbooks(String category);
+	public List<EBookVO> interestbooks(int category);
 	
 	//좋아요 숫자 조회
 	public int bookLike(int booknumber);
