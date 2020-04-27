@@ -17,8 +17,8 @@ import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml","file:src/main/webapp/WEB-INF/spring/root-context.xml"
-	
+@ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml",
+"file:src/main/webapp/WEB-INF/spring/root-context.xml"	
 })
 @Log4j
 public class MemberControllerTests {
@@ -44,22 +44,34 @@ public class MemberControllerTests {
 //				.getModel());
 //	}
 	
+//	@Test
+//	public void memeberSignUp() throws Exception {
+//		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/member/signUp")
+//				.param("memberId", "abc12345514@naver.com")
+//				.param("memberPw", "aaa1111")
+//				.param("memberNickName", "odkqosd10")
+//				.param("memberZipcode", "01111")
+//				.param("memberAddress", "서울서울서울!!")
+//				.param("memberDaddress", "서울특별시 종로구 종로동")
+//				.param("memberTel", "010-1111-1111")
+//				.param("memberSub", "2020/01/01")
+//				.param("memberAdmin", "1"))
+//				.andReturn().getModelAndView().getViewName();
+//		
+//		log.info("회원가입 결과: " +  resultPage);
+//	}
+	
+	//로그인
 	@Test
-	public void memeberSignUp() throws Exception {
-		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/member/signUp")
-				.param("memberId", "abc1234554@naver.com")
-				.param("memberPw", "aaa1111")
-				.param("memberNickName", "odkqosd10")
-				.param("memberZipcode", "01111")
-				.param("memberAddress", "서울서울서울!!")
-				.param("memberDaddress", "서울특별시 종로구 종로동")
-				.param("memberTel", "010-1111-1111")
-				.param("memberSub", "2020/01/01")
-				.param("memberAdmin", "1"))
+	public void memberSignInTests() throws Exception {
+		
+		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/member/signin")
+				.param("memberEmail", "abc1234@naver.com")
+				.param("memberPw", "abc1234"))
 				.andReturn().getModelAndView().getViewName();
 		
-		log.info("회원가입 결과: " +  resultPage);
+		log.info(resultPage);
+		
 	}
-	
 	
 }

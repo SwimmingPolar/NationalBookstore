@@ -46,7 +46,6 @@ public class MemberController {
 	
 	@PostMapping("/signUp")
 	public String memberSignUp(MemberVO member) {
-		log.info(member.getMemberEmail());
 		if (memberService.memberSignUp(member)) return "회원가입 성공 페이지";
 		else return "회원가입 실패 페이지";		
 	}
@@ -68,7 +67,7 @@ public class MemberController {
 	@RequestMapping("/emailAuthentication")
 	public @ResponseBody Map<String, Boolean> emailAuthenticationCodeSend(EmailCheckVO email) {
 		
-		Map<String, Boolean> resultMap = new HashMap<String, Boolean>();
+		Map<String, Boolean> resultMap = new HashMap<String, Boolean>(); 
 		
 		if(emailService.insertEmailCode(email)) { // DB에 인증정보 입력성공시 PK 키 리턴.. 
 			if(emailService.authenticationCodeSend(email)) { //메일보내기 성공하면
@@ -111,7 +110,7 @@ public class MemberController {
 		return "업데이트 완료후 보여줄 페이지 경로";
 	}
 	
-	@PostMapping("/login")
+	@PostMapping("/signin")
 	public String memberLogin(@RequestParam(required = false, name = "autoLogin") String autoLogin , MemberVO member ,HttpServletRequest request, HttpServletResponse response) {
 		if(memberService.memberSignIn(member)) {
 			if(autoLogin != null) {
@@ -166,6 +165,7 @@ public class MemberController {
 		return "카테고리 등록 페이지 써주에요";
 	}
 	
+	//관심 등록
 	@PostMapping("/memberInterestsInsert")
 	public String memberInterestsInsert(@RequestParam(required = false, name = "categoryCheck") int[] categoryArray, HttpServletRequest request) {
 		
