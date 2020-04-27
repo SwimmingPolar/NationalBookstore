@@ -14,12 +14,13 @@
 <script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
 <!-- css reset -->
 <link rel="stylesheet" type="text/css" href="resources/style/reset.css" />
-<link rel="stylesheet" type="text/css" href="resources/style/search.css" />
+<link rel="stylesheet" type="text/css" href="resources/style/search-style.css" />
 <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
 <%
 	String type = request.getParameter("type");
 	String keyword = request.getParameter("keyword");
 	String category = request.getParameter("category");
+	
 	if(type == null)
 		type = "BOOK_TITLE";
 	if(keyword == null)
@@ -59,6 +60,10 @@
 		});
 		//검색결과 레이아웃 변경
 		$(".btn-layout").click(function() {
+			$(".checkbox-cart").each(function() {
+				$(this).prop("checked", true);
+				$(this).prop("checked", false);
+			});
 			$(".btn-layout").css("color", "var(--gray-color)");
 			$(this).css("color", "#000000");
 			if($(this).hasClass("list")) {
@@ -69,6 +74,15 @@
 				$(".search-result").addClass("grid-layout");
 				document.cookie = "layout=grid";
 			}
+		})
+		//장바구니 추가
+		$(".btn-cart-outer").click(function() {
+			var cartList = [];
+			$(".checkbox-cart").each(function() {
+				if($(this).prop("checked") == true)
+					cartList.push($(this).val());
+			})
+			console.dir(cartList);
 		})
 	});
 </script>
@@ -210,7 +224,11 @@
 									<span class="category-count" >${paperCount }</span>
 								</c:when>
 							</c:choose>
-							<span class="fas fa-chevron-right" style="visibility:hidden;"></span>
+							<%-- 종이책일때는 장바구니 추가 버튼 생성 --%>
+							<c:if test="${param.category eq 'paper' }">
+								<span class="to-cart" ><span class="btn-cart-outer far fa-check-square" ><span class="btn-cart" >&nbsp;장바구니 추가</span></span></span>
+							</c:if>
+							<span class="fas fa-chevron-right" style="display:none;"></span>
 						</button>
 					</div>
 					<%-- 카테고리 벨트 끝 --%>
@@ -221,6 +239,9 @@
 								<div class="book" >
 									<!-- 책 커버 -->
 									<img class="cover" />
+									<c:if test="${param.category eq 'paper' }" >
+										<input class="checkbox-cart btn-grid-cart" type="checkbox" name="cart" value="${book.BOOK_NUM }"/>
+									</c:if>
 									<!-- 책 정보 -->
 									<div class="info" >
 										<div class="title" >${book.BOOK_TITLE }</div>
@@ -237,6 +258,7 @@
 										</c:when>
 										<c:when test="${param.category eq 'paper' }" >
 											<button class="btn-purchase" >구매</button>
+											<input class="checkbox-cart btn-list-cart" type="checkbox" name="cart" value="${book.BOOK_NUM }" />
 										</c:when>
 									</c:choose>
 								</div>
