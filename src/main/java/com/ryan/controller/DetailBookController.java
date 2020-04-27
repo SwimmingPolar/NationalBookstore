@@ -41,7 +41,7 @@ public class DetailBookController {
 		
 		//조회수
 		service.updateBookLookUp(vo, request, response);
-				
+		
 		model.addAttribute("bookdetail", vo); //책 정보- 상세정보
 		
 		model.addAttribute("bookreview", service.searchReview(booknumber));		//책 번호 - 리뷰

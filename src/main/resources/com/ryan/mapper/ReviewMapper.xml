@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ryan.mapper.ReviewMapper">
+<insert id="insertReview">
+		INSERT INTO book_Review
+		(
+			book_num,
+			member_email,
+			review_title,
+			review_content,
+			review_regdate
+		)
+		VALUES
+		(
+			#{bookNum},
+			#{memberEmail},
+			#{reviewTitle},
+			#{reviewContent},
+			#{reviewRegdate}
+		)
+	</insert>
+	
+	<delete id="deleteReview">
+		DELETE FROM book_Review
+		WHERE review_num = #{reviewNum}
+	</delete>
+	
+		<update id="updateReview">
+		UPDATE FROM book_Review
+		SET review_title = #{reviewTitle},
+		review_content = #{reviewContent},
+		review_regdate = #{reviewRegdate}
+		WHERE review_num = #{reviewNum}
+	</update>
+</mapper>

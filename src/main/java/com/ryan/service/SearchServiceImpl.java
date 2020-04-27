@@ -2,6 +2,9 @@ package com.ryan.service;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,17 +19,14 @@ public class SearchServiceImpl implements SearchService{
 
 	@Override
 	public ArrayList<EBookVO> searchBookM(String writer,String bookname) {
-		
 		ArrayList<EBookVO> vo=new ArrayList<EBookVO>();
 		if(writer!=null) {
 			if(writer.length()>0) {
 				String [] w=writer.split("\\s+");
 				//vo.addAll(mapper.typeWriter(w));
-				vo.addAll(mapper.typeWriter(w));
-				
-				System.out.println(vo.get(3).getBookTitle()+"제목");
-				System.out.println(vo.size()+"저자");
-				
+				vo.addAll(mapper.typeWriter(w));		
+				//System.out.println(vo.get(3).getBookTitle()+"제목");
+				//System.out.println(vo.size()+"저자");
 			}
 		}else if(bookname!=null) {
 			if(bookname.length()>0){
@@ -34,8 +34,8 @@ public class SearchServiceImpl implements SearchService{
 				//vo.addAll(mapper.);
 				vo.addAll(mapper.typeBookname(bn));
 				//System.out.println(vo.get(3).getBookTitle());
-				System.out.println(vo.size()+"북네임");
-				System.out.println(vo.get(0).getBookTitle());
+				//System.out.println(vo.size()+"북네임");
+				//System.out.println(vo.get(0).getBookTitle());
 
 			}
 		}else {
@@ -43,9 +43,39 @@ public class SearchServiceImpl implements SearchService{
 		}
 		return vo;
 	}
+
+	
 	@Override
-	public ArrayList<PageVO> paging(PageVO pageInfo) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<EBookVO> bookList(ArrayList<EBookVO> tmpArr) {
+		ArrayList<EBookVO> vo=new ArrayList<EBookVO>();
+		for(int i=0;i<tmpArr.size();i++) {
+			if(tmpArr.get(i).getBookExistence()==1) {
+				vo.add(tmpArr.get(i));
+			}
+		}
+		return vo;
+	}
+	
+	
+	@Override
+	public ArrayList<EBookVO> pageList(ArrayList<EBookVO> tmpList,int pageNum) {
+		ArrayList<EBookVO> pagevo=new ArrayList<EBookVO>();
+		
+		int start=1;
+		int end=0;
+		
+		start=((pageNum-1)*12)+1;
+		
+		if(pageNum*12 <= tmpList.size()) 
+			end=pageNum*12;
+		else {
+			end=tmpList.size();
+		}
+		
+		for(int i=start;i<=end;i++) {
+			pagevo.add(tmpList.get(i));
+		}
+		
+		return pagevo;
 	}
 }
