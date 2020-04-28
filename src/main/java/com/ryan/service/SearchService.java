@@ -4,10 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.ryan.domain.EBookVO;
-import com.ryan.domain.PageVO;
 
 public interface SearchService {
 	//검색결과 책리스트
@@ -26,6 +23,5 @@ public interface SearchService {
 	public List<EBookVO> searchEbook(String type, String[] keyword) throws ClassNotFoundException, SQLException;
 	//종이책 검색
 	public List<EBookVO> searchPaperbook(String type, String[] keyword) throws ClassNotFoundException, SQLException;
-
 
 }
