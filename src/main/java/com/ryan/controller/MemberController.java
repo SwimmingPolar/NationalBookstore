@@ -105,7 +105,6 @@ public class MemberController {
 	@PostMapping("/update")
 	public String memberInfoUpdate(MemberVO member) {
 		
-		//AJax 처리.
 		if (memberService.memberUpdate(member)) {
 			log.info("controller member: " + member.getMemberPw());
 		} else {
