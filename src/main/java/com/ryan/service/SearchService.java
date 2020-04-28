@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ryan.domain.EBookVO;
+import com.ryan.domain.book.EBookVO;
 
 public interface SearchService {
 	//검색결과 책리스트

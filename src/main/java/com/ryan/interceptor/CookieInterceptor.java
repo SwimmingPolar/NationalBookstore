@@ -8,8 +8,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.ryan.domain.MemberVO;
-import com.ryan.service.MemberService;
+import com.ryan.domain.member.MemberVO;
+import com.ryan.service.member.MemberService;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;

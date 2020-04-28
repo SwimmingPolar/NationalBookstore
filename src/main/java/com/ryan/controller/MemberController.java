@@ -20,12 +20,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.ryan.domain.EmailCheckVO;
-import com.ryan.domain.MemberVO;
-import com.ryan.service.BookCategoryService;
-import com.ryan.service.EmailService;
-import com.ryan.service.InterestsService;
-import com.ryan.service.MemberService;
+import com.ryan.domain.member.EmailCheckVO;
+import com.ryan.domain.member.MemberVO;
+import com.ryan.service.book.BookCategoryService;
+import com.ryan.service.member.EmailService;
+import com.ryan.service.member.InterestsService;
+import com.ryan.service.member.MemberService;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;

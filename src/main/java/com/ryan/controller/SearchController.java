@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.ryan.domain.EBookVO;
+import com.ryan.domain.book.EBookVO;
 import com.ryan.service.SearchServiceImpl;
 
 @Controller

@@ -15,7 +15,7 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ryan.domain.EmailCheckVO;
+import com.ryan.domain.member.EmailCheckVO;
 
 import lombok.extern.log4j.Log4j;
 

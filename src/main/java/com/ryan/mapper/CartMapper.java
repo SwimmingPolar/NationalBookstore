@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.ryan.domain.CartVO;
+import com.ryan.domain.payment.CartVO;
 
 public interface CartMapper {
 	

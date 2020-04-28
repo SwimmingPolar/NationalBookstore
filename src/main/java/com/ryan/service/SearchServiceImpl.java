@@ -13,7 +13,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ryan.domain.EBookVO;
+import com.ryan.domain.book.EBookVO;
 import com.ryan.mapper.SearchMapper;
 
 @Service

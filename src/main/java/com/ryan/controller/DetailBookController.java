@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ryan.domain.EBookVO;
-import com.ryan.domain.HashtagVO;
-import com.ryan.domain.MyLibVO;
-import com.ryan.domain.MyReadBookVO;
-import com.ryan.service.DetailBookService;
-import com.ryan.service.MyBookService;
+import com.ryan.domain.book.EBookVO;
+import com.ryan.domain.book.HashtagVO;
+import com.ryan.domain.book.MyLibVO;
+import com.ryan.domain.book.MyReadBookVO;
+import com.ryan.service.book.DetailBookService;
+import com.ryan.service.book.MyBookService;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ryan.service.OrderService;
+import com.ryan.service.payment.OrderService;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;

@@ -3,12 +3,12 @@ package com.ryan.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ryan.domain.BookGradeVO;
-import com.ryan.domain.BookLikeVO;
-import com.ryan.domain.EBookVO;
-import com.ryan.domain.HashtagVO;
-import com.ryan.domain.MemberVO;
 import com.ryan.domain.ReviewVO;
+import com.ryan.domain.book.BookGradeVO;
+import com.ryan.domain.book.BookLikeVO;
+import com.ryan.domain.book.EBookVO;
+import com.ryan.domain.book.HashtagVO;
+import com.ryan.domain.member.MemberVO;
 
 public interface DetailBookMapper {	
 	

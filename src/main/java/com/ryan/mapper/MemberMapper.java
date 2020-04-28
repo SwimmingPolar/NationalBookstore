@@ -2,7 +2,7 @@ package com.ryan.mapper;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.ryan.domain.MemberVO;
+import com.ryan.domain.member.MemberVO;
 
 public interface MemberMapper {
 	//회원가입
