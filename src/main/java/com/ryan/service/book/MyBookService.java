@@ -1,6 +1,6 @@
 package com.ryan.service.book;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,19 +9,21 @@ import com.ryan.domain.book.MyReadBookVO;
 
 public interface MyBookService {
 
-	//책장 -- 조회, 삭제 입력
-	public ArrayList<MyLibVO> readingBook(MyLibVO vo, HttpServletRequest request);
+	//찜 책장 -- 조회, 삭제 입력
+	public List<MyLibVO> libBook(MyLibVO vo);
 	
-	public ArrayList<MyLibVO> deleteList(MyLibVO vo);
+	public List<MyLibVO> deleteLibBook(MyLibVO vo);
 	
-	public boolean insertList(MyLibVO vo);
-	
-	
+	public Boolean insertLibBook(MyLibVO vo);
 	
 	//읽고있는 책
-	public int insertReadBook(MyReadBookVO vo);
+	public List<MyReadBookVO>  readBook(MyReadBookVO vo);
 	
-	public ArrayList<MyReadBookVO> readBookList(MyReadBookVO vo);
+	//읽고있는 책 삭제
+	public List<MyReadBookVO> deleteReadBook(MyReadBookVO vo);
 	
-	public ArrayList<MyReadBookVO> deleteReadBook(MyReadBookVO vo);
+	//읽고있는 책
+	public Boolean insertReadBook(int booknumber, MyReadBookVO vo);
+
+
 }
