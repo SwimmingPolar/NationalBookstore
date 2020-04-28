@@ -1,5 +1,7 @@
 package com.ryan.mapper;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -9,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.ryan.domain.book.MyLibVO;
+import com.ryan.domain.book.MyReadBookVO;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -29,26 +31,25 @@ public class MyBookMapperTest {
 		log.info(mapper.readingBook(vo));
 	}
 	*/
-	/*
+	
 	@Test
-	public void insertList() {
-		MyLibVO vo = new MyLibVO();
+	public void insertReadBook() {
+		MyReadBookVO vo = new MyReadBookVO();
 
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());
-		cal.add(Calendar.DATE,3);
-
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); String time =
-		df.format(cal.getTime());
 		
-	
-		vo.setSubDate(cal.getTime());
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+		String time = df.format(cal.getTime());
+			
+		vo.setReadDate(time);
 		vo.setMemberEmail("abc1234@naver.com");
-		vo.setBookNum(1);
-		log.info("insert 결과 : " +mapper.insertList(vo));
+		vo.setBookNum(196);
+		log.info("insert 결과 : " +mapper.insertReadBook(vo));
 	}
 	
-	*/
+	
+	/*
 	@Test
 	public void deleteList() {
 		
@@ -58,5 +59,5 @@ public class MyBookMapperTest {
 		vo.setBookNum(1);
 		log.info(mapper.deleteList(vo));
 		
-	}
+	}*/
 }

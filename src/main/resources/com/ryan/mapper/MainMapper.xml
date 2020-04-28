@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ryan.mapper.MainMapper">
 	
-	<select id="getEbookList" resultType="com.ryan.domain.EBookVO">
+	<select id="getEbookList" resultType="com.ryan.domain.book.EBookVO">
 		SELECT * FROM ebook
 		
 		<choose>
@@ -28,7 +28,7 @@
 		and book_existence = 1
 	</select>
 	
-		<select id="getBookList" resultType="com.ryan.domain.EBookVO">
+		<select id="getBookList" resultType="com.ryan.domain.book.EBookVO">
 		SELECT * FROM ebook
 		
 		<choose>

@@ -87,6 +87,7 @@ public class SearchController {
 	/////////////////////////////////////////////////////////////////이 밑으로는 수정 좀 헀습니다.
 	@RequestMapping(value="/main")
 	public String Testo() {
+		System.out.println("asd");
 		return "search";
 	}
 	@RequestMapping(value="/search", method= RequestMethod.GET)
