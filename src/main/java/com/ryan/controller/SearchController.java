@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-//github.com/SwimmingPolar/NationalBookstore.git
-=======
->>>>>>> branch 'master' of https://github.com/SwimmingPolar/NationalBookstore.git
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
