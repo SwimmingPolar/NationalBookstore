@@ -72,7 +72,7 @@ public class MemberController {
 		
 		Map<String, Boolean> resultMap = new HashMap<String, Boolean>(); 
 		
-		if(emailService.insertEmailCode(email)) { // DB에 인증정보 입력성공시 PK 키 리턴.. 
+		if(emailService.insertEmailCode(email)) { // DB에 인증정보 입력성공시 PK키 리턴.. 
 			if(emailService.authenticationCodeSend(email)) { //메일보내기 성공하면
 				resultMap.put("result", true);
 				return resultMap;
