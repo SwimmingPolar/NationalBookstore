@@ -65,7 +65,7 @@ public class DetailBookController {
 		return "detailInfo";				
 	}
 	
-	@RequestMapping("/inserthashtag")
+	@RequestMapping("/book/inserthashtag")
 	public @ResponseBody List<HashtagVO> insertHashtag(HashtagVO vo, HttpServletRequest request, HttpServletResponse response) {		
 		service.hashtagCookie(vo, request, response);
 		return service.hashtag(vo.getBookNum());
@@ -88,15 +88,15 @@ public class DetailBookController {
 	}
 	
 	//찜 책장에 추가
-	@RequestMapping("/insertList")
+	@RequestMapping("/insertLibList")
 	public @ResponseBody Boolean insertList(Model model, MyLibVO vo) {
-		return mservice.insertList(vo);
+		return mservice.insertLibBook(vo);
 	}
 	
 	//읽은책 추가
 	@RequestMapping("/insertreadbook")
-	public @ResponseBody int insertReadBook(MyReadBookVO vo) {
-		return mservice.insertReadBook(vo);
+	public @ResponseBody Boolean insertReadBook(@RequestParam("booknumber") int booknumber, MyReadBookVO vo) {
+		return mservice.insertReadBook(booknumber, vo);
 	}
 	
 }

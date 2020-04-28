@@ -60,7 +60,10 @@
     </ul> 
 
     <div class="choiceBtnOne">
-        <input type="button" value="바로보기" class="choiceBtn">
+    	<form action="/book/insertreadbook">
+        	<input type="submit" value="바로보기" class="choiceBtn">
+        	<input type="hidden" name="bookNum" value="${bookdetail.bookNum }">
+       	</form>
         <input type="button" value="다운로드" class="choiceBtn">
         <input type="button" value="종이책 구매" class="choiceBtn">
 

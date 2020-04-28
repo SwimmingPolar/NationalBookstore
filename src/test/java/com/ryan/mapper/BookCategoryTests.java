@@ -17,12 +17,12 @@ public class BookCategoryTests {
 	@Setter(onMethod_ = {@Autowired})
 	private BookCategoryMapper mapper;
 	
-	
+/*	
 	@Test
 	public void getBookCategoryTests() {
 		
 		mapper.getBookCategoryList().forEach(category -> log.info(category));
 	}
-	
+	*/
 	
 }
