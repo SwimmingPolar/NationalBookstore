@@ -76,27 +76,28 @@
         </span>
         <c:forEach var="p" items="${likepeople}">
         <span class="likePeople2" style="color: black;">	<!-- 좋아요 한 사람들 -->
-            ${p.memberNickName } &nbsp;
+            ${p.memberNickName } 
         </span>
         </c:forEach>
     </a>
         <span class="likeBtn">
             <div class="heartSoo">
-            <input type="text" value=${booklike} id='countNum' size='5' >
+          	  <input type="text" value=${booklike} id='countNum' size='5' >
             </div>
             <div class="heartC">
             <!-- <c:if test="${id != null}"> -->
             <form action="/book/insertlike">
-                <input type="checkbox" id="heartClick">              
+                <input type="checkbox" id="heartClick">  
+            </form>            
                 <label for="heartClick">
-                	 <i class="fa fa-heart" aria-hidden="true"></i>
+                	<i class="fa fa-heart" aria-hidden="true"></i>
                 	<i class="far fa-heart" aria-hidden="true"></i>
         		</label>
-            </form>
+           
           <!-- </c:if> -->
             </div>
         </span>
-
+	
     </div>  
     <!-- likeChk end -->
 <div class="modal">

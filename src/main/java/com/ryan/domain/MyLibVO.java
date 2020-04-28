@@ -15,6 +15,4 @@ public class MyLibVO {
     // 책 고유번호 
     private int bookNum;
 
-    // 대여일자 
-    private Date subDate;
 }

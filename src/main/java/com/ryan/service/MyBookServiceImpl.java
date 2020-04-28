@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,26 +27,14 @@ public class MyBookServiceImpl implements MyBookService{
 	private MyBookMapper mapper;
 
 	@Override
-	public ArrayList<MyLibVO> readingBook(MyLibVO vo) {	
-		ArrayList<MyLibVO> mvo = mapper.readingBook(vo);
+	public ArrayList<MyLibVO> readingBook(MyLibVO vo, HttpServletRequest request) {		//찜 책장 
+		HttpSession session = request.getSession();
+		MyLibVO myvo = (MyLibVO) session.getAttribute("ryanmember");
 		
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(new Date());
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String time = df.format(cal.getTime());
-		String votime = null;
-		
-		for(int i=0; i<mvo.size(); i++) {
-			if(vo.getMemberEmail().equals(mvo.get(i).getMemberEmail()) && vo.getBookNum()==mvo.get(i).getBookNum()) {
-				votime = df.format(mvo.get(i).getSubDate());
-			}				
-			int check = time.compareTo(votime);
-			if(check > 0) {
-				//만료
-			}else {
-				// 대여중..
-			}
+		if(myvo.getMemberEmail().equals(vo.getMemberEmail()) && myvo.getBookNum()==vo.getBookNum()) {
+			
 		}
+		
 		return mvo;
 	}
 
@@ -64,15 +55,11 @@ public class MyBookServiceImpl implements MyBookService{
 		boolean flag = false;
 		for(int i=0; i<mapper.readingBook(vo).size(); i++) {
 			if(mapper.readingBook(vo).get(i).getBookNum()!=vo.getBookNum()) {
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(new Date());
-				cal.add(Calendar.DATE,3);
 				/*
 				 * DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); String time =
 				 * df.format(cal.getTime());
 				 */
 				flag=true;
-				vo.setSubDate(cal.getTime());
 				mapper.insertList(vo);
 				return flag;
 			}

@@ -2,6 +2,8 @@ package com.ryan.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,8 +27,8 @@ public class MyBookController {
 	private MyBookService service;
 	
 	@RequestMapping("/mylist")	//찜 책장
-	public String myBookList(MyLibVO vo, Model model) {
-		ArrayList<MyLibVO> list = service.readingBook(vo);
+	public String myBookList(MyLibVO vo, Model model, HttpServletRequest request) {
+		ArrayList<MyLibVO> list = service.readingBook(vo, request);
 		model.addAttribute("mybooklist", list);				
 		return "view";
 	}

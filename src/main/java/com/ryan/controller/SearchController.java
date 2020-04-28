@@ -1,12 +1,9 @@
 package com.ryan.controller;
 
-<<<<<<< HEAD
 import java.util.ArrayList;
-=======
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
->>>>>>> branch 'master' of https://github.com/SwimmingPolar/NationalBookstore.git
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
