@@ -24,7 +24,7 @@ import com.ryan.service.SearchServiceImpl;
 
 @Controller
 //순서대로 e북 리스트, 현물책 리스트, 요청페이지에 띄울 리스트 정보가 들어있다
-@SessionAttributes({"ebookList","bookList","pageList"})
+@SessionAttributes({"result","pageList"})
 @RequestMapping("/search/*")
 public class SearchController {
 	
@@ -34,16 +34,25 @@ public class SearchController {
 	private ArrayList<EBookVO> tmpArr;
 	
 	//검색후 e북과 현물북 리스트를 세션에 저장한다
-	@RequestMapping("/searchBook")
+	@RequestMapping("/검색결과세션으로저장")
 	//작가는 writer 책이름은 bookname으로 받음
-	public String searchBook(Model model,@RequestParam(required = false , name = "writer") String writer,@RequestParam(required = false, name = "bookname") String bookname) {
-		tmpArr=service.searchBookM(writer,bookname);
+	public String searchBook(Model model,String type,@RequestParam(value = "keyword", required = false, defaultValue=" ") String keyword) {
+		HashMap<String, List<EBookVO>> result = new HashMap<String, List<EBookVO>>();
+		
+		String [] tmp=keyword.split("\\s+");
+		
+		result.put("ebook", service.ebookList(type, tmp));
+		result.put("paper", service.bookList(type, tmp));
+		
+		model.addAttribute("result", result);
+		
+		//tmpArr=service.searchBookM(writer,bookname);
 		
 		//검색결과 전체를 bookList vo로 세션으로 넘김(세션 가능)
-		model.addAttribute("ebookList", tmpArr);
-		model.addAttribute("bookList",service.bookList(tmpArr));
+		//model.addAttribute("ebookList", tmpArr);
+		//model.addAttribute("bookList",service.bookList(tmpArr));
 		
-		System.out.println("크기는"+tmpArr.size());
+		//System.out.println("크기는"+tmpArr.size());
 		
 		return "결과페이지";
 	}
