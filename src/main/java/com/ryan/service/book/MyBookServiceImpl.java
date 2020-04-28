@@ -35,7 +35,7 @@ public class MyBookServiceImpl implements MyBookService{
 			
 		}
 		
-		return mvo;
+		return new ArrayList<MyLibVO>();
 	}
 
 	@Override
