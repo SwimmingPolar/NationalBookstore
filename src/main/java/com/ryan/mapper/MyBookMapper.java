@@ -2,8 +2,8 @@ package com.ryan.mapper;
 
 import java.util.ArrayList;
 
-import com.ryan.domain.MyLibVO;
-import com.ryan.domain.MyReadBookVO;
+import com.ryan.domain.book.MyLibVO;
+import com.ryan.domain.book.MyReadBookVO;
 
 public interface MyBookMapper {
 	

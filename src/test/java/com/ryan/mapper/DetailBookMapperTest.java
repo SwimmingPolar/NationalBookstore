@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.ryan.domain.BookGradeVO;
-import com.ryan.domain.BookLikeVO;
-import com.ryan.domain.HashtagVO;
+import com.ryan.domain.book.BookGradeVO;
+import com.ryan.domain.book.BookLikeVO;
+import com.ryan.domain.book.HashtagVO;
 
 import lombok.Setter;
 import lombok.extern.java.Log;
@@ -22,31 +22,31 @@ public class DetailBookMapperTest {
 	
 	@Setter(onMethod_ = {@Autowired})
 	private DetailBookMapper mapper;
-	
-//	@Test
-//	public void bookLike() {
-//		log.info(mapper.bookLike(1));
-//	}
+/*	
+	@Test
+	public void bookLike() {
+		log.info(mapper.bookLike(197));
+	}*/
 	/*
 	@Test
 	public void bookGrade() {
 		log.info(mapper.bookGrade(1));
 	}
-	
-	
-	
-	@Test
-	public void  hashtag() {
-		log.info(mapper.hashtag(1));
-	}
-	
 	*/
 	
 	
 	@Test
-	public void likepeople() {
-		log.info(mapper.likepeople(1));
+	public void  hashtag() {
+		log.info(mapper.hashtag(197));
 	}
+	
+	
+	
+	
+//	@Test
+//	public void likepeople() {
+//		log.info(mapper.likepeople(1));
+//	}
 	
 
 //	@Test

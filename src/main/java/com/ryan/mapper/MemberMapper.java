@@ -1,6 +1,8 @@
 package com.ryan.mapper;
 
-import com.ryan.domain.MemberVO;
+import org.apache.ibatis.annotations.Param;
+
+import com.ryan.domain.member.MemberVO;
 
 public interface MemberMapper {
 	//회원가입
@@ -22,5 +24,8 @@ public interface MemberMapper {
 	
 	//자동 로그인 확인용
 	public int autoLogin(MemberVO member);
+	
+	//회원탈퇴
+	public int memberSignDelete(@Param("tableList") String[] tableList, @Param("memberEmail") String memberEmail);
 	
 }

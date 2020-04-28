@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ryan.domain.CartVO;
-import com.ryan.service.CartService;
+import com.ryan.domain.payment.CartVO;
+import com.ryan.service.payment.CartService;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;

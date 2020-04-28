@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ryan.domain.CartVO;
-import com.ryan.domain.OrderVO;
-import com.ryan.service.CartService;
-import com.ryan.service.OrderObjectService;
-import com.ryan.service.OrderService;
+import com.ryan.domain.payment.CartVO;
+import com.ryan.domain.payment.OrderVO;
+import com.ryan.service.payment.CartService;
+import com.ryan.service.payment.OrderObjectService;
+import com.ryan.service.payment.OrderService;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;

@@ -10,19 +10,22 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.ryan.domain.EmailCheckVO;
-import com.ryan.domain.MemberVO;
-import com.ryan.service.BookCategoryService;
-import com.ryan.service.EmailService;
-import com.ryan.service.InterestsService;
-import com.ryan.service.MemberService;
+import com.ryan.domain.member.EmailCheckVO;
+import com.ryan.domain.member.MemberVO;
+import com.ryan.service.book.BookCategoryService;
+import com.ryan.service.member.EmailService;
+import com.ryan.service.member.InterestsService;
+import com.ryan.service.member.MemberService;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -67,6 +70,7 @@ public class MemberController {
 	@RequestMapping("/emailAuthentication")
 	public @ResponseBody Map<String, Boolean> emailAuthenticationCodeSend(EmailCheckVO email) {
 		
+		log.info("컨트롤러" + email);
 		Map<String, Boolean> resultMap = new HashMap<String, Boolean>(); 
 		
 		if(emailService.insertEmailCode(email)) { // DB에 인증정보 입력성공시 PK 키 리턴.. 
@@ -101,7 +105,6 @@ public class MemberController {
 	@PostMapping("/update")
 	public String memberInfoUpdate(MemberVO member) {
 		
-		//AJax 처리.
 		if (memberService.memberUpdate(member)) {
 			log.info("controller member: " + member.getMemberPw());
 		} else {
@@ -111,7 +114,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/signin")
-	public String memberLogin(@RequestParam(required = false, name = "autoLogin") String autoLogin , MemberVO member ,HttpServletRequest request, HttpServletResponse response) {
+	public String memberLogin(@RequestParam(required = false, name = "rememberMe") String autoLogin , MemberVO member ,HttpServletRequest request, HttpServletResponse response) {
 		if(memberService.memberSignIn(member)) {
 			if(autoLogin != null) {
 				member.setMemberNickName(memberService.getMemberNickName(member));
@@ -120,6 +123,7 @@ public class MemberController {
 			}
 			HttpSession session = request.getSession();
 			session.setAttribute("ryanMember", member);
+			log.info(request.getRemoteAddr());
 			return "main";
 		} else {
 			return "login";
@@ -136,6 +140,7 @@ public class MemberController {
 		
 		return "main";
 	}
+	
 	@GetMapping("/email-signin")
 	public String getEmailLogin() {
 		return "email-signin";
@@ -150,11 +155,7 @@ public class MemberController {
 	}
 	
 	
-//	//체크박스 예시 삭제예정
-//	@GetMapping("ex")
-//	public String ex0101(@RequestParam(required = false, name = "checkbox") String[] das) {
-//		return "ex11";
-//	}
+	
 	
 	
 	// 관심 카테고리 등록 페이지 이동
@@ -176,6 +177,12 @@ public class MemberController {
 		}
 		
 	}
+	
+
+	
+//	@PutMapping
+//	@DeleteMapping
+//	@PatchMapping
 	
 	
 	

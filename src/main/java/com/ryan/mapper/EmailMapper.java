@@ -1,6 +1,6 @@
 package com.ryan.mapper;
 
-import com.ryan.domain.EmailCheckVO;
+import com.ryan.domain.member.EmailCheckVO;
 
 public interface EmailMapper {
 	

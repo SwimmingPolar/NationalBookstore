@@ -2,7 +2,7 @@ package com.ryan.mapper;
 
 import java.util.ArrayList;
 
-import com.ryan.domain.BookCategoryVO;
+import com.ryan.domain.book.BookCategoryVO;
 
 public interface BookCategoryMapper {
 	

@@ -3,12 +3,12 @@ package com.ryan.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ryan.domain.BookGradeVO;
-import com.ryan.domain.BookLikeVO;
-import com.ryan.domain.EBookVO;
-import com.ryan.domain.HashtagVO;
-import com.ryan.domain.MemberVO;
 import com.ryan.domain.ReviewVO;
+import com.ryan.domain.book.BookGradeVO;
+import com.ryan.domain.book.BookLikeVO;
+import com.ryan.domain.book.EBookVO;
+import com.ryan.domain.book.HashtagVO;
+import com.ryan.domain.member.MemberVO;
 
 public interface DetailBookMapper {	
 	
@@ -19,7 +19,7 @@ public interface DetailBookMapper {
 	public ArrayList<ReviewVO> searchReview(int booknumber);	
 	
 	//상세보기 페이지 관심책 불러오기
-	public List<EBookVO> interestbooks(String category);
+	public List<EBookVO> interestbooks(int category);
 	
 	//좋아요 숫자 조회
 	public int bookLike(int booknumber);
@@ -41,7 +41,7 @@ public interface DetailBookMapper {
 	public int insertHashtag(HashtagVO vo);
 	
 	//평점 입력
-	public int insertGrade(BookGradeVO vo);
+//	public int insertGrade(BookGradeVO vo);
 	
 	//좋아요 입력
 	public int insertLike(BookLikeVO vo);
