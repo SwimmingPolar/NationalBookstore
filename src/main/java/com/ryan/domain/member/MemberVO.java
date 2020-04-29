@@ -28,8 +28,6 @@ public class MemberVO {
 	// 전화번호 
     private String memberTel;
 
-    // 구독 
-    private Date memberSub;
     
     // 권한 
     private int memberAdmin;
