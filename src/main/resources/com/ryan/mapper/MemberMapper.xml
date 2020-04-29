@@ -12,7 +12,6 @@
 		#{memberAddress},
 		#{memberDaddress},
 		#{memberTel},
-		sysdate,
 		#{memberAdmin}
 		)
 	</insert>

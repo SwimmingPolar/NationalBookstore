@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,16 +23,19 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.ryan.domain.member.EmailCheckVO;
 import com.ryan.domain.member.MemberVO;
+import com.ryan.domain.payment.KakaoPayApprovalVO;
 import com.ryan.service.book.BookCategoryService;
 import com.ryan.service.member.EmailService;
 import com.ryan.service.member.InterestsService;
 import com.ryan.service.member.MemberService;
+import com.ryan.service.member.RegularPaymentService;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Controller
 @RequestMapping("/member/*")
+@SessionAttributes("ryanMember")
 @Log4j
 public class MemberController {
 	
@@ -46,6 +50,9 @@ public class MemberController {
 	
 	@Setter(onMethod_ = {@Autowired})
 	private InterestsService interestsService;
+	
+	@Setter(onMethod_ = {@Autowired})
+	private RegularPaymentService paymentService;
 	
 	@PostMapping("/signUp")
 	public String memberSignUp(MemberVO member) {
@@ -113,16 +120,15 @@ public class MemberController {
 		return "업데이트 완료후 보여줄 페이지 경로";
 	}
 	
-	@PostMapping("/signin")
-	public String memberLogin(@RequestParam(required = false, name = "rememberMe") String autoLogin , MemberVO member ,HttpServletRequest request, HttpServletResponse response) {
+	@GetMapping("/signin")
+	public String memberLogin(@RequestParam(required = false, name = "rememberMe") String autoLogin , MemberVO member ,HttpServletRequest request, HttpServletResponse response , Model model) {
 		if(memberService.memberSignIn(member)) {
 			if(autoLogin != null) {
 				member.setMemberNickName(memberService.getMemberNickName(member));
 				memberService.removeCookie(response);
 				memberService.addCookie(member, response);
 			}
-			HttpSession session = request.getSession();
-			session.setAttribute("ryanMember", member);
+			model.addAttribute("ryanMember", member);
 			log.info(request.getRemoteAddr());
 			return "main";
 		} else {
@@ -178,7 +184,26 @@ public class MemberController {
 		
 	}
 	
-
+	
+	//
+	@PostMapping("/paymentReady")
+	public String memberPaymentReady(@ModelAttribute("ryanMember") MemberVO member) {
+		
+		
+		return "redirect:" + paymentService.regularPaymentReady(member);
+	}
+	
+	@PostMapping("/paymentSuccess")
+	public String memberPaymentSuccess(@RequestParam("pg_token") String pg_token, @ModelAttribute("ryanMember") MemberVO member) {
+		
+		KakaoPayApprovalVO kakaoPayApprovalVO = paymentService.paymentComplete(pg_token, member);
+		
+		if(paymentService.insertPaymentInfo(member.getMemberEmail(), kakaoPayApprovalVO.getSid())) {
+			log.info(paymentService);
+		}
+		
+		return "test";
+	}
 	
 //	@PutMapping
 //	@DeleteMapping
