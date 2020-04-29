@@ -6,7 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.ryan.domain.MemberVO;
+import com.ryan.domain.member.MemberVO;
 
 public class LoginSessionChkInterceptor extends HandlerInterceptorAdapter {
 

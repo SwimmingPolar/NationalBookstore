@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,18 +21,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.ryan.domain.EmailCheckVO;
-import com.ryan.domain.MemberVO;
-import com.ryan.service.BookCategoryService;
-import com.ryan.service.EmailService;
-import com.ryan.service.InterestsService;
-import com.ryan.service.MemberService;
+import com.ryan.domain.member.EmailCheckVO;
+import com.ryan.domain.member.MemberVO;
+import com.ryan.domain.payment.KakaoPayApprovalVO;
+import com.ryan.service.book.BookCategoryService;
+import com.ryan.service.member.EmailService;
+import com.ryan.service.member.InterestsService;
+import com.ryan.service.member.MemberService;
+import com.ryan.service.member.RegularPaymentService;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Controller
 @RequestMapping("/member/*")
+@SessionAttributes("ryanMember")
 @Log4j
 public class MemberController {
 	
@@ -46,6 +50,9 @@ public class MemberController {
 	
 	@Setter(onMethod_ = {@Autowired})
 	private InterestsService interestsService;
+	
+	@Setter(onMethod_ = {@Autowired})
+	private RegularPaymentService paymentService;
 	
 	@PostMapping("/signUp")
 	public String memberSignUp(MemberVO member) {
@@ -70,6 +77,7 @@ public class MemberController {
 	@RequestMapping("/emailAuthentication")
 	public @ResponseBody Map<String, Boolean> emailAuthenticationCodeSend(EmailCheckVO email) {
 		
+		log.info("컨트롤러" + email);
 		Map<String, Boolean> resultMap = new HashMap<String, Boolean>(); 
 		
 		if(emailService.insertEmailCode(email)) { // DB에 인증정보 입력성공시 PK키 리턴.. 
@@ -104,7 +112,6 @@ public class MemberController {
 	@PostMapping("/update")
 	public String memberInfoUpdate(MemberVO member) {
 		
-		//AJax 처리.
 		if (memberService.memberUpdate(member)) {
 			log.info("controller member: " + member.getMemberPw());
 		} else {
@@ -114,15 +121,15 @@ public class MemberController {
 	}
 	
 	@PostMapping("/signin")
-	public String memberLogin(@RequestParam(required = false, name = "autoLogin") String autoLogin , MemberVO member ,HttpServletRequest request, HttpServletResponse response) {
+	public String memberLogin(@RequestParam(required = false, name = "rememberMe") String autoLogin , MemberVO member ,HttpServletRequest request, HttpServletResponse response , Model model) {
 		if(memberService.memberSignIn(member)) {
 			if(autoLogin != null) {
 				member.setMemberNickName(memberService.getMemberNickName(member));
 				memberService.removeCookie(response);
 				memberService.addCookie(member, response);
 			}
-			HttpSession session = request.getSession();
-			session.setAttribute("ryanMember", member);
+			model.addAttribute("ryanMember", member);
+			log.info(request.getRemoteAddr());
 			return "main";
 		} else {
 			return "login";
@@ -139,6 +146,7 @@ public class MemberController {
 		
 		return "main";
 	}
+	
 	@GetMapping("/email-signin")
 	public String getEmailLogin() {
 		return "email-signin";
@@ -174,6 +182,27 @@ public class MemberController {
 			return "실패";
 		}
 		
+	}
+	
+	
+	//
+	@PostMapping("/paymentReady")
+	public String memberPaymentReady(@ModelAttribute("ryanMember") MemberVO member) {
+		
+		
+		return "redirect:" + paymentService.regularPaymentReady(member);
+	}
+	
+	@PostMapping("/paymentSuccess")
+	public String memberPaymentSuccess(@RequestParam("pg_token") String pg_token, @ModelAttribute("ryanMember") MemberVO member) {
+		
+		KakaoPayApprovalVO kakaoPayApprovalVO = paymentService.paymentComplete(pg_token, member);
+		
+		if(paymentService.insertPaymentInfo(member.getMemberEmail(), kakaoPayApprovalVO.getSid())) {
+			log.info(paymentService);
+		}
+		
+		return "test";
 	}
 	
 //	@PutMapping

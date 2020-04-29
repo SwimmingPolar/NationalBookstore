@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.ryan.domain.EBookVO;
+import com.ryan.domain.book.EBookVO;
 
 public interface MainMapper {
 	

@@ -12,10 +12,14 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import com.ryan.domain.EmailCheckVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.ryan.domain.member.EmailCheckVO;
 
 import lombok.extern.log4j.Log4j;
 
+@Component
 @Log4j
 public class EmailFunction {
 	
@@ -201,7 +205,7 @@ public class EmailFunction {
 		
 		Random rn = new Random();
 		
-		//12자리로함.
+		//12자리로함
 		
 		for(int i=0; i<12; i++) {
 			
@@ -233,8 +237,6 @@ public class EmailFunction {
 			}
 			
 		}
-		
-		
 		
 		return checkedCode.toString();
 	}

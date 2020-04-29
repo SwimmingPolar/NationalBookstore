@@ -13,13 +13,14 @@
 <!-- Fontawesome -->
 <script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
 <!-- css reset -->
-<link rel="stylesheet" type="text/css" href="../../resources/styles/reset.css" />
-<link rel="stylesheet" type="text/css" href="../../resources/styles/search.css" />
+<link rel="stylesheet" type="text/css" href="../resources/styles/reset.css" />
+<link rel="stylesheet" type="text/css" href="../resources/styles/search.css" />
 <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
 <%
 	String type = request.getParameter("type");
 	String keyword = request.getParameter("keyword");
 	String category = request.getParameter("category");
+	String pageNum = request.getParameter("page");
 	
 	if(type == null)
 		type = "BOOK_TITLE";
@@ -27,6 +28,8 @@
 		keyword = "";
 	if(category == null)
 		category = "all";
+	if(pageNum == null)
+		pageNum = "1";
 %>
 <script type="text/javascript" >
 	$(document).ready(function() {
@@ -34,6 +37,7 @@
 		var keyword = "<%=keyword %>";
 		var category = "<%=category %>";
 		var layout = "${cookie.layout.value}";
+		var pageNum = "<%=pageNum %>";
 		if(layout == "") {
 			layout = "list";
 		}
@@ -42,6 +46,7 @@
 		$(".keyword").val(keyword);
 		$(".category[type='hidden']").val(category);
 		$(".btn-layout."+layout).css("color", "#000000");
+		$(".btn-page."+pageNum).css("color", "var(--red-color)");
 		//레이아웃 유지
 		if(layout == "list") {
 			$(".search-result").removeClass("grid-layout");
@@ -84,6 +89,10 @@
 			})
 			console.dir(cartList);
 		})
+		
+		$(".btn-page").click(function(data) {
+			console.dir(data.target.value);
+		})
 	});
 </script>
 </head>
@@ -98,21 +107,21 @@
 	</div>
 	<div ></div>
 	<!-- 검색바 -->
-	<form action="/main/search" method="GET" >
+	<form action="/controller/search/search" method="GET" >
 		<div class="search-bar" >
 			<select class="type" name="type" >
 				<option value="BOOK_TITLE" >제목</option>
 				<option value="BOOK_WRITER" >저자</option>
 				<option value="BOOK_PUBLISHER" >출판사</option>
 			</select>
-			<input class="keyword" type="text" name="keyword" placeholder="검색어를 입력해주세요"/>
+			<input class="keyword" type="text" name="keyword" placeholder="검색어를 입력해주세요" autocomplete="off" spellcheck="false"/>
 			<button class="btn-search fas fa-search" name="category" value="all" ></button>
 		</div>
 	</form>
 	<!-- 검색 결과 요약 -->
 	<c:if test="${not empty param.keyword }" >
 		<!-- 카테고리 선택 -->
-		<form action="search.do" method="GET" >
+		<form action="/controller/search/search" method="GET" >
 			<div class="category-list" >
 				<input class="type" type="hidden" name="type" />
 				<input class="keyword" type="hidden" name="keyword" />
@@ -150,7 +159,7 @@
 					<div class="search-list">
 						<%-- 카테고리 벨트 --%>
 						<div class="category-belt" >
-							<form action="search.do" method="GET" >
+							<form action="/controller/search/search" method="GET" >
 								<input class="type" type="hidden" name="type" />
 								<input class="keyword" type="hidden" name="keyword" />
 								<button name="category" value="${list.getKey() }" class="btn-category-belt" >
@@ -240,14 +249,14 @@
 									<!-- 책 커버 -->
 									<img class="cover" />
 									<c:if test="${param.category eq 'paper' }" >
-										<input class="checkbox-cart btn-grid-cart" type="checkbox" name="cart" value="${book.BOOK_NUM }"/>
+										<input class="checkbox-cart btn-grid-cart" type="checkbox" name="cart" value="${book.bookNum }"/>
 									</c:if>
 									<!-- 책 정보 -->
 									<div class="info" >
-										<div class="title" >${book.BOOK_TITLE }</div>
+										<div class="title" >${book.bookTitle }</div>
 										<div>
-											<span class="author" >${book.BOOK_WRITER }</span>
-											<span class="publisher" >${book.BOOK_PUBLISHER }</span>
+											<span class="author" >${book.bookWriter }</span>
+											<span class="publisher" >${book.bookPublisher }</span>
 										</div>
 									</div>
 								</div>
@@ -258,7 +267,7 @@
 										</c:when>
 										<c:when test="${param.category eq 'paper' }" >
 											<button class="btn-purchase" >구매</button>
-											<input class="checkbox-cart btn-list-cart" type="checkbox" name="cart" value="${book.BOOK_NUM }" />
+											<input class="checkbox-cart btn-list-cart" type="checkbox" name="cart" value="${book.bookNum }" />
 										</c:when>
 									</c:choose>
 								</div>
@@ -267,6 +276,15 @@
 					</div>
 					<%-- 책리스트 끝 --%>
 				</div>
+				<form action="/controller/search/search" >
+				<div class="div-page" >
+					<button class="btn-page before" name="pageNumber" value="before"><</button>
+					<c:forEach var="i" begin="0" end="9" >
+						<button class="btn-page ${i+1 }" name="pageNumber" value="${i+1 }" >${i+1 }</button>
+					</c:forEach>
+					<button class="btn-page next" name="pageNumber" value="after">></button>
+				</div>
+				</form>
 			</c:otherwise>
 			<%-- 단일 카테고리일때 끝 --%>
 		</c:choose>

@@ -17,7 +17,7 @@
 		)
 	</insert>
 	
-	<select id="getCartList" resultType="com.ryan.domain.CartVO" parameterType="String">
+	<select id="getCartList" resultType="com.ryan.domain.payment.CartVO" parameterType="String">
 		SELECT c.* , e.book_price FROM cart c, ebook e
 		WHERE c.book_num = e.book_num
 		and c.member_email = #{memberEmail}
@@ -40,7 +40,7 @@
 		WHERE member_Email = #{memberEmail}
 	</delete>
 	
-	<select id="cartBuyList" resultType="com.ryan.domain.CartVO">		
+	<select id="cartBuyList" resultType="com.ryan.domain.payment.CartVO">		
 		SELECT c.* , e.book_price FROM cart c, ebook e
 			WHERE c.book_num = e.book_num
 			and c.cart_num in

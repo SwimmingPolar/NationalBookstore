@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ryan.mapper.DetailBookMapper">
 
-<select id="searchEBook" resultType="com.ryan.domain.EBookVO">
+<select id="searchEBook" resultType="com.ryan.domain.book.EBookVO">
 	SELECT * FROM eBook WHERE book_num=#{bookNum}
 </select>
 
@@ -10,7 +10,7 @@
 	SELECT * FROM book_Review WHERE book_num=#{bookNum}
 </select>
 
-<select id="interestbooks" resultType="com.ryan.domain.EBookVO">
+<select id="interestbooks" resultType="com.ryan.domain.book.EBookVO">
 	SELECT * FROM EBOOK WHERE category_num=#{categoryNum}
 </select>
 
@@ -21,21 +21,21 @@
 	
 </select>
 
-<select id="bookLikeList" resultType="com.ryan.domain.BookLikeVO">
+<select id="bookLikeList" resultType="com.ryan.domain.book.BookLikeVO">
 	SELECT * FROM book_Like WHERE book_num=#{bookNum}
 </select>
 
 <select id="bookGrade" resultType="_double"> 
 	<![CDATA[
-		SELECT NVL(avg(grade_score),0) FROM book_Grade WHERE book_num=#{bookNum}
+		SELECT NVL(round(avg(grade_score),1),0) FROM book_Grade WHERE book_num=#{bookNum}
 	]]>
 </select>
 
-<select id="hashtag" resultType="com.ryan.domain.HashtagVO">
+<select id="hashtag" resultType="com.ryan.domain.book.HashtagVO">
 	SELECT * FROM book_hashtag WHERE book_num=#{bookNum} ORDER BY hash_num DESC
 </select>
 
-<select id="likepeople" resultType="com.ryan.domain.MemberVO">
+<select id="likepeople" resultType="com.ryan.domain.member.MemberVO">
 	<![CDATA[
 		select * from member m, ebook e, book_like l 
 		where m.member_Email=l.member_Email and l.book_num = e.book_num
@@ -43,7 +43,7 @@
 	]]>
 </select>
 
-<insert id="insertHashtag" parameterType="com.ryan.domain.HashtagVO">
+<insert id="insertHashtag" parameterType="com.ryan.domain.book.HashtagVO">
 	INSERT INTO book_hashtag (book_num, hash_tag) VALUES(#{bookNum}, #{hashTag})
 </insert>
 <!-- 
@@ -51,11 +51,11 @@
 	INSERT INTO book_grade (member_Email, book_Num, grade_score) VALUES(#{memberEmail},#{bookNum},#{gradeScore})
 </insert>
  -->
-<insert id="insertLike" parameterType="com.ryan.domain.BookLikeVO">
+<insert id="insertLike" parameterType="com.ryan.domain.book.BookLikeVO">
 	INSERT INTO book_like (member_Email, book_Num) VALUES( #{memberEmail}, #{bookNum})
 </insert>
 
-<delete id="deleteLike" parameterType="com.ryan.domain.BookLikeVO">
+<delete id="deleteLike" parameterType="com.ryan.domain.book.BookLikeVO">
 	DELETE FROM book_like WHERE book_num = #{bookNum} and member_Email=#{memberEmail}
 </delete>
 

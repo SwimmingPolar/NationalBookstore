@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ryan.domain.EBookVO;
-import com.ryan.domain.HashtagVO;
-import com.ryan.domain.MyLibVO;
-import com.ryan.domain.MyReadBookVO;
-import com.ryan.service.DetailBookService;
-import com.ryan.service.MyBookService;
+import com.ryan.domain.book.EBookVO;
+import com.ryan.domain.book.HashtagVO;
+import com.ryan.domain.book.MyLibVO;
+import com.ryan.domain.book.MyReadBookVO;
+import com.ryan.service.book.DetailBookService;
+import com.ryan.service.book.MyBookService;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -41,7 +41,7 @@ public class DetailBookController {
 		
 		//조회수
 		service.updateBookLookUp(vo, request, response);
-				
+		
 		model.addAttribute("bookdetail", vo); //책 정보- 상세정보
 		
 		model.addAttribute("bookreview", service.searchReview(booknumber));		//책 번호 - 리뷰
@@ -65,7 +65,7 @@ public class DetailBookController {
 		return "detailInfo";				
 	}
 	
-	@RequestMapping("/inserthashtag")
+	@RequestMapping("/book/inserthashtag")
 	public @ResponseBody List<HashtagVO> insertHashtag(HashtagVO vo, HttpServletRequest request, HttpServletResponse response) {		
 		service.hashtagCookie(vo, request, response);
 		return service.hashtag(vo.getBookNum());
@@ -88,15 +88,15 @@ public class DetailBookController {
 	}
 	
 	//찜 책장에 추가
-	@RequestMapping("/insertList")
+	@RequestMapping("/insertLibList")
 	public @ResponseBody Boolean insertList(Model model, MyLibVO vo) {
-		return mservice.insertList(vo);
+		return mservice.insertLibBook(vo);
 	}
 	
 	//읽은책 추가
 	@RequestMapping("/insertreadbook")
-	public @ResponseBody int insertReadBook(MyReadBookVO vo) {
-		return mservice.insertReadBook(vo);
+	public @ResponseBody Boolean insertReadBook(@RequestParam("booknumber") int booknumber, MyReadBookVO vo) {
+		return mservice.insertReadBook(booknumber, vo);
 	}
 	
 }

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.ryan.domain.MemberVO;
+import com.ryan.domain.member.MemberVO;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -51,17 +51,17 @@ public class MemberMapperTests {
 //	}
 	
 	//로그인 - 완료
-	@Test
-	public void signInTest() {
-		
-		MemberVO member = new MemberVO();
-		member.setMemberEmail("abc1234@naver.com");
-		member.setMemberPw("abc1234");
-		
-		int result = mapper.memberSignIn(member);
-		log.info("로그인 리턴값 : " +  result);
-		
-	}
+//	@Test
+//	public void signInTest() {
+//		
+//		MemberVO member = new MemberVO();
+//		member.setMemberEmail("abc1234@naver.com");
+//		member.setMemberPw("abc1234");
+//		
+//		int result = mapper.memberSignIn(member);
+//		log.info("로그인 리턴값 : " +  result);
+//		
+//	}
 	
 	//회원정보 업데이트 -완료
 //	@Test
@@ -76,5 +76,13 @@ public class MemberMapperTests {
 //		
 //	}
 	
+	
+	//회원탈퇴
+	@Test
+	public void memberDelete() {
+		
+		
+		
+	}
 	
 }

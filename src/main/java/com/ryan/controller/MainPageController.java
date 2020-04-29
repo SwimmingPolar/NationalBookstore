@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ryan.domain.EBookVO;
-import com.ryan.domain.MemberVO;
+import com.ryan.domain.book.EBookVO;
+import com.ryan.domain.member.MemberVO;
 import com.ryan.mapper.MainMapper;
-import com.ryan.service.MainPageService;
+import com.ryan.service.main.MainPageService;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;

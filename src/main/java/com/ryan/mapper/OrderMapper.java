@@ -2,7 +2,7 @@ package com.ryan.mapper;
 
 import java.util.ArrayList;
 
-import com.ryan.domain.OrderVO;
+import com.ryan.domain.payment.OrderVO;
 
 public interface OrderMapper {
 	

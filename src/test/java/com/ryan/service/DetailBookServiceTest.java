@@ -6,9 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.ryan.domain.BookGradeVO;
-import com.ryan.domain.BookLikeVO;
+import com.ryan.domain.book.BookGradeVO;
+import com.ryan.domain.book.BookLikeVO;
 import com.ryan.mapper.DetailBookMapper;
+import com.ryan.service.book.DetailBookService;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
