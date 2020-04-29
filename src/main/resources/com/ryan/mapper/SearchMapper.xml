@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ryan.mapper.SearchMapper">
-<<<<<<< HEAD
-<select id="typeWriter" resultType="com.ryan.domain.EBookVO">
-	SELECT DISTINCT book_num
-=======
+
 <select id="typeWriter" resultType="com.ryan.domain.book.EBookVO" parameterType="java.util.Map">
 	SELECT DISTINCT book_writer
->>>>>>> branch 'master' of https://github.com/SwimmingPolar/NationalBookstore.git
 	FROM (
 	SELECT * FROM eBook
 	WHERE 
@@ -17,8 +13,7 @@
 	) ORDER BY book_writer
 </select>
 <!-- cd를 foreach에 씌울수도 -->
-<<<<<<< HEAD
-<select id="bookList" resultType="com.ryan.domain.EBookVO">
+<select id="bookList" resultType="com.ryan.domain.book.EBookVO">
 	SELECT DISTINCT book_num
 	FROM (
 	SELECT * FROM eBook
@@ -44,7 +39,7 @@
 	) ORDER BY book_title
 </select>
 
-<select id="ebookList" resultType="com.ryan.domain.EBookVO">
+<select id="ebookList" resultType="com.ryan.domain.book.EBookVO">
 	SELECT DISTINCT book_num
 	FROM (
 	SELECT * FROM eBook
@@ -69,10 +64,7 @@
 	) ORDER BY book_title
 </select>
 
-<select id="Ebook" resultType="com.ryan.domain.EBookVO">
-=======
 <select id="typeBookname" resultType="com.ryan.domain.book.EBookVO">
->>>>>>> branch 'master' of https://github.com/SwimmingPolar/NationalBookstore.git
 	SELECT DISTINCT book_title
 	FROM (
 	SELECT * FROM eBook
