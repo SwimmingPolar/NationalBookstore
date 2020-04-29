@@ -78,7 +78,6 @@
 				</foreach>
 			</when>
 		</choose>
-		AND BOOK_EXISTENCE LIKE 0
 	</select>
 	<!-- 종이책 검색 -->
 	<select resultType="com.ryan.domain.book.EBookVO" id="searchPaperbook" >
