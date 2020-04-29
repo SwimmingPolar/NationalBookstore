@@ -120,7 +120,7 @@ public class MemberController {
 		return "업데이트 완료후 보여줄 페이지 경로";
 	}
 	
-	@GetMapping("/signin")
+	@PostMapping("/signin")
 	public String memberLogin(@RequestParam(required = false, name = "rememberMe") String autoLogin , MemberVO member ,HttpServletRequest request, HttpServletResponse response , Model model) {
 		if(memberService.memberSignIn(member)) {
 			if(autoLogin != null) {
