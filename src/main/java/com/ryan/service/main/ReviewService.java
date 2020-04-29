@@ -1,4 +1,4 @@
-package com.ryan.service;
+package com.ryan.service.main;
 
 import com.ryan.domain.ReviewVO;
 
