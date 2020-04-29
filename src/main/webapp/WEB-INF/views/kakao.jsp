@@ -8,7 +8,7 @@
 </head>
 <body>
 	
-	<form action="/kakaPay" method="post">
+	<form action="/member/paymentReady" method="post">
 		<input type="submit" value="das">
 	</form>
 	

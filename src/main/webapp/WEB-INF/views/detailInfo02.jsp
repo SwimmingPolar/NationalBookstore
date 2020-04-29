@@ -1,30 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap" rel="stylesheet">
-    <!-- Fontawesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
-    <!--
-    Main Font:
-    font-family: 'Kaushan Script', cursive;
+<meta charset="UTF-8">
+<title>Insert title here</title>
 
-    Article Choices:
-    font-family: 'Roboto', sans-serif;
-    font-family: 'Open Sans', sans-serif;
-    font-family: 'Montserrat', sans-serif;
-
-    Korean Font:
-    font-family: 'Noto Sans KR', sans-serif;
-    -->
-
-    <link rel="stylesheet" href="../../resources/styles/detailInfo.css">
+    <link rel="stylesheet" href="../../resources/css/detailInfo.css">
     <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
     <script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -51,78 +37,74 @@
 </div>
     <!-- imageBox -->
     <div class="introWrite">
-    <h3> ${bookdetail.bookTitle} </h3>
+    <h3> 책 제목 입력하는 곳입니다. </h3>
     <ul>
-        <li> ${bookdetail.bookWriter} </li>
-        <li style="color:gray; "> ${bookdetail.bookPublisher } /
-        <fmt:formatDate value="${bookdetail.bookPbDate }" pattern="yyyy.MM.dd"/></li>
-        <li style="color:lightgray;"> 장르/분류 : ${bookdetail.bookCategory } > aa > bb </li>
+        <li> 저자이름 </li>
+        <li style="color:gray; "> 출판사 / 출판날짜 </li>
+        <li style="color:lightgray;""> 장르/분류 : 기술> aa > bb </li>
     </ul> 
 
+    <div class ="bookStarScore">
+        <i class="fal fa-star empty"></i>
+        <i class="fal fa-star empty"></i>
+        <i class="fal fa-star empty"></i>
+        <i class="fal fa-star empty"></i>
+        <i class="fal fa-star empty"></i>
+
+        <i class="fas fa-star full"></i>
+        <i class="fas fa-star full"></i>
+        <i class="fas fa-star full"></i>
+        <i class="fas fa-star full"></i>
+        <i class="fas fa-star full"></i>
+
+    </div>
+
     <div class="choiceBtnOne">
-    	<form action="/book/insertreadbook">
-        	<input type="submit" value="바로보기" class="choiceBtn">
-        	<input type="hidden" name="booknumber" value="${bookdetail.bookNum }">
-       	</form>
+        <input type="button" value="바로보기" class="choiceBtn">
         <input type="button" value="다운로드" class="choiceBtn">
         <input type="button" value="종이책 구매" class="choiceBtn">
 
     </div>
     <div class ="likeChk">
     
-        <a href="#" id="modalOpen">
+        <a href="#modalGo" id="modalOpen">
         <span class="likePeople">
-             <c:forEach var="p" items="${likepeople}">
-           		 <i class="far fa-user-circle prof" ></i>${p.memberNickName }
-             </c:forEach>
+            <i class="far fa-user-circle prof" ></i>
             <i class="fas fa-user-circle prof" ></i>
             <i class="far fa-user-circle prof" ></i>
           
         </span>
-   
-        <span class="likePeople2" style="color: black;">	<!-- 좋아요 한 사람들 -->
-          
+        <span class="likePeople2" style="color: black;">
+            좋아하는 사람들
         </span>
-      
     </a>
         <span class="likeBtn">
             <div class="heartSoo">
-          	  <input type="text" value="${booklike}" id='countNum' size='5' >
+            <input type="text" value="0" id='countNum' size='5' >
             </div>
             <div class="heartC">
             <!-- <c:if test="${id != null}"> -->
-            <form action="/book/insertlike">
-            	<input type="checkbox" id="heartClick">             
-            </form>            
-            	<c:choose>
-            	<c:when test="${likecheck }">
-            	<label for="heartClick">
-                	<i class="fa fa-heart" aria-hidden="true"></i>
+            <form action="">
+                <input type="checkbox" id="heartClick">
+                <label for="heartClick">
+                    <i class="far fa-heart" aria-hidden="true"></i>
+                    <i class="fa fa-heart" aria-hidden="true"></i>
                 </label>
-            	</c:when>
-            	<c:otherwise>
-            	<label for="heartClick">
-                	<i class="far fa-heart" aria-hidden="true"></i>
-                </label>
-            	</c:otherwise>                
-                </c:choose>               
-           
+            </form>
           <!-- </c:if> -->
             </div>
         </span>
-	
+
     </div>  
     <!-- likeChk end -->
 <div id ="modalGo" class="modal">
     
+        <h2> 테스트 중 </h2>
     <div class="modal_content">
-    <span id="modalCloseBtn"> &times; </span>
-    <p>모달창 예시입니다.</p>
+        모달창 예시입니다.
     </div>
 
 </div>
-
-    </div>
 
     </div>
     <!-- introWrite -->
@@ -134,13 +116,13 @@
     <div class="body-container"> 
 
         <div class="firstBox">
-        	
-          	  <h2>  # 해시태그 </h2>
+            <h2>  # 감성태그 </h2>
             
-      <!--	<div class="hashtagDetail"> 
+            <div class="hashtagDetail"> 
 
                 <div class="hashTag">       
                 <form action="" method="post" name="hashtagChk"> 
+
                     <input type="checkbox" name="tagChkbox" id="chk1" onclick="chkboxCnt(this)"> 
                     <label for="chk1"> #좋아요
                     </label>
@@ -162,46 +144,14 @@
                 <input type="text" name="emoTag" class="emoTag" placeholder ="해시태그를 입력해주세요 (최대 6자)">
                 <input type="button" value="남기기" class="inputBtn">
             
-            </div>  -->
-            
-                
-            
-            <div class="hashtagDetail"> 
-                <div class="hashTag">
-                	<c:set var="count" value="${1 }" />
-					<c:forEach var="h" items="${hashtag}">
-						<c:if test="${count <= 5 }">		
-                	    <%-- 	<input type="checkbox" name="chkbox" id="chk1" value=${h.hashTag }>${h.hashTag }				
-						<form action="" method="post" name="hashtagChk">  --%>
-                    <input type="checkbox" name="tagChkbox" class="tagChkbox" id="chk${h.hashNum }" onclick="chkboxCnt(this)" value=${h.hashTag }>
-                    <label for="chk${h.hashNum }" > # ${h.hashTag }<%-- >${h.hashTag } --%>
-                    </label>
-					<!-- 	</form> -->
-                	    </c:if>
-                	    <c:set var="count" value="${count+1 }"/>
-            		</c:forEach>
-            		
-
-                </div>
-                <form action="/book/inserthashtag">
-                
-                <c:choose>
-                	<c:when test="${hashtagCookieCheck }">
-               	 		<input type="text" id="hashTag" name="hashTag" class="emoTag" placeholder ="해시태그를 입력해주세요 (최대 6자)">
-               	 		 <input type="hidden" name="bookNum" value="${bookdetail.bookNum }">
-            		 	 <input type="button" value="남기기" class="inputBtn">
-                	</c:when>
-                	<c:otherwise>
-               	 		<input type="text" name="hashTag" class="emoTag" placeholder ="해시태그는 24시간에 1번만 입력 가능합니다." readonly="readonly">
-                	</c:otherwise>
-                </c:choose>
-            	</form>
             </div> 
         </div>
+
+        <!-- firstBox end -->
+
         <div class="secondBox">
             <h2> 책소개 </h2>
             <div class="bookDetail">
-            <!-- 책 소개 부분 없음 -->
                 책소개하는 칸입니다. 
 
 ‘이 소설 자체가 순수한 마법’이라는 최고의 극찬을 받으며 2017년 뉴베리 수상의 영광을 차지한 작품이다. 고요하지만 위험한 숲속에 해마다 아기가 버려진다. 또한 매년 그런 아기를 구하러 오는 마녀가 있다. 그런데 이상하다. 마녀 잰은 유독 이번 아기에게 눈길을 빼앗긴다. 그러다가 그만 실수로 아기에게 달빛을 먹이고 만다. 사실 달빛에는 어마어마한 마법이 깃들어 있다.
@@ -227,13 +177,20 @@
         </div>
         <div class="fourthBox">
             <h2> 리뷰 </h2>
-           	<div class="reviewDetail">
-           	<c:forEach var="r" items="${bookreview}">	<!-- 리뷰 -->
-           		${r.reviewTitle }<br/>
-           		${r.reviewContent }
-           	</c:forEach>
-           	</div>
+            <div class="reviewDetail"> 리뷰하는 칸입니다. </div>
             <input type="button" value="더보기" class="moreChk3">
+        </div>
+        <div class="fifthBox">
+            <h2> 관련 도서 </h2>
+            <div class="similarBook">
+                <img src="../../resources/image/similarBook.jpg" alt="error">
+                <img src="../../resources/image/similarBook.jpg" alt="error">
+                <img src="../../resources/image/similarBook.jpg" alt="error">
+                <img src="../../resources/image/similarBook.jpg" alt="error">
+                <img src="../../resources/image/similarBook.jpg" alt="error">
+                
+            </div>
+
         </div>
 
     </div>
@@ -323,10 +280,10 @@ $(function() {
 
     $('#heartClick').click(function() {
         $.ajax({
-            url: "/book/insertlike",
+            url: "heartGo.do",
             type: "get",
             data: {
-                booknumber: '${booknumber}'
+                id: '${id}'
                 
             },
 
@@ -358,32 +315,18 @@ $(function() {
 
 <script>
 
- var modal = document.getElementById('modalGo');
- var openBtn = document.getElementById('modalOpen');
- var closeBtn = document.getElementById('modalCloseBtn');
+        $(".modalOpen").click(function(){
+            $(".modal").attr("style", "display:block");
+        });
 
- openBtn.onclick = function() {
-    modal.style.display = "block";
+        $(".modalClose").click(function(){
+            $(".modal").attr("style","display:none");
 
-
- }
-
- closeBtn.onclick = function() {
-     modal.style.display ="none";
-
- }
-
-window.onclick = function(event){
-    if(event.target==modal) {
-        modal.style.display = "none";
-
-    }
-}
+        });
 
 </script>
 
 <script>
-
 $('a[href="#modalGo"]').click(function(event){
     event.preventDefault();
 
@@ -417,25 +360,7 @@ function chkboxCnt(gogo) {
 
 }
 
-
 </script>
-
-<script>
-
-
-$("#chk1").change(function() {
-    var isChk = this.checked;
-    if(isChk) {
-        $(".emoTag").val($(".tagChkbox").val());
-        
-    }
-});
-
-
-</script>
-
-
-
 
 <script>
 
@@ -460,37 +385,30 @@ function chkboxCnt(gogo) {
 
 
 <script>
-	
-	var count = 0;
-	
+
     $(function() {
         $('.inputBtn').click(function(){
 
             $.ajax({
                 url: "/book/inserthashtag",
                 type:'post',
-                data : {
-                    bookNum: '${bookdetail.bookNum}',
-                    hashTag: $('#hashTag').val()
+                data {
+
+                    bookNum: '${bookdetail.bookNum}'
+
                 },
-                success:function(data) {
-                	/* var result = data.json;
-                	alert(data); */
-                	$('.hashTag').html('');
-                	$.each(data, function(idx, val){
-                		$(".hashTag").append("<label>"+val.hashTag+"</label>");
-                		count++;
-                		if(count == 5){
-                			return false;
-                		}
-                	});
+                success:function() {
+                    $(".hashTag").html('<input type="checkbox" name="tagChkbox" id="chk1" onclick="chkboxCnt(this)">');
+
                 },
 
-            });
+            })
 
         });
-    })
+    });
 
 </script>
+
+
 </body>
 </html>

@@ -77,7 +77,7 @@ public class MyBookServiceImpl implements MyBookService{
 		
 		vo.setBookNum(booknumber);
 		vo.setReadDate(df.format(cal.getTime()));
-		
+	//	vo.setMemberEmail("abc1234@naver.com"); 
 		List<MyReadBookVO> list = mapper.readBook(vo.getMemberEmail());
 		boolean flag= false;
 		for(int i=0; i<list.size();i++) {
