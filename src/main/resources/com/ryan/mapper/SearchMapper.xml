@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ryan.mapper.SearchMapper">
-<select id="typeWriter" resultType="com.ryan.domain.EBookVO" parameterType="java.util.Map">
+<<<<<<< HEAD
+<select id="typeWriter" resultType="com.ryan.domain.EBookVO">
+	SELECT DISTINCT book_num
+=======
+<select id="typeWriter" resultType="com.ryan.domain.book.EBookVO" parameterType="java.util.Map">
 	SELECT DISTINCT book_writer
+>>>>>>> branch 'master' of https://github.com/SwimmingPolar/NationalBookstore.git
 	FROM (
 	SELECT * FROM eBook
 	WHERE 
@@ -12,7 +17,62 @@
 	) ORDER BY book_writer
 </select>
 <!-- cd를 foreach에 씌울수도 -->
-<select id="typeBookname" resultType="com.ryan.domain.EBookVO">
+<<<<<<< HEAD
+<select id="bookList" resultType="com.ryan.domain.EBookVO">
+	SELECT DISTINCT book_num
+	FROM (
+	SELECT * FROM eBook
+	WHERE 
+	<choose>
+			<when test="param1.equals('BOOK_TITLE')" >
+				<foreach collection="param2" index="index" item="search" separator="or">
+					BOOK_TITLE LIKE  '%'||#{search}||'%'
+				</foreach>
+			</when>
+			<when test="param1.equals('BOOK_WRITER')" >
+				<foreach collection="param2" index="index" item="search" separator="or" >
+					BOOK_WRITER LIKE '%'||#{search}||'%'
+				</foreach>
+			</when>
+			<when test="param1.equals('BOOK_PUBLISHER')" >
+				<foreach collection="param2" index="index" item="search" separator="or" >
+					BOOK_PUBLISHER LIKE '%'||#{search }||'%'
+				</foreach>
+			</when>
+		</choose>
+		AND BOOK_EXISTENCE LIKE 1
+	) ORDER BY book_title
+</select>
+
+<select id="ebookList" resultType="com.ryan.domain.EBookVO">
+	SELECT DISTINCT book_num
+	FROM (
+	SELECT * FROM eBook
+	WHERE 
+	<choose>
+			<when test="param1.equals('BOOK_TITLE')" >
+				<foreach collection="param2" index="index" item="search" separator="or">
+					BOOK_TITLE LIKE  '%'||#{search}||'%'
+				</foreach>
+			</when>
+			<when test="param1.equals('BOOK_WRITER')" >
+				<foreach collection="param2" index="index" item="search" separator="or" >
+					BOOK_WRITER LIKE '%'||#{search}||'%'
+				</foreach>
+			</when>
+			<when test="param1.equals('BOOK_PUBLISHER')" >
+				<foreach collection="param2" index="index" item="search" separator="or" >
+					BOOK_PUBLISHER LIKE '%'||#{search }||'%'
+				</foreach>
+			</when>
+		</choose>
+	) ORDER BY book_title
+</select>
+
+<select id="Ebook" resultType="com.ryan.domain.EBookVO">
+=======
+<select id="typeBookname" resultType="com.ryan.domain.book.EBookVO">
+>>>>>>> branch 'master' of https://github.com/SwimmingPolar/NationalBookstore.git
 	SELECT DISTINCT book_title
 	FROM (
 	SELECT * FROM eBook
@@ -23,7 +83,7 @@
 	) ORDER BY book_title
 </select>
 <!--@@@@@@@@@@@@@@@@@@@@@@@@@@@ 이 밑으로 제가 수정 좀 했습니다.   @@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
-	<select resultType="com.ryan.domain.EBookVO" id="searchEbook" >
+	<select resultType="com.ryan.domain.book.EBookVO" id="searchEbook" >
 		SELECT * FROM EBOOK WHERE
 		<choose>
 			<when test="param1.equals('BOOK_TITLE')" >
@@ -45,7 +105,7 @@
 		AND BOOK_EXISTENCE LIKE 0
 	</select>
 	<!-- 종이책 검색 -->
-	<select resultType="com.ryan.domain.EBookVO" id="searchPaperbook" >
+	<select resultType="com.ryan.domain.book.EBookVO" id="searchPaperbook" >
 		SELECT * FROM EBOOK WHERE
 		<choose>
 			<when test="param1.equals('BOOK_TITLE')" >

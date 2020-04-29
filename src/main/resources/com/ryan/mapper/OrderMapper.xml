@@ -28,7 +28,7 @@
 		)
 	</insert>
 	
-	<select id="getOrderList" parameterType="String" resultType="com.ryan.domain.OrderVO">
+	<select id="getOrderList" parameterType="String" resultType="com.ryan.domain.payment.OrderVO">
 		SELECT * FROM orderNumber WHERE member_Email = #{memberEmail}
 	</select>
 	
