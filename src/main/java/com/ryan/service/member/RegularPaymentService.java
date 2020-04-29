@@ -12,4 +12,7 @@ public interface RegularPaymentService {
 	//결제 정보 입력
 	public boolean insertPaymentInfo(String memberEmail, String memberSid);
 	
+	//스케쥴
+	public void autoRegularPaymentSystem();
+	
 }
