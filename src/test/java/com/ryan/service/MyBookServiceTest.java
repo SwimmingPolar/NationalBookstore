@@ -45,7 +45,7 @@ public class MyBookServiceTest {
 		MyReadBookVO vo = new MyReadBookVO();
 		vo.setBookNum(197);
 		vo.setMemberEmail("abc1234@naver.com");
-		log.info(mapper.readBookList(vo));
+		
 	}
 	/*
 	@Test

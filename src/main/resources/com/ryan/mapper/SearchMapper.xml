@@ -12,6 +12,7 @@
 	</foreach>
 	) ORDER BY book_writer
 </select>
+<!-- cd를 foreach에 씌울수도 -->
 <select id="bookList" resultType="com.ryan.domain.book.EBookVO">
 	SELECT DISTINCT book_num
 	FROM (
