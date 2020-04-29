@@ -47,7 +47,7 @@ public interface DetailBookService {
 //	public double insertGrade(BookGradeVO vo);
 	
 	//좋아요 입력
-	public int insertLike(int booknumber, HttpServletRequest request, HttpServletResponse response);
+	public int insertLike(int booknumber, HttpServletRequest request);
 	
 	// 조회수 증가
 	public void updateBookLookUp(EBookVO vo , HttpServletRequest request , HttpServletResponse response);
