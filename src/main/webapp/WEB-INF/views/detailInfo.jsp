@@ -23,9 +23,6 @@
 
     <link rel="stylesheet" href="../../resources/styles/detailInfo.css">
     <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
     <script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -99,16 +96,16 @@
 
     </div>  
     <!-- likeChk end -->
-<div class="modal">
-    <div class = "likeModalContent">
-        <h2> 테스트 중 </h2>
-        <button type="button" id="modalClose"> 닫기 </button>
-    </div>
-    <div class="modalLayer">
-
+<div id ="modalGo" class="modal">
+    
+    <div class="modal_content">
+    <span id="modalCloseBtn"> &times; </span>
+    <p>모달창 예시입니다.</p>
     </div>
 
 </div>
+
+    </div>
 
     </div>
     <!-- introWrite -->
@@ -121,7 +118,36 @@
 
         <div class="firstBox">
         	
-          	  <h2>  해시태그 </h2>
+          	  <h2>  # 해시태그 </h2>
+            
+      <!--        <div class="hashtagDetail"> 
+
+                <div class="hashTag">       
+                <form action="" method="post" name="hashtagChk"> 
+                    <input type="checkbox" name="tagChkbox" id="chk1" onclick="chkboxCnt(this)"> 
+                    <label for="chk1"> #좋아요
+                    </label>
+                    <input type="checkbox" name="tagChkbox" id="chk2" onclick="chkboxCnt(this)">
+                    <label for="chk2"> #특이해요
+                    </label>
+                    <input type="checkbox" name="tagChkbox" id="chk3" onclick="chkboxCnt(this)">    
+                    <label for="chk3"> #과거세대와의 소통
+                    </label>
+                    <input type="checkbox" name="tagChkbox" id="chk4" onclick="chkboxCnt(this)">
+                    <label for="chk4"> #노잼
+                    </label>
+                    <input type="checkbox" name="tagChkbox" id="chk5" onclick="chkboxCnt(this)">
+                    <label for="chk5"> #표지부터 소장각
+                    </label>
+                </form>
+                </div>
+                <form action="" method="POST"></form>
+                <input type="text" name="emoTag" class="emoTag" placeholder ="해시태그를 입력해주세요 (최대 6자)">
+                <input type="button" value="남기기" class="inputBtn">
+            
+            </div>  -->
+            
+                
             
             <div class="hashtagDetail"> 
                 <div class="hashTag">
@@ -314,14 +340,129 @@ $(function() {
 
 <script>
 
-        $(".modalOpen").click(function(){
-            $(".modal").attr("style", "display:block");
-        });
+ var modal = document.getElementById('modalGo');
+ var openBtn = document.getElementById('modalOpen');
+ var closeBtn = document.getElementById('modalCloseBtn');
 
-        $(".modalClose").click(function(){
-            $(".modal").attr("style","display:none");
+ openBtn.onclick = function() {
+    modal.style.display = "block";
 
-        });
+
+ }
+
+ closeBtn.onclick = function() {
+     modal.style.display ="none";
+
+ }
+
+window.onclick = function(event){
+    if(event.target==modal) {
+        modal.style.display = "none";
+
+    }
+}
 
 </script>
+
+<script>
+$('a[href="#modalGo"]').click(function(event){
+    event.preventDefault();
+
+    $(this).modal({
+        fadeDuration:250
+    });
+
+});
+
+</script>
+
+
+<script>
+
+var maxChkbox = 3; 
+var cnt=0;
+
+function chkboxCnt(gogo) {
+    if(gogo.checked) {
+        cnt +=1;
+    }else {
+        cnt -=1;
+    }
+
+    if(cnt > maxChkbox) {
+        alert("3개까지 선택가능합니다. ");
+        gogo.checked=false;
+        cnt -= 1;
+        
+    }
+
+}
+
+
+</script>
+
+<script>
+
+
+$("#chk1").change(function() {
+    var isChk = this.checked;
+    if(isChk) {
+        $(".emoTag").val($("#chk1").val());
+        
+    }
+});
+
+
+</script>
+
+
+
+
+<script>
+
+function chkboxCnt(gogo) {
+    var chkvalue = gogo.val();
+    $.ajax( {
+        url:"/book/inserthashtag",
+        type:"post",
+        data {
+            bookNum : '${bookdetail.bookNum}',
+            hashTag : chkvalue
+
+        },
+        success:function (hashtagList) {
+
+        },
+
+    })
+}
+
+</script>
+
+
+<script>
+
+    $(function() {
+        $('.inputBtn').click(function(){
+
+            $.ajax({
+                url: "/book/inserthashtag",
+                type:'post',
+                data {
+
+                    bookNum: '${bookdetail.bookNum}'
+
+                },
+                success:function() {
+                    $(".hashTag").html('<input type="checkbox" name="tagChkbox" id="chk7" onclick="chkboxCnt(this)">');
+
+                },
+
+            })
+
+        });
+    });
+
+</script>
+</body>
 </html>
