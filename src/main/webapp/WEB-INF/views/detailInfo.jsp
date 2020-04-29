@@ -124,7 +124,7 @@
         	
           	  <h2>  # 해시태그 </h2>
             
-      <!--        <div class="hashtagDetail"> 
+      <!--	<div class="hashtagDetail"> 
 
                 <div class="hashTag">       
                 <form action="" method="post" name="hashtagChk"> 
@@ -158,16 +158,21 @@
                 	<c:set var="count" value="${1 }" />
 					<c:forEach var="h" items="${hashtag}">
 						<c:if test="${count <= 5 }">		
+<<<<<<< HEAD
                 	    	<input type="checkbox" name="chkbox" id="chk1" value=${h.hashTag }>${h.hashTag }
+=======
+						
+						<form action="" method="post" name="hashtagChk"> 
+                    <input type="checkbox" name="tagChkbox" class="tagChkbox" id="chk1" onclick="chkboxCnt(this)" value=${h.hashTag }>${h.hashTag }> 
+                    <label for="chk1"> # ${h.hashTag }>${h.hashTag }
+                    </label>
+						</form>
+>>>>>>> branch 'master' of https://github.com/SwimmingPolar/NationalBookstore.git
                 	    </c:if>
                 	    <c:set var="count" value="${count+1 }"/>
             		</c:forEach>
             		
-           
-                <!--     <input type="checkbox" name="chkbox" id="chk3">
-                    <input type="checkbox" name="chkbox" id="chk4">
-                    <input type="checkbox" name="chkbox" id="chk5">
-                    <input type="checkbox" name="chkbox" id="chk6"> -->
+
                 </div>
                 <form action="/book/inserthashtag">
                 
@@ -369,6 +374,7 @@ window.onclick = function(event){
 </script>
 
 <script>
+
 $('a[href="#modalGo"]').click(function(event){
     event.preventDefault();
 
@@ -411,7 +417,7 @@ function chkboxCnt(gogo) {
 $("#chk1").change(function() {
     var isChk = this.checked;
     if(isChk) {
-        $(".emoTag").val($("#chk1").val());
+        $(".emoTag").val($(".tagChkbox").val());
         
     }
 });
@@ -470,6 +476,7 @@ function chkboxCnt(gogo) {
                 		}
                 	});
                 },
+
             });
 
         });
