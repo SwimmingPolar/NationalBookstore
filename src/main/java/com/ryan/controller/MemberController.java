@@ -120,7 +120,7 @@ public class MemberController {
 		return "업데이트 완료후 보여줄 페이지 경로";
 	}
 	
-	@PostMapping("/signin")
+	@GetMapping("/signin")
 	public String memberLogin(@RequestParam(required = false, name = "rememberMe") String autoLogin , MemberVO member ,HttpServletRequest request, HttpServletResponse response , Model model) {
 		if(memberService.memberSignIn(member)) {
 			if(autoLogin != null) {
@@ -151,10 +151,10 @@ public class MemberController {
 	public String getEmailLogin() {
 		return "email-signin";
 	}
-	@GetMapping("/signin")
-	public String getSignIn() {
-		return "signin";
-	}
+//	@GetMapping("/signin")
+//	public String getSignIn() {
+//		return "signin";
+//	}
 	@GetMapping("/signup")
 	public String getMemberSignUp() {
 		return "signup";
@@ -193,8 +193,8 @@ public class MemberController {
 		return "redirect:" + paymentService.regularPaymentReady(member);
 	}
 	
-	@PostMapping("/paymentSuccess")
-	public String memberPaymentSuccess(@RequestParam("pg_token") String pg_token, @ModelAttribute("ryanMember") MemberVO member) {
+	@GetMapping("/paymentSuccess")
+	public String memberPaymentSuccess(@RequestParam("pg_token") String pg_token, @ModelAttribute("ryanMember") MemberVO member, Model model) {
 		
 		KakaoPayApprovalVO kakaoPayApprovalVO = paymentService.paymentComplete(pg_token, member);
 		
@@ -202,7 +202,14 @@ public class MemberController {
 			log.info(paymentService);
 		}
 		
-		return "test";
+		model.addAttribute("info", kakaoPayApprovalVO);
+		
+		return "kakaoPaySuccess";
+	}
+	
+	@GetMapping("/test")
+	public String test() {
+		return "kakao";
 	}
 	
 //	@PutMapping

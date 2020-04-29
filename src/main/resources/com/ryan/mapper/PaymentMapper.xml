@@ -14,9 +14,13 @@
 		(
 			#{memberEmail},
 			#{memberSid},
-			SYSDATE + 30,
+			SYSDATE,
 			1
 		)
 	</insert>
+	
+	<select id="getTodayRegularPaymentList" resultType="com.ryan.domain.member.PaymentVO">
+		SELECT * FROM member_payment WHERE TO_CHAR(member_next_payment,'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD')
+	</select>
 	
 </mapper>

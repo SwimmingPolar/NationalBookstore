@@ -25,11 +25,10 @@
 	<context:component-scan base-package="com.ryan.controller" />
 	<context:component-scan base-package="com.ryan.exception"/>
 	
-	
-	   <!-- timer 설정 -->   
+<!-- 	   timer 설정   
  	<task:scheduler id="gsScheduler" pool-size="10" />
  	<task:executor id="gsTaskExecutor" pool-size="10" />
- 	<task:annotation-driven executor="gsTaskExecutor" scheduler="gsScheduler" /> 
+ 	<task:annotation-driven executor="gsTaskExecutor" scheduler="gsScheduler" />  -->
 	
 	<!-- interceptor 설정 -->
 	<beans:bean id="cookieInterceptor" class="com.ryan.interceptor.CookieInterceptor"/>
