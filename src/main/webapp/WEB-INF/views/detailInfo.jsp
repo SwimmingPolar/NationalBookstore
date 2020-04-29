@@ -370,7 +370,6 @@ window.onclick = function(event){
 </script>
 
 <script>
-
 $('a[href="#modalGo"]').click(function(event){
     event.preventDefault();
 
@@ -431,11 +430,12 @@ function chkboxCnt(gogo) {
     $.ajax( {
         url:"/book/inserthashtag",
         type:"post",
-        data {
+        data : {
             bookNum : '${bookdetail.bookNum}',
             hashTag : chkvalue
 
         },
+        
         success:function (hashtagList) {
 
         },
@@ -454,20 +454,20 @@ function chkboxCnt(gogo) {
             $.ajax({
                 url: "/book/inserthashtag",
                 type:'post',
-                data {
+                data : {
 
                     bookNum: '${bookdetail.bookNum}'
 
                 },
                 success:function() {
-                    $(".hashTag").html('<input type="checkbox" name="tagChkbox" id="chk7" onclick="chkboxCnt(this)">');
-
+                  /*   $(".hashTag").html('<input type="checkbox" name="tagChkbox" id="chk7" onclick="chkboxCnt(this)">');
+ */
                 },
 
             });
 
         });
-    });
+    })
 
 </script>
 </body>
