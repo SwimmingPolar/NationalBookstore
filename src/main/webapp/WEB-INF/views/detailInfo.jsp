@@ -158,7 +158,7 @@
                 	<c:set var="count" value="${1 }" />
 					<c:forEach var="h" items="${hashtag}">
 						<c:if test="${count <= 5 }">		
-                	    <input type="checkbox" name="chkbox" id="chk1" value=${h.hashTag }>${h.hashTag }
+                	    	<input type="checkbox" name="chkbox" id="chk1" value=${h.hashTag }>${h.hashTag }
                 	    </c:if>
                 	    <c:set var="count" value="${count+1 }"/>
             		</c:forEach>
@@ -173,9 +173,9 @@
                 
                 <c:choose>
                 	<c:when test="${hashtagCookieCheck }">
-               	 		<input type="text" name="hashTag" class="emoTag" placeholder ="해시태그를 입력해주세요 (최대 6자)">
+               	 		<input type="text" id="hashTag" name="hashTag" class="emoTag" placeholder ="해시태그를 입력해주세요 (최대 6자)">
                	 		 <input type="hidden" name="bookNum" value="${bookdetail.bookNum }">
-            		 	 <input type="submit" value="남기기" class="inputBtn">
+            		 	 <input type="button" value="남기기" class="inputBtn">
                 	</c:when>
                 	<c:otherwise>
                	 		<input type="text" name="hashTag" class="emoTag" placeholder ="해시태그는 24시간에 1번만 입력 가능합니다." readonly="readonly">
@@ -445,27 +445,35 @@ function chkboxCnt(gogo) {
 
 
 <script>
-
+	
+	var count = 0;
+	
     $(function() {
         $('.inputBtn').click(function(){
 
             $.ajax({
                 url: "/book/inserthashtag",
                 type:'post',
-                data {
-
-                    bookNum: '${bookdetail.bookNum}'
-
+                data : {
+                    bookNum: '${bookdetail.bookNum}',
+                    hashTag: $('#hashTag').val()
                 },
-                success:function() {
-                    $(".hashTag").html('<input type="checkbox" name="tagChkbox" id="chk7" onclick="chkboxCnt(this)">');
-
+                success:function(data) {
+                	/* var result = data.json;
+                	alert(data); */
+                	$('.hashTag').html('');
+                	$.each(data, function(idx, val){
+                		$(".hashTag").append("<label>"+val.hashTag+"</label>");
+                		count++;
+                		if(count == 5){
+                			return false;
+                		}
+                	});
                 },
-
-            })
+            });
 
         });
-    });
+    })
 
 </script>
 </body>

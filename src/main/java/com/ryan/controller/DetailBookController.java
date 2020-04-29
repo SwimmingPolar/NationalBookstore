@@ -65,7 +65,7 @@ public class DetailBookController {
 		return "detailInfo";				
 	}
 	
-	@RequestMapping("/book/inserthashtag")
+	@RequestMapping("/inserthashtag")
 	public @ResponseBody List<HashtagVO> insertHashtag(HashtagVO vo, HttpServletRequest request, HttpServletResponse response) {		
 		service.hashtagCookie(vo, request, response);
 		return service.hashtag(vo.getBookNum());
