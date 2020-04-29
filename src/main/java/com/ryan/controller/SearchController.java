@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,12 +14,16 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.ryan.domain.book.EBookVO;
+import com.ryan.domain.payment.CartVO;
 import com.ryan.service.SearchServiceImpl;
 
 @Controller
@@ -87,7 +91,6 @@ public class SearchController {
 	/////////////////////////////////////////////////////////////////이 밑으로는 수정 좀 헀습니다.
 	@RequestMapping(value="/main")
 	public String Testo() {
-		System.out.println("asd");
 		return "search";
 	}
 	@RequestMapping(value="/search", method= RequestMethod.GET)
@@ -106,4 +109,21 @@ public class SearchController {
 		return "search";
 	}
 	
+	
+	@PostMapping(value="/cart")
+	@ResponseBody
+	public Map<String, String> Carto(@RequestBody CartVO[] cartList) {
+		System.out.println("장바구니 담기 요청.");
+		Map<String, String> resultMessage = new HashMap<String, String>();
+		resultMessage.put("doneM", "통신 성공");
+		resultMessage.put("failM", "통신 실패");
+		if(cartList.length!=0) {
+			for(CartVO vo : cartList) {
+				System.out.println(vo);
+			}
+		} else {
+			System.out.println("리스트가 비어있습니다.");
+		}
+		return resultMessage;
+	}
 }
