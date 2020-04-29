@@ -1,4 +1,4 @@
-package com.ryan.service;
+package com.ryan.service.main;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
