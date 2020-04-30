@@ -1,4 +1,4 @@
-package com.ryan.service;
+package com.ryan.service.main;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,36 +25,6 @@ public class SearchServiceImpl implements SearchService{
 	public ArrayList<EBookVO> ebookList(String type, String[] keyword) {
 		return mapper.ebookList(type, keyword);
 	}
-	
-	/*
-	 * @Override public ArrayList<EBookVO> searchBookM(String type,String []
-	 * keyword) { ArrayList<EBookVO> vo=new ArrayList<EBookVO>();
-	 * 
-	 * mapper.
-	 * 
-	 * if(writer!=null) { if(writer.length()>0) { String [] w=writer.split("\\s+");
-	 * //vo.addAll(mapper.typeWriter(w)); vo.addAll(mapper.typeWriter(w));
-	 * //System.out.println(vo.get(3).getBookTitle()+"제목");
-	 * //System.out.println(vo.size()+"저자"); } }else if(bookname!=null) {
-	 * if(bookname.length()>0){ String [] bn=bookname.split("\\s+");
-	 * //vo.addAll(mapper.); vo.addAll(mapper.typeBookname(bn));
-	 * //System.out.println(vo.get(3).getBookTitle());
-	 * //System.out.println(vo.size()+"북네임");
-	 * //System.out.println(vo.get(0).getBookTitle());
-	 * 
-	 * } }else {
-	 * 
-	 * } return vo; }
-	 */
-
-	
-	/*
-	 * @Override public ArrayList<EBookVO> bookList(ArrayList<EBookVO> tmpArr,int
-	 * pageNum) { ArrayList<EBookVO> vo=new ArrayList<EBookVO>(); for(int
-	 * i=0;i<tmpArr.size();i++) { if(tmpArr.get(i).getBookExistence()==1) {
-	 * vo.add(tmpArr.get(i)); } } return vo; }
-	 */
-	
 	
 	@Override
 	public ArrayList<EBookVO> pageList(ArrayList<EBookVO> tmpList,int pageNum) {

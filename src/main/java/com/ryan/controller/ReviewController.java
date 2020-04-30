@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ryan.domain.ReviewVO;
-import com.ryan.service.ReviewServiceImpl;
+import com.ryan.service.main.ReviewServiceImpl;
 
 @Controller
 @RequestMapping("/review/*")
