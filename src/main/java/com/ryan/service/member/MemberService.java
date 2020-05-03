@@ -18,6 +18,9 @@ public interface MemberService {
 	//로그인 유효성 검사
 	public boolean memberSignIn(MemberVO member);
 	
+	//비밀번호 암호화
+	
+	
 	//쿠키용
 	
 	//자동로그인 체크시 쿠키생성

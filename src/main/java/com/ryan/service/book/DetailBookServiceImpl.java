@@ -120,7 +120,7 @@ public class DetailBookServiceImpl implements DetailBookService{
 	}
 */
 	@Override
-	public int insertLike(int booknumber, HttpServletRequest request, HttpServletResponse response) {
+	public int insertLike(int booknumber, HttpServletRequest request) {
 		ArrayList<BookLikeVO> list = mapper.bookLikeList(booknumber);
 		HttpSession session = request.getSession();	
 		BookLikeVO vo = (BookLikeVO) session.getAttribute("ryanmember");

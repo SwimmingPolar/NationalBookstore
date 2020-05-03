@@ -20,6 +20,7 @@
 	String type = request.getParameter("type");
 	String keyword = request.getParameter("keyword");
 	String category = request.getParameter("category");
+	String pageNum = request.getParameter("page");
 	
 	if(type == null)
 		type = "BOOK_TITLE";
@@ -27,6 +28,8 @@
 		keyword = "";
 	if(category == null)
 		category = "all";
+	if(pageNum == null)
+		pageNum = "1";
 %>
 <script type="text/javascript" >
 	$(document).ready(function() {
@@ -34,6 +37,7 @@
 		var keyword = "<%=keyword %>";
 		var category = "<%=category %>";
 		var layout = "${cookie.layout.value}";
+		var pageNum = "<%=pageNum %>";
 		if(layout == "") {
 			layout = "list";
 		}
@@ -42,6 +46,7 @@
 		$(".keyword").val(keyword);
 		$(".category[type='hidden']").val(category);
 		$(".btn-layout."+layout).css("color", "#000000");
+		$(".btn-page."+pageNum).css("color", "var(--red-color)");
 		//레이아웃 유지
 		if(layout == "list") {
 			$(".search-result").removeClass("grid-layout");
@@ -80,9 +85,26 @@
 			var cartList = [];
 			$(".checkbox-cart").each(function() {
 				if($(this).prop("checked") == true)
-					cartList.push($(this).val());
+					cartList.push({ bookNum : $(this).val(), bookCount : "1" });
 			})
 			console.dir(cartList);
+			$.ajax({
+				url : "/controller/search/cart",
+				dataType : "json",
+				contentType : "application/json",
+				data : JSON.stringify(cartList),
+				type : "POST"
+			})
+			.done(function(response) {
+				console.dir(response.doneM);
+			})
+			.fail(function(response) {
+				console.dir(response.failM);
+			})
+		})
+		
+		$(".btn-page").click(function(data) {
+			console.dir(data.target.value);
 		})
 	});
 </script>
@@ -105,7 +127,7 @@
 				<option value="BOOK_WRITER" >저자</option>
 				<option value="BOOK_PUBLISHER" >출판사</option>
 			</select>
-			<input class="keyword" type="text" name="keyword" placeholder="검색어를 입력해주세요"/>
+			<input class="keyword" type="text" name="keyword" placeholder="검색어를 입력해주세요" autocomplete="off" spellcheck="false"/>
 			<button class="btn-search fas fa-search" name="category" value="all" ></button>
 		</div>
 	</form>
@@ -175,7 +197,7 @@
 							<c:forEach var="book" items="${list.getValue() }" begin="0" end="3" varStatus="status" >
 								<c:if test="${loop_flag }" >
 									<div class="search" >
-										<div class="book" >
+										<div class="book ${book.bookNum }" >
 											<!-- 책 커버 -->
 											<img class="cover" />
 											<!-- 책 정보 -->
@@ -236,7 +258,7 @@
 					<div class="search-result" >
 						<c:forEach var="book" items="${result.get(param.category) }" >
 							<div class="search" >
-								<div class="book" >
+								<div class="book ${book.bookNum }" >
 									<!-- 책 커버 -->
 									<img class="cover" />
 									<c:if test="${param.category eq 'paper' }" >
@@ -267,6 +289,15 @@
 					</div>
 					<%-- 책리스트 끝 --%>
 				</div>
+				<form action="/controller/search/search" >
+				<div class="div-page" >
+					<button class="btn-page before" name="pageNumber" value="before"><</button>
+					<c:forEach var="i" begin="0" end="9" >
+						<button class="btn-page ${i+1 }" name="pageNumber" value="${i+1 }" >${i+1 }</button>
+					</c:forEach>
+					<button class="btn-page next" name="pageNumber" value="after">></button>
+				</div>
+				</form>
 			</c:otherwise>
 			<%-- 단일 카테고리일때 끝 --%>
 		</c:choose>

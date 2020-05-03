@@ -9,7 +9,7 @@ import com.ryan.domain.payment.CartVO;
 public interface CartMapper {
 	
 	//담기
-	public int insertCart(CartVO cart);
+	public int insertCart(@Param("cartList") CartVO[] cart, @Param("memberEmail") String memberEmail);
 	//목록
 	public ArrayList<CartVO> getCartList(String memberEmail);
 	

@@ -22,14 +22,17 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<!-- 회원 -->
 	<context:component-scan base-package="com.ryan.controller" />
 	<context:component-scan base-package="com.ryan.exception"/>
 	
+	<!-- 관리자 -->
+	<context:component-scan base-package="com.admin.controller"/>
 	
-	   <!-- timer 설정 -->   
+<!-- 	   timer 설정   
  	<task:scheduler id="gsScheduler" pool-size="10" />
  	<task:executor id="gsTaskExecutor" pool-size="10" />
- 	<task:annotation-driven executor="gsTaskExecutor" scheduler="gsScheduler" /> 
+ 	<task:annotation-driven executor="gsTaskExecutor" scheduler="gsScheduler" />  -->
 	
 	<!-- interceptor 설정 -->
 	<beans:bean id="cookieInterceptor" class="com.ryan.interceptor.CookieInterceptor"/>
@@ -42,6 +45,7 @@
 			<mvc:mapping path="/**"/>
 			<mvc:exclude-mapping path="/member/signin"/>
 			<mvc:exclude-mapping path="/member/logout"/>
+			<mvc:exclude-mapping path="/member/signUp"/>
 			<beans:ref bean="cookieInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>

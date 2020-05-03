@@ -83,20 +83,21 @@ public class DetailBookController {
 	
 	//좋아요 입력
 	@RequestMapping("/insertlike")
-	public @ResponseBody int insertLike(@RequestParam("booknumber") int booknumber, HttpServletRequest request, HttpServletResponse response) {
-		return service.insertLike(booknumber, request, response);
+	public @ResponseBody int insertLike(@RequestParam("booknumber") int booknumber, HttpServletRequest request) {
+		return service.insertLike(booknumber, request);
 	}
 	
 	//찜 책장에 추가
-	@RequestMapping("/insertList")
+	@RequestMapping("/insertLibList")
 	public @ResponseBody Boolean insertList(Model model, MyLibVO vo) {
-		return mservice.insertList(vo);
+		return mservice.insertLibBook(vo);
 	}
 	
 	//읽은책 추가
 	@RequestMapping("/insertreadbook")
-	public @ResponseBody int insertReadBook(MyReadBookVO vo) {
-		return mservice.insertReadBook(vo);
+	public String insertReadBook(@RequestParam("booknumber") int booknumber, MyReadBookVO vo) {
+		mservice.insertReadBook(booknumber, vo);
+		return "view";
 	}
 	
 }

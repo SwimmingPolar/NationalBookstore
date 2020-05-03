@@ -83,7 +83,7 @@ public class OrderServiceImpl implements OrderService {
 		params.add("quantity", "1"); //상품 수량
 		params.add("total_amount", "1000"); //상품 총액
 		params.add("tax_free_amount", "0"); // 비과세
-		params.add("approval_url", "http://localhost:8181/kakaoPaySuccess"); //성공
+		params.add("approval_url", "http://localhost:8181/member/paymentSuccess"); //성공
 		params.add("cancel_url", "http://localhost:8181/kakaoCancel"); //취소
 		params.add("fail_url", "http://localhost:8181/kakaoFail");
 		

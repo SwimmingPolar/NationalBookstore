@@ -1,16 +1,19 @@
 package com.ryan.service.book;
 
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.ryan.domain.book.MyLibVO;
 import com.ryan.domain.book.MyReadBookVO;
@@ -20,6 +23,7 @@ import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Service
+@SessionAttributes("ryanMember")
 @Log4j
 public class MyBookServiceImpl implements MyBookService{
 	
@@ -27,72 +31,67 @@ public class MyBookServiceImpl implements MyBookService{
 	private MyBookMapper mapper;
 
 	@Override
-	public ArrayList<MyLibVO> readingBook(MyLibVO vo, HttpServletRequest request) {		//찜 책장 
-		HttpSession session = request.getSession();
-		MyLibVO myvo = (MyLibVO) session.getAttribute("ryanmember");
-		
-		if(myvo.getMemberEmail().equals(vo.getMemberEmail()) && myvo.getBookNum()==vo.getBookNum()) {
-			
-		}
-		
-		return mvo;
+	public List<MyLibVO> libBook(@ModelAttribute("ryanMember") MyLibVO vo) {	//찜 책장 조회
+		// TODO Auto-generated method stub		
+		List<MyLibVO> list = mapper.libBook(vo.getMemberEmail());		
+		return list;
 	}
 
-	@Override
-	public ArrayList<MyLibVO> deleteList(MyLibVO vo) {
-		int num = mapper.deleteList(vo);
-		if(num==1) {
-			log.info("mybook list delete 실행 ");
-		}else {
-			log.info(" mybook list delete 오류");
-		}
-		return mapper.readingBook(vo);
-	}
-
-	@Override
-	public boolean insertList(MyLibVO vo) {
+	@Override	//찜 책장 삭제
+	public List<MyLibVO> deleteLibBook(MyLibVO vo) {
 		// TODO Auto-generated method stub
-		boolean flag = false;
-		for(int i=0; i<mapper.readingBook(vo).size(); i++) {
-			if(mapper.readingBook(vo).get(i).getBookNum()!=vo.getBookNum()) {
-				/*
-				 * DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); String time =
-				 * df.format(cal.getTime());
-				 */
-				flag=true;
-				mapper.insertList(vo);
-				return flag;
-			}
-		}
-		return flag;
-
+		int num=mapper.deleteLibBook(vo);
+		List<MyLibVO> list = mapper.libBook(vo.getMemberEmail());		
+		return list;
 	}
 
-	@Override
-	public int insertReadBook(MyReadBookVO vo) {
+	@Override 	//찜 책장 추가
+	public Boolean insertLibBook(MyLibVO vo) {
 		// TODO Auto-generated method stub
-		ArrayList<MyReadBookVO> list = mapper.readBookList(vo);
-		int num=0;
-		for(MyReadBookVO read : list) {
-			if(read.getBookNum()==vo.getBookNum() && read.getMemberEmail().equals(vo.getMemberEmail())) {
-				return mapper.updateReadBook(vo);				
-			}else {
-				return mapper.insertReadBook(vo);
-			}
-		}
-		return num;
+		int num = mapper.insertLibBook(vo);
+		if(num==1) return true;
+		return false;		
 	}
 
-	@Override
-	public ArrayList<MyReadBookVO> readBookList(MyReadBookVO vo) {
+	@Override		//읽은책 조회
+	public List<MyReadBookVO> readBook(@ModelAttribute("ryanMember") MyReadBookVO vo) {
 		// TODO Auto-generated method stub
-		return mapper.readBookList(vo);
+		List<MyReadBookVO> list = mapper.readBook(vo.getMemberEmail());
+		return list;
 	}
 
-	@Override
-	public ArrayList<MyReadBookVO> deleteReadBook(MyReadBookVO vo) {
+	@Override		//읽은책 삭제
+	public List<MyReadBookVO> deleteReadBook(MyReadBookVO vo) {
 		// TODO Auto-generated method stub
 		mapper.deleteReadBook(vo);
-		return mapper.readBookList(vo);
-	}		
+		List<MyReadBookVO> list = mapper.readBook(vo.getMemberEmail());
+		return list;
+	}
+
+	@Override		//읽은책 추가
+	public Boolean insertReadBook(int booknumber, @ModelAttribute("ryanMember") MyReadBookVO vo) {
+		// TODO Auto-generated method stub
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());		
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
+		vo.setBookNum(booknumber);
+		vo.setReadDate(df.format(cal.getTime()));
+	//	vo.setMemberEmail("abc1234@naver.com"); 
+		List<MyReadBookVO> list = mapper.readBook(vo.getMemberEmail());
+		boolean flag= false;
+		for(int i=0; i<list.size();i++) {
+			if(list.get(i).getBookNum()==vo.getBookNum()) {
+				flag=true;
+				break;
+			}
+		}
+		if(!flag) {
+			mapper.insertReadBook(vo);
+			return false;
+		}else {
+			mapper.updateReadBook(vo);	//읽은시간 업데이트 해주고 끝
+			return true;
+		}
+	}
 }

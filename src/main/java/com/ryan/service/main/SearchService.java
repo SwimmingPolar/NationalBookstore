@@ -1,4 +1,4 @@
-package com.ryan.service;
+package com.ryan.service.main;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -8,10 +8,10 @@ import com.ryan.domain.book.EBookVO;
 
 public interface SearchService {
 	//검색결과 책리스트
-	public ArrayList<EBookVO> searchBookM(String writer,String bookname);
+	public ArrayList<EBookVO> bookList(String type,String [] keyword);
 	
 	//검색한 결과중 현물책 리스트
-	public  ArrayList<EBookVO> bookList(ArrayList<EBookVO> tmpArr);
+	public  ArrayList<EBookVO> ebookList(String type,String [] keyword);
 	
 
 	//e북이나 현물북의 페이지 요청이 있을시 페이지 번호를 받고 해당 페이지 북리스트를 넘긴다
