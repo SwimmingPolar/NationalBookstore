@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ryan.mapper.ReviewMapper">
-<insert id="insertReview">
+<insert id="insertReview" parameterType="com.ryan.domain.ReviewVO">
+<selectKey keyProperty="reviewNum" resultType="int" order="BEFORE">
+SELECT review_num.nextval FROM book_Review
+</selectKey>
 		INSERT INTO book_Review
 		(
+			review_num,
 			book_num,
 			member_email,
 			review_title,
@@ -12,6 +16,7 @@
 		)
 		VALUES
 		(
+			#{reviewNum}
 			#{bookNum},
 			#{memberEmail},
 			#{reviewTitle},
@@ -32,4 +37,17 @@
 		review_regdate = #{reviewRegdate}
 		WHERE review_num = #{reviewNum}
 	</update>
+	
+	<select id="searchRead">
+	SELECT read_num FROM my_read_book
+	WHERE member_email=#{memberEmail},
+	book_num=#{bookNum}
+	</select>
+	
+	<select id="searchOrder">
+	SELECT o.orderlist_num FROM order_object o
+	JOIN order_number n on o.order_num=n.order_num
+	WHERE n.member_email=#{memberEmail},
+	o.book_num=#{bookNum}
+	</select>
 </mapper>
