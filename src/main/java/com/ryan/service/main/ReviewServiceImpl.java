@@ -19,15 +19,20 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
-	public Boolean delecteReview(int reviewNum, MemberVO member) {
-		// TODO Auto-generated method stub
-		return mapper.deleteReview(reviewNum)==1?true:false;
+	public Boolean delecteReview(String memberEmail,int bookNum) {
+			return mapper.deleteReview(memberEmail,bookNum)==1?true:false;
+	
 	}
 
 	@Override
 	public Boolean updateReview(ReviewVO review, MemberVO member) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Boolean duplicationChk(String memberEmail, int bookNum) {
+		return mapper.duplication(memberEmail, bookNum)>0?true:false;
 	}
 
 }

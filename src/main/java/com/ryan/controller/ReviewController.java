@@ -21,7 +21,6 @@ public class ReviewController {
 	@Autowired
 	private ReviewServiceImpl service;
 	
-	@PostConstruct
 	public boolean loginCheck(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		
@@ -40,6 +39,9 @@ public class ReviewController {
 	@RequestMapping("/ebookWrite")
 	public void insertEbookReview(@ModelAttribute("review")ReviewVO review) {
 		
+		//등록자가 이미 리뷰한 책인지 검사
+		//여부에 따라 검사 혹은 리뷰있음을 알림
+		
 	}
 	
 	@RequestMapping("/bookWrite")
@@ -48,12 +50,16 @@ public class ReviewController {
 	}
 	
 	@RequestMapping("/delete")
-	public void deleteReview(@ModelAttribute("ryanMember")MemberVO member,int booknum) {
-		
+	public String deleteReview(@ModelAttribute("ryanMember")MemberVO member,int bookNum) {
+		String memberEmail=member.getMemberEmail();
+		if(service.duplicationChk(memberEmail, bookNum)) {
+			return service.delecteReview(memberEmail, bookNum)? "정상삭제시 갈 jsp":"실패문구";
+		}else
+			return "삭제할리뷰가존재하지않음";
 	}
 	
 	@RequestMapping("/update")
 	public void updateReview(@ModelAttribute("ryanMember")MemberVO member,@ModelAttribute("review")ReviewVO review) {
-		
+		//
 	}
 }

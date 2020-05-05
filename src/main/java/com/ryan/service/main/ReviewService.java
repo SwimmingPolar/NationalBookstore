@@ -6,8 +6,10 @@ import com.ryan.domain.member.MemberVO;
 public interface ReviewService {
 	public Boolean insertReview(ReviewVO review,MemberVO member);
 	
-	public Boolean delecteReview(int reviewNum,MemberVO member);
+	public Boolean delecteReview(String memberEmail,int bookNum);
 	
 	public Boolean updateReview(ReviewVO review,MemberVO member);
+	
+	public Boolean duplicationChk(String memberEmail,int bookNum);
 
 }
