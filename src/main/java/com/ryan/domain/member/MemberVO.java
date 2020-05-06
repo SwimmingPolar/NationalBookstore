@@ -28,9 +28,9 @@ public class MemberVO {
 	// 전화번호 
     private String memberTel;
 
-    
     // 권한 
     private int memberAdmin;
-	
+    
+    private Date memberSignupDate;
     
 }

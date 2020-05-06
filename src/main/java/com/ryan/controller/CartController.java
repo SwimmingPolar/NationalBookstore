@@ -1,6 +1,7 @@
 package com.ryan.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +24,6 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @RequestMapping("/cart/*")
-@SessionAttributes({"ryanMember","cartBuyList"})
 @Log4j
 public class CartController {
 	
@@ -48,7 +48,9 @@ public class CartController {
 	
 	//장바구니 페이지 이동
 	@GetMapping("/list")
-	public String getCartList(Model model,@ModelAttribute("ryanMember") MemberVO member) {
+	public String getCartList(Model model,HttpSession session) {
+		
+		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
 		
 		model.addAttribute("cartList", cartService.getCartList(member));
 		
@@ -79,17 +81,19 @@ public class CartController {
 	}
 	
 	@RequestMapping("/removeAll") //버튼 하나 만들고 경로 입력해주면 됩니다.
-	public String removeAll(@ModelAttribute("ryanMember") MemberVO member) {
+	public String removeAll(HttpSession session) {
 		
+		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
 		
+		log.info(member);
 		if(cartService.removeAll(member)) return "redirect:/cart/list";
 		else return "실패";
 	}
 	
 	@RequestMapping("/buy")
-	public String buy(@RequestParam("cartNum") int[] cartNumArray , Model model) {
-		//cartNumArray 로 장바구니 정보 list 에 저장 
-		model.addAttribute("cartBuyList", cartService.cartBuyList(cartNumArray));
+	public String buy(@RequestParam("cartNum") int[] cartNumArray , HttpSession session) {
+		
+		session.setAttribute("cartBuyList", cartService.cartBuyList(cartNumArray));
 		return "redirect:/order/orderPage";
 	}
 	

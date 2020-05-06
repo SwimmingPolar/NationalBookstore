@@ -12,7 +12,8 @@
 		#{memberAddress},
 		#{memberDaddress},
 		#{memberTel},
-		#{memberAdmin}
+		#{memberAdmin},
+		SYSDATE
 		)
 	</insert>
 	
@@ -55,10 +56,21 @@
 		SELECT count(*) FROM member WHERE member_email = #{memberEmail} and member_pw = #{memberPw}
 	</select>
 	
+	<!-- 정지 유효성체크? -->
+	<select id="memberBanCheck" resultType="int">
+		SELECT count(*) FROM member_ban
+		<where>
+			member_email = #{memberEmail} and ban_check = 1
+		</where> 
+	</select>
+	
+	
 	<!-- 회원탈퇴 -->
 	
-	<!-- 여기부터 쿠키 -->
 	
+	
+	
+	<!-- 여기부터 쿠키 -->
 	<!-- 자동로그인 체크시 회원의 닉네임을 가져옴 -->
 	<select id="getMemberNickName" resultType="String">
 		SELECT member_nick_name FROM member WHERE member_email = #{memberEmail}
