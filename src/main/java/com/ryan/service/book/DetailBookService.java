@@ -6,12 +6,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ryan.domain.ReviewVO;
+
 import com.ryan.domain.book.BookGradeVO;
 import com.ryan.domain.book.BookLikeVO;
 import com.ryan.domain.book.EBookVO;
 import com.ryan.domain.book.HashtagVO;
 import com.ryan.domain.book.MyReadBookVO;
+import com.ryan.domain.book.ReviewVO;
 import com.ryan.domain.member.MemberVO;
 
 public interface DetailBookService {

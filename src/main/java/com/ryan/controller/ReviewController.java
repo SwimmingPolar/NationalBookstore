@@ -11,7 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ryan.domain.ReviewVO;
+import com.ryan.domain.book.ReviewVO;
 import com.ryan.domain.member.MemberVO;
 import com.ryan.service.main.ReviewServiceImpl;
 
@@ -57,5 +57,11 @@ public class ReviewController {
 			return service.updateReview(review)? "정상수정시 갈 jsp":"실패시";
 		}else
 			return "본인 reivew가 아님";
+	}
+	
+	@RequestMapping("/reviewList")
+	public String reviewList() {
+		
+		return "";
 	}
 }

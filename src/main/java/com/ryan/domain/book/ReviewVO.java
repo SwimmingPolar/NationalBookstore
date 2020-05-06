@@ -1,4 +1,4 @@
-package com.ryan.domain;
+package com.ryan.domain.book;
 
 import java.util.Date;
 
