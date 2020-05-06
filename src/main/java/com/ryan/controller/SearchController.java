@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.ryan.domain.book.EBookVO;
-import com.ryan.service.main.SearchServiceImpl;
 import com.ryan.domain.payment.CartVO;
+import com.ryan.service.main.SearchServiceImpl;
 
 
 //순서대로 e북 리스트, 현물책 리스트, 요청페이지에 띄울 리스트 정보가 들어있다
@@ -64,14 +64,20 @@ public class SearchController {
 	@RequestMapping("/page")
 	public String page(Model model,HttpServletRequest request,int existence,@RequestParam(value = "pageNum", required = false, defaultValue="1") int pageNum) {
 		HashMap<String, List<EBookVO>> tmp = new HashMap<String, List<EBookVO>>();
+		System.out.println("해시맵 생성");
 		if(existence==0) {
 			tmp.put("page", service.pageList((ArrayList<EBookVO>) request.getAttribute("ebooklist"), pageNum));
+			System.out.println("page 불러옴");
 			model.addAttribute("pageList", tmp);
+			System.out.println("page 모델이 저장");
 		}else {
 			tmp.put("page", service.pageList((ArrayList<EBookVO>) request.getAttribute("booklist"), pageNum));
+			System.out.println("page 불러옴");
 			model.addAttribute("pageList", tmp);
+			System.out.println("page 모델이 저장");
 		}
-		return "결과페이지";
+		System.out.println("리턴 search");
+		return "search";
 	}
 	
 	
@@ -81,8 +87,8 @@ public class SearchController {
 	}
 	
 	/////////////////////////////////////////////////////////////////이 밑으로는 수정 좀 헀습니다.
-	@RequestMapping(value="/searchtmp", method= RequestMethod.GET)
-	public String search(@RequestParam("type") String type, @RequestParam("keyword") String keyword, Model model) throws ClassNotFoundException, SQLException {
+	@RequestMapping(value="/searchtest", method= RequestMethod.GET)
+	public String search(@RequestParam("type") String type, @RequestParam("keyword") String keyword, HttpSession session, Model model) throws ClassNotFoundException, SQLException {
 		String[] keywordArr = keyword.split(" ");
 		
 		System.out.println("검색 실행(param1:"+type+",param2:"+keyword+")");
@@ -92,12 +98,13 @@ public class SearchController {
 		result.put("ebook", service.searchEbook(type, keywordArr));
 		result.put("paper", service.searchPaperbook(type, keywordArr));
 		
+		session.setAttribute("ebookCount", result.get("ebook").size());
+		session.setAttribute("paperCount", result.get("paper").size());
+		session.setAttribute("resultCount", result.get("ebook").size() + result.get("paper").size());
 		model.addAttribute("result", result);
 		
-		return "searchtmp";
+		return "search";
 	}
-	
-	
 	@PostMapping(value="/cart")
 	@ResponseBody
 	public Map<String, String> Carto(@RequestBody CartVO[] cartList) {
@@ -113,5 +120,23 @@ public class SearchController {
 			System.out.println("리스트가 비어있습니다.");
 		}
 		return resultMessage;
+	}
+	@RequestMapping("/pagetest")
+	public String pageTest(@RequestParam("type") String type, @RequestParam("keyword") String keyword, @RequestParam("pageNum") int pageNum, Model model, HttpServletRequest request) throws ClassNotFoundException, SQLException {
+		String[] keywordArr = keyword.split(" ");
+		System.out.println("검색 실행(param1:"+type+",param2:"+keyword+",param3:"+pageNum+")");
+		HashMap<String, List<EBookVO>> result = new HashMap<String, List<EBookVO>>();
+		if(request.getParameter("category").equals("all")) {
+			result.put("ebook", service.searchEbook(type, keywordArr));
+			result.put("paper", service.searchPaperbook(type, keywordArr));
+		}
+		else {
+			result.put("ebook", service.searchEbookPage(type, keywordArr, pageNum));
+			result.put("paper", service.searchPaperbookPage(type, keywordArr, pageNum));
+		}
+		model.addAttribute("result", result);
+		
+		System.out.println("result의 값은:"+result.get("ebook"));
+		return "search";
 	}
 }

@@ -59,6 +59,7 @@
 </select>
 
 <!--@@@@@@@@@@@@@@@@@@@@@@@@@@@ 이 밑으로 제가 수정 좀 했습니다.   @@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
+	<!-- ebook 검색 -->
 	<select resultType="com.ryan.domain.book.EBookVO" id="searchEbook" >
 		SELECT * FROM EBOOK WHERE
 		<choose>
@@ -100,5 +101,54 @@
 			</when>
 		</choose>
 		AND BOOK_EXISTENCE LIKE 1
+	</select>
+	<!-- ebook page -->
+	<select resultType="com.ryan.domain.book.EBookVO" id="searchEbookPage" >
+		WITH result AS
+		(SELECT ROWNUM num, EBOOK.* FROM EBOOK WHERE
+		<choose>
+			<when test="param1.equals('BOOK_TITLE')" >
+				<foreach collection="param2" index="index" item="search" separator="or">
+					BOOK_TITLE LIKE  '%'||#{search}||'%'
+				</foreach>
+			</when>
+			<when test="param1.equals('BOOK_WRITER')" >
+				<foreach collection="param2" index="index" item="search" separator="or" >
+					BOOK_WRITER LIKE '%'||#{search}||'%'
+				</foreach>
+			</when>
+			<when test="param1.equals('BOOK_PUBLISHER')" >
+				<foreach collection="param2" index="index" item="search" separator="or" >
+					BOOK_PUBLISHER LIKE '%'||#{search }||'%'
+				</foreach>
+			</when>
+		</choose>)
+		SELECT * FROM result
+		WHERE num BETWEEN ((${param3 }*12)-11) AND (${param3 }*12)
+	</select>
+	<!-- 종이책 page -->
+	<select resultType="com.ryan.domain.book.EBookVO" id="searchPaperbookPage" >
+		WITH result AS
+		(SELECT ROWNUM num, EBOOK.* FROM EBOOK WHERE
+		<choose>
+			<when test="param1.equals('BOOK_TITLE')" >
+				<foreach collection="param2" index="index" item="search" separator="or">
+					BOOK_TITLE LIKE  '%'||#{search}||'%'
+				</foreach>
+			</when>
+			<when test="param1.equals('BOOK_WRITER')" >
+				<foreach collection="param2" index="index" item="search" separator="or" >
+					BOOK_WRITER LIKE '%'||#{search}||'%'
+				</foreach>
+			</when>
+			<when test="param1.equals('BOOK_PUBLISHER')" >
+				<foreach collection="param2" index="index" item="search" separator="or" >
+					BOOK_PUBLISHER LIKE '%'||#{search }||'%'
+				</foreach>
+			</when>
+		</choose>
+		AND BOOK_EXISTENCE LIKE 1)
+		SELECT * FROM result
+		WHERE num BETWEEN ((${param3 }*12)-11) AND (${param3 }*12)
 	</select>
 </mapper>
