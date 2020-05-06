@@ -95,8 +95,8 @@ public class DetailBookController {
 	
 	//읽은책 추가
 	@RequestMapping("/insertreadbook")
-	public String insertReadBook(@RequestParam("booknumber") int booknumber, MyReadBookVO vo) {
-		mservice.insertReadBook(booknumber, vo);
+	public String insertReadBook(MyReadBookVO vo, HttpServletRequest request) {
+		mservice.insertReadBook(vo,request);
 		return "view";
 	}
 	

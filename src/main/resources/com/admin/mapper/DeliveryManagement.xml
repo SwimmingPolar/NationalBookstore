@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.mapper.DeliveryManagement">
+	
+	<select id="getOrderList" resultType="com.ryan.domain.payment.OrderVO" parameterType="String">
+		SELECT n.order_number,n.order_status,n.order_payment_method,n.member_email,TO_CHAR(n.order_date,'YYYY-MM-DD') order_date ,sum(o.book_count * e.book_price) sum 
+		FROM order_number n , order_object o , ebook e
+		<where>
+			n.order_number = o.order_number and o.book_num = e.book_num
+			<if test="status != null and status != '' and status != 'All'">
+				and n.order_status = #{status}
+			</if>
+		</where>
+		GROUP BY n.order_number, n.order_status, n.order_payment_method, n.member_email, TO_CHAR(n.order_date,'YYYY-MM-DD')
+	</select>
+	
+	<update id="updateTrackingNumber">
+		UPDATE order_number
+		<set>
+			order_tracking_number = #{orderTrackingNumber}
+		</set>
+		<where>
+			order_number = #{orderNumber}
+		</where>
+	</update>
+	
+	<update id="updateStatus">
+		UPDATE order_number
+		<set>
+			order_status = #{status}
+		</set>
+		<where>
+			order_number in
+			<foreach collection="param1" index="index" item="orderNumber" separator="," open="(" close=")">
+				#{orderNumber}
+			</foreach>
+		</where>
+	</update>
+	
+</mapper>

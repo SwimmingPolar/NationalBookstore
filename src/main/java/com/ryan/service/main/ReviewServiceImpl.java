@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ryan.domain.ReviewVO;
+import com.ryan.domain.member.MemberVO;
 import com.ryan.mapper.ReviewMapper;
 
 @Service
@@ -13,19 +14,31 @@ public class ReviewServiceImpl implements ReviewService{
 
 	@Override
 	public Boolean insertReview(ReviewVO review) {
-		return mapper.insertReview(review)==1?true : false;
+		int flag=0;
+		if(mapper.duplication(review)>0)
+			return false;
+		else {
+			flag=(int)mapper.searchOrder(review)+(int)mapper.searchRead(review);
+			if(flag>0) {
+				return mapper.insertReview(review)==1?true : false;
+			}else
+				return false;
+		}
 	}
 
 	@Override
-	public Boolean delecteReview(int reviewNum) {
-		// TODO Auto-generated method stub
-		return null;
+	public Boolean delecteReview(ReviewVO review) {
+		if(mapper.duplication(review)>0)
+			return mapper.deleteReview(review)==1?true:false;
+		else
+			return false;
 	}
 
 	@Override
 	public Boolean updateReview(ReviewVO review) {
-		// TODO Auto-generated method stub
-		return null;
+		if(mapper.duplication(review)>0)
+			return mapper.updateReview(review)==1?true:false;
+		else
+			return false;
 	}
-
 }

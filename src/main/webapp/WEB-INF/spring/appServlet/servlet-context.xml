@@ -55,9 +55,21 @@
 
 			<mvc:mapping path="/cart/*"/> <!-- 로그인 유효성 검사할 페이지들 입력. -->
 			<mvc:mapping path="/book/insertlike"/>
-
+			<mvc:mapping path="/review/*"/>
+			
 			<beans:ref bean="loginSessionChkInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
+	
+	<!-- 파일 업로드에 필요한 bean -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 파일업로드 용량 -->
+		<beans:property name="maxUploadSize" value="10485760"/>
+	</beans:bean>
+	<!-- 파일 업로드를 위한 디렉토리 설정 -->
+<!-- 	 String uplodadPath = new String("업로드 경로") 
+	<beans:bean id="uploadPath" class="java.lang.String">
+		<beans:constructor-arg value="C:\Users\user\git\NationalBookstore\src\main\webapp\resources\data" />
+	</beans:bean> -->
 	
 </beans:beans>

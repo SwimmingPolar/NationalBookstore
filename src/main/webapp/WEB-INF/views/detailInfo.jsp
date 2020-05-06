@@ -135,35 +135,7 @@
 
         <div class="firstBox">
         	
-          	  <h2>  # 해시태그 </h2>
-            
-      <!--	<div class="hashtagDetail"> 
-
-                <div class="hashTag">       
-                <form action="" method="post" name="hashtagChk"> 
-                    <input type="checkbox" name="tagChkbox" id="chk1" onclick="chkboxCnt(this)"> 
-                    <label for="chk1"> #좋아요
-                    </label>
-                    <input type="checkbox" name="tagChkbox" id="chk2" onclick="chkboxCnt(this)">
-                    <label for="chk2"> #특이해요
-                    </label>
-                    <input type="checkbox" name="tagChkbox" id="chk3" onclick="chkboxCnt(this)">    
-                    <label for="chk3"> #과거세대와의 소통
-                    </label>
-                    <input type="checkbox" name="tagChkbox" id="chk4" onclick="chkboxCnt(this)">
-                    <label for="chk4"> #노잼
-                    </label>
-                    <input type="checkbox" name="tagChkbox" id="chk5" onclick="chkboxCnt(this)">
-                    <label for="chk5"> #표지부터 소장각
-                    </label>
-                </form>
-                </div>
-                <form action="" method="POST"></form>
-                <input type="text" name="emoTag" class="emoTag" placeholder ="해시태그를 입력해주세요 (최대 6자)">
-                <input type="button" value="남기기" class="inputBtn">
-            
-            </div>  -->
-            
+          	  <h2>  # 해시태그 </h2>    
                 
             
             <div class="hashtagDetail"> 
@@ -171,12 +143,23 @@
                 	<c:set var="count" value="${1 }" />
 					<c:forEach var="h" items="${hashtag}">
 						<c:if test="${count <= 5 }">		
+
+                	    	<%-- <input type="checkbox" name="chkbox" id="chk1" value=${h.hashTag }>${h.hashTag }	 --%>			
+						<form action="" method="post" name="hashtagChk"> 
+                    <input type="checkbox" name="chkbox" class="tagChkbox" id="chk1" onclick="chkboxCnt(this)" value=${h.hashTag }>${h.hashTag }> 
+                    <label for="chk1"> # ${h.hashTag }>${h.hashTag }
+
                 	    <%-- 	<input type="checkbox" name="chkbox" id="chk1" value=${h.hashTag }>${h.hashTag }				
 						<form action="" method="post" name="hashtagChk">  --%>
                     <input type="checkbox" name="tagChkbox" class="tagChkbox" id="chk${h.hashNum }" onclick="chkboxCnt(this)" value=${h.hashTag }>
                     <label for="chk${h.hashNum }" > # ${h.hashTag }<%-- >${h.hashTag } --%>
+
                     </label>
+
+						</form>
+
 					<!-- 	</form> -->
+
                 	    </c:if>
                 	    <c:set var="count" value="${count+1 }"/>
             		</c:forEach>
@@ -232,6 +215,23 @@
            		${r.reviewTitle }<br/>
            		${r.reviewContent }
            	</c:forEach>
+           	
+          <!--  	 <div class="reviewDetail"> 
+                <table>
+                    <tbody>
+                    <tr>
+                        <td>★★★★☆</td>
+                        <td>abc1234</td>
+                        <td>2019/11/09</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">제목입니다.</td>
+                    </tr>
+                    <tr><td colspan="3"><textarea name="reviewContent" id="reviewContent"></textarea></td></tr>
+                </tbody>
+                </table> -->
+            </div>
+           	
            	</div>
             <input type="button" value="더보기" class="moreChk3">
         </div>
@@ -278,7 +278,7 @@ $(function() {
         cnt++;
         if(cnt%2==1) {
         var aa = $('.bookDetail');
-        aa.height(400);
+        aa.height(600);
          }else { 
         var aa = $('.bookDetail');
         aa.height(110);
@@ -290,7 +290,7 @@ $(function() {
         cnt++;
         if(cnt%2==1) {
         var aa = $('.listDetail');
-        aa.height(500);
+        aa.height(600);
          }else {
         var aa = $('.listDetail');
         aa.height(110);
@@ -302,7 +302,7 @@ $(function() {
         cnt++;
         if(cnt%2==1) {
         var aa = $('.reviewDetail');
-        aa.height(400);
+        aa.height(600);
          }else {
             var aa = $('.reviewDetail');
         aa.height(110);
@@ -338,6 +338,8 @@ $(function() {
     })
 
         function heartCount() {
+    	
+    }
     $.ajax( {
         url: "heartNumber.do",
         type: "get",
@@ -383,7 +385,6 @@ window.onclick = function(event){
 </script>
 
 <script>
-
 $('a[href="#modalGo"]').click(function(event){
     event.preventDefault();
 
@@ -426,7 +427,7 @@ function chkboxCnt(gogo) {
 $("#chk1").change(function() {
     var isChk = this.checked;
     if(isChk) {
-        $(".emoTag").val($(".tagChkbox").val());
+        $(".emoTag").val($(".chkbox").val());
         
     }
 });
@@ -444,11 +445,12 @@ function chkboxCnt(gogo) {
     $.ajax( {
         url:"/book/inserthashtag",
         type:"post",
-        data {
+        data : {
             bookNum : '${bookdetail.bookNum}',
             hashTag : chkvalue
 
         },
+        
         success:function (hashtagList) {
 
         },
@@ -470,9 +472,12 @@ function chkboxCnt(gogo) {
                 url: "/book/inserthashtag",
                 type:'post',
                 data : {
+
                     bookNum: '${bookdetail.bookNum}',
                     hashTag: $('#hashTag').val()
-                },
+				   },
+
+
                 success:function(data) {
                 	/* var result = data.json;
                 	alert(data); */
@@ -484,7 +489,7 @@ function chkboxCnt(gogo) {
                 			return false;
                 		}
                 	});
-                },
+    		      },
 
             });
 
