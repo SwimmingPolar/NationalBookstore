@@ -13,7 +13,7 @@ import com.admin.service.AdminEventService;
 import lombok.Setter;
 
 @Controller
-@RequestMapping("/event/*")
+@RequestMapping("admin/event/*")
 public class AdminEventController {
 
 	@Setter(onMethod_ = {@Autowired})

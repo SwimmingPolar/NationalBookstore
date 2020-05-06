@@ -24,10 +24,10 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
-@RequestMapping("/admin/*")
+@RequestMapping("/admin/book/*")
 public class AdminBookController {
 	
-	@Setter(onMethod_ = {@Autowired})	//이벤트- 책 추천, 책 등록, 수정, 삭제
+	@Setter(onMethod_ = {@Autowired}) //이벤트- 책 추천, 책 등록, 수정, 삭제
 	private AdminBookService service;
 	
 	@RequestMapping("/관리자페이지")
