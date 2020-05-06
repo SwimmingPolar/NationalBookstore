@@ -338,6 +338,8 @@ $(function() {
     })
 
         function heartCount() {
+    	
+    }
     $.ajax( {
         url: "heartNumber.do",
         type: "get",
