@@ -8,9 +8,8 @@
 </head>
 <body>
 	
-	<form action="/member/paymentReady" method="post">
-		<input type="submit" value="das">
-	</form>
+	${ryanMember } <br>
+	${ryanMember.memberEmail }
 	
 </body>
 </html>

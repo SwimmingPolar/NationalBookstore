@@ -42,10 +42,17 @@
    
    <!-- 스케쥴 스캔 어노테이션 스캔 -->         
    <task:annotation-driven/>
-
+   
+   
+   <!-- 회원 -->
    <mybatis-spring:scan base-package="com.ryan.mapper"/>
    <context:component-scan base-package="com.ryan.service"/>
    <context:component-scan base-package="com.ryan.function"/>
+   
+   
+   <!-- 관리자 -->
+   <mybatis-spring:scan base-package="com.admin.mapper"/>
+   <context:component-scan base-package="com.admin.service"/>
    
    
 	   

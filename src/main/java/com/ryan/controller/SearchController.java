@@ -35,6 +35,7 @@ public class SearchController {
 	@Autowired
 	private SearchServiceImpl service;
 	
+	//검색결과 없는것 추가하기
 	//검색후 e북과 현물북 리스트를 세션에 저장한다
 	@RequestMapping("/search")
 	public String searchBook(Model model,String type,@RequestParam(value = "keyword", required = false, defaultValue=" ") String keyword) {

@@ -9,9 +9,9 @@ import com.ryan.domain.payment.CartVO;
 public interface CartMapper {
 	
 	//담기
-	public int insertCart(CartVO cart);
+	public int insertCart(@Param("cartList") CartVO[] cart, @Param("memberEmail") String memberEmail);
 	//목록
-	public ArrayList<CartVO> getCartList(String memberEmail);
+	public ArrayList<CartVO> getCartList(@Param("memberEmail") String memberEmail);
 	
 	//수량 수정
 	public int modifyCartCount(@Param("bookCount") int bookCount ,@Param("cartNum") int cartNum);
