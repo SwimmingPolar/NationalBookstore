@@ -3,7 +3,7 @@ package com.admin.mapper;
 import java.util.List;
 import java.util.Map;
 
-import com.admin.domain.AdminBestListVO;
+import com.admin.domain.book.AdminBestListVO;
 
 public interface AdminEventMapper {
 	

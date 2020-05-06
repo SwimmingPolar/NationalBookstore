@@ -1,4 +1,4 @@
-package com.admin.service;
+package com.admin.service.book;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,8 +59,7 @@ public class AdminBookServiceImpl implements AdminBookService{
 	@Override
 	public Boolean updateBook(EBookVO vo) {			//책 수정
 		// TODO Auto-generated method stub
-		int num=mapper.updateBook(vo);
-		if(num==0) return false;
+		mapper.updateBook(vo);
 		return true;
 	}
 
