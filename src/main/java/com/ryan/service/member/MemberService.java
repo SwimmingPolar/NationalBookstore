@@ -18,6 +18,9 @@ public interface MemberService {
 	//로그인 유효성 검사
 	public boolean memberSignIn(MemberVO member);
 	
+	//정지중인 회원인지 체크
+	public boolean memberBanCheck(MemberVO member);
+	
 	//비밀번호 암호화
 	
 	

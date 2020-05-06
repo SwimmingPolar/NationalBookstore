@@ -85,4 +85,16 @@ public class MemberMapperTests {
 		
 	}
 	
+	//정지유효성?
+	@Test
+	public void memeberBanCheckTests() {
+		
+		MemberVO member = new MemberVO();
+		member.setMemberEmail("abc1234@naver.com");
+		
+		int result = mapper.memberBanCheck(member);
+		
+		log.info("결과: " + result);
+	}
+	
 }

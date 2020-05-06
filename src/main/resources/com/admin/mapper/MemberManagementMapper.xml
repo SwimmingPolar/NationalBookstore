@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.mapper.MemberManagementMapper">
+	
+	<!-- 회원 가입 월 가져오기 -->
+	<select id="getMemberSignupDate" resultType="String">
+		SELECT TO_CHAR(member_signup_date,'YYYY-MM') FROM member GROUP BY TO_CHAR(member_signup_date,'YYYY-MM')
+	</select>
+	
+	<!-- 회원가입 수 -->
+	<select id="getMemberSignupCount" resultType="com.admin.domain.member.MemberSignupCountVO">
+		SELECT count(*) count,
+		<choose>
+			<when test="choiceDate != null and choiceDate != ''">
+				TO_CHAR(member_signup_date,'YYYY-MM')
+			</when>
+			<when test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				TO_CHAR(member_signup_date,'YYYY-MM-DD')
+			</when>
+		</choose>
+		member_signup_date FROM member
+		<where>
+			<choose>
+				<when test="choiceDate != null and choiceDate != ''">
+					TO_CHAR(member_signup_date,'YYYY-MM') = #{choiceDate}
+					GROUP BY TO_CHAR(member_signup_date,'YYYY-MM')
+				</when>
+				<when test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+					<![CDATA[
+						TO_CHAR(member_signup_date,'YYYY-MM-DD') >= #{startDate} and
+						TO_CHAR(member_signup_date,'YYYY-MM-DD') <= #{endDate}
+					]]>
+					GROUP BY TO_CHAR(member_signup_date,'YYYY-MM-DD')
+				</when>
+			</choose>
+		</where>
+		ORDER BY member_signup_date DESC
+	</select>
+	
+	<!-- 구독회원수 -->
+	<!-- 선택한 날짜 통계 가져오기 -->
+	<select id="getSubscriptionCount" resultType="com.admin.domain.revenue.RegularPaymentRevenueVO">
+		SELECT count(*) count,
+		<choose>
+			<when test="choiceDate != null and choiceDate != ''">
+				TO_CHAR(payment_date, 'YYYY-MM')
+			</when>
+			<when test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				TO_CHAR(payment_date, 'YYYY-MM-DD')
+			</when>
+		</choose>
+		payment_date FROM regular_payment_revenue
+		<where>
+			<choose>
+				<when test="choiceDate != null and choiceDate != ''">
+					TO_CHAR(payment_date,'YYYY-MM') = #{choiceDate}
+					GROUP BY TO_CHAR(payment_date, 'YYYY-MM')
+				</when>
+				<when test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+					<![CDATA[
+						TO_CHAR(payment_date,'YYYY-MM-DD') >= #{startDate} and
+						TO_CHAR(payment_date,'YYYY-MM-DD') <= #{endDate} 
+					]]>
+					GROUP BY TO_CHAR(payment_date,'YYYY-MM-DD')
+				</when>
+			</choose>
+		</where>
+	</select>
+	
+	<!-- 구독중인 회원 -->
+	<select id="getSubscriptionMember" resultType="com.admin.domain.member.MemberManagementVO">
+		SELECT * FROM member m , member_payment p 
+		<where>
+			m.member_email = p.member_email and p.member_payment_check = 1
+		</where>
+	</select>
+	
+	
+	
+</mapper>

@@ -115,6 +115,12 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
+	@Override
+	public boolean memberBanCheck(MemberVO member) {
+		return mapper.memberBanCheck(member) >= 1 ? true : false;
+	}
+
+
 	
 
 

@@ -16,6 +16,11 @@
 	<logger name="com.ryan">
 		<level value="info" />
 	</logger>
+	
+	<!-- admin 이하 파일 log사용 -->
+	<logger name="com.admin">
+		<level value="info"/>
+	</logger>
 
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
