@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.mapper.BookMapper">
+
+<select id="statusLike" resultType="com.ryan.domain.book.EBookVO">
+	<![CDATA[
+		select * from (select rownum, e.* from ebook e, book_like b where e.book_num = b.book_num order by b.like_num desc) 
+		where rownum <= 5
+	]]>
+</select>
+
+<select id="statusLookup" resultType="com.ryan.domain.book.EBookVO">
+	select * from ebook order by book_lookup DESC
+</select>
+
+<select id="bestReader" resultType="com.ryan.domain.member.MemberVO">
+	SELECT * FROM member WHERE MEMBER_EMAIL LIKE (SELECT DISTINCT(member_email) 
+	FROM MY_READ_BOOK WHERE READ_DATE LIKE #{readDate} group by member_email)
+</select>
+
+<update id="resetLookup" >
+	update ebook SET book_lookup=0  
+</update>
+
+
+
+
+<insert id="insertBook" parameterType="com.ryan.domain.book.EBookVO" useGeneratedKeys="true" keyProperty="bookNum">
+	insert into ebook 
+	(book_title,book_country,category_num,book_writer,book_pb_date,book_publisher,
+	book_thumbnail,book_price,book_discount,book_path,book_existence,bookLookup)
+	VALUES(#{bookTiltle},#{bookCountry},#{categoryNum},#{bookWriter},#{bookPbDate},
+	#{bookPublisher},#{bookThumbnail},#{bookPrice},#{bookDiscount},#{bookPath},#{bookExistence},0)
+</insert>
+
+<update id="updateBook" parameterType="com.ryan.domain.book.EBookVO">
+	update ebook set book_price=#{bookPrice} WHERE book_num=#{bookNum}
+</update>
+
+<delete id="deleteBook" parameterType="hashmap">
+	delete ebook 
+	where
+	<if test="numberlist != null"> 
+		<foreach collection="numberlist" item="item" separator="or">
+			book_num=#{item}
+		</foreach>
+	</if>
+</delete>
+
+
+</mapper>

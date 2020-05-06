@@ -8,7 +8,7 @@ import lombok.Data;
 public class PaymentVO {
 	
     // 정기결제 
-    private int 고유번호;
+    private int paymentNum;
 
     // 아이디 
     private String memberEmail;

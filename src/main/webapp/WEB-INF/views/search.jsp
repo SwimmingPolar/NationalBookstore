@@ -85,9 +85,22 @@
 			var cartList = [];
 			$(".checkbox-cart").each(function() {
 				if($(this).prop("checked") == true)
-					cartList.push($(this).val());
+					cartList.push({ bookNum : $(this).val(), bookCount : "1" });
 			})
 			console.dir(cartList);
+			$.ajax({
+				url : "/controller/search/cart",
+				dataType : "json",
+				contentType : "application/json",
+				data : JSON.stringify(cartList),
+				type : "POST"
+			})
+			.done(function(response) {
+				console.dir(response.doneM);
+			})
+			.fail(function(response) {
+				console.dir(response.failM);
+			})
 		})
 		
 		$(".btn-page").click(function(data) {
@@ -184,7 +197,7 @@
 							<c:forEach var="book" items="${list.getValue() }" begin="0" end="3" varStatus="status" >
 								<c:if test="${loop_flag }" >
 									<div class="search" >
-										<div class="book" >
+										<div class="book ${book.bookNum }" >
 											<!-- 책 커버 -->
 											<img class="cover" />
 											<!-- 책 정보 -->
@@ -245,7 +258,7 @@
 					<div class="search-result" >
 						<c:forEach var="book" items="${result.get(param.category) }" >
 							<div class="search" >
-								<div class="book" >
+								<div class="book ${book.bookNum }" >
 									<!-- 책 커버 -->
 									<img class="cover" />
 									<c:if test="${param.category eq 'paper' }" >

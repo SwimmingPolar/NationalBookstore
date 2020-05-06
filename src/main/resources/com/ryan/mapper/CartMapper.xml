@@ -3,18 +3,22 @@
 <mapper namespace="com.ryan.mapper.CartMapper">
 	
 	<insert id="insertCart">
-		INSERT INTO cart
-		(
-			book_num,
-			member_email,
-			book_count
-		)
-		VALUES
-		(
-			#{bookNum},
-			#{memberEmail},
-			#{bookCount}
-		)
+		INSERT ALL
+		<foreach collection="param1" index="index" item="cart">
+			INTO cart
+			(
+				book_num,
+				member_email,
+				book_count
+			)
+			VALUES
+			(
+				#{cart.bookNum},
+				#{memberEmail},
+				#{cart.bookCount}
+			)
+		</foreach>
+		SELECT * FROM dual
 	</insert>
 	
 	<select id="getCartList" resultType="com.ryan.domain.payment.CartVO" parameterType="String">

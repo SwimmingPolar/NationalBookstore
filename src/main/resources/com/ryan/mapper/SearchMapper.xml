@@ -1,20 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ryan.mapper.SearchMapper">
-
-<select id="typeWriter" resultType="com.ryan.domain.book.EBookVO" parameterType="java.util.Map">
-	SELECT DISTINCT book_writer
-	FROM (
-	SELECT * FROM eBook
-	WHERE 
-	<foreach collection="array" item="keyword" index="index" separator="OR">
-	book_writer like '%' || #{keyword} || '%'
-	</foreach>
-	) ORDER BY book_writer
-</select>
-<!-- cd를 foreach에 씌울수도 -->
 <select id="bookList" resultType="com.ryan.domain.book.EBookVO">
-	SELECT DISTINCT book_num
+	SELECT e.* FROM 
+	(SELECT DISTINCT book_num
 	FROM (
 	SELECT * FROM eBook
 	WHERE 
@@ -36,11 +25,14 @@
 			</when>
 		</choose>
 		AND BOOK_EXISTENCE LIKE 1
-	) ORDER BY book_title
+		ORDER BY book_title
+	)) a
+	JOIN eBook e ON a.book_num=e.book_num
 </select>
 
 <select id="ebookList" resultType="com.ryan.domain.book.EBookVO">
-	SELECT DISTINCT book_num
+	SELECT e.* FROM 
+	(SELECT DISTINCT book_num
 	FROM (
 	SELECT * FROM eBook
 	WHERE 
@@ -61,19 +53,11 @@
 				</foreach>
 			</when>
 		</choose>
-	) ORDER BY book_title
+		ORDER BY book_title
+	)) a
+	JOIN eBook e ON a.book_num=e.book_num
 </select>
 
-<select id="typeBookname" resultType="com.ryan.domain.book.EBookVO">
-	SELECT DISTINCT book_title
-	FROM (
-	SELECT * FROM eBook
-	WHERE 
-	<foreach collection="array" item="keyword" index="index" separator="OR">
-	book_title like '%' || #{keyword} || '%'
-	</foreach>
-	) ORDER BY book_title
-</select>
 <!--@@@@@@@@@@@@@@@@@@@@@@@@@@@ 이 밑으로 제가 수정 좀 했습니다.   @@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
 	<select resultType="com.ryan.domain.book.EBookVO" id="searchEbook" >
 		SELECT * FROM EBOOK WHERE
@@ -94,7 +78,6 @@
 				</foreach>
 			</when>
 		</choose>
-		AND BOOK_EXISTENCE LIKE 0
 	</select>
 	<!-- 종이책 검색 -->
 	<select resultType="com.ryan.domain.book.EBookVO" id="searchPaperbook" >

@@ -23,17 +23,12 @@ public class CartServiceImpl implements CartService {
 	private CartMapper mapper;
 
 	@Override
-	public boolean insertCart(CartVO cart) {
-		return mapper.insertCart(cart) == 1 ? true : false;
+	public boolean insertCart(CartVO[] cart , MemberVO member) {
+		return mapper.insertCart(cart , member.getMemberEmail()) >= 1 ? true : false;
 	}
 
 	@Override
-	public ArrayList<CartVO> getCartList(HttpServletRequest request) {
-		
-		HttpSession session = request.getSession();
-		
-		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
-		
+	public ArrayList<CartVO> getCartList(MemberVO member) {		
 		return mapper.getCartList(member.getMemberEmail());
 	}
 
@@ -48,13 +43,8 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public boolean removeAll(HttpServletRequest request) {
-		
-		HttpSession session = request.getSession();
-		
-		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
-		
-		return mapper.removeAll(member.getMemberEmail()) == 1 ? true : false;
+	public boolean removeAll(MemberVO member) {
+		return mapper.removeAll(member.getMemberEmail()) >= 1 ? true : false;
 	}
 
 	@Override

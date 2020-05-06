@@ -22,14 +22,17 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<!-- 회원 -->
 	<context:component-scan base-package="com.ryan.controller" />
 	<context:component-scan base-package="com.ryan.exception"/>
 	
+	<!-- 관리자 -->
+	<context:component-scan base-package="com.admin.controller"/>
 	
-	   <!-- timer 설정 -->   
+<!-- 	   timer 설정   
  	<task:scheduler id="gsScheduler" pool-size="10" />
  	<task:executor id="gsTaskExecutor" pool-size="10" />
- 	<task:annotation-driven executor="gsTaskExecutor" scheduler="gsScheduler" /> 
+ 	<task:annotation-driven executor="gsTaskExecutor" scheduler="gsScheduler" />  -->
 	
 	<!-- interceptor 설정 -->
 	<beans:bean id="cookieInterceptor" class="com.ryan.interceptor.CookieInterceptor"/>
@@ -42,6 +45,7 @@
 			<mvc:mapping path="/**"/>
 			<mvc:exclude-mapping path="/member/signin"/>
 			<mvc:exclude-mapping path="/member/logout"/>
+			<mvc:exclude-mapping path="/member/signUp"/>
 			<beans:ref bean="cookieInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
@@ -55,5 +59,16 @@
 			<beans:ref bean="loginSessionChkInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
+	
+	<!-- 파일 업로드에 필요한 bean -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 파일업로드 용량 -->
+		<beans:property name="maxUploadSize" value="10485760"/>
+	</beans:bean>
+	<!-- 파일 업로드를 위한 디렉토리 설정 -->
+	<!-- String uplodadPath = new String("업로드 경로") -->
+	<beans:bean id="uploadPath" class="java.lang.String">
+		<beans:constructor-arg value="C:\Users\user\git\NationalBookstore\src\main\webapp\resources\data" />
+	</beans:bean>
 	
 </beans:beans>

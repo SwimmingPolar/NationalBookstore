@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,14 +54,15 @@
     <h3> ${bookdetail.bookTitle} </h3>
     <ul>
         <li> ${bookdetail.bookWriter} </li>
-        <li style="color:gray; "> ${bookdetail.bookPublisher } / ${bookdetail.bookPbDate } </li>
+        <li style="color:gray; "> ${bookdetail.bookPublisher } /
+        <fmt:formatDate value="${bookdetail.bookPbDate }" pattern="yyyy.MM.dd"/></li>
         <li style="color:lightgray;"> 장르/분류 : ${bookdetail.bookCategory } > aa > bb </li>
     </ul> 
 
     <div class="choiceBtnOne">
     	<form action="/book/insertreadbook">
         	<input type="submit" value="바로보기" class="choiceBtn">
-        	<input type="hidden" name="bookNum" value="${bookdetail.bookNum }">
+        	<input type="hidden" name="booknumber" value="${bookdetail.bookNum }">
        	</form>
         <input type="button" value="다운로드" class="choiceBtn">
         <input type="button" value="종이책 구매" class="choiceBtn">
@@ -69,30 +72,40 @@
     
         <a href="#" id="modalOpen">
         <span class="likePeople">
-            <i class="far fa-user-circle prof" ></i>
+             <c:forEach var="p" items="${likepeople}">
+           		 <i class="far fa-user-circle prof" ></i>${p.memberNickName }
+             </c:forEach>
             <i class="fas fa-user-circle prof" ></i>
             <i class="far fa-user-circle prof" ></i>
           
         </span>
-        <c:forEach var="p" items="${likepeople}">
+   
         <span class="likePeople2" style="color: black;">	<!-- 좋아요 한 사람들 -->
-            ${p.memberNickName } 
+          
         </span>
-        </c:forEach>
+      
     </a>
         <span class="likeBtn">
             <div class="heartSoo">
-          	  <input type="text" value=${booklike} id='countNum' size='5' >
+          	  <input type="text" value="${booklike}" id='countNum' size='5' >
             </div>
             <div class="heartC">
             <!-- <c:if test="${id != null}"> -->
             <form action="/book/insertlike">
-                <input type="checkbox" id="heartClick">  
+            	<input type="checkbox" id="heartClick">             
             </form>            
-                <label for="heartClick">
+            	<c:choose>
+            	<c:when test="${likecheck }">
+            	<label for="heartClick">
                 	<i class="fa fa-heart" aria-hidden="true"></i>
+                </label>
+            	</c:when>
+            	<c:otherwise>
+            	<label for="heartClick">
                 	<i class="far fa-heart" aria-hidden="true"></i>
-        		</label>
+                </label>
+            	</c:otherwise>                
+                </c:choose>               
            
           <!-- </c:if> -->
             </div>
@@ -130,12 +143,23 @@
                 	<c:set var="count" value="${1 }" />
 					<c:forEach var="h" items="${hashtag}">
 						<c:if test="${count <= 5 }">		
+
                 	    	<%-- <input type="checkbox" name="chkbox" id="chk1" value=${h.hashTag }>${h.hashTag }	 --%>			
 						<form action="" method="post" name="hashtagChk"> 
                     <input type="checkbox" name="chkbox" class="tagChkbox" id="chk1" onclick="chkboxCnt(this)" value=${h.hashTag }>${h.hashTag }> 
                     <label for="chk1"> # ${h.hashTag }>${h.hashTag }
+
+                	    <%-- 	<input type="checkbox" name="chkbox" id="chk1" value=${h.hashTag }>${h.hashTag }				
+						<form action="" method="post" name="hashtagChk">  --%>
+                    <input type="checkbox" name="tagChkbox" class="tagChkbox" id="chk${h.hashNum }" onclick="chkboxCnt(this)" value=${h.hashTag }>
+                    <label for="chk${h.hashNum }" > # ${h.hashTag }<%-- >${h.hashTag } --%>
+
                     </label>
+
 						</form>
+
+					<!-- 	</form> -->
+
                 	    </c:if>
                 	    <c:set var="count" value="${count+1 }"/>
             		</c:forEach>
@@ -191,6 +215,23 @@
            		${r.reviewTitle }<br/>
            		${r.reviewContent }
            	</c:forEach>
+           	
+          <!--  	 <div class="reviewDetail"> 
+                <table>
+                    <tbody>
+                    <tr>
+                        <td>★★★★☆</td>
+                        <td>abc1234</td>
+                        <td>2019/11/09</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">제목입니다.</td>
+                    </tr>
+                    <tr><td colspan="3"><textarea name="reviewContent" id="reviewContent"></textarea></td></tr>
+                </tbody>
+                </table> -->
+            </div>
+           	
            	</div>
             <input type="button" value="더보기" class="moreChk3">
         </div>
@@ -237,7 +278,7 @@ $(function() {
         cnt++;
         if(cnt%2==1) {
         var aa = $('.bookDetail');
-        aa.height(400);
+        aa.height(600);
          }else { 
         var aa = $('.bookDetail');
         aa.height(110);
@@ -249,7 +290,7 @@ $(function() {
         cnt++;
         if(cnt%2==1) {
         var aa = $('.listDetail');
-        aa.height(500);
+        aa.height(600);
          }else {
         var aa = $('.listDetail');
         aa.height(110);
@@ -261,7 +302,7 @@ $(function() {
         cnt++;
         if(cnt%2==1) {
         var aa = $('.reviewDetail');
-        aa.height(400);
+        aa.height(600);
          }else {
             var aa = $('.reviewDetail');
         aa.height(110);
@@ -282,7 +323,7 @@ $(function() {
 
     $('#heartClick').click(function() {
         $.ajax({
-            url: "/insertlike",
+            url: "/book/insertlike",
             type: "get",
             data: {
                 booknumber: '${booknumber}'
