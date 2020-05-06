@@ -14,7 +14,7 @@ public class OrderVO {
     private String memberEmail;
 
     // 주문날짜 
-    private Date orderDate;
+    private String orderDate;
 
     // 배송진행상태 
     private String orderStatus;
@@ -30,4 +30,14 @@ public class OrderVO {
 
     // 코멘트 
     private String orderComment;
+
+    // 결제 방식 
+    private String orderPaymentMethod;
+
+    // 운송장 번호 
+    private int orderTrackingNumber;
+    
+    //총합계 금액
+    private int sum;
+    
 }

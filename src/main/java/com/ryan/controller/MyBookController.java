@@ -28,8 +28,8 @@ public class MyBookController {
 	private MyBookService service;
 	
 	@RequestMapping("/myLibList")	//찜 책장
-	public String myBookList(Model model, MyLibVO vo) {
-		List<MyLibVO> list = service.libBook(vo);
+	public String myBookList(Model model, HttpServletRequest request) {
+		List<MyLibVO> list = service.libBook(request);
 		model.addAttribute("libbooklist", list);
 		return "view";
 	}
@@ -41,8 +41,8 @@ public class MyBookController {
 	}
 	
 	@RequestMapping("/readbooklist") 	//읽은 책 조회
-	public String myReadBook(Model model, MyReadBookVO vo) {
-		model.addAttribute("readbooklist", service.readBook(vo));
+	public String myReadBook(Model model, HttpServletRequest request) {
+		model.addAttribute("readbooklist", service.readBook(request));
 		return "view";
 	}
 	

@@ -17,6 +17,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import com.admin.mapper.RevenueMapper;
 import com.ryan.domain.member.MemberVO;
 import com.ryan.domain.member.PaymentVO;
 import com.ryan.domain.payment.KakaoPayApprovalVO;
@@ -41,6 +42,10 @@ public class RegularPaymentServiceImpl implements RegularPaymentService {
 	
 	@Setter(onMethod_ = {@Autowired})
 	private PaymentMapper mapper;
+	
+	@Setter(onMethod_ = {@Autowired})
+	private RevenueMapper revenueMapper;
+	
 	
 	@Override
 	public String regularPaymentReady(MemberVO member) {
@@ -117,6 +122,10 @@ public class RegularPaymentServiceImpl implements RegularPaymentService {
 		try {
 			kakaoPayApprovalVO = restTemplate.postForObject(new URI("https://kapi.kakao.com/v1/payment/approve"), body, KakaoPayApprovalVO.class);
 			log.info("" + kakaoPayApprovalVO);
+			
+			//에러가 안날시 수익 증가.. 나중에 DB설계 다시할 예쩡
+			revenueMapper.insertRevenue();
+			
 			return kakaoPayApprovalVO;
 		} catch (RestClientException e) {
             e.printStackTrace();
@@ -166,6 +175,9 @@ public class RegularPaymentServiceImpl implements RegularPaymentService {
 			
 			try {
 				kakaoPayApprovalVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/subscription"), body, KakaoPayApprovalVO.class);
+				
+				//정기 결제 1회 완료시마다 수익 입력
+				revenueMapper.insertRevenue();
 				
 			} catch (RestClientException e) {
 	            e.printStackTrace();
