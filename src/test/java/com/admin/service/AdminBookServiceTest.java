@@ -23,11 +23,6 @@ public class AdminBookServiceTest {
 	
 	@Test
 	public void updateBook() {
-		EBookVO vo = new EBookVO();
-		vo.setBookNum(197);
-		vo.setBookDiscount(30);
-		int price = vo.getBookDiscount();
-		
 		
 		
 		
