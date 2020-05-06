@@ -5,14 +5,14 @@ import com.ryan.domain.ReviewVO;
 public interface ReviewMapper {
 	public int insertReview(ReviewVO review);
 	
-	public int deleteReview(String memberEmail,int reviewNum);
+	public int deleteReview(ReviewVO review);
 	
-	public int updateReview();
+	public int updateReview(ReviewVO review);
 	
-	public int searchRead(String memberEmail,int reviewNum);
+	public int searchRead(ReviewVO review);
 	
-	public int searchOrder(String memberEmail,int reviewNum);
+	public int searchOrder(ReviewVO review);
 	
-	public int duplication(String memberEmail,int reviewNum);
+	public int duplication(ReviewVO review);
 
 }

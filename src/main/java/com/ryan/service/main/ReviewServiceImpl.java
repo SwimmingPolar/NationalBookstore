@@ -13,26 +13,32 @@ public class ReviewServiceImpl implements ReviewService{
 	private ReviewMapper mapper;
 
 	@Override
-	public Boolean insertReview(ReviewVO review, MemberVO member) {
-		
-		return mapper.insertReview(review)==1?true : false;
+	public Boolean insertReview(ReviewVO review) {
+		int flag=0;
+		if(mapper.duplication(review)>0)
+			return false;
+		else {
+			flag=(int)mapper.searchOrder(review)+(int)mapper.searchRead(review);
+			if(flag>0) {
+				return mapper.insertReview(review)==1?true : false;
+			}else
+				return false;
+		}
 	}
 
 	@Override
-	public Boolean delecteReview(String memberEmail,int bookNum) {
-			return mapper.deleteReview(memberEmail,bookNum)==1?true:false;
-	
+	public Boolean delecteReview(ReviewVO review) {
+		if(mapper.duplication(review)>0)
+			return mapper.deleteReview(review)==1?true:false;
+		else
+			return false;
 	}
 
 	@Override
-	public Boolean updateReview(ReviewVO review, MemberVO member) {
-		// TODO Auto-generated method stub
-		return null;
+	public Boolean updateReview(ReviewVO review) {
+		if(mapper.duplication(review)>0)
+			return mapper.updateReview(review)==1?true:false;
+		else
+			return false;
 	}
-
-	@Override
-	public Boolean duplicationChk(String memberEmail, int bookNum) {
-		return mapper.duplication(memberEmail, bookNum)>0?true:false;
-	}
-
 }
