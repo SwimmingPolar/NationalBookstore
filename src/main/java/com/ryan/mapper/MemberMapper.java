@@ -17,6 +17,9 @@ public interface MemberMapper {
 	//로그인
 	public int memberSignIn(MemberVO member);
 	
+	//정지중인 회원인지 확인.
+	public int memberBanCheck(MemberVO member);
+	
 	//쿠키용
 	
 	//로그인한 회원의 닉네임 획득

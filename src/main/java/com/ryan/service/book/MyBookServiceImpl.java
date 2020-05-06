@@ -23,7 +23,6 @@ import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Service
-@SessionAttributes("ryanMember")
 @Log4j
 public class MyBookServiceImpl implements MyBookService{
 	
@@ -31,9 +30,10 @@ public class MyBookServiceImpl implements MyBookService{
 	private MyBookMapper mapper;
 
 	@Override
-	public List<MyLibVO> libBook(@ModelAttribute("ryanMember") MyLibVO vo) {	//찜 책장 조회
+	public List<MyLibVO> libBook(HttpServletRequest request) {	//찜 책장 조회
 		// TODO Auto-generated method stub		
-		List<MyLibVO> list = mapper.libBook(vo.getMemberEmail());		
+		HttpSession session = request.getSession();
+		List<MyLibVO> list = mapper.libBook(session.getAttribute("ryanMember").toString());		
 		return list;
 	}
 
@@ -54,9 +54,10 @@ public class MyBookServiceImpl implements MyBookService{
 	}
 
 	@Override		//읽은책 조회
-	public List<MyReadBookVO> readBook(@ModelAttribute("ryanMember") MyReadBookVO vo) {
+	public List<MyReadBookVO> readBook(HttpServletRequest request) {
 		// TODO Auto-generated method stub
-		List<MyReadBookVO> list = mapper.readBook(vo.getMemberEmail());
+		HttpSession session = request.getSession();
+		List<MyReadBookVO> list = mapper.readBook(session.getAttribute("ryanMember").toString());
 		return list;
 	}
 
@@ -69,16 +70,18 @@ public class MyBookServiceImpl implements MyBookService{
 	}
 
 	@Override		//읽은책 추가
-	public Boolean insertReadBook(int booknumber, @ModelAttribute("ryanMember") MyReadBookVO vo) {
+	public Boolean insertReadBook(MyReadBookVO vo, HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());		
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
-		vo.setBookNum(booknumber);
+		HttpSession session = request.getSession();
+		
+		//vo.setBookNum(booknumber);
 		vo.setReadDate(df.format(cal.getTime()));
 	//	vo.setMemberEmail("abc1234@naver.com"); 
-		List<MyReadBookVO> list = mapper.readBook(vo.getMemberEmail());
+		List<MyReadBookVO> list = mapper.readBook(request.getAttribute("ryanMember").toString());
 		boolean flag= false;
 		for(int i=0; i<list.size();i++) {
 			if(list.get(i).getBookNum()==vo.getBookNum()) {

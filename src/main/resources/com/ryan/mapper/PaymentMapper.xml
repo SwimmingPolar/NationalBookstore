@@ -20,7 +20,7 @@
 	</insert>
 	
 	<select id="getTodayRegularPaymentList" resultType="com.ryan.domain.member.PaymentVO">
-		SELECT * FROM member_payment WHERE TO_CHAR(member_next_payment,'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD')
+		SELECT * FROM member_payment WHERE TO_CHAR(member_next_payment,'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD') and member_payment_check = 1
 	</select>
 	
 </mapper>

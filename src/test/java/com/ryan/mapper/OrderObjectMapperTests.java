@@ -25,36 +25,38 @@ public class OrderObjectMapperTests {
 	@Setter(onMethod_ = {@Autowired})
 	private OrderMapper orderMaaper;
 	
-//	@Test
-//	public void orderObjectInsertTests() {
-//		
-//		OrderVO order = new OrderVO();
-//		order.setMemberEmail("abc12345@naver.com");
-//		order.setOrderStatus("배송 준비중");
-//		order.setOrderZipcode("123124");
-//		order.setOrderAddress("서울특별시 종로구 종로종로");
-//		order.setOrderDaddress("단성빌딩 5층입니다.");
-//		order.setOrderComment("빠른 배송");
-//		
-//		int result = orderMaaper.insertOrder(order);
-//		
-//		ArrayList<CartVO> cartBuyList = new ArrayList<CartVO>();
-//		
-//		CartVO cart = new CartVO();
-//		cart.setBookNum(3);
-//		cart.setMemberEmail("abc1234@naver.com");
-//		cart.setBookCount(12);
-//		CartVO cart1 = new CartVO();
-//		cart.setBookNum(2);
-//		cart.setMemberEmail("abc1234@naver.com");
-//		cart.setBookCount(11);
-//		cartBuyList.add(cart1);
-//		cartBuyList.add(cart);
-//		log.info("orderNumber: " + order.getOrderNumber()); 
-//		int result2 = objMapper.insertOrderObject(order.getOrderNumber(), cartBuyList);
-//		
-//		log.info("입력된 수 : " + result2);
-//		
-//	}
+	@Test
+	public void orderObjectInsertTests() {
+		
+		OrderVO order = new OrderVO();
+		order.setMemberEmail("abc12345@naver.com");
+		order.setOrderStatus("배송 준비중");
+		order.setOrderZipcode("123124");
+		order.setOrderAddress("서울특별시 종로구 종로종로");
+		order.setOrderDaddress("단성빌딩 5층입니다.");
+		order.setOrderComment("빠른 배송");
+		
+		int result = orderMaaper.insertOrder(order);
+		
+		ArrayList<CartVO> cartBuyList = new ArrayList<CartVO>();
+		
+		
+		CartVO cart = new CartVO();
+		cart.setBookNum(254);
+		cart.setMemberEmail("abc1234@naver.com");
+		cart.setBookCount(12);
+		CartVO cart1 = new CartVO();
+		cart1.setBookNum(197);
+		cart1.setMemberEmail("abc1234@naver.com");
+		cart1.setBookCount(11);
+		cartBuyList.add(cart);
+		cartBuyList.add(cart1);
+
+		log.info("orderNumber: " + order.getOrderNumber()); 
+		int result2 = objMapper.insertOrderObject(order.getOrderNumber(), cartBuyList);
+		
+		log.info("입력된 수 : " + result2);
+		
+	}
 	
 }

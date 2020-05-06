@@ -3,6 +3,7 @@ package com.ryan.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
+import com.admin.service.revenue.RevenueService;
 import com.ryan.domain.member.EmailCheckVO;
 import com.ryan.domain.member.MemberVO;
 import com.ryan.domain.payment.KakaoPayApprovalVO;
@@ -35,7 +38,6 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @RequestMapping("/member/*")
-@SessionAttributes("ryanMember")
 @Log4j
 public class MemberController {
 	
@@ -53,6 +55,9 @@ public class MemberController {
 	
 	@Setter(onMethod_ = {@Autowired})
 	private RegularPaymentService paymentService;
+	
+	@Setter(onMethod_ = {@Autowired})
+	private RevenueService revenueService;
 	
 	@PostMapping("/signUp")
 	public String memberSignUp(MemberVO member) {
@@ -120,31 +125,33 @@ public class MemberController {
 		return "업데이트 완료후 보여줄 페이지 경로";
 	}
 	
-	@GetMapping("/signin")
-	public String memberLogin(@RequestParam(required = false, name = "rememberMe") String autoLogin , MemberVO member ,HttpServletRequest request, HttpServletResponse response , Model model) {
+	@PostMapping("/signin")
+	public String memberLogin(@RequestParam(required = false, name = "rememberMe") String remeberMe , MemberVO member ,HttpServletRequest request, HttpServletResponse response , Model model) {
+		//정지중인 유저인지 체크하는 서비스 호출에서 검사할것 아직안함.
+		
 		if(memberService.memberSignIn(member)) {
-			if(autoLogin != null) {
+			if(remeberMe != null) {
 				member.setMemberNickName(memberService.getMemberNickName(member));
 				memberService.removeCookie(response);
 				memberService.addCookie(member, response);
 			}
-			model.addAttribute("ryanMember", member);
+			HttpSession session = request.getSession();
+			session.setAttribute("ryanMember", member);
 			log.info(request.getRemoteAddr());
-			return "main";
+			return "redirect:/member/test"; 
 		} else {
-			return "login";
+			return "redirect:/member/signin";
 		}
 
 	}
 	
 	@GetMapping("/logout")
-	public String memew(HttpServletRequest request, HttpServletResponse response) {
+	public String memberLogout(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		
 		session.invalidate();
 		memberService.removeCookie(response);
-		
-		return "main";
+		return "redirect:/member/test";
 	}
 	
 	@GetMapping("/email-signin")
@@ -199,18 +206,22 @@ public class MemberController {
 		KakaoPayApprovalVO kakaoPayApprovalVO = paymentService.paymentComplete(pg_token, member);
 		
 		if(paymentService.insertPaymentInfo(member.getMemberEmail(), kakaoPayApprovalVO.getSid())) {
-			log.info(paymentService);
+			if(revenueService.insertRevenue()) {
+				model.addAttribute("info", kakaoPayApprovalVO);
+				
+				return "kakaoPaySuccess"; // 결제 완료 페이지 써주세요~!
+			}
+			
 		}
 		
-		model.addAttribute("info", kakaoPayApprovalVO);
-		
-		return "kakaoPaySuccess";
+		return "결제 실패";
 	}
 	
 	@GetMapping("/test")
 	public String test() {
-		return "kakao";
+		return "testLogin";
 	}
+	
 	
 //	@PutMapping
 //	@DeleteMapping

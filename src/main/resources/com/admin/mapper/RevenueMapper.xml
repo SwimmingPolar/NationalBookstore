@@ -2,6 +2,81 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.mapper.RevenueMapper">
 	
+	<!-- 구독수익 -->
+	<!-- 구독 완료시 값넣기 -->
+	<insert id="insertRevenue">
+		INSERT INTO regular_payment_revenue
+		(
+			payment_date
+		)
+		VALUES
+		(
+			SYSDATE
+		)
+	</insert>
 	
+	<!-- 결제내역이 있는 월 목록 가져오기 -->
+	
+	<select id="getRegularPaymentRevenueDate" resultType="String">
+		SELECT TO_CHAR(payment_date,'YYYY-MM') FROM regular_payment_revenue GROUP BY TO_CHAR(payment_date,'YYYY-MM')
+	</select>
+	
+	<!-- 선택한 날짜 통계 가져오기 -->
+	<select id="getRegularPaymentRevenue" resultType="com.admin.domain.revenue.RegularPaymentRevenueVO">
+		SELECT count(*) * 9900 count,
+		<choose>
+			<when test="choiceDate != null and choiceDate != ''">
+				TO_CHAR(payment_date, 'YYYY-MM')
+			</when>
+			<when test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				TO_CHAR(payment_date, 'YYYY-MM-DD')
+			</when>
+		</choose>
+		payment_date FROM regular_payment_revenue
+		<where>
+			<choose>
+				<when test="choiceDate != null and choiceDate != ''">
+					TO_CHAR(payment_date,'YYYY-MM') = #{choiceDate}
+					GROUP BY TO_CHAR(payment_date, 'YYYY-MM')
+				</when>
+				<when test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+					<![CDATA[
+						TO_CHAR(payment_date,'YYYY-MM-DD') >= #{startDate} and
+						TO_CHAR(payment_date,'YYYY-MM-DD') <= #{endDate} 
+					]]>
+					GROUP BY TO_CHAR(payment_date,'YYYY-MM-DD')
+				</when>
+			</choose>
+		</where>
+	</select>
+	
+	<!-- 종이책 수익 -->
+	<!-- 결제내역이 있는 월 목록 가져오기 -->
+	<!-- orderNumber 에서 가져옴.. -->
+	<select id="getBookPaymentRevenueDate" resultType="String">
+		SELECT TO_CHAR(order_date,'YYYY-MM') FROM order_number GROUP BY TO_CHAR(order_date,'YYYY-MM')
+	</select>
+	
+	<select id="getBookPaymentRevenue" resultType="com.admin.domain.revenue.BookRevenueVO">
+		SELECT e.book_title book_title, e.book_price * o.book_count price , sum(o.book_count) sum 
+		FROM ebook e, order_object o, order_number n
+		<where>
+			e.book_num = o.book_num and n.order_number = o.order_number and
+			<choose>
+				<when test="choiceDate != null and choiceDate != ''">
+					TO_CHAR(n.order_date,'YYYY-MM') = #{choiceDate}
+					GROUP BY e.book_title, e.book_price * o.book_count
+				</when>
+				<when test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+					<![CDATA[
+					TO_CHAR(n.order_date,'YYYY-MM-DD') >= #{startDate} and
+					TO_CHAR(n.order_date,'YYYY-MM-DD') <= #{endDate}
+					]]>
+					GROUP BY e.book_title, e.book_price * o.book_count
+				</when>
+			</choose>
+		</where>
+		ORDER BY price DESC
+	</select>
 	
 </mapper>

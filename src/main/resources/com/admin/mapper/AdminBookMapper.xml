@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.admin.mapper.BookMapper">
+<mapper namespace="com.admin.mapper.AdminBookMapper">
 
 <select id="statusLike" resultType="com.ryan.domain.book.EBookVO">
 	<![CDATA[
@@ -10,12 +10,14 @@
 </select>
 
 <select id="statusLookup" resultType="com.ryan.domain.book.EBookVO">
-	select * from ebook order by book_lookup DESC
+	<![CDATA[
+		select * from(select rownum, ebook.* from ebook order by book_lookup DESC) where rownum < 6
+	]]>
 </select>
 
-<select id="bestReader" resultType="com.ryan.domain.member.MemberVO">
+<select id="bestReader" parameterType="String"  resultType="com.ryan.domain.member.MemberVO">
 	SELECT * FROM member WHERE MEMBER_EMAIL LIKE (SELECT DISTINCT(member_email) 
-	FROM MY_READ_BOOK WHERE READ_DATE LIKE #{readDate} group by member_email)
+	FROM MY_READ_BOOK WHERE READ_DATE LIKE #{date} group by member_email)
 </select>
 
 <update id="resetLookup" >
@@ -34,7 +36,7 @@
 </insert>
 
 <update id="updateBook" parameterType="com.ryan.domain.book.EBookVO">
-	update ebook set book_price=#{bookPrice} WHERE book_num=#{bookNum}
+	update ebook set book_price=#{bookPrice}, book_discount=#{bookDiscount} WHERE book_num=#{bookNum}
 </update>
 
 <delete id="deleteBook" parameterType="hashmap">

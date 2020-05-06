@@ -24,6 +24,8 @@ public class CookieInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
+		//여기서도 정지중인 유저인지 체크하는 서비스 호출해서 검사.
+		
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
 		
