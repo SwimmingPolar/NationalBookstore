@@ -55,7 +55,8 @@
 
 			<mvc:mapping path="/cart/*"/> <!-- 로그인 유효성 검사할 페이지들 입력. -->
 			<mvc:mapping path="/book/insertlike"/>
-
+			<mvc:mapping path="/review/*"/>
+			
 			<beans:ref bean="loginSessionChkInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
