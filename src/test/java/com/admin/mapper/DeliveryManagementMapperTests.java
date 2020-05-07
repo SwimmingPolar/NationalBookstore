@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.admin.domain.delivery.OrderDetailVO;
 import com.ryan.domain.payment.OrderVO;
 
 import lombok.Setter;
@@ -39,17 +40,29 @@ public class DeliveryManagementMapperTests {
 //		log.info("결과는: " + result);
 //	}
 	
+//	@Test
+//	public void updateOrderStatusTests() {
+//		
+//		int[] orderNumber = {68,69};
+//		String status = "결제 완료";
+//		
+//		int result = mapper.updateStatus(orderNumber, status);
+//		
+//		log.info("결과: " + result);
+//		
+//	}
+	
 	@Test
-	public void updateOrderStatusTests() {
+	public void getOrderDetailTests() {
 		
-		int[] orderNumber = {68,69};
-		String status = "결제 완료";
+		OrderDetailVO detail = mapper.getOrderDetail(69);
 		
-		int result = mapper.updateStatus(orderNumber, status);
+		detail.setDetailList(mapper.getOrderObject(69));
 		
-		log.info("결과: " + result);
+		log.info(detail);
+		
+		detail.getDetailList().forEach(details -> log.info(detail));
 		
 	}
-	
 	
 }

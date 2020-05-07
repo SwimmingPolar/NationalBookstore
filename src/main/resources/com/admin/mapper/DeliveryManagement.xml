@@ -37,4 +37,20 @@
 		</where>
 	</update>
 	
+	<select id="getOrderDetail" resultType="com.admin.domain.delivery.OrderDetailVO">
+		SELECT * FROM order_number
+		<where>
+			order_number = #{orderNumber}
+		</where>
+	</select>
+	
+	<select id="getOrderObject" resultType="com.ryan.domain.payment.OrderObjectVO">
+		SELECT o.orderlist_num,o.order_number,o.book_num,o.book_count , sum(o.book_count * e.book_price) price
+		FROM order_object o , ebook e
+		<where>
+			o.book_num = e.book_num and order_number = #{orderNumber}
+		</where>
+		GROUP BY o.orderlist_num, o.order_number, o.book_num, o.book_count
+	</select>
+	
 </mapper>
