@@ -3,7 +3,8 @@
 <mapper namespace="com.ryan.mapper.DetailBookMapper">
 
 <select id="searchEBook" resultType="com.ryan.domain.book.EBookVO">
-	select e.*, c.book_category from ebook e, book_category c where e.category_num=c.category_num and e.book_num = #{bookNum}
+	select e.*, c.book_category, f.first_category from ebook e, second_category c, first_category f 
+	where e.category_num=c.category_num and f.first_num=c.first_num and e.book_num=#{bookNum}
 </select>
 
 <select id="searchReview" resultType="com.ryan.domain.book.ReviewVO">

@@ -56,7 +56,7 @@
         <li> ${bookdetail.bookWriter} </li>
         <li style="color:gray; "> ${bookdetail.bookPublisher } /
         <fmt:formatDate value="${bookdetail.bookPbDate }" pattern="yyyy.MM.dd"/></li>
-        <li style="color:lightgray;"> 장르/분류 : ${bookdetail.bookCategory } > aa > bb </li>
+        <li style="color:lightgray;"> 장르/분류 : ${bookdetail.bookCategory } > ${bookdetail.firstCategory } </li>
     </ul> 
 
     <div class="choiceBtnOne">
