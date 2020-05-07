@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.admin.service.AdminBookService;
+import com.admin.service.book.AdminBookService;
 import com.ryan.domain.book.EBookVO;
 
 import lombok.Setter;
@@ -30,7 +30,7 @@ public class AdminBookController {
 	@Setter(onMethod_ = {@Autowired}) //이벤트- 책 추천, 책 등록, 수정, 삭제
 	private AdminBookService service;
 	
-	@RequestMapping("/관리자페이지")
+	@RequestMapping("/adminpage")
 	public String statusLike(Model model, @RequestParam("date") String date) {		
 		
 		model.addAttribute("lookup", service.statusLookup());		//조회수 
@@ -54,6 +54,8 @@ public class AdminBookController {
 			String imgpath = request.getSession().getServletContext().getRealPath("\\")+"\\NationalBookstore\\src\\main\\webapp\\resources\\thumbnail";
 			
 			if(file.getContentType().equals("jpg")) {
+				//임시 디렉토리에 저장된 업로드 파일을 지정된 디렉토리로 복사
+				//fileCopyUtils.copy(바이트배열, 파일객체)
 				File target = new File(path,saveName);
 				FileCopyUtils.copy(file.getBytes(), target);
 				vo.setBookThumbnail(path+"/"+file.getOriginalFilename());
@@ -63,10 +65,6 @@ public class AdminBookController {
 				vo.setBookPath(imgpath+"/"+saveName);
 			}
 		}		
-		
-		//임시 디렉토리에 저장된 업로드 파일을 지정된 디렉토리로 복사
-		//fileCopyUtils.copy(바이트배열, 파일객체)
-				
 		EBookVO vo1 = service.insertBook(vo);
 		log.info("결과"+vo1.getBookNum()+","+vo1.getBookPath());
 		return "";

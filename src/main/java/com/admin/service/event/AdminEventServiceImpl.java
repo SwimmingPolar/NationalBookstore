@@ -1,4 +1,4 @@
-package com.admin.service;
+package com.admin.service.event;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,7 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.admin.domain.AdminBestListVO;
+import com.admin.domain.book.AdminBestListVO;
 import com.admin.mapper.AdminEventMapper;
 
 import lombok.Setter;
@@ -22,22 +22,28 @@ public class AdminEventServiceImpl implements AdminEventService{
 	private AdminEventMapper mapper;
 	
 	@Override
-	public Boolean pushBook(ArrayList<AdminBestListVO> booknum) {
+	public Boolean pushBook(AdminBestListVO booknum) {
 		// TODO Auto-generated method stub
 		int count = mapper.countBook();
 		List<AdminBestListVO> list = mapper.checkBook();
+		boolean flag = false;
 		
 		if(count < 6) {
-			for(AdminBestListVO number : booknum) {
-				for(AdminBestListVO ad : list) {
-					if(ad.getBookNum()==number.getBookNum()) {
-						log.info("같은 책 존재함");
-					}else {
-						mapper.pushBook(number);
+			if(!list.equals("") || list != null) {
+				for(int i=0; i<list.size();i++) {
+					if(booknum.getBookNum()==list.get(i).getBookNum()) {
+						flag=true;
+						break;
 					}
-				}		
+				}
+				if(flag) {
+					log.info("같은책 존재");
+				}else {
+					mapper.pushBook(booknum);
+				}
 			}
 		}else {
+			log.info("count 확인");
 			return false;
 		}		
 		return true;
@@ -47,7 +53,7 @@ public class AdminEventServiceImpl implements AdminEventService{
 	public Boolean deleteBook(int[] deletenum ) {
 		// TODO Auto-generated method stub
 		ArrayList<Integer> list = new ArrayList<Integer>();
-		for(int number : list) {
+		for(int number : deletenum) {
 			list.add(number);
 		}
 		
@@ -58,6 +64,5 @@ public class AdminEventServiceImpl implements AdminEventService{
 		if(num==0) return false;
 		return true;
 	}
-
 	
 }
