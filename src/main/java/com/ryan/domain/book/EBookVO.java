@@ -18,6 +18,8 @@ public class EBookVO {
     // 카테고리 
     private String bookCategory;
     
+    private String firstCategory;
+    
     private int categoryNum;
 
     // 작가 
