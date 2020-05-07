@@ -2,10 +2,11 @@ package com.ryan.service.book;
 
 import java.util.ArrayList;
 
-import com.ryan.domain.book.BookCategoryVO;
+
+import com.ryan.domain.book.SecondCategoryVO;
 
 public interface BookCategoryService {
 	
-	public ArrayList<BookCategoryVO> getBookCategory();
+	public ArrayList<SecondCategoryVO> getBookCategory();
 	
 }

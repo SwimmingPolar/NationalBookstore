@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ryan.mapper.FollowMapper">
+	
+	<insert id="insertFollow">
+		INSERT INTO member_follow
+		(
+			fk_member_follow_1,
+			fk_member_follow_2
+		)
+		VALUES
+		(
+			#{follower},
+			#{following}
+		)
+	</insert>
+	
+	<delete id="deleteFollow">
+		DELETE FROM member_follow
+		<where>
+			#{follower} and #{following}
+		</where>
+	</delete>
+	
+	<select id="getMyFollowing" resultType="com.ryan.domain.member.FollowVO">
+		SELECT f.*,m.member_nick_name member_nick_name FROM member_follow f, member m
+		<where>
+			f.fk_member_follow_1 = m.member_email
+			fk_member_follow_1 = #{memberEmail}
+		</where>
+	</select>
+	
+	<select id="getMyFollower" resultType="com.ryan.domain.member.FollowVO">
+		SELECT f.*,m.member_nick_name member_nick_name FROM member_follow f, member m
+		<where>
+			f.fk_member_follow_2 = m.member_email
+			fk_member_follow_2 = #{memberEmail}
+		</where>
+	</select>
+	
+	<select id="followCheck" resultType="int">
+		SELECT count(*) FROM member_follow
+		<where>
+			fk_member_follow_1 = #{follower} and fk_member_follow_2 = #{following}
+		</where>
+	</select>
+	
+</mapper>

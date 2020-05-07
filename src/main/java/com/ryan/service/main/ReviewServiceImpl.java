@@ -1,10 +1,11 @@
 package com.ryan.service.main;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ryan.domain.ReviewVO;
-import com.ryan.domain.member.MemberVO;
+import com.ryan.domain.book.ReviewVO;
 import com.ryan.mapper.ReviewMapper;
 
 @Service
@@ -40,5 +41,11 @@ public class ReviewServiceImpl implements ReviewService{
 			return mapper.updateReview(review)==1?true:false;
 		else
 			return false;
+	}
+
+	@Override
+	public ArrayList<ReviewVO> reviewList() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
