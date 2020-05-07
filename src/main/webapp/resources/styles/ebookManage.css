@@ -30,7 +30,7 @@ li{
 }
 
 .statusChk {
-    border:2px solid green;
+    /* border:2px solid green; */
     margin:10px;
 }
 
@@ -63,8 +63,10 @@ li{
 
 
 .tabContent {
-    border:2px solid red;
+    /* border:2px solid red; */
     
+    border:1px solid black;
+    margin:2px 0 0 3px;
     
 }
 
@@ -148,23 +150,17 @@ li{
 }
 
 .orderTable select {
-
     width: 100px;
     height: 30px;
-
 }
 
 .orderTable input[type="text"] {
-    
     height: 24px;
-
 }
 
 .orderTable input[type="button"] {
-
     width: 50px;
     height: 30px;
-
 }
 
 .orderTable input[type="button"]:hover {
@@ -182,15 +178,13 @@ li{
 }
 
 .dateBtn {
-margin:10px 0px 0px 10px;
-
+    margin:10px 0px 0px 10px;
 }
 
 .dateBtn input[type="date"]{
      height:27px;
     text-align: center;
     }
-
 
 .choiceStatus {
     padding: 10px 10px 10px 50px;
@@ -216,20 +210,48 @@ margin:10px 0px 0px 10px;
     border:none;
 }
 
-.orderTable span>a {
-
+.orderTable span > a {
+    /* display: block; */
     color:#5198bd;
-
 }
 
 .orderTable span > a:hover {
-
     font-weight:bold;
 }
 
 .adjustHere span:nth-child(1) {
-
     color:rgb(27, 122, 177);
-    font-weight:bold;
-
 }  
+
+.statusChk ul li {
+
+    border:none;
+    padding: 0 10px 0 10px;
+    position: relative;
+    background-color: #f1f1f1;
+}
+
+.statusChk ul li::before {
+    content:'';
+    width:1px;
+    height:14px;
+    top:50%;
+    left:0;
+    margin-top:-7px;
+    background-color:lightgray;
+    position: absolute;
+    
+}
+
+.statusChk ul li:nth-child(1)::before {
+    display:none;
+}
+
+.statusChk ul li a:hover {
+    font-weight: bold;
+}
+
+.statusChk ul li {
+
+    
+}

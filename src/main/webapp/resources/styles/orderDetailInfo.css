@@ -11,37 +11,65 @@ li{
     list-style: none;
 }
 
-.mainBody {
+/* .mainBody {
 
     margin-left:230px;
 
-}
+} */
 
 .mainBody .mainTitle h3{
     margin-top:0px;
-    padding:18px 0px 18px 10px;
+   text-align:center;
+    margin:0 auto;
     border-bottom:1px solid lightgray;
-    color: gray;
+    color: rgb(65, 56, 56);
+    padding:10px 20px 10px 20px;
+    margin-bottom:10px;
 }
 
-.orderDetail > table {
-    width: 70%;
+.orderInformation {
+    background-color:#a0b2cc;
+    color:white;
+    font-weight:bold;
+    text-align:center;
+    width:90%;
+    margin:0 auto;
+    padding-top:8px;
+    padding-bottom:8px;
+}
+
+
+
+.orderDetail table {
+    width: 90%;
     background-color:white;
     margin:0 auto;
+    margin-top:10px;
+    margin-bottom:10px;
   }
   
 
-  .orderDetail  table th {
-      background-color: #e6e7e9;
+  .orderDetail table th {
+      background-color: #e4ecf8;
       width:20%;
+      padding:10px;
+      font-size:14px;
   }
 
 
-  .orderDetail  table td {
-      width:80%;
-      text-indent: 20px;
-      /* border:1px solid lightgray; */
-  }
+
+.delivery table {
+padding:10px;
+text-align:left;
+text-indent: 20px;
+    
+}
+
+#howMany {
+
+    text-align:center;
+    width: 40px;
+}
 
 
 .secondTable {
@@ -52,9 +80,15 @@ li{
 }
 
 
+.orderInfo table tr td:nth-child(4){
+    /* font-weight:bold; */
+    font-size:17px;
+
+}
+
 .secondTable tr th {
     background-color:#e4ecf8;
-    font-weight: normal;
+    /* font-weight: normal; */
 
 }
 
@@ -62,12 +96,67 @@ li{
 .secondTable tr td {
     width: 600px;
     text-align:center;  
-    border-left:1px solid lightgray;
+    /* border-left:1px solid lightgray; */
+
+}
+
+.deliveryInfo {
+    border:1px solid lightgray;
+    margin:10px;
+
+}
+
+.deliveryInfo tr th {
+
+    background-color:white;
+    padding:5px;
 
 }
 
 
-.orderDetail table tr td ul {
-    display:inline;
+.payMethod tr td {
+
+    width: 70px;
+    padding:10px;
+    /* border:2px solid blue; */
+    font-size:14px;
+    text-align: left;
+
+}
+
+.clientInfo table {
+    text-indent: 15px;
+    border:1px solid lightgray;
+}
+
+.clientInfo table td {
+    padding:10px;
+}
+
+.payMethod table tr td:nth-child(2n) {
+
+    padding-right:15px;
+    text-align:right;
+
+}
+
+.payMethod table {
+    border:1px solid lightgray;
+
+}
+
+.orderInfo table tr:nth-child(3)>td {
+    text-align:right;
+    border-top:1px solid lightgray;
+    padding-right:10px;
+    font-size:15px;
+    padding-top:5px;
+    padding-bottom:5px;
+}
+
+.orderInfo table tr:nth-child(3)>td a {
+    font-size:23px;
+    padding:15px;
+    color:rgb(11, 11, 156);
 
 }
