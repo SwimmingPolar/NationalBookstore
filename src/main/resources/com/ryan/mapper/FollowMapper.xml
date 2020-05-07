@@ -25,7 +25,7 @@
 	<select id="getMyFollowing" resultType="com.ryan.domain.member.FollowVO">
 		SELECT f.*,m.member_nick_name member_nick_name FROM member_follow f, member m
 		<where>
-			f.fk_member_follow_1 = m.member_email
+			f.fk_member_follow_1 = m.member_email and
 			fk_member_follow_1 = #{memberEmail}
 		</where>
 	</select>
@@ -33,7 +33,7 @@
 	<select id="getMyFollower" resultType="com.ryan.domain.member.FollowVO">
 		SELECT f.*,m.member_nick_name member_nick_name FROM member_follow f, member m
 		<where>
-			f.fk_member_follow_2 = m.member_email
+			f.fk_member_follow_2 = m.member_email and
 			fk_member_follow_2 = #{memberEmail}
 		</where>
 	</select>
