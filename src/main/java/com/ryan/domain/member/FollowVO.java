@@ -14,4 +14,7 @@ public class FollowVO {
     // 요청받는자 
     private String fkMemberFollow2;
 	
+    //닉네임
+    private String memberNickName;
+    
 }
