@@ -32,18 +32,15 @@
 
                 <div class="orderTable">
                     <span class="statusChk">
-                        <a href="#">All</a>
-                         <a href="#">입금대기 (0) </a>
-                        <i class="fas fa-grip-lines-vertical"></i>
-                        <a href="#">결제완료 (1) </a>
-                        <i class="fas fa-grip-lines-vertical"></i>
-                        <a href="#">배송준비 (0) </a>
-                        <i class="fas fa-grip-lines-vertical"></i>
-                        <a href="#">배송중 (1) </a>
-                        <i class="fas fa-grip-lines-vertical"></i>
-                        <a href="#">배송완료 (0) </a>
-                        <i class="fas fa-grip-lines-vertical"></i>
-
+                        <ul>
+                            <li> <a href="#"> All </a></li>
+                            <li> <a href="#"> 입금대기 (0) </a> </li>
+                            <li> <a href="#"> 결제완료 (1) </a> </li>
+                            <li> <a href="#"> 배송준비 (0) </a> </li>
+                            <li> <a href="#"> 배송중 (1) </a> </li>
+                            <li> <a href="#"> 배송완료 (0) </a> </li>
+                        </ul>
+                        
                     </span>
 
                     <!-- <div class="dateBtn">
@@ -80,7 +77,8 @@
                                     id="chkboxContent"> </td>
                             <td>
                                 <span class="adjustHere">
-                                    <a href="orderDetailInfo.html">
+                                    <a href="#" onclick="window.open('orderDetailInfo.html', 'detail', 'top=100px, left=100px, height=730px, width=1000px')">
+
                                         <span> 주문번호 : 2020050311447-4879546 </span>
                                         <span> 달빛 마신 마녀 </span>
                                         <span> 2020-05-03 11:33 </span>
