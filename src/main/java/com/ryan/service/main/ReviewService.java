@@ -14,5 +14,5 @@ public interface ReviewService {
 	
 	public Boolean updateReview(ReviewVO review);
 	
-	public ArrayList<ReviewVO> reviewList();
+	public ArrayList<ReviewVO> myReviewList(String memberEmail);
 }
