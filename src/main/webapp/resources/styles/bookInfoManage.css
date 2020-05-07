@@ -1,0 +1,97 @@
+body {
+    background-color: #f1f1f1;
+
+}
+
+a{
+    text-decoration: none;
+}
+
+li{
+    list-style: none;
+
+}
+
+.titleBookManage h3 {
+
+    padding:18px 0px 18px 10px;
+    color:gray;
+    margin-top:0px;
+    margin-bottom:0px;
+}
+
+.main {
+    margin-left:230px;
+ 
+}
+
+.titleBookManage {
+    border-bottom:1px solid lightgray;
+}
+
+.bookInfo table {
+    border:1px solid lightgray;
+    background-color: white;
+    width:90%;
+    margin-top:10px;
+}
+
+.bookInfo table th {
+    background-color: #c6cedb;
+    padding:10px;
+   
+}
+
+.bookInfo table td {
+    text-align:center;
+
+}
+
+.bookInfo table img {
+
+    width: 100px;
+
+}
+
+.bookInfo input[type="button"] {
+
+    width: 60px;
+    display:block;
+    text-align: center;
+    margin:0 auto;
+    margin-top:10px;
+
+}
+
+.bookInfo ul {
+    padding:0px 10px 0px 10px;
+}
+
+.bookInfo ul li>input[type="button"]{
+    width: 80px;
+    height: 35px;
+}
+
+
+input[type="button"]:hover {
+    background-color:#0099FF;
+    color:white;
+    font-weight:bold;
+
+}
+
+.bookInfo table table {
+    width:100%;
+    margin-bottom:10px;
+}
+
+.bookInfo table table th {
+      background-color: rgb(240, 240, 240);
+      border-bottom:1px solid lightgray;
+
+}
+
+.bookInfo table table td {
+    border-bottom:1px solid lightgray;
+    border-left:1px solid lightgray;
+}

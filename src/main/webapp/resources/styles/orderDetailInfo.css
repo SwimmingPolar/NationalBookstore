@@ -1,0 +1,73 @@
+body {
+    background-color: #f1f1f1;
+
+}
+
+a{
+    text-decoration: none;
+}
+
+li{
+    list-style: none;
+}
+
+.mainBody {
+
+    margin-left:230px;
+
+}
+
+.mainBody .mainTitle h3{
+    margin-top:0px;
+    padding:18px 0px 18px 10px;
+    border-bottom:1px solid lightgray;
+    color: gray;
+}
+
+.orderDetail > table {
+    width: 70%;
+    background-color:white;
+    margin:0 auto;
+  }
+  
+
+  .orderDetail  table th {
+      background-color: #e6e7e9;
+      width:20%;
+  }
+
+
+  .orderDetail  table td {
+      width:80%;
+      text-indent: 20px;
+      /* border:1px solid lightgray; */
+  }
+
+
+.secondTable {
+    width:80%;
+    margin:0 auto;
+    border:1px solid lightgray;
+    margin-top:10px;
+}
+
+
+.secondTable tr th {
+    background-color:#e4ecf8;
+    font-weight: normal;
+
+}
+
+
+.secondTable tr td {
+    width: 600px;
+    text-align:center;  
+    border-left:1px solid lightgray;
+
+}
+
+
+.orderDetail table tr td ul {
+    display:inline;
+
+}

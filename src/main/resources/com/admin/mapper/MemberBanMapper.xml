@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.mapper.MemberBanMapper">
+	
+	<insert id="insertMemberBan">
+		INSERT INTO member_ban
+		(
+			member_email,
+			ban_reason,
+			ban_release_date,
+			ban_check,
+			ban_period
+		)
+		VALUES
+		(
+			#{memberEmail},
+			#{banReason},
+			SYSDATE + #{banPeriod},
+			1,
+			#{banPeriod}
+		)
+	</insert>
+	
+	<!-- 현재 정지 중인 회원들 -->
+	
+	<select id="getBanList" resultType="com.admin.domain.member.MemberBanVO">
+		SELECT * FROM member_ban
+		<where>
+			ban_check = 1
+		</where>
+		ORDER BY ban_release_date DESC
+	</select>
+	
+	<!-- 정지이력 -->
+	<!-- 현재 정지중인거는 안보여줘야 하나?>. -->
+	<select id="getBanHistory" resultType="com.admin.domain.member.MemberBanVO">
+		SELECT * FROM member_ban
+	</select>
+	
+	<!-- 여기부터 자동으로 정지 해제 -->
+	
+	<select id="getTodayMemberLiberationList" resultType="com.admin.domain.member.MemberBanVO">
+		SELECT * FROM member_ban
+		<where>
+			TO_CHAR(ban_release_date,'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD')
+		</where>
+	</select>
+	
+	<update id="memberLiberation">
+		<foreach collection="list" index="index" item="member">
+			UPDATE member_ban
+			<set>
+				ban_check = 0
+			</set>
+			<where>
+				member_email = #{member.memberEmail}
+			</where>
+		</foreach>
+	</update>
+	
+</mapper>

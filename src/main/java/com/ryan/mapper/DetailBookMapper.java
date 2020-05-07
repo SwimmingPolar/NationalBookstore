@@ -3,7 +3,7 @@ package com.ryan.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ryan.domain.ReviewVO;
+import com.ryan.domain.book.ReviewVO;
 import com.ryan.domain.book.BookGradeVO;
 import com.ryan.domain.book.BookLikeVO;
 import com.ryan.domain.book.EBookVO;

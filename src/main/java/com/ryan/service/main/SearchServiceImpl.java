@@ -61,4 +61,15 @@ public class SearchServiceImpl implements SearchService{
 		return mapper.searchPaperbook(type, keyword);
 		//return sqlSession.getMapper(SearchMapper.class).searchPaperbook(type, keyword);
 	}
+	//ebook 페이징
+	@Override
+	public List<EBookVO> searchEbookPage(String type, String[] keyword, int pageNum) throws ClassNotFoundException, SQLException {
+		return mapper.searchEbookPage(type, keyword, pageNum);
+	}
+
+
+	@Override
+	public List<EBookVO> searchPaperbookPage(String type, String[] keyword,int pageNum) throws ClassNotFoundException, SQLException {
+		return mapper.searchPaperbookPage(type, keyword, pageNum);
+	}
 }

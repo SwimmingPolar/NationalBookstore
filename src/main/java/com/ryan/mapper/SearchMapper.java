@@ -16,4 +16,8 @@ public interface SearchMapper {
 	public List<EBookVO> searchEbook(@Param("type") String type, @Param("keyword") String[] keyword);
 	//종이책 검색
 	public List<EBookVO> searchPaperbook(@Param("type") String type, @Param("keyword") String[] keyword);
+	//ebook 페이징
+	public List<EBookVO> searchEbookPage(@Param("type") String type,@Param("keyword") String[] keyword, @Param("pageNum") int pageNum);
+	//종이책 페이징
+	public List<EBookVO> searchPaperbookPage(@Param("type") String type,@Param("keyword") String[] keyword, @Param("pageNum") int pageNum);
 }

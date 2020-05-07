@@ -1,16 +1,17 @@
 package com.ryan.controller;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ryan.domain.ReviewVO;
+import com.ryan.domain.book.ReviewVO;
 import com.ryan.domain.member.MemberVO;
 import com.ryan.service.main.ReviewServiceImpl;
 
@@ -21,45 +22,46 @@ public class ReviewController {
 	@Autowired
 	private ReviewServiceImpl service;
 	
-	public boolean loginCheck(HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		
+	@RequestMapping("/write")
+	public String insertEbookReview(@ModelAttribute @Valid ReviewVO review,BindingResult result,HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
+		MemberVO member = (MemberVO) session.getAttribute("ryanMember");	
+		String memberEmail=member.getMemberEmail();
 		
-		if(member == null) {
-			response.sendRedirect("/member/login");
-			return false;
-		} else {
-			return true;
-		}
-		
-	}
-	
-	@RequestMapping("/ebookWrite")
-	public void insertEbookReview(@ModelAttribute("review")ReviewVO review) {
-		
-		//등록자가 이미 리뷰한 책인지 검사
-		//여부에 따라 검사 혹은 리뷰있음을 알림
-		
-	}
-	
-	@RequestMapping("/bookWrite")
-	public void insertBookReview(@ModelAttribute("review")ReviewVO review) {
-		
+		if(memberEmail.equals((String)review.getMemberEmail())) {
+			return service.insertReview(review)? "정상입력시 갈 jsp":"실패시";
+		}else
+			return "본인 reivew가 아님";
 	}
 	
 	@RequestMapping("/delete")
-	public String deleteReview(@ModelAttribute("ryanMember")MemberVO member,int bookNum) {
+	public String deleteReview(HttpServletRequest request,@ModelAttribute @Valid ReviewVO review,BindingResult result) {
+		HttpSession session = request.getSession();
+		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
 		String memberEmail=member.getMemberEmail();
-		if(service.duplicationChk(memberEmail, bookNum)) {
-			return service.delecteReview(memberEmail, bookNum)? "정상삭제시 갈 jsp":"실패문구";
+		
+		if(memberEmail.equals((String)review.getMemberEmail())) {
+			return service.delecteReview(review)? "정상삭제시 갈 jsp":"실패시";
 		}else
-			return "삭제할리뷰가존재하지않음";
+			return "본인 reivew가 아님";
+		
 	}
 	
 	@RequestMapping("/update")
-	public void updateReview(@ModelAttribute("ryanMember")MemberVO member,@ModelAttribute("review")ReviewVO review) {
-		//
+	public String updateReview(@ModelAttribute @Valid ReviewVO review,BindingResult result,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
+		String memberEmail=member.getMemberEmail();
+		
+		if(memberEmail.equals(review.getMemberEmail())) {
+			return service.updateReview(review)? "정상수정시 갈 jsp":"실패시";
+		}else
+			return "본인 reivew가 아님";
+	}
+	
+	@RequestMapping("/reviewList")
+	public String reviewList() {
+		
+		return "";
 	}
 }

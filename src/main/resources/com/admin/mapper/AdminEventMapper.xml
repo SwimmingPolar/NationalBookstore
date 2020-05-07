@@ -1,17 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.admin.mapper.EventMapper">
+<mapper namespace="com.admin.mapper.AdminEventMapper">
 
-<insert id="pushBook" parameterType="com.admin.domain.AdminBestListVO">
-	insert into admin_bestlist(admin_category,book_num) VALUES(#{adminCategory},#{bookNum})
+<insert id="pushBook" parameterType="com.admin.domain.book.AdminBestListVO">
+	insert into admin_bestlist(category_num,book_num) VALUES(#{categoryNum},#{bookNum})
 </insert>
 
 <select id="countBook" resultType="_int">
 	SELECT COUNT(*) from admin_bestlist
 </select>
 
-<select id="checkBook" resultType="com.admin.domain.AdminBestListVO">
+<select id="checkBook" resultType="com.admin.domain.book.AdminBestListVO">
 	select book_num from admin_bestlist
 </select>
+
+<delete id="deleteBook" parameterType="hashmap">
+	delete admin_bestlist 
+	WHERE 
+	<if test="deletenum != null">
+		<foreach collection="deletenum" item="item" separator="or">
+			book_num = #{item}
+		</foreach>	
+	</if>
+</delete>
+
 
 </mapper>

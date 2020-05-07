@@ -1,9 +1,9 @@
 <%@page import="org.springframework.ui.Model"%>
-<%@page import="java.util.Enumeration"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +16,8 @@
 <link rel="stylesheet" type="text/css" href="../resources/styles/reset.css" />
 <link rel="stylesheet" type="text/css" href="../resources/styles/search.css" />
 <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
+	<fmt:formatNumber var="ebookPage" value="${(ebookCount/3)+(1-((ebookCount/3)%1))%1}" pattern="0"/>
+	<fmt:formatNumber var="paperPage" value="${(paperCount/3)+(1-((paperCount/3)%1))%1}" pattern="0"/>
 <%
 	String type = request.getParameter("type");
 	String keyword = request.getParameter("keyword");
@@ -103,24 +105,25 @@
 			})
 		})
 		
-		$(".btn-page").click(function(data) {
-			console.dir(data.target.value);
+		//페이지 버튼 관리
+		$(".btn-page."+${ebookPage }).nextAll().attr("disabled", true);
+		$(".btn-page.move").click(function(e) {
+			e.preventDefault();
+			$(".btn-page.num").each(function() {
+				$(this).val(parseInt($(this).val())+10)
+				$(this).text($(this).val());
+			});
 		})
 	});
 </script>
 </head>
-<c:set var="ebook" value="${result.ebook }" />
-<c:set var="paper" value="${result.paper }" />
-<c:set var="ebookCount" value="${fn:length(ebook) }" />
-<c:set var="paperCount" value="${fn:length(paper) }" />
-<c:set var="resultCount" value="${ebookCount + paperCount }" />
 <body>
 	<div class="div-title" >
 		<h3>National Bookstore</h3>
 	</div>
 	<div ></div>
 	<!-- 검색바 -->
-	<form action="/controller/search/search" method="GET" >
+	<form action="/controller/search/searchtest" method="GET" >
 		<div class="search-bar" >
 			<select class="type" name="type" >
 				<option value="BOOK_TITLE" >제목</option>
@@ -134,10 +137,11 @@
 	<!-- 검색 결과 요약 -->
 	<c:if test="${not empty param.keyword }" >
 		<!-- 카테고리 선택 -->
-		<form action="/controller/search/search" method="GET" >
+		<form action="/controller/search/pagetest" method="GET" >
 			<div class="category-list" >
 				<input class="type" type="hidden" name="type" />
 				<input class="keyword" type="hidden" name="keyword" />
+				<input type="hidden" name="pageNum" value="1" />
 				<button name="category" value="all" class="btn-category selected">통합검색</button>
 				<button name="category" value="ebook" class="btn-category">ebook</button>
 				<button name="category" value="paper" class="btn-category">종이책</button>
@@ -172,7 +176,8 @@
 					<div class="search-list">
 						<%-- 카테고리 벨트 --%>
 						<div class="category-belt" >
-							<form action="/controller/search/search" method="GET" >
+							<form action="/controller/search/pagetest" method="GET" >
+								<input type="hidden" name="pageNum" value="1" />
 								<input class="type" type="hidden" name="type" />
 								<input class="keyword" type="hidden" name="keyword" />
 								<button name="category" value="${list.getKey() }" class="btn-category-belt" >
@@ -232,70 +237,84 @@
 			<c:otherwise>
 				<div class="search-list" >
 				<%-- 카테고리 벨트 --%>
-					<div class="category-belt" >
-						<input class="type" type="hidden" name="type" />
-						<input class="keyword" type="hidden" name="keyword" />
-						<button class="btn-category-belt" style="cursor:default;" >
-							<c:choose>
-								<c:when test="${param.category eq 'ebook' }" >
-									<span class="category-title" >EBOOK</span>
-									<span class="category-count" >${ebookCount }</span>
-								</c:when>
-								<c:when test="${param.category eq 'paper' }" >
-									<span class="category-title" >종이책</span>
-									<span class="category-count" >${paperCount }</span>
-								</c:when>
-							</c:choose>
-							<%-- 종이책일때는 장바구니 추가 버튼 생성 --%>
-							<c:if test="${param.category eq 'paper' }">
-								<span class="to-cart" ><span class="btn-cart-outer far fa-check-square" ><span class="btn-cart" >&nbsp;장바구니 추가</span></span></span>
-							</c:if>
-							<span class="fas fa-chevron-right" style="display:none;"></span>
-						</button>
-					</div>
-					<%-- 카테고리 벨트 끝 --%>
-					<%-- 책리스트 --%>
-					<div class="search-result" >
-						<c:forEach var="book" items="${result.get(param.category) }" >
-							<div class="search" >
-								<div class="book ${book.bookNum }" >
-									<!-- 책 커버 -->
-									<img class="cover" />
-									<c:if test="${param.category eq 'paper' }" >
-										<input class="checkbox-cart btn-grid-cart" type="checkbox" name="cart" value="${book.bookNum }"/>
-									</c:if>
-									<!-- 책 정보 -->
-									<div class="info" >
-										<div class="title" >${book.bookTitle }</div>
-										<div>
-											<span class="author" >${book.bookWriter }</span>
-											<span class="publisher" >${book.bookPublisher }</span>
-										</div>
+				<div class="category-belt" >
+					<input class="type" type="hidden" name="type" />
+					<input class="keyword" type="hidden" name="keyword" />
+					<input type="hidden" name="pageNum" value="1" />
+					<button class="btn-category-belt" style="cursor:default;" >
+						<c:choose>
+							<c:when test="${param.category eq 'ebook' }" >
+								<span class="category-title" >EBOOK</span>
+								<span class="category-count" >${ebookCount }</span>
+							</c:when>
+							<c:when test="${param.category eq 'paper' }" >
+								<span class="category-title" >종이책</span>
+								<span class="category-count" >${paperCount }</span>
+							</c:when>
+						</c:choose>
+						<%-- 종이책일때는 장바구니 추가 버튼 생성 --%>
+						<c:if test="${param.category eq 'paper' }">
+							<span class="to-cart" ><span class="btn-cart-outer far fa-check-square" ><span class="btn-cart" >&nbsp;장바구니 추가</span></span></span>
+						</c:if>
+						<span class="fas fa-chevron-right" style="display:none;"></span>
+					</button>
+				</div>
+				<%-- 카테고리 벨트 끝 --%>
+				<%-- 책리스트 --%>
+				<div class="search-result" >
+					<%-- <c:forEach var="book" items="${result.get(param.category) }" > --%>
+					<c:forEach var="book" items="${result.get(param.category) }" >
+						<div class="search" >
+							<div class="book ${book.bookNum }" >
+								<!-- 책 커버 -->
+								<img class="cover" />
+								<c:if test="${param.category eq 'paper' }" >
+									<input class="checkbox-cart btn-grid-cart" type="checkbox" name="cart" value="${book.bookNum }"/>
+								</c:if>
+								<!-- 책 정보 -->
+								<div class="info" >
+									<div class="title" >${book.bookTitle }</div>
+									<div>
+										<span class="author" >${book.bookWriter }</span>
+										<span class="publisher" >${book.bookPublisher }</span>
 									</div>
 								</div>
-								<div class="interact" >
-									<c:choose>
-										<c:when test="${param.category eq 'ebook' }" >
-											<button class="btn-read" >바로보기</button>
-										</c:when>
-										<c:when test="${param.category eq 'paper' }" >
-											<button class="btn-purchase" >구매</button>
-											<input class="checkbox-cart btn-list-cart" type="checkbox" name="cart" value="${book.bookNum }" />
-										</c:when>
-									</c:choose>
-								</div>
 							</div>
-						</c:forEach>
-					</div>
-					<%-- 책리스트 끝 --%>
-				</div>
-				<form action="/controller/search/search" >
-				<div class="div-page" >
-					<button class="btn-page before" name="pageNumber" value="before"><</button>
-					<c:forEach var="i" begin="0" end="9" >
-						<button class="btn-page ${i+1 }" name="pageNumber" value="${i+1 }" >${i+1 }</button>
+							<div class="interact" >
+								<c:choose>
+									<c:when test="${param.category eq 'ebook' }" >
+										<button class="btn-read" >바로보기</button>
+									</c:when>
+									<c:when test="${param.category eq 'paper' }" >
+										<button class="btn-purchase" >구매</button>
+										<input class="checkbox-cart btn-list-cart" type="checkbox" name="cart" value="${book.bookNum }" />
+									</c:when>
+								</c:choose>
+							</div>
+						</div>
 					</c:forEach>
-					<button class="btn-page next" name="pageNumber" value="after">></button>
+				</div>
+				<%-- 책리스트 끝 --%>
+				</div>
+				<form action="/controller/search/pagetest" >
+				<div class="div-page" >
+					<c:choose>
+						<c:when test="${param.category eq 'ebook' }" >
+							<input type="hidden" name="existence" value="0" />
+							<input type="hidden" name="category" value="ebook" />
+						</c:when>
+						<c:otherwise>
+							<input type="hidden" name="existence" value="1" />
+							<input type="hidden" name="category" value="paper" />
+						</c:otherwise>
+					</c:choose>
+					<input type="hidden" name="type" value="${param.type }" />
+					<input type="hidden" name="keyword" value="${param.keyword }"/>
+					<button class="btn-page move before" name="pageNum" value="before"><</button>
+					<c:forEach var="i" begin="0" end="9" >
+						<button class="btn-page ${i+1 } num" name="pageNum" value="${i+1 }" >${i+1 }</button>
+					</c:forEach>
+					<button class="btn-page move next" name="pageNum" value="after">></button>
 				</div>
 				</form>
 			</c:otherwise>

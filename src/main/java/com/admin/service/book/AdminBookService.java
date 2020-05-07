@@ -1,4 +1,4 @@
-package com.admin.service;
+package com.admin.service.book;
 
 import java.util.List;
 

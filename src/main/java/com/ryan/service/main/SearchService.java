@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.ryan.domain.book.EBookVO;
 
 public interface SearchService {
@@ -23,5 +25,8 @@ public interface SearchService {
 	public List<EBookVO> searchEbook(String type, String[] keyword) throws ClassNotFoundException, SQLException;
 	//종이책 검색
 	public List<EBookVO> searchPaperbook(String type, String[] keyword) throws ClassNotFoundException, SQLException;
-
+	//ebook 페이징
+	public List<EBookVO> searchEbookPage(@Param("type") String type,@Param("keyword") String[] keyword, @Param("pageNum") int pageNum) throws ClassNotFoundException, SQLException;
+	//종이책 페이징
+	public List<EBookVO> searchPaperbookPage(@Param("type") String type,@Param("keyword") String[] keyword, @Param("pageNum") int pageNum) throws ClassNotFoundException, SQLException;
 }

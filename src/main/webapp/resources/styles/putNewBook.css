@@ -1,0 +1,235 @@
+
+body {
+    background-color: #f1f1f1;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+a{
+    text-decoration: none;
+}
+
+li{
+    list-style: none;
+
+}
+
+.main {
+
+    
+    /* border:2px solid blue; */
+    width:95%;
+    display:flex;
+    flex-direction:row;
+}
+
+
+/* .tab_menu {
+    border:2px solid red;
+    width:95%;
+
+
+}
+
+.tab_wrapper {
+
+    border:2px solid green;
+    height: 200px;
+}
+
+.tab_menu>ul>li {
+
+    display:inline;
+}
+
+.tab_content {
+    display:none;
+
+} */
+
+.putItemTitle h3 {
+
+    padding:18px 0 18px 10px;
+    color: gray;
+    margin-top:0px;
+    margin-bottom:0px;
+}
+
+.putItemTitle {
+
+    border-bottom:1px solid lightgray;    
+}
+.bookImg {
+
+    /* border:2px solid black; */
+    width: 95%;
+    height:150px;
+    margin:10px 0 10px 0;
+    border:1px dotted lightgray;
+}
+
+.insertNewBook {
+    /* border:2px solid orange; */
+    width: 60%;
+    margin:0 10px 0 10px;
+ 
+}
+
+.insertNewBook select {
+    height: 30px;
+    width: 40%;
+    margin:10px;
+}
+
+.insertNewBook table {
+    width: 100%;
+    font-size: 14px;
+    margin:0 auto;
+}
+.insertNewBook table th{
+    background-color:#e2dfdf;
+    padding:10px;
+    width: 150px;
+    text-align:left;
+    text-indent: 20px;
+}
+.insertNewBook table td {
+
+    background-color:#ffffff;
+    padding-left:15px;
+}
+
+.insertNewBook table input {
+
+    width: 95%;
+}
+
+.rightBox {
+    /* border:2px solid yellow; */
+    width:35%;
+    margin: 0 20px 0 20px;
+    font-size:14px;
+    background-color:#ffffff;
+}
+
+.rightBox input[type="text"] {
+    width: 80px;
+}
+
+.wrapper {
+    margin-left:230px;
+    /* border:2px solid lightgray; */
+}
+
+.storyBox {
+    /* border:2px solid green; */
+    margin:10px;
+    /* padding:5px; */
+    font-size: 11px;
+    box-shadow: 0 0 10px rgba(0,0,0,.05);
+    border:1px solid darkgray;
+}
+
+.storyBox >ul>li>p>a {
+    color:red;
+}
+
+.moneyBox, .settingChoice, .shippingFare, .shipChoice {
+
+    border:1px solid lightgray;
+    margin:20px 10px 20px 10px;
+}
+
+.shippingFare {
+    padding: 20px;
+    color:rgb(136, 133, 133);
+    font-weight:bold;
+}
+/*
+.shipChoice {
+    border:1px solid lightgray;
+} */
+.moneyBox table {
+    font-size:13px;
+    width:100%;
+}
+
+.moneyBox table th {
+    background-color:#e2dfdf;
+    padding:5px;
+    
+}
+
+.moneyBox table td {
+    padding:5px 0px 5px 10px;
+    border-top:1px solid lightgray;
+}
+
+.moneyBox a {
+    color:red;
+}
+
+.shipChoice div {
+
+    margin:10px 5px 5px 5px;    
+}
+
+.shipChoice p {
+
+        color:red;
+        /* border:2px solid blue; */
+        font-size:12px;
+        padding:0px 10px 0px 10px;
+}
+
+.settingChoice table{
+
+    font-size:13px;
+    padding:5px;
+    width:100%;
+    text-align: left;
+}
+
+.settingChoice table th {
+    border-top:1px solid lightgray;
+    border-right:1px solid lightgray;
+}
+
+.settingChoice table td {
+ 
+    border-top:1px solid lightgray;
+}
+
+.saveNewProduct, .resetInfo {
+
+    width: 200px;
+    height: 40px;
+    font-size:18px;
+    
+    
+}
+
+.finishBtn {
+    width:500px;
+    margin:0 auto;
+    margin-top:30px;
+    margin-bottom:30px;
+}
+
+.finishBtn button:hover, .finishBtn input[type="reset"]:hover {
+    background-color: #0099FF;
+    color:white;
+    font-weight: bold;
+
+}
+
+.finishBtn button, .finishBtn input {
+
+    border-radius: 10px;
+    border:1px solid black;
+    background-color: white;
+
+}
+
+.insertNewBook table a {
+    color:red;
+}
