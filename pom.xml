@@ -188,11 +188,11 @@
    			<version>1.0.0.GA</version>
 		</dependency>
 
-		<dependency>
+		<!-- <dependency>
    			<groupId>org.hibernate</groupId>
    			<artifactId>hibernate-validator</artifactId>
    			<version>4.2.0.Final</version>
-		</dependency>
+		</dependency> -->
 
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 		<dependency>

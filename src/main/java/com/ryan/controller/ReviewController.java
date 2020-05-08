@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,10 +61,12 @@ public class ReviewController {
 	}
 	
 	@RequestMapping("/myReviewList")
-	public String reviewList(HttpServletRequest request) {
+	public String reviewList(HttpServletRequest request,Model model) {
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
-		service.myReviewList((String) member.getMemberEmail());
-		return service.myReviewList((String) member.getMemberEmail()) !=null ?"":"";
+		String memberEmail=member.getMemberEmail();
+		service.myReviewList(memberEmail);
+		model.addAttribute("myreviewlist", service.myReviewList(memberEmail));
+		return "";
 	}
 }
