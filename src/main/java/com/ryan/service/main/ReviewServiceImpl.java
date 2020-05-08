@@ -44,8 +44,7 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
-	public ArrayList<ReviewVO> reviewList() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<ReviewVO> myReviewList(String memeberEmail) {
+		return mapper.myReviewList(memeberEmail);
 	}
 }
