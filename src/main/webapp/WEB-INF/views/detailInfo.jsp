@@ -166,13 +166,18 @@
             		
 
                 </div>
+                
+                        
+            </div>
+                
+                <div class="tagtag">
                 <form action="/book/inserthashtag">
                 
                 <c:choose>
                 	<c:when test="${hashtagCookieCheck }">
-               	 		<input type="text" id="hashTag" name="hashTag" class="emoTag" placeholder ="해시태그를 입력해주세요 (최대 6자)">
+               	 		 <input type="text" name="emoTag" class="emoTag" placeholder ="이 책에 대한 나만의 #감성태그를 달아주세요">
                	 		 <input type="hidden" name="bookNum" value="${bookdetail.bookNum }">
-            		 	 <input type="button" value="남기기" class="inputBtn">
+            		 	<input type="button" value="등록" class="inputBtn">
                 	</c:when>
                 	<c:otherwise>
                	 		<input type="text" name="hashTag" class="emoTag" placeholder ="해시태그는 24시간에 1번만 입력 가능합니다." readonly="readonly">
