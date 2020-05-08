@@ -15,4 +15,7 @@ public class OrderObjectVO {
 
     // 구매수량 
     private int bookCount;
+    
+    //가격
+    private int price;
 }

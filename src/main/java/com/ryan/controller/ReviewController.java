@@ -59,9 +59,11 @@ public class ReviewController {
 			return "본인 reivew가 아님";
 	}
 	
-	@RequestMapping("/reviewList")
-	public String reviewList() {
-		
-		return "";
+	@RequestMapping("/myReviewList")
+	public String reviewList(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
+		service.myReviewList((String) member.getMemberEmail());
+		return service.myReviewList((String) member.getMemberEmail()) !=null ?"":"";
 	}
 }
