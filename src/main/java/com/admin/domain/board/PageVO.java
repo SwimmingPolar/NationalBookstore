@@ -1,4 +1,4 @@
-package com.ryan.domain;
+package com.admin.domain.board;
 
 import lombok.Data;
 

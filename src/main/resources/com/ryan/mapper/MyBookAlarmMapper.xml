@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ryan.mapper.MyBookAlarmMapper">
+
+<insert id="requestAlarm" parameterType="com.ryan.domain.book.BookAlarmVO">
+	insert into book_alarm (fk_member_alarm,fk_book_alarm, alarm_check) VALUES (#{fkMemberAlarm},#{fkBookAlarm},0)
+</insert>
+
+
+<select id="showAlarm" parameterType="String" resultType="com.ryan.domain.book.BookAlarmVO">
+	select a.*, e.book_title, to_char(sysdate, 'yyyymmdd')-to_char(e.book_pb_date,'yyyymmdd') book_pb_date
+	from book_alarm a, ebook e where a.fk_book_alarm = e.book_num and alarm_check = 1 and a.fk_member_alarm = #{fkMemberAlarm}
+</select>
+
+ 
+ <select id="checkList" resultType="com.ryan.domain.book.BookAlarmVO">
+ 	select a.*,e.book_title to_char(sysdate, 'yyyymmdd')-to_char(e.book_pb_date,'yyyymmdd')
+	from book_alarm a, ebook e where a.fk_book_alarm = e.book_num and alarm_check = 0
+ </select>
+ 
+ <update id="changeNO" parameterType="int">
+ 	update book_alarm set alarm_check = 1 where alarm_no = #{alarmNo}
+ </update>
+ 
+ <delete id="deleteAlarm" parameterType="int">
+ 	delete book_alarm where alarm_no = #{alarmNo}
+ </delete>
+ 
+</mapper>

@@ -65,7 +65,7 @@ SELECT review_num.nextval FROM book_Review
 	book_num=#{bookNum}
 	</select>
 	
-	<select id="reviewList" resultType="com.ryan.domain.book.ReviewVO">
-	SELECT * FROM book_Review WHERE book_num=#{bookNum}
+	<select id="myreviewList" resultType="com.ryan.domain.book.ReviewVO">
+	SELECT * FROM book_Review WHERE member_email=#{memberEmail}
 	</select>
 </mapper>

@@ -22,62 +22,98 @@
         </div>
 
         <div class="orderDetail">
+            <div class="orderInformation">
+                주문번호 (9987454321) / <a> 주문 날짜: 2020-04-30</a></th>
+             </div>
 
-            <table>
+            <div class="orderInfo">
+                <table class="secondTable">
                 <tr>
-                    <th colspan="2">주문번호 (9987454321) / <a> 주문 날짜: 2020-04-30</a></th>
+                    <th> 도서이미지 </th>
+                    <th> 도서명 </th>
+                    <th> 수량 </th>
+                    <th> 가격 </th>
+                    
                 </tr>
-                <tr>
-                    <th> 회원아이디 </th>
-                    <td>  abc1234 </td>
-                </tr>
-                <tr> 
-                    <th> 주문 상세기록 </th>
-                    <td> 
-                        <div class="orderInfo">
-                            <table class="secondTable">
-                                <tr>
-                                    
-                                </tr>
-                                <tr>
-                                    <td> 도서명 </td>
-                                    <td> 달빛 마신 소녀 </td>
-                                </tr>
-                            </table>
+                    <tr>
+                        <td> <img src="../../resources/image/book02.jpg" alt="오류" width=100> </td>
+                        <td> 달빛 마신 소녀 </td>
+                        <td> <input type="text" id="howMany" value="2"> </td>
+                        <td> KRW <span class="bookPrice">16,000</span> 원  </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"> 총 개수 <a> 2 </a> 개 </td>
+                        <td> 총 금액  <a> 32,000 </a> 원</td>
+                    </tr>
+                </table>
+            </div> 
+         
+            <div class="clientInfo">
+                <table>
+                    <tr>
+                        <th>주문자 이름</th>
+                        <td colspan="3">홍길동</td>
+                    </tr>
+                    <tr>
+                        <th>핸드폰 번호</th>
+                        <td>010-4444-8888</td>
+                        <th>이메일</th>
+                        <td>abc1234@gmail.com</td>
+                    </tr>
 
-                        </div> 
-                    </td>    
-                </tr>
-                <tr> 
-                    <th> 배송지 (상세주소) </th>
-                    <td> 
-                   <ul>
-                       <li> 우편번호 </li>
-                       <li> 주소 </li>
-                       <li> 상세주소 </li>
-                   </ul>
+                </table>
 
-                   <ul>
-                       <li> 45778 </li>
-                       <li> 경기도 시흥시 은행동 </li>
-                       <li> 273-71 태청빌라 301호 </li>
-                   </ul>
-                    </td>    
-                </tr>
-                <tr> 
-                    <th> 결제수단 </th>
-                    <td>  </td>    
-                </tr>
-                <tr> 
-                    <th> 결제금액 </th>
-                    <td>  </td>    
-                </tr>
-            </table>
+            </div>
 
+
+            <div class="delivery"> 
+                <table class="deliveryInfo">
+                    <tr>
+                        <th> 우편번호 </th>
+                        <td> 32140 </td>
+                    </tr>
+                    <tr>
+                        <th> 주소 </th>
+                        <td> 경기도 시흥시 매화동 </td>
+                    </tr>
+                    <tr>
+                        <th> 상세주소 </th>
+                        <td> 273-6 태청빌라 301호 </td>
+                    </tr>
+                    <tr>
+                        <th> 배송 요청사항 </th>
+                        <td> 문앞에 놔주세요. </td>
+                    </tr>
+                </table>
+            </div>
+
+                <div class="payMethod">
+                        <table class="payMethod">
+                            <tr>
+                                <th colspan="2"> 주문 금액 </th>
+                                <th colspan="2"> 할인 금액 </th>
+                                <th colspan="2"> 결제 금액 </th>
+                                <th colspan="2"> 적립 포인트 </th>
+                            </tr>
+                            <tr>
+                                <td> <b>상품금액</b> </td>
+                                <td> 27,000 원 </td>
+                                <td> <b>할인</b> </td>
+                                <td> 2,700 원 </td>
+                                <td> <b>신용카드</b> </td>
+                                <td> 24,300 원 </td>
+                                <td> <b>기본적립 </b> </td>
+                                <td> 1,350 원 </td>
+
+                            </tr>
+                        
+                        </table> 
+                
+                </div>
+                <!-- payMethod end -->
         </div>
 
     </div>
-
 
 </body>
 </html>
