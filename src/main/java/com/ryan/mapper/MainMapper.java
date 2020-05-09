@@ -12,4 +12,8 @@ public interface MainMapper {
 	
 	public ArrayList<EBookVO> getBookList(@Param("type") String type, @Param("keyword") String[] keyword);
 	
+	
+	
+	
+	
 }
