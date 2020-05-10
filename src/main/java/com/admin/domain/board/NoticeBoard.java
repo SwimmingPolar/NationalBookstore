@@ -3,7 +3,7 @@ package com.admin.domain.board;
 import lombok.Data;
 
 @Data
-public class noticeBoard {
+public class NoticeBoard {
 	// board_num 
     private int noticeNo;
     

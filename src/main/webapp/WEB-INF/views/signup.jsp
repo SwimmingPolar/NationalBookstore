@@ -163,7 +163,7 @@
         // append spinner to label
         const emailLabel = document.querySelector('.email-container > label[for="email"]');
         const spinner = document.createElement('img');
-        spinner.setAttribute('src', './ajax-loading.svg');
+        spinner.setAttribute('src', '../../resources/images/ajax-loading.svg');
         emailLabel.appendChild(spinner);
 
         const xhr = new XMLHttpRequest();

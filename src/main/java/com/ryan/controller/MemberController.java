@@ -219,7 +219,7 @@ public class MemberController {
 	
 	@GetMapping("/test")
 	public String test() {
-		return "testLogin";
+		return "Test";
 	}
 	
 	
