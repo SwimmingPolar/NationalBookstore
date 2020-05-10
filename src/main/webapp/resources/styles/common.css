@@ -1,0 +1,86 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.flexible-slider-window,
+.infinite-slider-window {
+  overflow: hidden;
+  font-size: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  user-drag: none;
+  -webkit-user-drag: none;
+}
+
+.flexible-slider-window ul,
+.infinite-slider-window ul {
+  list-style: none;
+}
+.flexible-slider-window a,
+.infinite-slider-window a {
+  display: block;
+  text-decoration: none;
+}
+
+.flexible-slider-window a,
+.infinite-slider-window a,
+.flexible-slider-window img,
+.infinite-slider-window img {
+  user-select: none;
+  -webkit-user-select: none;
+  user-drag: none;
+  -webkit-user-drag: none;
+}
+
+.flexible-slider,
+.infinite-slider {
+  cursor: grab;
+  display: flex;
+  counter-reset: slider;
+}
+
+.flexible-slider:active,
+.infinite-slider:active {
+  cursor: grabbing;
+}
+
+.flexible-slider .flexible-slide,
+.infinite-slider .infinite-slide {
+  flex: 1;
+  counter-increment: slider;
+  position: relative;
+}
+.flexible-slider .flexible-slide::after,
+.infinite-slider .infinite-slide::after {
+  position: absolute;
+  content: counter(slider);
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  line-height: 320px;
+  text-align: center;
+  font-size: 150px;
+}
+
+.fadeInUp {
+  visibility: hidden;
+}
+.fadeInUp.revealed {
+  visibility: visible;
+  animation: fadeInUp 0.65s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(7%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
