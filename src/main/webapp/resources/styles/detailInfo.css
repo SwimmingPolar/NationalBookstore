@@ -153,27 +153,58 @@ li {
 
 
 }
+.emoTag {
+    padding-top:5px;
+    font-size:13px;
+}
 
-
-.firstBox .emoTag {
+/* .firstBox .emoTag {
     width: 400px;
     height: 30px;
-    font-size: 16px;
+    font-size: 13px;
     border-radius:20px;
     padding-left: 10px;
     margin:30px 5px 30px 30px;
 
 
+} */
+
+.tagtag {
+    border:1px solid #9268bb;
+    border-radius:15px;
+    height:25px;
+    position: relative;
+    margin-top:30px;
+    margin-bottom:20px;
+
+}
+
+.tagtag input[type="text"] {
+    position: absolute;
+    width:550px;
+    border:none;
+    margin-left:20px;
+    outline:none;
+
 }
 
 
-.hashtagDetail input[type="button"] {
-
-    border-radius: 30px;
-    height:30px;
+.tagtag input[type="button"] {
+    position: absolute;
+    /* float:right; */
+    border-radius: 0 15px 15px 0;
+    height:25px;
+    font-size:13px;
     color:white;
-    background-color: #0099FF;
+    background-color:#9268bb;
     border:none;
+    outline:none;
+    right:0;
+    top:0;
+    margin-right:-1px;
+    cursor: pointer;
+    padding:0 12px 0 12px;
+
 }
 
 .bookDetail .inputBtn {
@@ -466,6 +497,7 @@ border:1px dotted #e8e8e8;
     background-color:#0099FF;
     color:white;
     border:1px dotted rgba(0, 101, 216, 0.904);
+    cursor: pointer;
 }
 
 .hashTag input[type="checkbox"] + label {
@@ -476,8 +508,14 @@ border:1px dotted #e8e8e8;
     margin-left:20px;
     color:black;
     padding: 8px;
+    cursor: pointer;
 
 }
+.bookStarScore .full {
+    /* position: absolute; */
+    color:#f1c40f;
+}
+
 
 .bookStarScore span{
 
@@ -486,7 +524,5 @@ border:1px dotted #e8e8e8;
 
 .bookStarScore span.on{
     color:#f1c40f;
-
-}
 
 }

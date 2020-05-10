@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ryan.mapper.ReviewMapper">
-<insert id="insertReview" parameterType="com.ryan.domain.ReviewVO">
+<insert id="insertReview" parameterType="com.ryan.domain.book.ReviewVO">
 <selectKey keyProperty="reviewNum" resultType="int" order="BEFORE">
 SELECT review_num.nextval FROM book_Review
 </selectKey>
@@ -63,5 +63,9 @@ SELECT review_num.nextval FROM book_Review
 	SELECT count(*) FROM book_Review
 	WHERE member_email=#{memberEmail},
 	book_num=#{bookNum}
+	</select>
+	
+	<select id="myreviewList" resultType="com.ryan.domain.book.ReviewVO">
+	SELECT * FROM book_Review WHERE member_email=#{memberEmail}
 	</select>
 </mapper>

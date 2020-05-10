@@ -1,17 +1,16 @@
 package com.ryan.controller;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
+import org.springframework.ui.Model;
+//import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ryan.domain.ReviewVO;
+import com.ryan.domain.book.ReviewVO;
 import com.ryan.domain.member.MemberVO;
 import com.ryan.service.main.ReviewServiceImpl;
 
@@ -23,7 +22,7 @@ public class ReviewController {
 	private ReviewServiceImpl service;
 	
 	@RequestMapping("/write")
-	public String insertEbookReview(@ModelAttribute @Valid ReviewVO review,BindingResult result,HttpServletRequest request) {
+	public String insertEbookReview(@ModelAttribute("review") ReviewVO review,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("ryanMember");	
 		String memberEmail=member.getMemberEmail();
@@ -35,7 +34,7 @@ public class ReviewController {
 	}
 	
 	@RequestMapping("/delete")
-	public String deleteReview(HttpServletRequest request,@ModelAttribute @Valid ReviewVO review,BindingResult result) {
+	public String deleteReview(HttpServletRequest request,@ModelAttribute("review")  ReviewVO review) {
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
 		String memberEmail=member.getMemberEmail();
@@ -48,7 +47,7 @@ public class ReviewController {
 	}
 	
 	@RequestMapping("/update")
-	public String updateReview(@ModelAttribute @Valid ReviewVO review,BindingResult result,HttpServletRequest request) {
+	public String updateReview(@ModelAttribute("review") ReviewVO review,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
 		String memberEmail=member.getMemberEmail();
@@ -57,5 +56,15 @@ public class ReviewController {
 			return service.updateReview(review)? "정상수정시 갈 jsp":"실패시";
 		}else
 			return "본인 reivew가 아님";
+	}
+	
+	@RequestMapping("/myReviewList")
+	public String reviewList(HttpServletRequest request,Model model) {
+		HttpSession session = request.getSession();
+		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
+		String memberEmail=member.getMemberEmail();
+		service.myReviewList(memberEmail);
+		model.addAttribute("myreviewlist", service.myReviewList(memberEmail));
+		return "";
 	}
 }
