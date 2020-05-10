@@ -1,0 +1,114 @@
+body {
+
+    /* font-family: 'Noto Sans KR', sans-serif; */
+    font-family: 'Montserrat', sans-serif;
+    background-color:#f7f7f7;
+}
+
+a {
+ 
+    text-decoration: none;
+
+}
+
+.title {
+    text-align:center;
+    background-color:white;
+    border-bottom:1px solid lightgray;
+    position:fixed;
+    right:0;
+    top:0;
+    left:0;
+    z-index:100;
+    /* margin-bottom: 100px; */
+    
+}
+
+.line {
+    border-bottom:1px solid lightgray;
+    display: block;
+
+
+}
+
+hr {
+    border:0;
+}
+
+
+.wrapper{
+    
+    width: 700px;
+    background-color:white;
+    padding: 10px 0 10px 0;
+    text-align: center;
+    margin:0 auto;
+    margin-top:200px;
+    border:1px solid #ccc;
+    border-radius: 5px;
+}
+
+.infoRechk input {
+
+    height:40px;
+    width: 80%;
+    padding-left: 10px;
+    font-size: 16px;
+    color: #333;
+    border:1px solid #ccc;
+    border-radius: 2px;
+}
+
+.infoRechk input::placeholder {
+    color: #ccc;
+    /* font-weight: bold; */
+}
+
+.infoRechk p {
+    margin-bottom:34px;
+    margin-top:30px;
+    font-size:17px;
+    color:#333;
+}
+
+.finishChkBtn {
+    display:flex;
+    /* border:2px solid blue; */
+    width: 80%;
+    margin:0 auto;
+    margin-top:20px;
+    margin-bottom: 30px;
+}
+
+.finishChkBtn button {
+    height: 48px;
+    border-radius: 4px;
+    cursor: pointer;
+    border:none;
+    outline:none;
+    color:#333;
+    font-size:16px;
+    width:100%;
+}
+
+#preBtn {
+    background-color:#eee;
+
+}
+
+#okBtn {
+    background-color: #ffeb60;
+    margin-left:12px;
+
+}
+
+#preBtn:hover {
+
+    background-color:rgb(223, 223, 223);
+
+}
+
+#okBtn:hover {
+    background-color: #f1dd5a;
+   
+}
