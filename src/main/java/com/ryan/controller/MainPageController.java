@@ -56,4 +56,24 @@ public class MainPageController {
 		return "search";
 	}
 	
+	@RequestMapping(value="/paper")
+	public String Paper() {
+		return "paper";
+	}
+	
+	@RequestMapping(value="/books")
+	public String Books() {
+		return "books";
+	}
+	
+	@RequestMapping(value="/books/all")
+	public String BooksAll() {
+		return "all";
+	}
+	
+	@RequestMapping(value="/bestseller")
+	public String BestSeller() {
+		return "all";
+	}
+	
 }

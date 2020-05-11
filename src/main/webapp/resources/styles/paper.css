@@ -1,0 +1,12 @@
+body > * {
+	width: 700px;
+	margin: 0 auto;
+}
+
+.div-title {
+	position: fixed;
+}
+
+.div-title + div {
+	padding-top: 50px;
+}
