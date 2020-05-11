@@ -24,7 +24,6 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
-@RequestMapping("/main/*")
 public class MainPageController {
 	
 	@Setter(onMethod_ = {@Autowired})
@@ -33,28 +32,27 @@ public class MainPageController {
 	@GetMapping("/")
 	public String mainPage(HttpServletRequest request) {
 		
-		log.info("메인페이지 이동");
 		return "main";
 	}
 	
-	@GetMapping("/search")
-	public String search(@RequestParam("type") String type , @RequestParam("keyword") String keyword, Model model) {
-		
-		String[] keywordArr = keyword.split(" ");
-		
-		HashMap<String, ArrayList<EBookVO>> result = new HashMap<String, ArrayList<EBookVO>>();
-		//model.addAttribute("ebook", sv.searchEbook(vo));
-		//model.addAttribute("paper", sv.searchPaperbook(vo));
-		model.addAttribute("result", result);
-		return "search";
-		
-	}
-	
-	@GetMapping("/test")
-	public String searchTest() {
-		
-		return "search";
-	}
+//	@GetMapping("/search")
+//	public String search(@RequestParam("type") String type , @RequestParam("keyword") String keyword, Model model) {
+//		
+//		String[] keywordArr = keyword.split(" ");
+//		
+//		HashMap<String, ArrayList<EBookVO>> result = new HashMap<String, ArrayList<EBookVO>>();
+//		//model.addAttribute("ebook", sv.searchEbook(vo));
+//		//model.addAttribute("paper", sv.searchPaperbook(vo));
+//		model.addAttribute("result", result);
+//		return "search";
+//		
+//	}
+//	
+//	@GetMapping("/test")
+//	public String searchTest() {
+//		
+//		return "search";
+//	}
 	
 	@RequestMapping(value="/paper")
 	public String Paper() {
