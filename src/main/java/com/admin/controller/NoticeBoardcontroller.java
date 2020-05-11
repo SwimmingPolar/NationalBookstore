@@ -8,23 +8,28 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.admin.domain.board.NoticeBoard;
+import com.admin.domain.board.NoticeBoardVO;
 import com.admin.domain.board.PageVO;
-import com.admin.service.board.BoardService;
 import com.admin.service.board.FileService;
+import com.admin.service.board.NoticeBoardService;
 
 @Controller
 @RequestMapping("/board/notice/*")
 public class NoticeBoardcontroller {
 	
 	@Autowired
-	private BoardService service;
+	private NoticeBoardService service;
 	
 	@Autowired
 	private FileService fileS;
 
+	@RequestMapping("/writeForm")
+	public String noticeWriteForm() {
+		return "입력jsp";
+	}
+	
 	@RequestMapping(value="/write", method=RequestMethod.POST)
-	public String noticeWrite(NoticeBoard notice,MultipartFile uploadFile) {
+	public String noticeWrite(NoticeBoardVO notice,MultipartFile uploadFile) {
 		boolean flag = service.noticeWrite(notice);
 		
 		if(flag) {
@@ -36,13 +41,18 @@ public class NoticeBoardcontroller {
 	}
 	
 	@RequestMapping("/delete")
-	public String noticeDelete(NoticeBoard notice) {
-		return service.noticeDelete(notice)?"":"";
+	public String noticeDelete(NoticeBoardVO notice) {
+		return service.noticeDelete(notice)?"삭제 실패시":"실패시 이동";
+	}
+	
+	@RequestMapping("/updateForm")
+	public String noticeUpdateForm() {
+		return "수정jsp";
 	}
 	
 	@RequestMapping(value="/update",method=RequestMethod.POST)
-	public String noticeUpdate(NoticeBoard notice,MultipartFile uploadFile) {
-		return service.noticeDelete(notice)?"":"";
+	public String noticeUpdate(NoticeBoardVO notice,MultipartFile uploadFile) {
+		return service.noticeDelete(notice)?"업로드 성공시 이동":"실패시 이동";
 	}
 	
 	@RequestMapping("/page")
@@ -55,6 +65,4 @@ public class NoticeBoardcontroller {
 		
 		return "";
 	}
-	
-	//@RequestMapping("")
 }

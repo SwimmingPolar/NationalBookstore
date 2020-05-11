@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.mapper.NoticeBoardMapper">
-<insert id="noticeInsert">
+<insert id="insertNotice" parameterType="com.admin.domain.board.NoticeBoardVO">
 		INSERT admin_Notice
 		(
 			notice_no,
@@ -22,12 +22,13 @@
 		)
 </insert>
 
-<delete id="noticeDelete">
+<delete id="deleteNotice" parameterType="com.admin.domain.board.NoticeBoardVO">
 		DELETE admin_Notice
 		WHERE notice_no = #{noticeNo},
 		notice_writer=#{noticeWriter}
 </delete>
-<update id="noticeUpdate">
+
+<update id="updateNotice" parameterType="com.admin.domain.board.NoticeBoardVO">
 		UPDATE FROM admin_Notice
 		SET notice_category=#{noticeCategory},
 			notice_title=#{noticeTitle},
@@ -36,10 +37,10 @@
 			WHERE notice_writer=#{noticeWriter}
 </update>
 
-<select id="selectCount">
+<select id="selectNoticeCount">
 select Count(*) from admin_Notice where notice_category=#{type}
 </select>
-<select id="selectPageList" resultType="com.admin.domain.board.NoticeBoard">
+<select id="selectNoticePageList">
 select * from admin_Notice where notice_category=#{type}
 </select>
 

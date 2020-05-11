@@ -27,8 +27,7 @@ SELECT review_num.nextval FROM book_Review
 	
 	<delete id="deleteReview">
 		DELETE FROM book_Review
-		WHERE review_num = #{reviewNum},
-		member_email=#{memberEmail}
+		WHERE review_num = #{reviewNum}
 	</delete>
 	
 		<update id="updateReview">

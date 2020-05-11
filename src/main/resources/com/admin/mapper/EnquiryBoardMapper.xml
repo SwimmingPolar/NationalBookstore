@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.mapper.EnquiryBoardMapper">
+<insert id="insertEq" parameterType="com.admin.domain.board.EnquiryBoardVO">
+INSERT enquriry_Board
+		(
+			board_num,
+			member_email,
+			board_title,
+			board_content,
+			board_regdate,
+			board_state
+		)
+		VALUES
+		(
+			boardNum.NEXTVAL,
+			#{memberEmail},
+			#{boardTitle},
+			#{boardContent},
+			#{boardRegdate},
+			#{boardState}
+		)
+</insert>
+
+<delete id="deleteEq" parameterType="com.admin.domain.board.EnquiryBoardVO">
+		DELETE FROM enquriry_Board
+		WHERE board_num = #{boardNum}
+</delete>
+
+<update id="updateEq" parameterType="com.admin.domain.board.EnquiryBoardVO">
+		UPDATE FROM enquriry_Board
+		SET board_title = #{boardTitle},
+		board_content = #{boardContent},
+		board_regdate = #{boardRegdate},
+		board_state = #{boardState}
+		WHERE board_num = #{boardNum}
+</update>
+
+<update id="updateEqState" >
+		UPDATE FROM enquriry_Board
+		SET board_state = #{boardState}
+		WHERE board_num = #{boardNum}
+</update>
+
+
+<insert id="insertReply" parameterType="com.admin.domain.board.ReplyVO">
+INSERT reply
+		(
+			reply_num,
+			board_num,
+			writer,
+			reply_content,
+			reply_regdate,
+		)
+		VALUES
+		(
+			replyNum.NEXTVAL,
+			#{boardNum},
+			#{writer},
+			#{replyContent},
+			#{replyRegdate},
+		)
+</insert>
+
+<delete id="deleteReply" parameterType="com.admin.domain.board.ReplyVO">
+		DELETE FROM reply
+		WHERE reply_num = #{replyNum}
+</delete>
+
+<update id="updateReply" parameterType="com.admin.domain.board.ReplyVO">
+		UPDATE FROM reply
+		SET reply_content = #{boardContent},
+		reply_regdate = #{boardRegdate},
+		WHERE reply_num = #{replyNum}
+</update>
+</mapper>

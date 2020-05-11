@@ -21,6 +21,12 @@ public class ReviewController {
 	@Autowired
 	private ReviewServiceImpl service;
 	
+	@RequestMapping("/reviewForm")
+	public String reviewForm(){
+		
+		return "";
+	}
+	
 	@RequestMapping("/write")
 	public String insertEbookReview(@ModelAttribute("review") ReviewVO review,HttpServletRequest request) {
 		HttpSession session = request.getSession();
