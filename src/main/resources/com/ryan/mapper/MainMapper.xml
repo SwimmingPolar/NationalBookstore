@@ -54,8 +54,19 @@
 		and book_existence = 0
 	</select>
 	
-	<select id="">
-		
+	<!-- 오늘의 추천도서 -->
+	<select id="getTodayBookList" resultType="com.ryan.domain.book.EBookVO">
+		SELECT e.* FROM ebook e, admin_bestlist a
+		<where>
+			e.book_num = a.book_num
+		</where>
 	</select>
 	
+	<!-- 사람들이 많이 읽은 책 -->
+	<select id="getBestReadBook" resultType="com.ryan.domain.book.EBookVO">
+		SELECT * FROM
+	</select>
+	
+	
+		
 </mapper>
