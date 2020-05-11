@@ -5,23 +5,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>전체 도서</title>
-<script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
-<link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="../../resources/styles/reset.css" />
-<link rel="stylesheet" type="text/css" href="../../resources/styles/books.css" />
-<script type="text/javascript" >
-</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>전체 도서</title>
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Black+Han+Sans|Nanum+Gothic|Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap"
+    rel="stylesheet" />
+  <!-- Fontawesome API -->
+  <script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
+  <!--
+    Available Fonts
+    Main Font:
+    font-family: 'Kaushan Script', cursive;
+
+    Article Choices:
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+
+    Korean Font:
+    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'Black Han Sans', sans-serif;
+    font-family: 'Nanum Gothic', sans-serif;
+    -->
+  <!-- css reset -->
+  <link rel="stylesheet" href="../../resources/styles/reset.css" />
+  <!-- individual page stylesheet -->
+	<link rel="stylesheet" href="../../resources/styles/books.css" />
+  <link rel="stylesheet" href="../../resources/styles/common.css" />
+
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+  <!-- slidify sliders and fadeInUp reveal -->
+  <script src="../../resources/js/common.js"></script>
 </head>
 <body>
-	<div id="div-title" class="div-title" >
-		<h3>National Bookstore</h3>
-	</div>
-	<div ></div>
+  <header class="topbar">
+    <nav>
+      <div class="container">
+        <a href="javascript: history.back();"><i class="far fa-arrow-left"></i></a>
+        <h2>전체 도서</h2>
+      </div>
+    </nav>
+  </header>
 	<form action="books/all" method="GET">
-		<div class="genre-list" >
+		<div class="genre-list fadeInUp" >
 			<button class="genre 2" name="genre" value="2" >소설/시</button>
 			<button class="genre 3" name="genre" value="3" >에세이</button>
 			<button class="genre 4" name="genre" value="4" >인문</button>
@@ -34,5 +63,6 @@
 			<button class="genre 11" name="genre" value="11" >자기계발</button>
 		</div>
 	</form>
+	<%@ include file="template/footer.jsp" %>
 </body>
 </html>
