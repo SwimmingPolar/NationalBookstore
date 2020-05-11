@@ -8,9 +8,9 @@
 <script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap" rel="stylesheet">
-<script src="viewer.js" ></script>
-<link rel="stylesheet" type="text/css" href="reset.css" />
-<link rel="stylesheet" type="text/css" href="viewer.css" />
+<script src="/resources/js/viewer.js" ></script>
+<link rel="stylesheet" type="text/css" href="../../resources/styles/reset.css" />
+<link rel="stylesheet" type="text/css" href="../../resources/styles/viewer.css" />
 <title>Insert title here</title>
 </head>
 <body>
@@ -75,7 +75,7 @@
 		<div class="modal setting" >
 			<div class="modal-content" >
 				<h1>설정</h1>
-				<div class="select-background" >
+				<div class="setting-background" >
 					<button class="page-color white"></button>
 					<button class="page-color green"></button>
 					<button class="page-color gray"></button>
@@ -87,10 +87,11 @@
 					<option>나눔고딕</option>
 				</select>
 				글자 크기
-				<input type="range" step="5" />
+				<div class="setting-fontsize" >
+					<input type="radio" id="font-large" name="fontsize" ><label for="font-large" >크게</label>
+					<input type="radio" id="font-normal" name="fontsize" ><label for="font-normal" >보통</label>
+				</div>
 				줄 간격
-				<input type="range" />
-				좌우 여백
 				<input type="range" />
 				<button class="btn-modal-close" >닫기</button>
 			</div>

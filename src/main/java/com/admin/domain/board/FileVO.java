@@ -3,7 +3,7 @@ package com.admin.domain.board;
 import lombok.Data;
 
 @Data
-public class FileBoardVO {
+public class FileVO {
     // file_num 
     private int fileNum;
 

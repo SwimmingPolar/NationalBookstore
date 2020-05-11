@@ -13,7 +13,7 @@
 		)
 		VALUES
 		(
-			noticeNo.NEXTVAL
+			noticeNo.NEXTVAL,
 			#{noticeCategory},
 			#{noticeTitle},
 			#{noticeContent},
@@ -21,8 +21,26 @@
 			#{noticeDate}
 		)
 </insert>
-<delete id="noticeDelete">
 
+<delete id="noticeDelete">
+		DELETE admin_Notice
+		WHERE notice_no = #{noticeNo},
+		notice_writer=#{noticeWriter}
 </delete>
-<update id="noticeUpdate"></update>
+<update id="noticeUpdate">
+		UPDATE FROM admin_Notice
+		SET notice_category=#{noticeCategory},
+			notice_title=#{noticeTitle},
+			notice_content=#{noticeContent},
+			notice_date=#{noticeDate},
+			WHERE notice_writer=#{noticeWriter}
+</update>
+
+<select id="selectCount">
+select Count(*) from admin_Notice where notice_category=#{type}
+</select>
+<select id="selectPageList" resultType="com.admin.domain.board.NoticeBoard">
+select * from admin_Notice where notice_category=#{type}
+</select>
+
 </mapper>

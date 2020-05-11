@@ -149,17 +149,17 @@
         <nav class="lnb">
           <ul>
             <li>
-              <a href="#">
+              <a href="books">
                 <span>전체 도서</span>
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="bestseller">
                 <span>베스트 셀러</span>
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="paper">
                 <span>도서 구매</span>
               </a>
             </li>

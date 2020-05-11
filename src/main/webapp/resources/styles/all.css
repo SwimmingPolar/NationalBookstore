@@ -1,0 +1,332 @@
+body > * {
+	width:700px;
+	margin: 0 auto;
+}
+
+/*타이틀*/
+.div-title {
+	width: 100%;
+	position: fixed;
+	text-align: center;
+	background: #FFFFFF;
+	font-family: var(--main-font);
+	color: red;
+	box-shadow: 0px 1px 1px -1px rgba(0, 0, 0, 1);
+}
+
+.div-title + div {
+	padding-top: 50px;
+}
+/*검색*/
+.search-box {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	background: var(--light-gray-color);
+	border-radius: 5px;
+	box-shadow: 1px 1px 2px -1px rgba(0, 0, 0, 0.7);
+}
+
+.search-bar {
+	display: flex;
+	height: 30px;
+	font-family: var(--korean-font);
+	margin: 7px;
+}
+
+.search-bar > * {
+	border: none;
+	border-radius: 5px;
+	outline: none;
+	background: none;
+	box-shadow: 1px 1px 3px -1px rgba(0, 0,0 , 0.5);
+}
+
+.type {
+	flex-basis: 10%;
+	font-family: 'Noto Sans KR', sans-serif;
+	background: var(--white-color);
+	padding: 2px 9px;
+	cursor : pointer;
+	border: 1px solid rgba(0,0,0,0.3);
+	border-radius: 5px; 
+	outline : none;
+}
+
+.keyword {
+	flex-basis: 77%;
+	font-family: 'Noto Sans KR', sans-serif;
+	background-color: var(--white-color);
+	margin: 0 1.5%;
+	padding: 2px 9px;
+}
+
+.btn-search {
+	cursor: pointer;
+	flex-basis: 10%;
+	color: #FFFFFF;
+	background-color: var(--main-color);
+}
+
+.search-selection {
+	display: flex;
+	flex-wrap: wrap;
+	font-family: var(--korean-font);
+	margin-bottom: 2px;
+	padding: 5px;
+}
+
+.selection {
+	flex-basis: 13%;
+	display: flex;
+	align-items: center;
+	margin: 2px 5px;
+	margin-right: 15px;
+}
+
+.selection > * {
+	cursor: pointer;
+	outline: none;
+}
+
+.category {
+	width: 1.3em;
+	height: 1.3em;
+	margin: 3px;
+}
+
+/*정렬기준*/
+.sort {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	margin: 15px auto;
+}
+
+.sort-type {
+	font-family: var(--korean-font);
+}
+
+.btn-sort {
+	cursor: pointer;
+	outline: none;
+	background: none;
+	border: 0;
+	margin: 2px;
+	
+}
+
+.btn-sort:hover {
+	text-decoration: underline;
+	color: var(--main-color);
+}
+
+.btn-layout {
+	cursor: pointer;
+	background: none;
+	outline: none;
+	border: 0;
+	font-size: 1.3em;
+	color: var(--gray-color);
+}
+
+/* 검색 요약 */
+.search-summary {
+	display: flex;
+	align-items: center;
+	height: 30px;
+}
+
+.search-summary > * {
+	flex-basis: 33.3%;
+}
+
+.search-summary > div {
+	font-family: var(--korean-font);
+	font-size: 0.9em;
+}
+
+.scount {
+	display: flex;
+	justify-content: center;
+	align-items: baseline;
+	font-family: var(--korean-font);
+}
+
+.layout {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.layout > * {
+	cursor: pointer;
+	background: none;
+	outline: none;
+	border: 0;
+	font-size: 1.3em;
+	color: var(--gray-color);
+	margin: 0 2px;
+}
+
+.result-count {
+	color: var(--main-color);
+	margin: 0 2px;
+}
+
+/*검색결과*/
+.book-list {
+	display: flex;
+	flex-direction: column;
+}
+
+.search {
+	display: flex;
+	border-radius: 5px;
+	box-shadow: 1px 1px 3px -1px rgba(0,0,0,0.5);
+	margin-bottom: 5px;
+}
+
+.book {
+	flex-basis: 80%;
+	display: flex;
+}
+
+.cover {
+	width: 120px;
+	height: 140px;
+	background: url("http://placehold.it/120X140.jpg");
+	border-radius: 5px 0 0 5px;
+	box-shadow: 1px 0px 1px -2px rgba(0, 0, 0, 0.5);
+}
+
+.info {
+	display: flex;
+	flex-direction: column;
+	padding: 10px;
+}
+
+.info * {
+	font-family: var(--korean-font);
+}
+
+.title {
+	font-size: 1.3em;
+}
+
+.info > div:nth-child(2) {
+	display: flex;
+	color: rgba(0, 0, 0, 0.4);
+	font-size: 1.1em;
+}
+
+.author::after {
+	content: "·";
+	margin: 0 3px;
+}
+
+.interact {
+	flex-basis: 20%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.interact > * {
+	cursor: pointer;
+	outline: none;
+	background: none;
+	border: 0;
+	border-radius: 5px;
+	color: var(--white-color);
+	font-family: var(--korean-font);
+	width: 100px;
+	height: 45px;
+}
+
+.btn-read {
+	background-color: var(--main-color);
+}
+
+/*-----그리드 레이아웃-----*/
+.grid-layout {
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.grid-layout .search {
+	flex-basis: 22.3%;
+	flex-direction: column;
+	margin: 10px 1.75%;
+}
+
+.grid-layout .book {
+	flex-basis: 90%;
+	display: flex;
+	flex-direction: column;
+}
+
+.grid-layout .cover {
+	border-radius: 5px 5px 0px 0px;
+	width: 156.6px;
+	background: url("http://placehold.it/157X140.jpg");
+}
+
+.grid-layout .author::after {
+	content: "";
+}
+
+.grid-layout .search:first-child, .grid-layout .search:nth-child(4n+1) {
+	margin-left: 0px;
+}
+.grid-layout .search:nth-child(4n) {
+	margin-right: 0px;
+}
+
+.grid-layout .title {
+	font-size: 1em;
+}
+
+.grid-layout .author {
+	font-size: 0.8em;
+}
+
+.grid-layout .publisher {
+	display: none;
+}
+
+.grid-layout .interact {
+	flex-basis: 10%;
+	flex-direction: row;
+	justify-content: flex-end;
+	width: 100%;
+}
+
+.grid-layout .btn-read {
+	width: 100%;
+	margin: 0;
+	border-radius: 0 0 2px 2px;
+}
+
+.grid-layout .btn-purchase {
+	width: 100%;
+	margin: 0;
+	border-radius: 0 0 2px 2px;
+}
+
+.grid-layout .checkbox-cart {
+	display: none;
+}
+
+/* 임시 */
+.temp {
+	display: none;
+	position: relative;
+	top: -140px;
+	right: -138px;
+	width: 1.5em;
+	height: 1.5em;
+}
+
+.grid-layout .temp {
+	display: inline;
+}

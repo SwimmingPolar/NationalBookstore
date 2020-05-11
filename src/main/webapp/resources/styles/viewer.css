@@ -118,6 +118,10 @@ body {
 	background: none;
 }
 
+.bookmark-div {
+	z-index: 2;
+}
+
 .page {
 	padding: 3%;
 }
@@ -152,6 +156,7 @@ hr {
 	top: 50%; left: 50%;
 	transform: translate(-50%, -50%);
 	width: 300px; height: 300px;
+	padding: 15px;
 	border: 2px solid #000000;
 	background: #FFFFFF;
 	z-index: 5;
@@ -165,7 +170,7 @@ hr {
 	z-index: 4;
 }
 
-.setting .select-background {
+.setting .setting-background {
 	display: flex;
 	justify-content: center;
 }
@@ -174,15 +179,19 @@ hr {
 	width: 50px; height: 30px;
 }
 
-.modal.setting .select-background > button:first-child {
+.modal.setting .setting-background > button:first-child {
 	background: #FFFFFF;
 }
-.modal.setting .select-background > button:nth-child(2) {
+.modal.setting .setting-background > button:nth-child(2) {
 	background: #2b9900;
 }
-.modal.setting .select-background > button:nth-child(3) {
+.modal.setting .setting-background > button:nth-child(3) {
 	background: #6a6a6a;
 }
-.modal.setting .select-background > button:nth-child(4) {
+.modal.setting .setting-background > button:nth-child(4) {
 	background: #000000;
+}
+
+.modal.setting {
+	display: block;
 }
