@@ -11,7 +11,7 @@ public class ReplyVO {
     private int boardNum;
 
     // 작성자 
-    private String replyer;
+    private String writer;
 
     // 내용 
     private String replyContent;
