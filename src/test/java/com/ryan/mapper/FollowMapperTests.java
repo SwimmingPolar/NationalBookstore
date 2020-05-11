@@ -20,27 +20,27 @@ public class FollowMapperTests {
 	@Setter(onMethod_ = {@Autowired})
 	private FollowMapper mapper;
 	
-	@Test
-	public void insertFollowTests() {
-		
-		
-		
-		if(mapper.followCheck("abc1234@naver.com", "abc12345@naver.com") != 1) {
-			int result = mapper.insertFollow("abc1234@naver.com", "abc12345@naver.com");
-			
-			log.info("결과: " + result);
-		} else {
-			log.info("실패");
-		}
-		
-	}
+//	@Test
+//	public void insertFollowTests() {
+//		
+//		
+//		
+//		if(mapper.followCheck("abc1234@naver.com", "abc12345@naver.com") != 1) {
+//			int result = mapper.insertFollow("abc1234@naver.com", "abc12345@naver.com");
+//			
+//			log.info("결과: " + result);
+//		} else {
+//			log.info("실패");
+//		}
+//		
+//	}
 	
 //	@Test
 //	public void getMyFollowingTests() {
 //		MemberVO member = new MemberVO();
 //		member.setMemberEmail("abc1234@naver.com");
 //		
-//		mapper.getMyFollowing(member).forEach(memberVO -> log.info(member));
+//		mapper.getMyFollowing(member).forEach(follow -> log.info(follow));
 //	}
 	
 	@Test
@@ -48,7 +48,7 @@ public class FollowMapperTests {
 		
 		MemberVO member = new MemberVO();
 		member.setMemberEmail("abc12345@naver.com");
-		mapper.getMyFollower(member).forEach(memberVO -> log.info(memberVO));
+		mapper.getMyFollower(member).forEach(follow -> log.info(follow));
 		
 	}
 	

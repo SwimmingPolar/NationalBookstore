@@ -67,8 +67,8 @@
 		<beans:property name="maxUploadSize" value="10485760"/>
 	</beans:bean>
 	<!-- 파일 업로드를 위한 디렉토리 설정 -->
-<!-- 	 String uplodadPath = new String("업로드 경로") 
-	<beans:bean id="uploadPath" class="java.lang.String">
+	<!--  String uplodadPath = new String("업로드 경로") --> 
+	<!-- <beans:bean id="uploadPath" class="java.lang.String">
 		<beans:constructor-arg value="C:\Users\user\git\NationalBookstore\src\main\webapp\resources\data" />
 	</beans:bean> -->
 	

@@ -1,0 +1,420 @@
+body {
+
+    font-family: 'Noto Sans KR', sans-serif;
+    
+}
+
+a {
+ 
+    text-decoration: none;
+
+}
+
+li {
+
+    list-style:none;
+}
+
+
+.newMyInfo {
+    width: 700px;
+    margin:0 auto;
+    display:block;
+    /* display:flex; */
+    /* flex-direction:column; */
+    /* border:2px solid green; */
+    margin-top:100px;
+    margin-bottom: 100px;
+    
+
+}
+
+.title {
+text-align:center;
+background-color:white;
+border-bottom:1px solid lightgray;
+position:fixed;
+right:0;
+top:0;
+left:0;
+z-index:100;
+/* margin-bottom: 100px; */
+
+}
+
+.myInfoDeleteBtn {
+    /* float:right; */
+    /* display: block; */
+    margin-bottom:30px;
+    margin-top:-25px;
+    /* border:2px solid blue; */
+    text-align: right;
+}
+
+.myInfoDeleteBtn button {
+    width:90px;
+    height:30px;
+    outline:none;
+    cursor: pointer;
+    border-radius: 2px;
+    border:none;
+    background-color: #fff4aa;
+
+}
+
+
+.imageBox {
+    position: relative;
+    border:1px solid #e8e8e8;
+    border-radius: 50%;
+    width:80px;
+    height:80px;
+    margin:0 auto;
+    /* margin-top: 20px; */
+    display: block;
+    
+}
+
+.imageBox label {
+
+    position: absolute;
+    width:24px;
+    height:24px;
+    right:0;
+    bottom:0;
+    background-color:#7f7d7a;
+    color:white;
+    border-radius: 50%;
+    cursor: pointer;
+    outline:none;
+
+}
+.imageBox input[type="file"] {
+
+    display:none;
+
+}
+
+.imageBox i {
+
+  margin-left:5px;
+  font-size:14px;
+}
+
+.imageBox button {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    right:-30px;
+    bottom:0;
+    border-radius: 50%;
+    background-color: #7f7d7a;
+    border:none;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+}
+
+.imageBox button i {
+    font-size:16px;
+    color:white;
+    font-weight: normal;
+    /* margin-right:6px; */
+    margin-left:0px;
+ 
+}
+
+.imageBox img{
+    position:absolute;
+    width:100%;
+    /* max-height:100%; */
+    height:100%;
+    /* text-align: center; */
+    /* margin:0 auto; */
+    border-radius: 50%;
+    
+}
+
+.updateLists {
+    display:flex;
+
+}
+
+.newMyInfo p {
+    margin-bottom:4px;
+}
+
+.updateLists input[type="text"] {
+    
+    font-size: 14px;
+    padding:10px;
+    outline:none;
+    border-radius: 2px;
+    border:1px solid #ccc;
+    width:100%;
+}
+
+.updateLists button {
+    height:40px;
+    outline:none;
+    width:100px;
+    line-height: 40px;
+    margin-left:8px;
+    text-align:center;
+    font-size:14px;
+    background-color:#ffeb60;
+    border:none;
+    border-radius: 2px;
+    cursor: pointer;
+
+}
+
+
+.wrapperOne span, .wrapperOne_half span {
+
+    font-size:12px;
+    color: #999; 
+    display:block;
+    margin:3px 0 8px;
+}
+
+#inputPwAgain {
+background-color: #f5f5f5;
+
+}
+
+.firstLine {
+
+    border-top:1px solid #ccc;  
+    display:block;
+    margin : 24px 0 20px 0;
+}
+
+.secondLine {
+
+    border-top:1px solid #ccc;  
+    display:block;
+    margin-bottom:20px;
+}
+
+hr{
+    border:0;
+} 
+.updateMail {
+    display:flex;
+}
+
+.wrapperTwo .updateMail span {
+
+    /* border:2px solid blue; */
+    font-size:16px;
+    padding: 5px 8px 5px 8px;
+    color:rgb(119, 119, 119);
+}
+
+
+
+.updateMail .input input[type="text"] {
+    
+    font-size: 14px;
+    padding:10px;
+    outline:none;
+    border-radius: 2px;
+    border:1px solid #ccc;
+    width:100%;
+    box-sizing: border-box;
+}
+
+.dis input[type="text"] {
+    
+    font-size: 14px;
+    padding:10px;
+    outline:none;
+    border-radius: 2px;
+    border:1px solid #ccc;
+    width:100%;
+    box-sizing: border-box;
+}
+.input {
+    flex:1;
+    position: relative;
+    /* border:2px solid red; */
+   
+}
+
+.dis {
+    position: relative;
+    flex:1;
+    /* border:2px solid red; */
+    box-sizing: border-box;
+}
+
+.dis input[type="text"] {
+  
+    background-color:#f5f5f5;
+    
+}
+
+.mailChoice select {
+
+    font-size: 15px;
+    padding:10px;
+    outline:none;
+    border-radius: 2px;
+    border:1px solid #ccc;
+    width:100%;
+    box-sizing: border-box;
+    margin:10px 0 25px 0;
+    color:#4b4b4b;
+}
+
+.infoAgree input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    float:left;
+    margin-right:8px;
+    /* margin-top:6px; */
+    margin-bottom:0px;
+}
+
+.infoAgree input[type="checkbox"]+label {
+vertical-align: middle;
+margin-bottom:10px;
+    
+    
+}
+
+.infoChkList ul li{
+
+    font-size:12px;
+    list-style: circle;
+    padding:2px;
+    color:#999999;
+    
+
+}
+
+.wrapperThree button {
+    height:48px;
+    font-size: 17px;
+    background-color:#ffeb60;
+    border:none;
+    border-radius: 4px;
+    width: 100%; 
+    outline:none;
+    color: #333;
+    cursor: pointer;
+
+}
+.wrapperThree button:hover {
+
+    background-color:#fde651;
+
+}
+
+/* .infoAgree input[type="checkbox"]{
+
+    display:none;
+}
+
+.infoAgree input[type="checkbox"] + label {
+    font-size:16px;
+    color: #333;
+    position:relative;
+    cursor: pointer;
+    display:block;
+
+}
+
+
+.infoAgree input[type="checkbox"] + label:before{
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ffeb60;
+    border-radius: 2px;
+    position: absolute;
+    top:0;
+    left:0;
+    content:"";
+    display: block;
+
+
+} */
+.address1 {
+    display:flex;
+}
+
+.address2 {
+    display:flex;
+}
+
+.wrapperFour input, .wrapperOne_half input{
+
+    font-size: 14px;
+    padding:10px;
+    outline:none;
+    border-radius: 2px;
+    border:1px solid #ccc;
+    width:100%;
+    /* box-sizing: border-box; */
+    margin:4px;
+    box-sizing: border-box;
+
+
+}
+
+/* .wrapperOne_half span {
+    font-size: 12px;
+    color: #999;
+    padding-left: 2px;
+} */
+
+
+.wrapperFour input, .wrapperOne_half input::placeholder {
+    color:#ccd6e3;
+}
+
+#homeZipcode {
+
+    font-size: 14px;
+    padding:10px;
+    outline:none;
+    border-radius: 2px;
+    border:1px solid #ccc;
+    width:90px;
+    /* box-sizing: border-box; */
+    margin:4px;
+
+}
+
+.address1 button {
+    height:40px;
+    width: 140px;
+    line-height: 40px;
+    margin-right: 8px;
+    text-align: center;
+    font-size: 14px;
+    background-color: #ffeb60;
+    outline:none;
+    border:none;
+    cursor: pointer;
+    margin:4px;
+    
+    
+}
+
+.address1 input, .address2 input{
+    color:#333;
+
+}
+
+.wrapperFour {
+
+    margin-bottom:30px;
+
+}
+
+.wrapperThree {
+    padding-top:20px;
+    border-top:1px solid lightgray;
+}

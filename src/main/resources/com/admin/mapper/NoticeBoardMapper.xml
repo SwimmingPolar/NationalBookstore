@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.mapper.NoticeBoardMapper">
+<insert id="noticeInsert">
+		INSERT admin_Notice
+		(
+			notice_no,
+			notice_category,
+			notice_title,
+			notice_content,
+			notice_writer,
+			notice_date
+		)
+		VALUES
+		(
+			noticeNo.NEXTVAL,
+			#{noticeCategory},
+			#{noticeTitle},
+			#{noticeContent},
+			#{noticeWriter},
+			#{noticeDate}
+		)
+</insert>
+
+<delete id="noticeDelete">
+		DELETE admin_Notice
+		WHERE notice_no = #{noticeNo},
+		notice_writer=#{noticeWriter}
+</delete>
+<update id="noticeUpdate">
+		UPDATE FROM admin_Notice
+		SET notice_category=#{noticeCategory},
+			notice_title=#{noticeTitle},
+			notice_content=#{noticeContent},
+			notice_date=#{noticeDate},
+			WHERE notice_writer=#{noticeWriter}
+</update>
+
+<select id="selectCount">
+select Count(*) from admin_Notice where notice_category=#{type}
+</select>
+<select id="selectPageList" resultType="com.admin.domain.board.NoticeBoard">
+select * from admin_Notice where notice_category=#{type}
+</select>
+
+</mapper>

@@ -1,0 +1,66 @@
+package com.admin.domain.board;
+
+import lombok.Data;
+
+@Data
+public class PageVO {
+	//현재 페이지
+	private int page;
+	
+	//한페이지당 보여줄 게시물개수
+	private int viewSize=10;
+	
+	//현재 속한페이지그룹 0부터 시작
+	private int group;
+	
+	//페이지 그룹당 보여줄 갯수 아래 1페이지 2페이지 이런게 몇개 있나
+	private int pagePerGroup=10;
+	
+	//페이지그룹 시작번호
+	private int startG;
+	
+	//페이지그룹 끝번호
+	private int endG;
+	
+	//총개시물수
+	private int tContent;
+	
+	//총페이지수
+	private int tPage;
+	
+	//현제페이지 첫번째 게시물 번호
+	private int startContent;
+	
+	public PageVO() {
+		super();
+	}
+	
+	public PageVO(int page,int tContent) {
+		
+		this.tContent=tContent;
+		
+		//전체 페이지수
+		tPage=(tContent+viewSize-1)/viewSize;
+		
+		if(page<1)
+			page=1;
+		if(page>tPage)
+			page=tPage;
+		
+		this.page=page;
+		
+		//현재 그룹
+		group=(page-1)/pagePerGroup;
+		
+		//현재그룹의 첫번째 페이지
+		startG=page*pagePerGroup+1;
+		startG=startG<1?1:startG;
+		
+		//현재그룹의 마지막페이지
+		endG=startG+pagePerGroup-1;
+		endG=endG<tPage?endG:tPage;
+		
+		startContent=(page-1)*viewSize;
+		
+	}
+}
