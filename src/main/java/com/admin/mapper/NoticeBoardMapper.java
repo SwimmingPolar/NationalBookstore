@@ -4,17 +4,22 @@ import java.util.ArrayList;
 
 import org.apache.ibatis.session.RowBounds;
 
-import com.admin.domain.board.NoticeBoard;
+import com.admin.domain.board.NoticeBoardVO;
 
 public interface NoticeBoardMapper {
-	public int insertWrite(NoticeBoard notice);
+	//입력
+	public int insertNotice(NoticeBoardVO notice);
 	
-	public int delelteNotice(NoticeBoard notice);
+	//삭제
+	public int deleteNotice(NoticeBoardVO notice);
 	
-	public int updateNotice(NoticeBoard notice);
+	//수정
+	public int updateNotice(NoticeBoardVO notice);
 	
-	public int selectCount(String type);
+	//페이지 작업을 위한 전체 게시물수 받아오기
+	public int selectNoticeCount(String type);
 	
-	public ArrayList<NoticeBoard> selectPageList(String type,RowBounds rb);
+	//요청페이지 게시물 리스트
+	public ArrayList<NoticeBoardVO> selectNoticePageList(String type,RowBounds rb);
 
 }
