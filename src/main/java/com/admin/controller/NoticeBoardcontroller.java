@@ -20,8 +20,9 @@ public class NoticeBoardcontroller {
 	@Autowired
 	private NoticeBoardService service;
 	
-	@Autowired
-	private FileService fileS;
+	/*
+	 * @Autowired private FileService fileS;
+	 */
 
 	@RequestMapping("/writeForm")
 	public String noticeWriteForm() {
