@@ -58,7 +58,7 @@ z-index:100;
     cursor: pointer;
     border-radius: 2px;
     border:none;
-    background-color: #fff4aa;
+    background-color: #0099FF;
 
 }
 
@@ -102,6 +102,7 @@ z-index:100;
 }
 
 .imageBox button {
+    color:white;
     width: 24px;
     height: 24px;
     position: absolute;
@@ -155,6 +156,7 @@ z-index:100;
 }
 
 .updateLists button {
+    color:white;
     height:40px;
     outline:none;
     width:100px;
@@ -162,7 +164,7 @@ z-index:100;
     margin-left:8px;
     text-align:center;
     font-size:14px;
-    background-color:#ffeb60;
+    background-color:#0099FF;
     border:none;
     border-radius: 2px;
     cursor: pointer;
@@ -294,23 +296,7 @@ margin-bottom:10px;
 
 }
 
-.wrapperThree button {
-    height:48px;
-    font-size: 17px;
-    background-color:#ffeb60;
-    border:none;
-    border-radius: 4px;
-    width: 100%; 
-    outline:none;
-    color: #333;
-    cursor: pointer;
 
-}
-.wrapperThree button:hover {
-
-    background-color:#fde651;
-
-}
 
 /* .infoAgree input[type="checkbox"]{
 
@@ -388,13 +374,14 @@ margin-bottom:10px;
 }
 
 .address1 button {
+    color:white;
     height:40px;
     width: 140px;
     line-height: 40px;
     margin-right: 8px;
     text-align: center;
     font-size: 14px;
-    background-color: #ffeb60;
+    background-color:#0099FF;
     outline:none;
     border:none;
     cursor: pointer;
@@ -417,4 +404,51 @@ margin-bottom:10px;
 .wrapperThree {
     padding-top:20px;
     border-top:1px solid lightgray;
+}
+
+.finishBtn button{
+    height:48px;
+    font-size: 17px;
+    background-color:#0099FF;
+    border:none;
+    border-radius: 4px;
+    /* width: 100%;  */
+    outline:none;
+    color: white;
+    cursor: pointer;
+    width:100%;
+    /* border:1px solid red; */
+}
+
+.finishBtn button:hover {
+
+    background-color:rgb(1, 134, 223);
+
+}
+
+.finishBtn {
+    display:flex;
+    
+    
+}
+
+
+.btn1, .btn2 {
+    flex:1;
+    /* border:2px solid black; */
+}
+
+.btn1 {
+    margin-right:10px;
+}
+
+.btn1 button {
+    background-color:rgb(207, 207, 207);
+    
+
+}
+
+.btn1 button:hover {
+
+    background-color:rgb(168, 168, 168);
 }

@@ -1,3 +1,4 @@
+
 body {
     background-color: #f1f1f1;
 
@@ -43,9 +44,10 @@ li{
 .newItemInsert ul li {
 
     display:inline;
-    border:1px solid black;
+    border:1px solid lightgray;
     margin:3px;
     background-color: white;
+    box-shadow: 0 0 10px rgba(0,0,0,.05);
 
 }
 
@@ -57,7 +59,7 @@ li{
 .tabs li {
     /* border:2px solid yellow; */
     padding:10px 20px 10px 20px;
-    
+    cursor: pointer;
 
 }
 
@@ -65,8 +67,9 @@ li{
 .tabContent {
     /* border:2px solid red; */
     
-    border:1px solid black;
+    border:1px solid lightgray;
     margin:2px 0 0 3px;
+    box-shadow: 0 0 10px rgba(0,0,0,.05);
     
 }
 
@@ -75,7 +78,7 @@ li{
 .orderTable table {
     background-color:#ffffff;
     width: 100%;
-    box-shadow: 0 0 10px rgba(0,0,0,.05);
+    /* box-shadow: 0 0 10px rgba(0,0,0,.05); */
     /* margin:20px; */
     margin-bottom:10px;
     text-align: left;
@@ -229,6 +232,7 @@ li{
     padding: 0 10px 0 10px;
     position: relative;
     background-color: #f1f1f1;
+    
 }
 
 .statusChk ul li::before {
@@ -251,7 +255,4 @@ li{
     font-weight: bold;
 }
 
-.statusChk ul li {
 
-    
-}

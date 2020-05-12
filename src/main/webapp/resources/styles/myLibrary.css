@@ -1,5 +1,4 @@
 
-
 li{
     list-style: none;
 }
@@ -25,24 +24,27 @@ body{
     width:50%;
     margin:0 auto;
     /* border:2px solid blue; */
+    position: relative;
    
 }
 
 
 .firstColumn {
 
-
+position:sticky;
+top:0;
 width:100%;
 height: 350px;
 border-radius: 15px;
 /* background-repeat: no-repeat;
 background-size:cover; */
 /* border:1px solid lightgray; */
-position: relative;
+/* position: relative; */
 z-index: 1;
 box-shadow: 0 0 10px rgba(0,0,0,.05);
 /* border:2px solid red; */
-    padding:40px 20px 20px 20px;
+padding:40px 20px 20px 20px;
+
 }
 
 .firstColumn::after {
@@ -51,12 +53,15 @@ box-shadow: 0 0 10px rgba(0,0,0,.05);
     height: 100%;
     content:"";
     border-radius: 15px;
-    background-image:url('../../resources/image/photo2.jpg');
+    background-image:url('../images/myLibrary/library.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
     position: absolute;
     top:0;
     left:0;
     z-index:-1;
-    opacity: 0.7;
+    opacity: 0.8;
     box-shadow: 0 0 10px rgba(0,0,0,.05);
     
 
@@ -99,14 +104,20 @@ input[type="radio"]:checked + label {
     background-color:#CAC9C9;
     color:rgb(255, 255, 255);
     font-weight: bold;
-    border-bottom:3px solid rgb(199, 199, 199);
+    /* border-bottom:3px solid rgb(199, 199, 199); */
     
 
 }
+.secondColumn {
+    z-index:2;
+    margin-bottom: 100px;
 
+}
 
 .secondColumn label {
     /* border:1px solid lightgray; */
+    position:sticky;
+    top:0;
     padding:10px 25px 10px 25px;
     margin:0px;
     color:rgb(90, 90, 90);
@@ -118,6 +129,8 @@ input[type="radio"]:checked + label {
 
 
 .content {
+
+    background-color:white;
     display:none;
     padding:30px;
     /* border:1px solid #e8e8e8; */
@@ -193,22 +206,25 @@ input[type="radio"]:checked + label {
     color: #A451F7
 }
 
+
+
 .firstColumn .myImage {
-    margin: 20px; 
+    position: relative;
+    /* margin: 20px;  */
     font-size:80px;
-    /* color:rgb(223, 214, 187); */
-    width: 100px;
-    /* border:2px solid blue; */
-    display:inline;
 }
+
 
 .firstColumn .myImage a {
-    color:rgb(223, 214, 187);
+   
+    background-color:white;
+    /* color:rgb(223, 214, 187); */
 }
 
-.myImage a i {
-    background-color:white;
+.myImage i {
+    /* background-color:white; */
     border-radius: 50%;
+    color:lightgray;
     
     /* border:1px solid rgb(216, 216, 216); */
 
@@ -219,7 +235,7 @@ input[type="radio"]:checked + label {
 .myNickname {
     width:300px;
     /* border:2px solid red; */
-    display:inline-block;
+    display:block;
     font-size:22px;
     /* font-weight:bold; */
     color:rgb(92, 92, 92);
@@ -536,7 +552,7 @@ input[type="radio"]:checked + label {
     width: 93%;
     height: 110px;
     overflow:auto;
-    border:1px dotted lightgray;
+    border:1px solid #e8e8e8;
     border-radius: 15px;
     font-family: 'Noto Sans KR', sans-serif;
     color:gray;
@@ -545,7 +561,7 @@ input[type="radio"]:checked + label {
     text-align:left;
     /* margin:0 auto; */
     margin:8px 15px 0px 15px ;
-    border:1px dotted #e8e8e8;
+    
 
 }
 
@@ -584,9 +600,44 @@ input[type="radio"]:checked + label {
 }
 
 .postImage img {
-    max-width:100%;
+    max-width:90%;
     margin:10px;
     padding:5px;
-    max-height:90%;
+    height:90%;
+
+}
+
+
+
+.footer a {
+
+    /* margin:60px; */
+    /* position:efixed; */
+    color:gray;
+    margin: 50px;
+    height:50px;
+   
+}
+
+.footer {
+
+    margin:0 auto;
+    background: #e8e8e8;
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    height:4rem;
+    z-index:40;
+    border-top: 1px solid #eee;
+    background: #fff;
+    font-size: 14px;
+
+}
+
+
+.footer ul li{
+
+    display:inline;
 
 }

@@ -115,12 +115,6 @@ li {
 
 }
 
-
-.reviewDetail {
-
-    
-}
-
 .reviewDetail table {
 
     border-bottom : 1px solid lightgray;
@@ -158,16 +152,7 @@ li {
     font-size:13px;
 }
 
-/* .firstBox .emoTag {
-    width: 400px;
-    height: 30px;
-    font-size: 13px;
-    border-radius:20px;
-    padding-left: 10px;
-    margin:30px 5px 30px 30px;
 
-
-} */
 
 .tagtag {
     border:1px solid #9268bb;

@@ -3,6 +3,7 @@ body {
     /* font-family: 'Noto Sans KR', sans-serif; */
     font-family: 'Montserrat', sans-serif;
     background-color:#f7f7f7;
+
 }
 
 a {
@@ -25,6 +26,7 @@ a {
 }
 
 .line {
+    
     border-bottom:1px solid lightgray;
     display: block;
 
@@ -86,29 +88,32 @@ hr {
     cursor: pointer;
     border:none;
     outline:none;
-    color:#333;
+    color:white;
     font-size:16px;
     width:100%;
+
 }
 
 #preBtn {
-    background-color:#eee;
+    background-color:rgb(207, 207, 207);
+    
 
 }
 
 #okBtn {
-    background-color: #ffeb60;
+    background-color: #0099FF;
     margin-left:12px;
+    color:white;
 
 }
 
 #preBtn:hover {
-
-    background-color:rgb(223, 223, 223);
+   
+    background-color:rgb(168, 168, 168);
 
 }
 
 #okBtn:hover {
-    background-color: #f1dd5a;
+    background-color: rgb(7, 133, 218);
    
 }

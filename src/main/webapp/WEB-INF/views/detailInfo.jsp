@@ -117,7 +117,7 @@
     
     <div class="modal_content">
     <span id="modalCloseBtn"> &times; </span>
-    <p>모달창 예시입니다.</p>
+    <p> 모달창 예시입니다. </p>
     </div>
 
 </div>
