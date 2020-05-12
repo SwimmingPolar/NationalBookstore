@@ -45,4 +45,7 @@
 		</where>
 	</select>
 	
+	<select id="countFollower" resultType="int">
+		SELECT COUNT(*) FROM member_follow WHERE fk_member_follow_2=${memberEmail}
+	</select>	
 </mapper>

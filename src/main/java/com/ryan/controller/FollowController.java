@@ -63,6 +63,7 @@ public class FollowController {
 		return service.getMyFollowing(member);
 	}
 	
+	//나를 팔로우 한 사람
 	@PostMapping("/myfollower")
 	public ArrayList<FollowVO> getMyFollower(HttpSession session){
 		MemberVO member = (MemberVO) session.getAttribute("ryanMember");

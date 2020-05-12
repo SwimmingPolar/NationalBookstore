@@ -26,7 +26,7 @@
 	SELECT * FROM book_Like WHERE book_num=#{bookNum}
 </select>
 
-<select id="bookGrade" resultType="_double"> 
+<select id="bookGrade" resultType="_int"> 
 	<![CDATA[
 		SELECT NVL(round(avg(grade_score),1),0) FROM book_Grade WHERE book_num=#{bookNum}
 	]]>
