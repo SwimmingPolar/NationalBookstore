@@ -15,8 +15,10 @@
 		INSERT INTO my_lib (member_email, book_num) VALUES(#{memberEmail}, #{bookNum})
 	</insert>
 
-	<select id="readBook" resultType="com.ryan.domain.book.MyReadBookVO">
-		select * from my_read_book where member_email=#{memberEmail} order by read_date DESC
+	<select id="readBook" resultType="com.ryan.domain.book.EBookVO">
+		select e.* from my_read_book m , ebook e 
+		where m.book_num = e.book_num
+		and member_email=#{memberEmail} order by read_date DESC
 	</select>
 	
 	<delete id="deleteReadBook" parameterType="com.ryan.domain.book.MyReadBookVO">
@@ -31,12 +33,25 @@
 		UPDATE my_read_book SET read_date = #{readDate} where member_email=#{memberEmail} and book_num=#{bookNum}
 	</update>
 	
-	<select id="countLibBook" resultType="int">
+	<select id="countLibBook" resultType="_int">
 		select count(*) from my_lib where member_email=#{memberEmail}
 	</select>
 	
-	<select id="countReadBook" resultType="int">
+	<select id="countReadBook" resultType="_int">
 		select count(*) from my_read_book where member_email=#{memberEmail}
+	</select>
+	
+	<select id="countLikeBook" resultType="_int">
+		select count(*) from book_like where member_email=#{memberEmail}
+	</select>
+	
+	<insert id="insertGrade" parameterType="com.ryan.domain.book.BookGradeVO">
+		INSERT INTO book_grade (member_Email, book_Num, grade_score) VALUES(#{memberEmail},#{bookNum},#{gradeScore})
+	</insert>
+	
+	<select id="checkEmail" resultType="com.ryan.domain.book.BookGradeVO">
+		select g.*, e.book_title from book_grade g, ebook e where g.book_num = e.book_num and
+		member_email = #{memberEmail}
 	</select>
 
 </mapper>

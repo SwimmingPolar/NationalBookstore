@@ -22,8 +22,8 @@
 </div>
 
 <div class="myNickname">
-        <a> 지혜로운 셀럽 </a> 님의 서재 
-        <a> 아이디  abc1234 </a>
+        <a> ${ryanMember.memberNickName } </a> 님의 서재 
+        <a> ${ryanMember.memberEmail } </a>
 </div>
 
 <div class="infoSetting">
@@ -34,7 +34,7 @@
 <div class = "manyBtn">
     <ul>
         <li><a href="#"> 읽은 책 <b>( ${readbookcount } )</b> </a></li>
-        <li><a href="#"> 좋아요 <b>( 1 )</b> </a></li>
+        <li><a href="#"> 좋아요 <b>( ${likeBookcount } )</b> </a></li>
         <li><a href="#"> 팔로우 <b>( ${myFollower} )</b> </a></li>
     </ul>
 
@@ -64,11 +64,20 @@
             <a>${readbookcount }</a> 권의 도서
         </div>
         <div class="mybook_Content">
-           <span> <i class="fas fa-books"></i></span>
-            	<c:forEach var="book" items="${libbooklist}">
-            		${book.bookTitle }
-            	 </c:forEach>
-            	서재에 등록된 도서가 없습니다
+           
+
+           <c:choose>
+           		<c:when test="${readbooklist.size() >0 }">
+           			<c:forEach var="readbook" items="${readbooklist }">
+            			${readbook.bookTitle} <br/>
+            	 	</c:forEach>
+           		</c:when>
+           		<c:otherwise>
+           			<span> <i class="fas fa-books"></i></span>
+           				등록된 도서가 없습니다
+           		</c:otherwise>
+           </c:choose>
+            	
         </div>
         
     </div>
@@ -79,12 +88,19 @@
     
         <div class="makeNewBook">
             <div class="mybook_Content">
-            <span> <i class="fas fa-books"></i></span>
-                		나만의 책장을 만들어보세요
-             <button type="button" id=makeBookCart> <i class="fas fa-plus"></i> 새 책장 만들기 </button>
-             <c:forEach var="readbook" items="${readbooklist}"> 
-             		${readbook.bookTitle}             
-             </c:forEach>
+
+             <c:choose>
+           		<c:when test="${libbooklist.size() >0 }">
+           			<c:forEach var="book" items="${libbooklist }">
+            			${book.bookTitle }
+            	 	</c:forEach>
+           		</c:when>
+           		<c:otherwise>
+           			<span> <i class="fas fa-books"></i></span>
+             	   		나만의 책장을 만들어보세요
+          	 	  <button type="button" id=makeBookCart> <i class="fas fa-plus"></i> 새 책장 만들기 </button>
+           		</c:otherwise>
+           </c:choose>
          </div>
         </div>
     </div>

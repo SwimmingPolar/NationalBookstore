@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ryan.domain.book.BookGradeVO;
 import com.ryan.domain.book.EBookVO;
 import com.ryan.domain.book.MyLibVO;
 import com.ryan.domain.book.MyReadBookVO;
@@ -55,18 +56,18 @@ public class MyBookServiceImpl implements MyBookService{
 	}
 
 	@Override		//읽은책 조회
-	public ArrayList<MyReadBookVO> readBook(HttpSession session) {
+	public ArrayList<EBookVO> readBook(HttpSession session) {
 		// TODO Auto-generated method stub
 		MemberVO member = (MemberVO)session.getAttribute("ryanMember");
-		ArrayList<MyReadBookVO> list = mapper.readBook(member.getMemberEmail());
+		ArrayList<EBookVO> list = mapper.readBook(member.getMemberEmail());
 		return list;
 	}
 
 	@Override		//읽은책 삭제
-	public ArrayList<MyReadBookVO> deleteReadBook(MyReadBookVO vo) {
+	public ArrayList<EBookVO> deleteReadBook(MyReadBookVO vo) {
 		// TODO Auto-generated method stub
 		mapper.deleteReadBook(vo);
-		ArrayList<MyReadBookVO> list = mapper.readBook(vo.getMemberEmail());
+		ArrayList<EBookVO> list = mapper.readBook(vo.getMemberEmail());
 		return list;
 	}
 
@@ -82,7 +83,7 @@ public class MyBookServiceImpl implements MyBookService{
 		//vo.setBookNum(booknumber);
 		vo.setReadDate(df.format(cal.getTime()));
 	//	vo.setMemberEmail("abc1234@naver.com"); 
-		ArrayList<MyReadBookVO> list = mapper.readBook(request.getAttribute("ryanMember").toString());
+		ArrayList<EBookVO> list = mapper.readBook(request.getAttribute("ryanMember").toString());
 		boolean flag= false;
 		for(int i=0; i<list.size();i++) {
 			if(list.get(i).getBookNum()==vo.getBookNum()) {
@@ -110,6 +111,35 @@ public class MyBookServiceImpl implements MyBookService{
 		MemberVO member =(MemberVO) session.getAttribute("ryanMember");
 		return mapper.countReadBook(member.getMemberEmail());
 		}
+
+	@Override
+	public int countLikeBook(HttpSession session) {
+		MemberVO member =(MemberVO) session.getAttribute("ryanMember");
+		return mapper.countLikeBook(member.getMemberEmail());
+	}
+
+	@Override
+	public ArrayList<BookGradeVO> insertGrade(BookGradeVO vo, HttpSession session) {
+		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
+		ArrayList<BookGradeVO> gradeList = mapper.checkEmail(member.getMemberEmail());
+		boolean flag=false;
+		for(BookGradeVO grade : gradeList) {
+			if(grade.getMemberEmail().equals(member.getMemberEmail())) {
+				if(grade.getBookNum()==vo.getBookNum()) {
+					flag = true;
+					break;
+				}				
+			}else {
+				mapper.insertGrade(vo);
+			}
+		}
+		if(!flag) {
+			mapper.insertGrade(vo);
+		}
+		return mapper.checkEmail(member.getMemberEmail());
+	}
+	
+	
 	
 	
 	
