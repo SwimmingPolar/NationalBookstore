@@ -5,7 +5,7 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class EBookVO {
+public class EBookVO{
     // 책 고유번호 
     private int bookNum;
 
