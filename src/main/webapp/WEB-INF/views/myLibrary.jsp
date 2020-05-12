@@ -65,7 +65,7 @@
         </div>
         <div class="mybook_Content">
            <span> <i class="fas fa-books"></i></span>
-            	<c:forEach var="book" items="libbooklist">
+            	<c:forEach var="book" items="${libbooklist}">
             		${book.bookTitle }
             	 </c:forEach>
             	서재에 등록된 도서가 없습니다
@@ -82,7 +82,7 @@
             <span> <i class="fas fa-books"></i></span>
                 		나만의 책장을 만들어보세요
              <button type="button" id=makeBookCart> <i class="fas fa-plus"></i> 새 책장 만들기 </button>
-             <c:forEach var="readbook" items="readbooklist"> 
+             <c:forEach var="readbook" items="${readbooklist}"> 
              		${readbook.bookTitle}             
              </c:forEach>
          </div>

@@ -41,7 +41,7 @@ public class MyBookController {
 	
 	@RequestMapping("/myLibList")	//찜 책장
 	public String myBookList(Model model, HttpSession session) {
-		List<EBookVO> list = service.libBook(session);
+		ArrayList<EBookVO> list = service.libBook(session);
 		model.addAttribute("libbooklist", list);
 		model.addAttribute("libcount",service.countLibBook(session));		//찜 책장 수량
 		return "myLibrary";

@@ -3,6 +3,7 @@ package com.ryan.service.book;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -12,8 +13,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.ryan.domain.book.EBookVO;
 import com.ryan.domain.book.MyLibVO;
@@ -32,18 +31,18 @@ public class MyBookServiceImpl implements MyBookService{
 	private MyBookMapper mapper;
 
 	@Override
-	public List<EBookVO> libBook(HttpSession session) {	//찜 책장 조회
+	public ArrayList<EBookVO> libBook(HttpSession session) {	//찜 책장 조회
 		// TODO Auto-generated method stub		
 		MemberVO vo = (MemberVO) session.getAttribute("ryanMember");
-		List<EBookVO> list = mapper.libBook(vo.getMemberEmail());		
+		ArrayList<EBookVO> list = mapper.libBook(vo.getMemberEmail());		
 		return list;
 	}
 
 	@Override	//찜 책장 삭제
-	public List<EBookVO> deleteLibBook(MyLibVO vo) {
+	public ArrayList<EBookVO> deleteLibBook(MyLibVO vo) {
 		// TODO Auto-generated method stub
 		int num=mapper.deleteLibBook(vo);
-		List<EBookVO> list = mapper.libBook(vo.getMemberEmail());		
+		ArrayList<EBookVO> list = mapper.libBook(vo.getMemberEmail());		
 		return list;
 	}
 
@@ -56,18 +55,18 @@ public class MyBookServiceImpl implements MyBookService{
 	}
 
 	@Override		//읽은책 조회
-	public List<MyReadBookVO> readBook(HttpSession session) {
+	public ArrayList<MyReadBookVO> readBook(HttpSession session) {
 		// TODO Auto-generated method stub
 		MemberVO member = (MemberVO)session.getAttribute("ryanMember");
-		List<MyReadBookVO> list = mapper.readBook(member.getMemberEmail());
+		ArrayList<MyReadBookVO> list = mapper.readBook(member.getMemberEmail());
 		return list;
 	}
 
 	@Override		//읽은책 삭제
-	public List<MyReadBookVO> deleteReadBook(MyReadBookVO vo) {
+	public ArrayList<MyReadBookVO> deleteReadBook(MyReadBookVO vo) {
 		// TODO Auto-generated method stub
 		mapper.deleteReadBook(vo);
-		List<MyReadBookVO> list = mapper.readBook(vo.getMemberEmail());
+		ArrayList<MyReadBookVO> list = mapper.readBook(vo.getMemberEmail());
 		return list;
 	}
 
@@ -83,7 +82,7 @@ public class MyBookServiceImpl implements MyBookService{
 		//vo.setBookNum(booknumber);
 		vo.setReadDate(df.format(cal.getTime()));
 	//	vo.setMemberEmail("abc1234@naver.com"); 
-		List<MyReadBookVO> list = mapper.readBook(request.getAttribute("ryanMember").toString());
+		ArrayList<MyReadBookVO> list = mapper.readBook(request.getAttribute("ryanMember").toString());
 		boolean flag= false;
 		for(int i=0; i<list.size();i++) {
 			if(list.get(i).getBookNum()==vo.getBookNum()) {
