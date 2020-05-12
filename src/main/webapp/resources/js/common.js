@@ -357,6 +357,8 @@ function revealElements(hiddenElements) {
   revealed = revealed.sort((prev, next) => prev.getBoundingClientRect().top - next.getBoundingClientRect().top);
 
   revealed.forEach(element => element.classList.add('revealed'));
+  // remove 'fadeInUp', 'revealed' class after animation ends
+  revealed.forEach(element => element.addEventListener('animationend', () => element.classList.remove('fadeInUp', 'revealed')));
   // returns un-revealed elements
   return removeElementsFrom(hiddenElements, revealed);
 }
@@ -374,6 +376,7 @@ function addFadeInUpEffects() {
       window.removeEventListener('scroll', fadeInUp);
   });
 }
+if (window.onload) alert('common.js load warning: window.onload event already exists');
 window.onload = function() {
   // slidify targeted elements
   // slider structure: 

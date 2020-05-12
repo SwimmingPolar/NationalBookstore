@@ -38,21 +38,25 @@
 .infinite-slider {
   cursor: grab;
   display: flex;
+}
+/* to be removed */
+.infinite-slider {
   counter-reset: slider;
 }
-
 .flexible-slider:active,
 .infinite-slider:active {
   cursor: grabbing;
 }
-
 .flexible-slider .flexible-slide,
 .infinite-slider .infinite-slide {
   flex: 1;
+}
+/* to be removed */
+.infinite-slider .infinite-slide {
   counter-increment: slider;
   position: relative;
 }
-.flexible-slider .flexible-slide::after,
+/* to be removed */
 .infinite-slider .infinite-slide::after {
   position: absolute;
   content: counter(slider);
@@ -76,7 +80,7 @@
 
 @keyframes fadeInUp {
   from {
-    transform: translateY(7%);
+    transform: translateY(3%);
     opacity: 0;
   }
   to {

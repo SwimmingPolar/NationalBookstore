@@ -5,54 +5,85 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<%
-	//이전 검색어 유지를 위함
-	request.setCharacterEncoding("UTF-8");
-	response.setCharacterEncoding("UTF-8");
-	String criteria = request.getParameter("criteria");
-	String keyword = request.getParameter("keyword");
-	String category = request.getParameter("category");
-	String layout = request.getParameter("layout");
-	if(criteria==null) {
-		criteria = "제목";
-	}
-	if(keyword==null) {
-		keyword = "";
-	}
-	if(category==null) {
-		category = "all";
-	}
-	if(layout==null) {
-		layout = "list";
-	}
-%>
-<script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
-<link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="../../resources/styles/reset.css" />
-<link rel="stylesheet" type="text/css" href="../../resources/styles/paper.css" />
-<script type="text/javascript" >
-	//체크된 책들 장바구니에 추가
-	$(document).on("click", ".btn-cart", function() {
-		console.clear();
-		$("input[type='checkbox']:checked").each(function(){
-			console.dir($(this).parents(".search").find(".title").text());
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>도서 구매</title>
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Black+Han+Sans|Nanum+Gothic|Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap"
+    rel="stylesheet" />
+  <!-- Fontawesome API -->
+  <script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
+  <!--
+    Available Fonts
+    Main Font:
+    font-family: 'Kaushan Script', cursive;
+
+    Article Choices:
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+
+    Korean Font:
+    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'Black Han Sans', sans-serif;
+    font-family: 'Nanum Gothic', sans-serif;
+    -->
+  <!-- css reset -->
+  <link rel="stylesheet" href="../../resources/styles/reset.css" />
+  <!-- individual page stylesheet -->
+	<link rel="stylesheet" href="../../resources/styles/paper.css" />
+  <link rel="stylesheet" href="../../resources/styles/common.css" />
+
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+  <!-- slidify sliders and fadeInUp reveal -->
+  <script src="../../resources/js/common.js"></script>
+	<%
+		//이전 검색어 유지를 위함
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		String criteria = request.getParameter("criteria");
+		String keyword = request.getParameter("keyword");
+		String category = request.getParameter("category");
+		String layout = request.getParameter("layout");
+		if(criteria==null) {
+			criteria = "제목";
+		}
+		if(keyword==null) {
+			keyword = "";
+		}
+		if(category==null) {
+			category = "all";
+		}
+		if(layout==null) {
+			layout = "list";
+		}
+	%>
+	<script type="text/javascript" >
+		//체크된 책들 장바구니에 추가
+		$(document).on("click", ".btn-cart", function() {
+			console.clear();
+			$("input[type='checkbox']:checked").each(function(){
+				console.dir($(this).parents(".search").find(".title").text());
+			});
 		});
-	});
-	//구매 버튼. 구매 페이지로 이동
-	$(document).on("click", ".btn-purchase", function() {
-		console.clear();
-		console.dir($(this).parents(".search").find(".title").text()+" 구매 시도");
-	})
-</script>
-<title>종이책</title>
+		//구매 버튼. 구매 페이지로 이동
+		$(document).on("click", ".btn-purchase", function() {
+			console.clear();
+			console.dir($(this).parents(".search").find(".title").text()+" 구매 시도");
+		})
+	</script>
 </head>
 <body>
-	<div class="div-title" >
-		<h3>National Bookstore</h3>
-	</div>
-	<div ></div>
+  <header class="topbar">
+    <nav>
+      <div class="container">
+        <a href="javascript: history.back();"><i class="far fa-arrow-left"></i></a>
+        <h2>도서 구매</h2>
+      </div>
+    </nav>
+  </header>
 	<!-- 검색바 -->
 	<form action="search.do" method="GET" >
 		<div class="search-bar" >
@@ -181,5 +212,6 @@
 			</div>
 		<%} %>
 	</div>
+	<%@ include file="template/footer.jsp" %>
 </body>
 </html>
