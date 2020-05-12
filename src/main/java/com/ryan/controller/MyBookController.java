@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ryan.domain.book.BookAlarmVO;
+import com.ryan.domain.book.BookGradeVO;
+import com.ryan.domain.book.BookLikeVO;
 import com.ryan.domain.book.EBookVO;
 import com.ryan.domain.book.MyLibVO;
 import com.ryan.domain.book.MyReadBookVO;
@@ -41,9 +43,13 @@ public class MyBookController {
 	
 	@RequestMapping("/myLibList")	//찜 책장
 	public String myBookList(Model model, HttpSession session) {
-		List<EBookVO> list = service.libBook(session);
+		ArrayList<EBookVO> list = service.libBook(session);
 		model.addAttribute("libbooklist", list);
 		model.addAttribute("libcount",service.countLibBook(session));		//찜 책장 수량
+		model.addAttribute("readbooklist", service.readBook(session));	//읽은책 리스트
+		model.addAttribute("readbookcount", service.countReadBook(session)); 		//읽은책 수량
+		model.addAttribute("likeBookcount", service.countLikeBook(session));
+		model.addAttribute("myFollower",fservice.countFollow(session)); //나를 팔로우 한 사람
 		return "myLibrary";
 	}
 	
@@ -53,16 +59,16 @@ public class MyBookController {
 		return service.deleteLibBook(vo);
 	}
 	
-	@RequestMapping("/readbooklist") 	//읽은 책 조회
-	public String myReadBook(Model model, HttpSession session) {
-		model.addAttribute("readbooklist", service.readBook(session));	//읽은책 리스트
-		model.addAttribute("readbookcount", service.countReadBook(session)); 		//읽은책 수량
-		return "myLibrary";
-	}
+//	@RequestMapping("/readbooklist") 	//읽은 책 조회
+//	public String myReadBook(Model model, HttpSession session) {
+//		model.addAttribute("readbooklist", service.readBook(session));	//읽은책 리스트
+//		model.addAttribute("readbookcount", service.countReadBook(session)); 		//읽은책 수량
+//		return "myLibrary";
+//	}
 	
 	//읽은 책 목록에서 삭제하기
 	@RequestMapping("/deletereadbook")
-	public @ResponseBody List<MyReadBookVO> deleteReadBook(MyReadBookVO vo) {
+	public @ResponseBody List<EBookVO> deleteReadBook(MyReadBookVO vo) {
 		return service.deleteReadBook(vo);
 	}
 	
@@ -80,9 +86,10 @@ public class MyBookController {
 	
 	//메인에서 출판일자별로 신작예정도서 출력
 	
-	//나를 팔로우한 사람의 수
-	public Model myfolower(HttpSession session, Model model) {
-		return model.addAttribute("myFollower",fservice.countFollow(session));
+	//평점 등록
+	@RequestMapping("/insertGrade")
+	public @ResponseBody ArrayList<BookGradeVO> insertGrade(BookGradeVO vo, HttpSession session) {
+		return service.insertGrade(vo, session);
 	}
 	
 		

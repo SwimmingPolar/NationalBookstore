@@ -47,11 +47,9 @@
 <insert id="insertHashtag" parameterType="com.ryan.domain.book.HashtagVO">
 	INSERT INTO book_hashtag (book_num, hash_tag) VALUES(#{bookNum}, #{hashTag})
 </insert>
-<!-- 
-<insert id="insertGrade" parameterType="com.ryan.domain.BookGradeVO">
-	INSERT INTO book_grade (member_Email, book_Num, grade_score) VALUES(#{memberEmail},#{bookNum},#{gradeScore})
-</insert>
- -->
+
+
+
 <insert id="insertLike" parameterType="com.ryan.domain.book.BookLikeVO">
 	INSERT INTO book_like (member_Email, book_Num) VALUES( #{memberEmail}, #{bookNum})
 </insert>

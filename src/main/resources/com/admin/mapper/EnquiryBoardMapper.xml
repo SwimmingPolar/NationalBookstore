@@ -42,6 +42,10 @@ INSERT enquriry_Board
 		WHERE board_num = #{boardNum}
 </update>
 
+<select id="numChk">
+select board_num from enquriry_Board where board_num = #{boardNum}
+</select>
+
 
 <insert id="insertReply" parameterType="com.admin.domain.board.ReplyVO">
 INSERT reply
@@ -65,6 +69,11 @@ INSERT reply
 <delete id="deleteReply" parameterType="com.admin.domain.board.ReplyVO">
 		DELETE FROM reply
 		WHERE reply_num = #{replyNum}
+</delete>
+
+<delete id="deleteAllReply" parameterType="com.admin.domain.board.EnquiryBoardVO">
+		DELETE FROM reply
+		WHERE board_num = #{boardNum}
 </delete>
 
 <update id="updateReply" parameterType="com.admin.domain.board.ReplyVO">
