@@ -32,7 +32,7 @@ public class MainPageController {
 	
 	@GetMapping("/")
 	public String mainPage(HttpServletRequest request, Model model) {
-		
+		log.info(service.getBestReadBook().size());
 		
 		
 		model.addAttribute("bestReadBook", service.getBestReadBook());

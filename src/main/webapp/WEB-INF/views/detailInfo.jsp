@@ -40,7 +40,7 @@
     <div class="top-container">
         <div class="leftBox">
     <div class="imageBox">
-     <img src="../../resources/image/book02.jpg" alt="없음">
+     <img src="${pageContext.request.contextPath }${bookdetail.bookThumbnail }" alt="없음">
     </div>
     <div class="preview">
     <a href="preview.html" onclick="window.open(this.href, '좋아요','width=1000, height=700');return false;" target="_blank" 
@@ -146,8 +146,8 @@
 
                 	    	<%-- <input type="checkbox" name="chkbox" id="chk1" value=${h.hashTag }>${h.hashTag }	 --%>			
 						<form action="" method="post" name="hashtagChk"> 
-                    <input type="checkbox" name="chkbox" class="tagChkbox" id="chk1" onclick="chkboxCnt(this)" value=${h.hashTag }>${h.hashTag }> 
-                    <label for="chk1"> # ${h.hashTag }>${h.hashTag }
+                   <%--  <input type="checkbox" name="chkbox" class="tagChkbox" id="chk1" onclick="chkboxCnt(this)" value=${h.hashTag }>
+                    <label for="chk1"> # ${h.hashTag }>${h.hashTag } --%>
 
                 	    <%-- 	<input type="checkbox" name="chkbox" id="chk1" value=${h.hashTag }>${h.hashTag }				
 						<form action="" method="post" name="hashtagChk">  --%>
