@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ryan.mapper.MyBookMapper">
-	<select id="libBook" resultType="com.ryan.domain.book.MyLibVO">
+	<select id="libBook" resultType="com.ryan.domain.book.EBookVO">
 		select e.* from my_lib l, ebook e 
 		WHERE l.book_num=e.book_num and member_email=#{memberEmail} 
 		order by lib_num DESC
