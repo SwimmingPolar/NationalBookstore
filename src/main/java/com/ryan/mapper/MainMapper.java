@@ -23,7 +23,7 @@ public interface MainMapper {
 	public ArrayList<EBookVO> getBestReadBook();
 	
 	//베스트셀러
-	public ArrayList<EBookVO> getBestSeller();
+	public ArrayList<EBookVO> getBestSeller(@Param("time") String time , @Param("category") String category);
 	
 	//세일
 	public ArrayList<EBookVO> getDisCountBook();
