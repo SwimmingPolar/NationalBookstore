@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ryan.domain.book.BookAlarmVO;
+import com.ryan.domain.book.EBookVO;
 import com.ryan.domain.book.MyLibVO;
 import com.ryan.domain.book.MyReadBookVO;
 import com.ryan.service.book.MyBookAlarmService;
 import com.ryan.service.book.MyBookService;
+import com.ryan.service.member.FollowService;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -34,23 +36,28 @@ public class MyBookController {
 	@Setter(onMethod_ = {@Autowired})
 	private MyBookAlarmService aservice;
 	
+	@Setter(onMethod_ = {@Autowired})
+	private FollowService fservice;
+	
 	@RequestMapping("/myLibList")	//찜 책장
-	public String myBookList(Model model, HttpServletRequest request) {
-		List<MyLibVO> list = service.libBook(request);
+	public String myBookList(Model model, HttpSession session) {
+		List<EBookVO> list = service.libBook(session);
 		model.addAttribute("libbooklist", list);
-		return "view";
+		model.addAttribute("libcount",service.countLibBook(session));		//찜 책장 수량
+		return "myLibrary";
 	}
 	
 	
 	@RequestMapping("/deleteLibList")
-	public @ResponseBody List<MyLibVO> deleteList(MyLibVO vo) {
+	public @ResponseBody List<EBookVO> deleteList(MyLibVO vo) {
 		return service.deleteLibBook(vo);
 	}
 	
 	@RequestMapping("/readbooklist") 	//읽은 책 조회
-	public String myReadBook(Model model, HttpServletRequest request) {
-		model.addAttribute("readbooklist", service.readBook(request));
-		return "view";
+	public String myReadBook(Model model, HttpSession session) {
+		model.addAttribute("readbooklist", service.readBook(session));	//읽은책 리스트
+		model.addAttribute("readbookcount", service.countReadBook(session)); 		//읽은책 수량
+		return "myLibrary";
 	}
 	
 	//읽은 책 목록에서 삭제하기
@@ -73,7 +80,10 @@ public class MyBookController {
 	
 	//메인에서 출판일자별로 신작예정도서 출력
 	
-	
+	//나를 팔로우한 사람의 수
+	public Model myfolower(HttpSession session, Model model) {
+		return model.addAttribute("myFollower",fservice.countFollow(session));
+	}
 	
 		
 }

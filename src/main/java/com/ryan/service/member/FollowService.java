@@ -2,6 +2,8 @@ package com.ryan.service.member;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.ryan.domain.member.FollowVO;
@@ -18,4 +20,6 @@ public interface FollowService {
 	public ArrayList<FollowVO> getMyFollower(MemberVO member);
 	
 	public Boolean followCheck( String follower , String following);
+	
+	public int countFollow(HttpSession session);
 }

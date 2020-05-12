@@ -125,7 +125,7 @@ public class MemberController {
 		return "업데이트 완료후 보여줄 페이지 경로";
 	}
 	
-	@PostMapping("/signin")
+	@GetMapping("/signin")
 	public String memberLogin(@RequestParam(required = false, name = "rememberMe") String remeberMe , MemberVO member ,HttpServletRequest request, HttpServletResponse response , Model model) {
 		//정지중인 유저인지 체크하는 서비스 호출에서 검사할것 아직안함.
 		

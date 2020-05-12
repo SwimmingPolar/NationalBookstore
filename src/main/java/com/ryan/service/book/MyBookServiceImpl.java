@@ -15,8 +15,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.ryan.domain.book.EBookVO;
 import com.ryan.domain.book.MyLibVO;
 import com.ryan.domain.book.MyReadBookVO;
+import com.ryan.domain.member.MemberVO;
 import com.ryan.mapper.MyBookMapper;
 
 import lombok.Setter;
@@ -30,18 +32,18 @@ public class MyBookServiceImpl implements MyBookService{
 	private MyBookMapper mapper;
 
 	@Override
-	public List<MyLibVO> libBook(HttpServletRequest request) {	//찜 책장 조회
+	public List<EBookVO> libBook(HttpSession session) {	//찜 책장 조회
 		// TODO Auto-generated method stub		
-		HttpSession session = request.getSession();
-		List<MyLibVO> list = mapper.libBook(session.getAttribute("ryanMember").toString());		
+		MemberVO vo = (MemberVO) session.getAttribute("ryanMember");
+		List<EBookVO> list = mapper.libBook(vo.getMemberEmail());		
 		return list;
 	}
 
 	@Override	//찜 책장 삭제
-	public List<MyLibVO> deleteLibBook(MyLibVO vo) {
+	public List<EBookVO> deleteLibBook(MyLibVO vo) {
 		// TODO Auto-generated method stub
 		int num=mapper.deleteLibBook(vo);
-		List<MyLibVO> list = mapper.libBook(vo.getMemberEmail());		
+		List<EBookVO> list = mapper.libBook(vo.getMemberEmail());		
 		return list;
 	}
 
@@ -54,10 +56,10 @@ public class MyBookServiceImpl implements MyBookService{
 	}
 
 	@Override		//읽은책 조회
-	public List<MyReadBookVO> readBook(HttpServletRequest request) {
+	public List<MyReadBookVO> readBook(HttpSession session) {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-		List<MyReadBookVO> list = mapper.readBook(session.getAttribute("ryanMember").toString());
+		MemberVO member = (MemberVO)session.getAttribute("ryanMember");
+		List<MyReadBookVO> list = mapper.readBook(member.getMemberEmail());
 		return list;
 	}
 
@@ -97,4 +99,30 @@ public class MyBookServiceImpl implements MyBookService{
 			return true;
 		}
 	}
+
+	@Override
+	public int countLibBook(HttpSession session) {
+		MemberVO member =(MemberVO) session.getAttribute("ryanMember");
+		return mapper.countLibBook(member.getMemberEmail());
+	}
+
+	@Override
+	public int countReadBook(HttpSession session) {
+		MemberVO member =(MemberVO) session.getAttribute("ryanMember");
+		return mapper.countReadBook(member.getMemberEmail());
+		}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

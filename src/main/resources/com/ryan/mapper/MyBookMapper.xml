@@ -2,7 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ryan.mapper.MyBookMapper">
 	<select id="libBook" resultType="com.ryan.domain.book.MyLibVO">
-		select * from my_lib WHERE member_email=#{memberEmail} order by lib_num DESC
+		select e.* from my_lib l, ebook e 
+		WHERE l.book_num=e.book_num and member_email=#{memberEmail} 
+		order by lib_num DESC
 	</select>
 	
 	<delete id="deleteLibBook" parameterType="com.ryan.domain.book.MyLibVO">
@@ -28,5 +30,13 @@
 	<update id="updateReadBook" parameterType="com.ryan.domain.book.MyReadBookVO">
 		UPDATE my_read_book SET read_date = #{readDate} where member_email=#{memberEmail} and book_num=#{bookNum}
 	</update>
+	
+	<select id="countLibBook" resultType="int">
+		select count(*) from my_lib where member_email=#{memberEmail}
+	</select>
+	
+	<select id="countReadBook" resultType="int">
+		select count(*) from my_read_book where member_email=#{memberEmail}
+	</select>
 
 </mapper>

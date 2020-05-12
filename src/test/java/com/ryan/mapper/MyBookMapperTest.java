@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.ryan.domain.book.MyLibVO;
 import com.ryan.domain.book.MyReadBookVO;
 
 import lombok.Setter;
@@ -31,7 +32,7 @@ public class MyBookMapperTest {
 		log.info(mapper.readingBook(vo));
 	}
 	*/
-	
+	/*
 	@Test
 	public void insertReadBook() {
 		MyReadBookVO vo = new MyReadBookVO();
@@ -47,7 +48,7 @@ public class MyBookMapperTest {
 		vo.setBookNum(196);
 		log.info("insert 결과 : " +mapper.insertReadBook(vo));
 	}
-	
+	*/
 	
 	/*
 	@Test
@@ -60,4 +61,14 @@ public class MyBookMapperTest {
 		log.info(mapper.deleteList(vo));
 		
 	}*/
+	
+	@Test
+	public void insertLibBook() {
+		MyLibVO vo = new MyLibVO();
+		vo.setBookNum(210);
+		vo.setMemberEmail("abc1234@naver.com");
+		
+		
+		log.info(mapper.insertLibBook(vo));
+	}
 }
