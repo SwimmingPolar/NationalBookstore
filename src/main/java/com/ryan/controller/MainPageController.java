@@ -31,7 +31,11 @@ public class MainPageController {
 	private MainPageService service;
 	
 	@GetMapping("/")
-	public String mainPage(HttpServletRequest request) {
+	public String mainPage(HttpServletRequest request, Model model) {
+		
+		
+		
+		model.addAttribute("bestReadBook", service.getBestReadBook());
 		
 		return "main";
 	}
