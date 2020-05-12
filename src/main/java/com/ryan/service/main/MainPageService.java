@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.apache.ibatis.annotations.Param;
 
 import com.ryan.domain.book.EBookVO;
+import com.ryan.domain.main.FilterSearchVO;
 
 public interface MainPageService {
 	
@@ -19,5 +20,7 @@ public interface MainPageService {
 	
 	//사람들이 많이 읽은 책
 	public ArrayList<EBookVO> getBestReadBook();
+	
+	public ArrayList<EBookVO> getFilterSearch(FilterSearchVO filterSearch); 
 	
 }

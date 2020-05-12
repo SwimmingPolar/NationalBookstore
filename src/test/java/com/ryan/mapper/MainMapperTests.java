@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.ryan.domain.book.EBookVO;
 import com.ryan.domain.book.HashtagVO;
+import com.ryan.domain.main.FilterSearchVO;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -66,11 +67,21 @@ public class MainMapperTests {
 //		
 //	}
 	
-	@Test
-	public void getBestReadBookTests() {
-		
-		mapper.getBestReadBook().forEach(book -> log.info(book));
-		
-	}
+//	@Test
+//	public void getBestReadBookTests() {
+//		
+//		mapper.getBestReadBook().forEach(book -> log.info(book));
+//		
+//	}
+	
+//	@Test
+//	public void getFilterSearchTests() {
+//		FilterSearchVO filterSearch = new FilterSearchVO();
+//		
+//		filterSearch.setFirstCategory("자기계발");
+//		
+//		mapper.getFilterSearch(filterSearch).forEach(filter -> log.info(filter));
+//		
+//	}
 	
 }

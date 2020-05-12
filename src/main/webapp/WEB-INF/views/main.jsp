@@ -699,7 +699,7 @@
               <li class="flexible-slide">
                 <a href="#">
                   <div class="thumbnail-wrapper">
-                    <span class="discount-rate">10<span>%</span></span>
+                    <span class="`-rate">10<span>%</span></span>
                     <img src="https://via.placeholder.com/150x200" alt="">
                   </div>
                   <div class="text-wrapper">

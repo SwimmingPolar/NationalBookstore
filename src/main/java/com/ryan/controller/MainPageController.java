@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ryan.domain.book.EBookVO;
+import com.ryan.domain.main.FilterSearchVO;
 import com.ryan.domain.member.MemberVO;
 import com.ryan.mapper.MainMapper;
 import com.ryan.service.main.MainPageService;
@@ -66,6 +67,15 @@ public class MainPageController {
 //		
 //		return "search";
 //	}
+	
+	
+	@GetMapping("/filterSearch")
+	public String filterSearch(FilterSearchVO filterSearch, Model model) {
+		
+		model.addAttribute("키", service.getFilterSearch(filterSearch));
+		
+		return "주소";
+	}
 	
 	@RequestMapping(value="/paper")
 	public String Paper() {

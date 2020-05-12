@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.ryan.domain.book.EBookVO;
 import com.ryan.domain.book.HashtagVO;
+import com.ryan.domain.main.FilterSearchVO;
 
 public interface MainMapper {
 	
@@ -34,6 +35,11 @@ public interface MainMapper {
 	
 	//해시태그로 추천
 	public ArrayList<EBookVO> getHashTagBook(ArrayList<HashtagVO> hashTagList);
+	
+	/////////////////////////////////////
+	//필터검색
+	
+	public ArrayList<EBookVO> getFilterSearch(FilterSearchVO filterSearch); 
 	
 	
 }

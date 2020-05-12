@@ -160,4 +160,39 @@
 		GROUP BY e.book_num , e.book_thumbnail
 	</select>
 	
+	
+	<!-- 검색 -->
+	
+	<select id="getFilterSearch" resultType="com.ryan.domain.book.EBookVO">
+		SELECT e.* FROM ebook e
+		<choose>
+			<when test="firstCategory != null">
+				, first_category f , second_category s
+				<where>
+					e.category_num = s.category_num and s.first_num = f.first_num
+					and
+					<choose>
+						<when test="firstCategory.equals('자기계발')"> <!-- 계속해서 when 으로 추가해주시면 됩니다. -->
+							f.first_num = 11
+						</when>
+					</choose>
+				</where>
+			</when>
+			<when test="secondCategory != null">
+				, second_category s
+				<where>
+					e.category_num = s.category_num
+					and
+					<choose>
+						<when test="secondCategory.equals('인간관계')">
+							s.category_num = 21
+						</when>
+					</choose>
+				</where>
+			</when>
+		</choose>
+		<!-- GROUP BY 필요하면 여기에 추가. -->
+		
+	</select>
+	
 </mapper>
