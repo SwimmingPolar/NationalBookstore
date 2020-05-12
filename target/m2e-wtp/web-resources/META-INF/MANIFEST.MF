@@ -1,5 +1,9 @@
 Manifest-Version: 1.0
+<<<<<<< HEAD
 Built-By: myjun
+=======
+Built-By: swimmingPolar
+>>>>>>> 71e5b45c7c065462012197f7a675a4f6f525186e
 Build-Jdk: 1.8.0_241
 Created-By: Maven Integration for Eclipse
 

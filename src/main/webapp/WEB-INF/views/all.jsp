@@ -6,97 +6,123 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
-<link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="../../resources/styles/reset.css" />
-<link rel="stylesheet" type="text/css" href="../../resources/styles/all.css" />
-<%
-	String type = request.getParameter("type");
-	String keyword = request.getParameter("keyword");
-	String category = request.getParameter("category");
-	if(type == null)
-		type = "BOOK_TITLE";
-	if(keyword == null)
-		keyword = "";
-	if(category == null)
-		category = "all";
-%>
-<script type="text/javascript" >
-	$(document).ready(function() {
-		var type = "<%=type %>";
-		var keyword = "<%=keyword %>";
-		var layout = "${cookie.layout.value}";
-		if(layout == "") {
-			layout = "list";
-		}
-		console.dir("현재 레이아웃:${cookie.layout.value}");
-		//검색기준 and 검색어 유지
-		$(".type").val(type);
-		$(".keyword").val(keyword);
-		<c:forEach var="category" items="${selected }" >
-			var category = "${category }";
-			$(".category").each(function() {
-				if($(this).val() == category)
-					$(this).attr("checked", true);
-			})
-		</c:forEach>
-		$(".btn-layout."+layout).css("color", "#000000");
-		//레이아웃 유지
-		if(layout == "list") {
-			$(".book-list").removeClass("grid-layout");
-		} else {
-			$(".book-list").addClass("grid-layout");
-		}
-		//검색결과 레이아웃 변경
-		$(".btn-layout").click(function() {
-			$(".btn-layout").css("color", "var(--gray-color)");
-			$(this).css("color", "#000000");
-			if($(this).hasClass("list")) {
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>베스트 셀러</title>
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Black+Han+Sans|Nanum+Gothic|Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap"
+    rel="stylesheet" />
+  <!-- Fontawesome API -->
+  <script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
+  <!--
+    Available Fonts
+    Main Font:
+    font-family: 'Kaushan Script', cursive;
+
+    Article Choices:
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+
+    Korean Font:
+    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'Black Han Sans', sans-serif;
+    font-family: 'Nanum Gothic', sans-serif;
+    -->
+  <!-- css reset -->
+  <link rel="stylesheet" href="../../resources/styles/reset.css" />
+  <!-- individual page stylesheet -->
+	<link rel="stylesheet" href="../../resources/styles/all.css" />
+  <link rel="stylesheet" href="../../resources/styles/common.css" />
+
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+  <!-- slidify sliders and fadeInUp reveal -->
+	<script src="../../resources/js/common.js"></script>
+	<%
+		String type = request.getParameter("type");
+		String keyword = request.getParameter("keyword");
+		String category = request.getParameter("category");
+		if(type == null)
+			type = "BOOK_TITLE";
+		if(keyword == null)
+			keyword = "";
+		if(category == null)
+			category = "all";
+	%>
+	<script type="text/javascript" >
+		$(document).ready(function() {
+			var type = "<%=type %>";
+			var keyword = "<%=keyword %>";
+			var layout = "${cookie.layout.value}";
+			if(layout == "") {
+				layout = "list";
+			}
+			console.dir("현재 레이아웃:${cookie.layout.value}");
+			//검색기준 and 검색어 유지
+			$(".type").val(type);
+			$(".keyword").val(keyword);
+			<c:forEach var="category" items="${selected }" >
+				var category = "${category }";
+				$(".category").each(function() {
+					if($(this).val() == category)
+						$(this).attr("checked", true);
+				})
+			</c:forEach>
+			$(".btn-layout."+layout).css("color", "#000000");
+			//레이아웃 유지
+			if(layout == "list") {
 				$(".book-list").removeClass("grid-layout");
-				document.cookie = "layout=list";
-			}
-			else {
+			} else {
 				$(".book-list").addClass("grid-layout");
-				document.cookie = "layout=grid";
 			}
-		})
-		//정렬
-		$(".btn-sort").click(function() {
-			var sort = $(this).val();
-			console.dir(sort);
-			$.ajax({
-				url : "sort.do",
-				type : "POST",
-				data : { "sort" : sort },
-				dataType : "json"
+			//검색결과 레이아웃 변경
+			$(".btn-layout").click(function() {
+				$(".btn-layout").css("color", "var(--gray-color)");
+				$(this).css("color", "#000000");
+				if($(this).hasClass("list")) {
+					$(".book-list").removeClass("grid-layout");
+					document.cookie = "layout=list";
+				}
+				else {
+					$(".book-list").addClass("grid-layout");
+					document.cookie = "layout=grid";
+				}
 			})
-			.done(function() {
-				console.dir("통신 성공");
+			//정렬
+			$(".btn-sort").click(function() {
+				var sort = $(this).val();
+				console.dir(sort);
+				$.ajax({
+					url : "sort.do",
+					type : "POST",
+					data : { "sort" : sort },
+					dataType : "json"
+				})
+				.done(function() {
+					console.dir("통신 성공");
+				})
+				.fail(function() {
+					console.dir("통신 실패");
+				})
+				.always(function() {
+					console.dir("통신 요청");
+				});
 			})
-			.fail(function() {
-				console.dir("통신 실패");
-			})
-			.always(function() {
-				console.dir("통신 요청");
-			});
-		})
-	});
-</script>
-<title>Insert title here</title>
+		});
+	</script>
 </head>
 <body>
-	<%-- 타이틀 --%>
-	<div class="div-title" >
-		<h3>National Bookstore</h3>
-	</div>
-	<div ></div>
+  <header class="topbar">
+    <nav>
+      <div class="container">
+        <a href="javascript: history.back();"><i class="far fa-arrow-left"></i></a>
+        <h2>전체 도서</h2>
+      </div>
+    </nav>
+  </header>
 	${sorto }
-	<a href="http://localhost:8081/test/books.jsp"><</a>
-	<a href="http://localhost:8081/test/category.do?CATEGORY_NUM=1" >HOME</a>
-	<div >
-	</div>
 	<%-- 검색 박스 --%>
 	<form action="category-search.do" method="GET" >
 		<div class="search-box" >
@@ -175,5 +201,6 @@
 			</div>
 		</c:forEach>
 	</div>
+	<%@ include file="template/footer.jsp" %>
 </body>
 </html>
