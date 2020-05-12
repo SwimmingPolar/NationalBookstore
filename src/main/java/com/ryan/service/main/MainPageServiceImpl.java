@@ -27,6 +27,16 @@ public class MainPageServiceImpl implements MainPageService {
 	public ArrayList<EBookVO> getBookList(String type, String[] keyword) {
 		return mapper.getBookList(type, keyword);
 	}
+
+	@Override
+	public ArrayList<EBookVO> getTodayBookList() {
+		return null;
+	}
+
+	@Override
+	public ArrayList<EBookVO> getBestReadBook() {
+		return mapper.getBestReadBook();
+	}
 	
 	
 	

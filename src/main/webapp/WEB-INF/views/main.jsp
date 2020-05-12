@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -360,150 +361,26 @@
         </script>
         <div class="list-container">
           <ul>
-            <li>
-              <a href="#">
-                <div class="img-wrapper">
-                  <img src="https://via.placeholder.com/50x75" alt="">
-                </div>
-                <div class="text-wrapper">
-                  <div class="ranking">
-                    <h3>1</h3>
-                  </div>
-                  <div class="meta-data">
-                    <span class="title">title</span>
-                    <span class="author">author</span>
-                  </div>
-                </div>
-              </a>
+          	<c:set var="count" value="${1 }"/>
+          	<c:forEach var="read" items="${bestReadBook }">
+          		<li>
+              	<a href="#">
+                	<div class="img-wrapper">
+                  		<img src="${pageContext.request.contextPath}${read.bookThumbnail}" alt="" width="50px" height="75px">
+                	</div>
+                	<div class="text-wrapper">
+                  	<div class="ranking">
+                    	<h3><c:out value="${count }"/> </h3>
+                  	</div>
+                  	<div class="meta-data">
+                    	<span class="title">${read.bookTitle }</span>
+                    	<span class="author">author</span>
+                  	</div>
+                	</div>
+              	</a>
             </li>
-            <li>
-              <a href="#">
-                <div class="img-wrapper">
-                  <img src="https://via.placeholder.com/50x75" alt="">
-                </div>
-                <div class="text-wrapper">
-                  <div class="ranking">
-                    <h3>2</h3>
-                  </div>
-                  <div class="meta-data">
-                    <span class="title">title</span>
-                    <span class="author">author</span>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <div class="img-wrapper">
-                  <img src="https://via.placeholder.com/50x75" alt="">
-                </div>
-                <div class="text-wrapper">
-                  <div class="ranking">
-                    <h3>3</h3>
-                  </div>
-                  <div class="meta-data">
-                    <span class="title">title</span>
-                    <span class="author">author</span>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <div class="img-wrapper">
-                  <img src="https://via.placeholder.com/50x75" alt="">
-                </div>
-                <div class="text-wrapper">
-                  <div class="ranking">
-                    <h3>4</h3>
-                  </div>
-                  <div class="meta-data">
-                    <span class="title">title</span>
-                    <span class="author">author</span>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <div class="img-wrapper">
-                  <img src="https://via.placeholder.com/50x75" alt="">
-                </div>
-                <div class="text-wrapper">
-                  <div class="ranking">
-                    <h3>5</h3>
-                  </div>
-                  <div class="meta-data">
-                    <span class="title">title</span>
-                    <span class="author">author</span>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <div class="img-wrapper">
-                  <img src="https://via.placeholder.com/50x75" alt="">
-                </div>
-                <div class="text-wrapper">
-                  <div class="ranking">
-                    <h3>6</h3>
-                  </div>
-                  <div class="meta-data">
-                    <span class="title">title</span>
-                    <span class="author">author</span>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <div class="img-wrapper">
-                  <img src="https://via.placeholder.com/50x75" alt="">
-                </div>
-                <div class="text-wrapper">
-                  <div class="ranking">
-                    <h3>7</h3>
-                  </div>
-                  <div class="meta-data">
-                    <span class="title">title</span>
-                    <span class="author">author</span>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <div class="img-wrapper">
-                  <img src="https://via.placeholder.com/50x75" alt="">
-                </div>
-                <div class="text-wrapper">
-                  <div class="ranking">
-                    <h3>8</h3>
-                  </div>
-                  <div class="meta-data">
-                    <span class="title">title</span>
-                    <span class="author">author</span>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <div class="img-wrapper">
-                  <img src="https://via.placeholder.com/50x75" alt="">
-                </div>
-                <div class="text-wrapper">
-                  <div class="ranking">
-                    <h3>9</h3>
-                  </div>
-                  <div class="meta-data">
-                    <span class="title">title</span>
-                    <span class="author">author</span>
-                  </div>
-                </div>
-              </a>
-            </li>
+            <c:set var="count" value="${count + 1 }"/>
+          	</c:forEach>
           </ul>
         </div>
       </section>

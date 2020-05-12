@@ -130,7 +130,7 @@ public class MemberController {
 				memberService.addCookie(member, response);
 			}
 			HttpSession session = request.getSession();
-			session.setAttribute("ryanMember", member);
+			session.setAttribute("ryanMember", memberService.getLoginMemberInfo(member));
 			log.info(request.getRemoteAddr());
 			return "redirect:/member/test"; 
 		} else {
@@ -213,7 +213,7 @@ public class MemberController {
 	
 	@GetMapping("/test")
 	public String test() {
-		return "Test";
+		return "test";
 	}
 	
 	

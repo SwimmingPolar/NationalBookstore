@@ -51,9 +51,17 @@
 		WHERE member_email = #{memberEmail}
 	</update>
 	
-	<!-- 로그인 -->
+	<!-- 로그인  유효성 체크--> <!-- 주말에 시큐리티 적용예정 -->
 	<select id="memberSignIn" resultType="int">
 		SELECT count(*) FROM member WHERE member_email = #{memberEmail} and member_pw = #{memberPw}
+	</select>
+	
+	<!-- 로그인 한사람 정보 가져오기 -->
+	
+	<select id="getLoginMemberInfo" resultType="com.ryan.domain.member.MemberVO">
+		SELECT member_email, member_nick_name, member_zipcode, member_address, member_daddress, member_tel, member_signup_date
+		FROM member
+		WHERE member_email = #{memberEmail} and member_pw = #{memberPw}
 	</select>
 	
 	<!-- 정지 유효성체크? -->

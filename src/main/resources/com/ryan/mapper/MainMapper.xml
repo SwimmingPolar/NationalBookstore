@@ -75,7 +75,7 @@
 		)
 		<where>
 			<![CDATA[
-				rnn <= 5
+				rnn <= 9
 			]]>
 		</where>
 	</select>
