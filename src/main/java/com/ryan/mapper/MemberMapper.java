@@ -14,8 +14,11 @@ public interface MemberMapper {
 	//회원정보수정
 	public int memberUpdate(MemberVO member);
 	
-	//로그인
+	//로그인 유효성 체크
 	public int memberSignIn(MemberVO member);
+	
+	//로그인한 사람 정보 가져오기
+	public MemberVO getLoginMemberInfo(MemberVO member);
 	
 	//정지중인 회원인지 확인.
 	public int memberBanCheck(MemberVO member);

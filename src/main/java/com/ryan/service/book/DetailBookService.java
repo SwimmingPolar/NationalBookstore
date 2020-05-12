@@ -30,7 +30,7 @@ public interface DetailBookService {
 	public int bookLike(int booknumber); 
 	
 	//평점 조회
-	public double bookGrade(int booknumber);
+	public int bookGrade(int booknumber);
 	
 	//태그 조회
 	public List<HashtagVO> hashtag(int booknumber);

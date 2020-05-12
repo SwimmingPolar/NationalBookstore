@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,8 +22,8 @@
 </div>
 
 <div class="myNickname">
-        <a> 지혜로운 셀럽 </a> 님의 서재 
-        <a> 아이디  abc1234 </a>
+        <a> ${ryanMember.memberNickName } </a> 님의 서재 
+        <a> ${ryanMember.memberEmail } </a>
 </div>
 
 <div class="infoSetting">
@@ -32,9 +33,9 @@
 
 <div class = "manyBtn">
     <ul>
-        <li><a href="#"> 읽은 책 <b>( 2 )</b> </a></li>
-        <li><a href="#"> 좋아요 <b>( 1 )</b> </a></li>
-        <li><a href="#"> 팔로우 <b>( 0 )</b> </a></li>
+        <li><a href="#"> 읽은 책 <b>( ${readbookcount } )</b> </a></li>
+        <li><a href="#"> 좋아요 <b>( ${likeBookcount } )</b> </a></li>
+        <li><a href="#"> 팔로우 <b>( ${myFollower} )</b> </a></li>
     </ul>
 
 
@@ -60,24 +61,46 @@
     
     <div class="content one">
         <div class="mybookTitle">
-            <a>0</a> 권의 도서
+            <a>${readbookcount }</a> 권의 도서
         </div>
         <div class="mybook_Content">
-           <span> <i class="fas fa-books"></i></span>
-            서재에 등록된 도서가 없습니다
+           
+
+           <c:choose>
+           		<c:when test="${readbooklist.size() >0 }">
+           			<c:forEach var="readbook" items="${readbooklist }">
+            			${readbook.bookTitle} <br/>
+            	 	</c:forEach>
+           		</c:when>
+           		<c:otherwise>
+           			<span> <i class="fas fa-books"></i></span>
+           				등록된 도서가 없습니다
+           		</c:otherwise>
+           </c:choose>
+            	
         </div>
         
     </div>
     <div class="content two">
         <div class="mybookTitle">
-            <a>0</a> 개의 책장
+            <a>${libcount}</a> 개의 책장
         </div>
     
         <div class="makeNewBook">
             <div class="mybook_Content">
-            <span> <i class="fas fa-books"></i></span>
-                나만의 책장을 만들어보세요
-             <button type="button" id=makeBookCart> <i class="fas fa-plus"></i> 새 책장 만들기 </button>
+
+             <c:choose>
+           		<c:when test="${libbooklist.size() >0 }">
+           			<c:forEach var="book" items="${libbooklist }">
+            			${book.bookTitle }
+            	 	</c:forEach>
+           		</c:when>
+           		<c:otherwise>
+           			<span> <i class="fas fa-books"></i></span>
+             	   		나만의 책장을 만들어보세요
+          	 	  <button type="button" id=makeBookCart> <i class="fas fa-plus"></i> 새 책장 만들기 </button>
+           		</c:otherwise>
+           </c:choose>
          </div>
         </div>
     </div>
@@ -87,13 +110,13 @@
         </div>
         <div class="mybook_Content">
             <span> <i class="fas fa-book"></i></span>
-             종이책 주문 정보가 존재하지 않습니다
+        	     종이책 주문 정보가 존재하지 않습니다
          </div>
 
     </div>
     <div class="content four">
         <div class="mybookTitle">
-           나의 포스트 <a>0</a> 개
+        	   나의 포스트 <a>0</a> 개
         </div>
         <div class ="postInputBtn">
         <button type= "button" id = postInput onclick="openNewPost()"> <i class="fas fa-pencil-alt"></i> 포스트 작성</button>

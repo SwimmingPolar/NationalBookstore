@@ -24,4 +24,7 @@ public interface FollowMapper {
 	//혹시모를 검증?
 	public int followCheck(@Param("follower") String follower ,@Param("following") String following);
 	
+	//나를 팔로우 한 사람들 수
+	public int countFollower(MemberVO member);
+	
 }

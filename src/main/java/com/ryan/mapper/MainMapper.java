@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.apache.ibatis.annotations.Param;
 
 import com.ryan.domain.book.EBookVO;
+import com.ryan.domain.book.HashtagVO;
 
 public interface MainMapper {
 	
@@ -23,11 +24,16 @@ public interface MainMapper {
 	public ArrayList<EBookVO> getBestReadBook();
 	
 	//베스트셀러
-	public ArrayList<EBookVO> getBestSeller();
+	public ArrayList<EBookVO> getBestSeller(@Param("time") String time , @Param("category") String category);
 	
 	//세일
 	public ArrayList<EBookVO> getDisCountBook();
 	
+	//해시태그 랜덤으로 가져오기
+	public ArrayList<HashtagVO> getRandomHashTag();
+	
+	//해시태그로 추천
+	public ArrayList<EBookVO> getHashTagBook(ArrayList<HashtagVO> hashTagList);
 	
 	
 }

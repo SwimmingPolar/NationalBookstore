@@ -56,7 +56,7 @@ public class DetailBookServiceImpl implements DetailBookService{
 	}
 
 	@Override
-	public double bookGrade(int booknumber) {		//평점조회
+	public int bookGrade(int booknumber) {		//평점조회
 		// TODO Auto-generated method stub
 		return mapper.bookGrade(booknumber);
 	}
