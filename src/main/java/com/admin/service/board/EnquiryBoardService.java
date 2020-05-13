@@ -1,6 +1,9 @@
 package com.admin.service.board;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.admin.domain.board.EnquiryBoardVO;
 import com.admin.domain.board.FileVO;
@@ -25,6 +28,8 @@ public interface EnquiryBoardService {
 	
 	//선택 문의사항 파일리스트 반환
 	public ArrayList<FileVO> selectEqFileList(int boardNum);
+	
+	public boolean insertFiles(EnquiryBoardVO enquiry,ArrayList<MultipartFile> files,String path) throws IOException;
 	
 	//리블 작성
 	public boolean replyWrite(ReplyVO reply);

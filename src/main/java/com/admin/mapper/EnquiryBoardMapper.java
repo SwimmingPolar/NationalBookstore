@@ -3,6 +3,7 @@ package com.admin.mapper;
 import java.util.ArrayList;
 
 import com.admin.domain.board.EnquiryBoardVO;
+import com.admin.domain.board.FileVO;
 import com.admin.domain.board.ReplyVO;
 
 public interface EnquiryBoardMapper {
@@ -40,4 +41,8 @@ public interface EnquiryBoardMapper {
 	
 	//해당게시물 리플 리스트
 	public ArrayList<ReplyVO> selectReplyList(int boardNum);
+	
+	public ArrayList<EnquiryBoardVO> selectLastSeqNum(EnquiryBoardVO enquiry);
+	
+	public int insertFile(FileVO file);
 }

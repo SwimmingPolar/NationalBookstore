@@ -1,6 +1,9 @@
 package com.admin.controller;
 
 
+
+import java.io.IOException;
+import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -10,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.admin.domain.board.EnquiryBoardVO;
 import com.admin.domain.board.ReplyVO;
@@ -29,9 +33,34 @@ public class EnquiryBoardController {
 	}
 	
 	@RequestMapping(value="/write", method=RequestMethod.POST)
-	public String enquiryWrite(Model model,EnquiryBoardVO enquiry) {
-		//성공하면 리스트로
-		return "";
+	public String enquiryWrite(Model model,EnquiryBoardVO enquiry,HttpServletRequest request,ArrayList<MultipartFile> files) {
+		HttpSession session = request.getSession();
+		MemberVO member = (MemberVO) session.getAttribute("ryanMember");	
+		if(enquiry!=null&&enquiry.getMemberEmail().equals(member.getMemberEmail())) {
+			boolean flag=service.eqWrite(enquiry);
+			//문의사항 등록이 완료되면 등록할 파일이 있는지 확인후 있으면 등록
+			if(flag&&files!=null&&files.isEmpty()&&files.size()>0) {
+				String path = request.getSession().getServletContext().getRealPath("\\")+"\\NationalBookstore\\src\\main\\webapp\\resources\\enquiryFile";
+				boolean flag2=false;
+				try {
+					//파일등록
+					flag2=service.insertFiles(enquiry,files, path);
+				} catch (IOException e) {
+					flag2=false;
+					e.printStackTrace();
+				}
+				if(flag2)
+					model.addAttribute("filemessage", "파일등록실패");
+			}
+			if(flag) 
+				model.addAttribute("message", "문의사항 입력 성공");
+			else 
+				model.addAttribute("message", "문의사항 입력 실패");
+			return "redirect:/board/enquiry/showList";
+		}else {
+			model.addAttribute("message", "선택된 내용이 없습니다.");
+			return "redirect:/board/enquiry/showList";
+		}
 	}
 	
 	@RequestMapping("/delete")
@@ -41,10 +70,12 @@ public class EnquiryBoardController {
 		if(enquiry!=null&&enquiry.getMemberEmail().equals(member.getMemberEmail())) {
 			if(service.eqDelete(enquiry))
 				model.addAttribute("message", "문의사항 삭제 성공");
-			return "";
+			else
+				model.addAttribute("message", "문의사항 삭제 실패");
+			return "redirect:/board/enquiry/showList";
 		}else {
 			model.addAttribute("message", "선택된 내용이 없습니다.");
-			return "";
+			return "redirect:/board/enquiry/showList";
 		}
 	}
 	
@@ -86,8 +117,7 @@ public class EnquiryBoardController {
 		}else {
 			model.addAttribute("message", "본인 문의사항이 아닙니다");
 			return "redirect:/board/enquiry/showList";
-		}
-			
+		}	
 	}
 	
 	@RequestMapping(value="/replyWrite", method=RequestMethod.POST)
