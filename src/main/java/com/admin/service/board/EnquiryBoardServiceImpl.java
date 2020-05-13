@@ -44,9 +44,11 @@ public class EnquiryBoardServiceImpl implements EnquiryBoardService{
 	}
 
 	@Override
-	public EnquiryBoardVO select(EnquiryBoardVO enquiry) {
-		// TODO Auto-generated method stub
-		return null;
+	public EnquiryBoardVO selectEq(int boardNum) {
+		if(mapper.numChk(boardNum)>0)
+			return mapper.selectEq(boardNum);
+		else
+			return null;
 	}
 
 	@Override

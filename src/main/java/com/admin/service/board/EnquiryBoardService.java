@@ -18,7 +18,7 @@ public interface EnquiryBoardService {
 	public ArrayList<EnquiryBoardVO> selectList(String memberEmail);
 	
 	//선택한 문의사항 정보반환,enquiryvo,replylist,filelist
-	public EnquiryBoardVO select(EnquiryBoardVO enquiry);
+	public EnquiryBoardVO selectEq(int boardNum);
 	
 	//선택 문의사항 리플리스트 반환
 	public ArrayList<ReplyVO> selectReplyList(int boardNum);

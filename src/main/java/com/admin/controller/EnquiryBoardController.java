@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.admin.domain.board.EnquiryBoardVO;
 import com.admin.domain.board.ReplyVO;
@@ -24,33 +25,36 @@ public class EnquiryBoardController {
 	
 	@RequestMapping("/writeForm")
 	public String enquiryWriteForm() {
-		return "입력jsp";
+		return "입력view";
 	}
 	
 	@RequestMapping(value="/write", method=RequestMethod.POST)
-	public String enquiryWrite(EnquiryBoardVO enquiry) {
+	public String enquiryWrite(Model model,EnquiryBoardVO enquiry) {
 		//성공하면 리스트로
 		return "";
 	}
 	
 	@RequestMapping("/delete")
-	public String enquiryDelete(EnquiryBoardVO enquiry,HttpServletRequest request) {
+	public String enquiryDelete(Model model,EnquiryBoardVO enquiry,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("ryanMember");	
 		if(enquiry!=null&&enquiry.getMemberEmail().equals(member.getMemberEmail())) {
-			
-			return service.eqDelete(enquiry)?"":"";
-		}else
+			if(service.eqDelete(enquiry))
+				model.addAttribute("message", "문의사항 삭제 성공");
 			return "";
+		}else {
+			model.addAttribute("message", "선택된 내용이 없습니다.");
+			return "";
+		}
 	}
 	
 	@RequestMapping("/updateForm")
 	public String enquiryUpdateForm() {
-		return "입력jsp";
+		return "입력view";
 	}
 	
 	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public String enquiryUpdate(EnquiryBoardVO enquiry) {
+	public String enquiryUpdate(Model model,EnquiryBoardVO enquiry) {
 		return "";
 	}
 	
@@ -61,51 +65,64 @@ public class EnquiryBoardController {
 		MemberVO member = (MemberVO) session.getAttribute("ryanMember");	
 		String memberEmail=member.getMemberEmail();
 		model.addAttribute("enquiryList", service.selectList(memberEmail));
-		return "";
+		return "본인 문의사항 보이는 view";
 	}
 	
 	//리스트중 특정 문의사항 클릭시
 	@RequestMapping("/select")
 	//클릭한 문의사항관련 객체를 EnquiryBoardVO enquiry로 넘겨야 합니다
-	public String enquirySelect(Model model,EnquiryBoardVO enquiry,HttpServletRequest request) {
+	public String enquirySelect(Model model,@RequestParam(value="boardNum")int boardNum,HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		MemberVO member = (MemberVO) session.getAttribute("ryanMember");	
-		if(enquiry!=null&&enquiry.getMemberEmail()!=null&&enquiry.getMemberEmail().equals(member.getMemberEmail())) {
+		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
+		EnquiryBoardVO enquiry=service.selectEq(boardNum);
+		if(enquiry!=null&&enquiry.getMemberEmail().equals(member.getMemberEmail())) {
 			//선택한 문의사항 객체 
-			model.addAttribute("enquiryVO", service.select(enquiry));
+			model.addAttribute("enquiryVO", enquiry);
 			//선택한 문의사항 replyList
-			model.addAttribute("replyList", service.selectReplyList(enquiry.getBoardNum()));
+			model.addAttribute("replyList", service.selectReplyList(boardNum));
 			//선택한 문의사항 fileList
-			model.addAttribute("fileList", service.selectEqFileList(enquiry.getBoardNum()));
-			return "문의사항 선택jsp";
-		}else
-			return "";
+			model.addAttribute("fileList", service.selectEqFileList(boardNum));
+			return "선택한 문의사항view";
+		}else {
+			model.addAttribute("message", "본인 문의사항이 아닙니다");
+			return "redirect:/board/enquiry/showList";
+		}
+			
 	}
 	
 	@RequestMapping(value="/replyWrite", method=RequestMethod.POST)
-	public String replyWrite(ReplyVO reply) {
+	public String replyWrite(Model model,ReplyVO reply) {
 		if(!(reply==null||reply.getBoardNum()<1)) {
-			service.replyWrite(reply);
-			return "";
-		}else
-			return "";
+			if(service.replyWrite(reply))
+				model.addAttribute("message", "리플등록 성공");
+			return "redirect:/board/enquiry/select?boardNum="+reply.getBoardNum();
+		}else {
+			model.addAttribute("message", "내용이 없습니다.");
+			return "redirect:/board/enquiry/select?boardNum="+reply.getBoardNum();
+		}
 	}
 	
 	@RequestMapping("/replyDelete")
-	public String replyDelete(ReplyVO reply) {
+	public String replyDelete(Model model,ReplyVO reply) {
 		if(!(reply==null||reply.getBoardNum()<1)) {
-			service.replyDelete(reply);
-			return "";
-		}else
-			return "";
+			if(service.replyDelete(reply))
+				model.addAttribute("message", "리플삭제 성공");
+			return "redirect:/board/enquiry/select?boardNum="+reply.getBoardNum();
+		}else {
+			model.addAttribute("message", "내용이 없습니다.");
+			return "redirect:/board/enquiry/select?boardNum="+reply.getBoardNum();
+		}
 	}
 	
 	@RequestMapping(value="/replyUpdate", method=RequestMethod.POST)
-	public String replyUpdate(ReplyVO reply) {
+	public String replyUpdate(Model model,ReplyVO reply) {
 		if(!(reply==null||reply.getBoardNum()<1)) {
-			service.replyUpdate(reply);
-			return "";
-		}else
-			return "";
+			if(service.replyUpdate(reply))
+				model.addAttribute("message", "리플수정 성공");
+			return "redirect:/board/enquiry/select?boardNum="+reply.getBoardNum();
+		}else {
+			model.addAttribute("message", "내용이 없습니다.");
+			return "redirect:/board/enquiry/select?boardNum="+reply.getBoardNum();
+		}
 	}
 }

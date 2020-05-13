@@ -36,6 +36,8 @@ public interface EnquiryBoardMapper {
 	//리플수정
 	public int updateReply(ReplyVO reply);
 	
+	public EnquiryBoardVO selectEq(int boardNum);
+	
 	//해당게시물 리플 리스트
 	public ArrayList<ReplyVO> selectReplyList(int boardNum);
 }

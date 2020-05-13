@@ -17,7 +17,7 @@ INSERT enquriry_Board
 			#{memberEmail},
 			#{boardTitle},
 			#{boardContent},
-			#{boardRegdate},
+			sysdate,
 			#{boardState}
 		)
 </insert>
@@ -54,7 +54,7 @@ INSERT reply
 			board_num,
 			writer,
 			reply_content,
-			reply_regdate,
+			reply_regdate
 		)
 		VALUES
 		(
@@ -62,7 +62,7 @@ INSERT reply
 			#{boardNum},
 			#{writer},
 			#{replyContent},
-			#{replyRegdate},
+			sysdate
 		)
 </insert>
 
@@ -82,4 +82,15 @@ INSERT reply
 		reply_regdate = #{boardRegdate},
 		WHERE reply_num = #{replyNum}
 </update>
+
+<select id="selectEq" parameterType="int">
+		SELECT * FROM enquriry_Board
+		WHERE board_num = #{boardNum}
+</select>
+
+<select id="selectReplyList" parameterType="int">
+		SELECT * FROM reply
+		WHERE board_num = #{boardNum}
+		ORDER BY reply_regdate DESC
+</select>
 </mapper>
