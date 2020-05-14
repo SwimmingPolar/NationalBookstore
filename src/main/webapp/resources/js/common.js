@@ -30,9 +30,8 @@ function flexibleSlidify(sliderWindow) {
   
   // final sliding offset
   let slidingOffset = 0;
-  // current slider position
-  let currentX = 0;
 
+  const getCurrentX = () => Number(window.getComputedStyle(slider).transform.split(',')[4]);
   // prevent clicking on 'a' and/or 'button' tag after moving slider
   document.addEventListener('click', event => {
     if (!isMoved) return;
@@ -53,6 +52,7 @@ function flexibleSlidify(sliderWindow) {
 
     // if mouse move does not occur right above the slider
     // limit slider move to 70% of mouse move
+    let currentX = getCurrentX() || 0;
     currentX = (function(futureX) {
       if (futureX > 0)
         return currentX + Math.floor(event.movementX*0.375);
@@ -91,6 +91,7 @@ function flexibleSlidify(sliderWindow) {
     slider.style.transitionDuration = slidingDuration + 'ms';
     slider.style.transitionTimingFunction = 'cubic-bezier(0.33, 1, 0.68, 1)';
 
+    let currentX = getCurrentX() || 0;
     currentX = (function(currentX) {
       if (currentX > 0) {
         slider.style.transitionDuration = '400ms';
@@ -183,8 +184,10 @@ function infiniteSlidify(sliderWindow) {
     sliderIndicators[index].classList.add('active');
   }
 
-  // lock slider when moving
+  // lock slider while transition occurs
   let transitionLock = false;
+  // lock slider when mouse is hovered
+  let mouseOverLock = false;
 
   // add indicator events
   if (sliderIndicators) {
@@ -235,12 +238,15 @@ function infiniteSlidify(sliderWindow) {
     intervalID = clearInterval(intervalID) || setInterval(() => {
       // if any of below lock is not cleared then do not slide (transisionLock)
       // viewport must be visible to user to be slided automatically (isViewportVisible, isPartiallyVisible)
-      if (transitionLock || !isViewportVisible || !isPartiallyVisible(sliderWindow)) return;
-      if (isPartiallyVisible(sliderWindow))
-        buttons['next'].click();
+      if (transitionLock || mouseOverLock || !isViewportVisible || !isPartiallyVisible(sliderWindow)) return;
+      buttons['next'].click();
     }, 3500);
   }
 
+  // lock slider when mouse is hovered on sliderWindow
+  sliderWindow.addEventListener('mouseover', () => mouseOverLock = true);
+  sliderWindow.addEventListener('mouseout', () => mouseOverLock = false);
+  
   // lock slider when traisition starts
   slider.addEventListener('transitionstart', () => transitionLock = true);
   slider.addEventListener('transitionend', () => {

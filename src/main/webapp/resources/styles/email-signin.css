@@ -1,39 +1,20 @@
-.container {
-  height: calc(100vh - 42px);
+.body-wrapper {
+  height: calc(100vh - 48px);
   display: flex;
-  background-color: var(--gray-color);
   justify-content: center;
   align-items: center;
   min-height: 525px;
-}
-
-.title-bar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--gray-color);
-  height: 42px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.175);
-}
-
-.title-bar a {
-  text-decoration: none;
-}
-
-.title-bar h2 {
-  color: var(--red-color);
-  font-family: 'Kaushan Script', cursive;
-  font-size: 28px;
-  opacity: 0.675;
+  background-color: #fff;
 }
 
 .selection-container {
   margin-top: -42px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 9px;
   padding: 18px;
   height: 402px;
   background-color: var(--light-gray-color);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.09);
 }
 
 .selection-container > div {
@@ -137,4 +118,8 @@
 
 .form-container > a:last-of-type:hover {
   box-shadow: 0 2px 6px 0 rgba(209,213,217);
+}
+
+header.topbar .container {
+  width: 520px;
 }

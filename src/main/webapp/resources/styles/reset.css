@@ -10,6 +10,8 @@
     --message-bubble-color-odd: #e5e4e9;
     --message-bubble-color-even: #3ea7f8;
     --sensual-yellow-color: #f1d919;
+    --light-blue-background-color: #ebf6ff;
+    --violet-color: #a451f7;
 }
 
 * {
@@ -19,7 +21,6 @@
 }
 
 body {
-  padding-bottom: 50px;
   position: relative;
 }
 
@@ -65,7 +66,7 @@ header.topbar nav a {
 }
 /* bottom fixed footer */
 footer.fixed {
-  position: fixed;
+  position: sticky;
   z-index: 99999;
   bottom: 0;
   width: 100%;
