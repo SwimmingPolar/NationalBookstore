@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.ryan.domain.book.EBookVO;
 import com.ryan.domain.main.FilterSearchVO;
+import com.ryan.domain.main.KeywordAutoCompletionVO;
 
 public interface MainPageService {
 	
@@ -27,6 +28,7 @@ public interface MainPageService {
 	//세일
 	public ArrayList<EBookVO> getDisCountBook();
 	
+	public ArrayList<KeywordAutoCompletionVO> getAutoKeyword(String type ,String keyowrd);
 	
 	//필터 예시
 	public ArrayList<EBookVO> getFilterSearch(FilterSearchVO filterSearch); 
