@@ -98,12 +98,12 @@
             <c:choose>
             <c:when test="${likecheck }">
             <label for="heartClick">
-                <i class="fa fa-heart"></i>
+                <i class="far fa-heart"></i>
             </label>
             </c:when>
             <c:otherwise>
             <label for="heartClick">
-                <i class="far fa-heart"></i>
+                <i class="fa fa-heart"></i>
             </label>
             </c:otherwise>                
             </c:choose>               
@@ -579,7 +579,7 @@
         $('.starJum01').click(function(){
             $('#starTxt').val($(this).length);
             
-        })
+        });
     
     });
     

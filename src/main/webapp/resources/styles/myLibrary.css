@@ -817,3 +817,19 @@ input[type="radio"]:checked + label {
     height:15px;
 
 }
+
+.ebookList table td ul li a{
+    position: relative;
+}
+
+.ebookList table td ul li a::after {
+    
+    position: absolute;
+    content:"";
+    top:0;
+    left:0;
+    background-color:gray;
+    width:3px;
+    height:10xp;   
+
+}
