@@ -42,8 +42,9 @@ public class MainPageController {
 	}
 	
 	
-	@GetMapping("/ajaxBestSeller")
+	@GetMapping("/best-seller")
 	public @ResponseBody ArrayList<EBookVO> responseBestSeller(@RequestParam("time") String time, @RequestParam("category") String category){
+		log.info(time + " " + category);
 		return service.getBestSeller(time, category);
 	}
 	
