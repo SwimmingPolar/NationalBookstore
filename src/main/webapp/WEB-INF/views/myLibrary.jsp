@@ -8,26 +8,22 @@
 <title>Insert title here</title>
    <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>    
     <script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
-<link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../resources/styles/myLibrary.css">
+	<link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="../../resources/styles/myLibrary.css">
+    <link rel="stylesheet" href="../../resources/styles/reset.css">
+    <link rel="stylesheet" href="../../resources/styles/common.css">
+    <script src="../../resources/js/common.js"></script>
+
 </head>
 <body>
-<header class="topbar">
-        <nav>
-          <div class="container">
-            <a href="javascript: history.back();"><i class="far fa-arrow-left"></i></a>
-            <h2>내 서재</h2>
-          </div>
-        </nav>
-      </header>
-
 
 <div class="wrapper">
 <div class="firstColumn">
 <!-- 배경화면 넣는곳 -->
 <div class="bigbox">
+
 <div class="myImage"> 
-     <a href="#modalGo" id="modalOpen"><img id="myFaceImage" src="NationalBookstore/src/main/webapp/resources/images/myLibrary/picture1.png" ></a>      
+    <a href="#modalGo" id="modalOpen"><img id="myFaceImage" src="../../resources/images/myLibrary/picture1.png" ></a>   
 </div>
 
 <div class="myNickname">
@@ -35,6 +31,7 @@
         <a> ${ryanMember.memberEmail } </a>
 </div>
 </div>
+
 
 <div class = "manyBtn">
     <ul>
@@ -48,12 +45,10 @@
 
 <div class="goSubscribe">
 <a href="goSubscribe.jsp"> 
-
   <b> 정기구독 시작 </b><br>
   <em> 바로가기 </em> 
   <i class="fas fa-arrow-circle-right"></i>
 </a>
-
 
     
 </div>
@@ -64,15 +59,14 @@
 <div class="secondColumn">
     <input type="radio" name="myPage" id="mybook" checked><label for="mybook"> 내 책</label>
     <input type="radio" name="myPage" id="mybookcart"><label for="mybookcart">책장</label>
-    <input type="radio" name="myPage" id="paperbook"><label for="paperbook">종이책 주문</label>
     <input type="radio" name="myPage" id="mypost"><label for="mypost">포스트</label>
     
     <div class="content one">
         <div class="mybookTitle">
             <a>${readbookcount }</a> 권의 도서
         </div>
-        
-   <!--      <div class="ebooks">
+      
+       <div class="ebooks">
           <div class="listTitle">
             <strong> e-book 다운로드 </strong> 
           </div>
@@ -82,16 +76,19 @@
             </label>          
           </div>
           <div class="ebookList"> 
-            <table>
-              <tr>
-              
+           <c:choose>
+           		<c:when test="${readbooklist.size() >0 }">
+            	<table>
+           			<c:forEach var="readbook" items="${readbooklist}">
+            			
+            			<tr>
                 <td><input type="checkbox" name="chkbox" id="chkbox"></td>
-                <td><img src="./NationalBookstore/src/main/webapp/resources/images/myLibrary/book02.jpg" ></td>
+                <td><img src="../../resources/images/myLibrary/book02.jpg" ></td>
                 <td>
                   <ul>
-                    <li> <strong>달빛마신 소녀</strong> </li>
-                    <li> <a>shadow harry 지음</a>  리더스북</li>
-                    <li> <span>구매일: 2020.05.02</span></li>
+                    <li> <strong>${readbook.bookTitle}</strong> </li>
+                    <li> <a>${readbook.bookWriter} 지음</a>  ${readbook.bookPublisher}</li>
+                    <li> <span>${readbook.bookNum}</span></li>
                   </ul>
 
                 </td>
@@ -99,34 +96,24 @@
 
                 
               </tr>
-            </table>
-           <div class="bookshelf">
-             
-           </div>
 
-          </div>
-
-        </div>  -->
-        
-        
-        
-           <c:choose>
-           		<c:when test="${readbooklist.size() >0 }">
-           			<c:forEach var="readbook" items="${readbooklist }">
-            			${readbook.bookTitle} <br/>
-            	 	</c:forEach>
+              <tr>
+                <td colspan="4"> </td>
+              </tr>	
+            	 	</c:forEach>   	
+            	 	</table>		
            		</c:when>
-           		
-           		
+           
            		<c:otherwise>
-           			<div class="mybook_Content">
-           <span> <i class="fas fa-books"></i></span>
-            서재에 등록된 도서가 없습니다
-        </div>
+           			 <div class="mybook_Content">
+        	   <span> <i class="fas fa-books"></i></span>
+        		    	서재에 등록된 도서가 없습니다
+      		         </div>
            		</c:otherwise>
            </c:choose>
-        
-    </div>
+            	
+        </div>
+     
     <div class="content two">
         <div class="mybookTitle">
             <a>${libcount}</a> 개의 책장
@@ -150,9 +137,10 @@
          </div>
         </div>
     </div>
-   <div class="content four">
+  
+    <div class="content four">
         <div class="mybookTitle">
-           나의 포스트 <a>0</a> 개
+        	   나의 포스트 <a>0</a> 개
         </div>
         <div class ="postInputBtn">
         <button type= "button" id = postInput onclick="openNewPost()"> <i class="fas fa-pencil-alt"></i> 포스트 작성</button>
@@ -209,7 +197,7 @@
             <div class="postImgFile">  
                 <input type="file" name="postImageFile" id="postImageFile" onchange="uploadImg(this);">
                     <div class="postImage" id="postImage">
-                        <img id ="imgimg">
+                        <img id ="imgimg" width=200>
                     </div>
                     
             </div>
@@ -223,141 +211,35 @@
             </div>
        
         </div>
-        
-
+   	 </div>
     </div>
-    </div>
-
 </div>
-<script>
-    $(document).ready(() => {
-      const li = document.querySelector('footer.fixed a[href="my-library"]').parentElement;
-      const ul = li.parentElement;
-      [ul, li].forEach(element => element.classList.add('active'));
-    });
-  </script>
-
-<footer class="fixed">
-    <div class="container">
-      <ul>
-        <li>
-          <a href="/">
-            <i class="far fa-home-alt"></i>
-            <span>홈</span>
-          </a>
-        </li>
-        <li>
-          <a href="search">
-            <i class="far fa-search"></i>
-            <span>검색</span>
-          </a>
-        </li>
-        <li>
-          <a href="feed">
-            <i class="fad fa-stream"></i>
-            <span>피드</span>
-          </a>
-        </li>
-        <li>
-          <a href="my-library">
-            <i class="fas fa-books"></i>
-            <span>내서재</span>
-          </a>
-        </li>
-        <li>
-          <a href="my-account">
-            <i class="far fa-user"></i>
-            <span>관리</span>
-          </a>
-        </li>
-      </ul>
-      <button type="button" class="scroll-to-top">
-        <i class="fad fa-chevron-double-up"></i>
-      </button>
-      <!-- add scroll-to-top function -->
-      <script>
-        $(document).ready(function () {
-          const button = document.querySelector("footer .scroll-to-top");
-          button.addEventListener("click", () => {
-            document.documentElement.style.scrollBehavior = "smooth";
-            document.documentElement.scrollTop = 0;
-            document.documentElement.style.scrollBehavior = "";
-          });
-  
-          let timeoutID = null;
-          window.addEventListener("scroll", () => {
-            if (document.documentElement.scrollTop === 0) {
-              button.classList.remove("visible");
-              return;
-            }
-            if (!button.classList.contains("visible")) {
-              button.style.transition = "";
-              button.classList.add("visible");
-            }
-            timeoutID =
-              clearTimeout(timeoutID) ||
-              setTimeout(() => {
-                button.style.transition = "0.4s ease";
-                button.classList.remove("visible");
-              }, 1200);
-          });
-        });
-      </script>
-    </div>
-  </footer>
-  <div id ="modalGo" class="modal">
-    
-    <div class="modal_content">
-      <span class="close"><i class="fas fa-times"></i></span>
-  
-      <img src="NationalBookstore/src/main/webapp/resources/images/myLibrary/picture1.png" >
-
-    </div>
-  
-  </div>
-
 
 <script> 
 
     $('.bookStarScore span').click(function(){
-        
         $(this).parent().children('span').removeClass('on');
         $(this).addClass('on').prevAll('span').addClass('on');
         $('.starJum01').click(function(){
-            $('#starTxt').val($(this).length);
-          
+            $('#starTxt').val($(this).length);       
         })
-    
-    });
-    
-    
+    }); 
     </script>
-
-    <script>
-        
-        function openNewPost() {
-            
+    <script>    
+        function openNewPost() {          
             var openP = document.getElementById('postInsert');
             var postChk = document.getElementById('myPostCheck');
-
             if (openP.style.display == 'none') {
                 openP.style.display ='block';
                 postChk.style.display = 'none';
-            }else {
-            
+            }else {          
                 openP.style.display ='none';
-                postChk.style.display = 'block';
-                
+                postChk.style.display = 'block';              
             }
         }
-
-
     </script>
 
     <script>
-
-        // 파일 업로드  미리보기
-
         function uploadImg(here) {
             if(here.files && here.files[0]) {
                 var reader = new FileReader();
@@ -366,14 +248,8 @@
                 }
                 reader.readAsDataURL(here.files[0]);
             }
-
         }
-
-        // 파일 업로드하기 
-
     </script>
-
-
     <script>
     var cnt=0;
     var array =['.starJum01'];
@@ -381,73 +257,33 @@
             cnt++;
             $('.starJum01').click(function(){
                 $('#starJum').val(cnt);
-
             })
         })
-
     </script>
-
-
-<!-- <script>
-
+ <script>
   var $allChk = $('#allChk');
   $allChk.change(function () {
       var $this = $(this);
       var checked = $this.prop('checked');
       $('input[name="chkbox"]').prop('checked', checked);
-
   });
-
-</script> -->
-
-
+</script> 
 <script>
-
-function 
-
-</script>
-
-<!-- <script>
-
-  $('a[href="#modalGo"]').click(function(event){
-      event.preventDefault();
-  
-      $(this).modal({
-          fadeDuration:250
-      });
-  
-  });
-  
-  </script> -->
-
-<script>
-
   var modal = document.getElementById('modalGo');
   var openBtn = document.getElementById('modalOpen');
-  var closeBtn = document.getElementsByClassName('close')[0];
-  
+  var closeBtn = document.getElementsByClassName('close')[0]; 
   openBtn.onclick = function() {
      modal.style.display = "block";
-   
- 
   }
   closeBtn.onclick = function() {
     modal.style.display = "none";
   }
- 
- 
  window.onclick = function(event){
      if(event.target==modal) {
          modal.style.display = "none";
  
      }
  }
- 
-
-
-
-
-
  </script>
 
 </body>

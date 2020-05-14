@@ -1,41 +1,38 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
 <head>
+<title>Document</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap" rel="stylesheet">
     <!-- Fontawesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
-    <!--
-    Main Font:
-    font-family: 'Kaushan Script', cursive;
 
-    Article Choices:
-    font-family: 'Roboto', sans-serif;
-    font-family: 'Open Sans', sans-serif;
-    font-family: 'Montserrat', sans-serif;
-
-    Korean Font:
-    font-family: 'Noto Sans KR', sans-serif;
-    -->
-
+ 	<link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../resources/styles/detailInfo.css">
     <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
     <script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="../../resources/styles/reset.css">
+    <link rel="stylesheet" href="../../resources/styles/styles/common.css">
+    <script src="../../resources/js/common.js"></script>
 
 </head>
 <body>
 
-    <header>
-        National Bookstore
-    </header>
+    <header class="topbar">
+        <nav>
+          <div class="container">
+            <a href="javascript: history.back();"><i class="far fa-arrow-left"></i></a>
+            <h2> National Bookstore </h2>
+          </div>
+        </nav>
+      </header>
     <div class="wrapper">
     <div class="top-container">
         <div class="leftBox">
@@ -54,18 +51,19 @@
     <h3> ${bookdetail.bookTitle} </h3>
     <ul>
         <li> ${bookdetail.bookWriter} </li>
-        <li style="color:gray; "> ${bookdetail.bookPublisher } /
-        <fmt:formatDate value="${bookdetail.bookPbDate }" pattern="yyyy.MM.dd"/></li>
-        <li style="color:lightgray;"> 장르/분류 : ${bookdetail.bookCategory } > ${bookdetail.firstCategory } </li>
+        <li style="color:gray; ">${bookdetail.bookPublisher } / <fmt:formatDate value="${bookdetail.bookPbDate }" pattern="yyyy.MM.dd"/></li>
+        <li style="color:lightgray;"> 장르/분류 : ${bookdetail.bookCategory } > ${bookdetail.firstCategory }</li>
     </ul> 
-    
-        <div class ="bookStarScore">
+
+    <div class ="bookStarScore">
             <span><i class="fas fa-star starJum01"></i></span>
             <span><i class="fas fa-star starJum02"></i></span>
             <span><i class="fas fa-star starJum03"></i></span>
             <span><i class="fas fa-star starJum04"></i></span>
             <span><i class="fas fa-star starJum05"></i></span>
     </div>
+
+    <!-- <input type="text" name="starTxt" id="starTxt"> -->
 
     <div class="choiceBtnOne">
     	<form action="/book/insertreadbook">
@@ -76,46 +74,45 @@
         <input type="button" value="종이책 구매" class="choiceBtn">
 
     </div>
+
     <div class ="likeChk">
-    
         <a href="#" id="modalOpen">
-        <span class="likePeople">
-             <c:forEach var="p" items="${likepeople}">
-           		 <i class="far fa-user-circle prof" ></i>
-           		 <i class="far fa-user-circle prof" ></i>
-           		 <i class="far fa-user-circle prof" ></i>${p.memberNickName }
-             </c:forEach>
+            <span class="likePeople">
+                 <c:forEach var="p" items="${likepeople}">
+                        <i class="far fa-user-circle prof" ></i>
+                        <i class="far fa-user-circle prof" ></i>
+                        <i class="far fa-user-circle prof" ></i>
+                 </c:forEach>
+                  좋아하는 사람들
+            </span>
           
-        </span>
-      
-    </a>
+        </a>
         <span class="likeBtn">
             <div class="heartSoo">
           	  <input type="text" value="${booklike}" id='countNum' size='5' >
             </div>
             <div class="heartC">
-            <!-- <c:if test="${id != null}"> -->
-            <form action="/book/insertlike">
-            	<input type="checkbox" id="heartClick">             
-            </form>            
-            	<c:choose>
-            	<c:when test="${likecheck }">
-            	<label for="heartClick">
-                	<i class="fa fa-heart" aria-hidden="true"></i>
-                </label>
-            	</c:when>
-            	<c:otherwise>
-            	<label for="heartClick">
-                	<i class="far fa-heart" aria-hidden="true"></i>
-                </label>
-            	</c:otherwise>                
-                </c:choose>               
-           
-          <!-- </c:if> -->
-            </div>
-        </span>
-	
-    </div>  
+        <form action="/book/insertlike">
+            <input type="checkbox" id="heartClick">             
+        </form>            
+            <c:choose>
+            <c:when test="${likecheck }">
+            <label for="heartClick">
+                <i class="fa fa-heart"></i>
+            </label>
+            </c:when>
+            <c:otherwise>
+            <label for="heartClick">
+                <i class="far fa-heart"></i>
+            </label>
+            </c:otherwise>                
+            </c:choose>               
+       
+      <!-- </c:if> -->
+        </div>
+    </span>
+
+</div>  
     <!-- likeChk end -->
 <div id ="modalGo" class="modal">
     
@@ -125,7 +122,7 @@
     <div class = "likeList"> 
 
       <ul>
-          <li> <span><img id="myFaceImage" src="NationalBookstore/src/main/webapp/resources/images/myLibrary/picture1.png" >
+          <li> <span><img id="myFaceImage" src="../../resources/images/myLibrary/picture1.png" >
           </span>
           <span> 
               <a>지혜로운 셀럽님</a> <br>
@@ -145,74 +142,70 @@
     </div>
     <!-- modalGo end -->
 
-    </div>
+</div>
 
     </div>
     <!-- introWrite -->
-
-    </div> 
+        </div> 
     <!-- top-container -->
-
 
     <div class="body-container"> 
 
         <div class="firstBox">
         	
-          	  <h2>  # 해시태그 </h2>    
-                
+            <h2>  # 해시태그 </h2>    
             
-            <div class="hashtagDetail"> 
-                <div class="hashTag">
-                	<c:set var="count" value="${1 }" />
-					<c:forEach var="h" items="${hashtag}">
-						<c:if test="${count <= 5 }">		
+        
+        <div class="hashtagDetail"> 
+            <div class="hashTag">
+                <c:set var="count" value="${1 }" />
+                <c:forEach var="h" items="${hashtag}">
+                    <c:if test="${count <= 5 }">		
 
-                	    	<%-- <input type="checkbox" name="chkbox" id="chk1" value=${h.hashTag }>${h.hashTag }	 --%>			
-						<form action="" method="post" name="hashtagChk"> 
-                   <%--  <input type="checkbox" name="chkbox" class="tagChkbox" id="chk1" onclick="chkboxCnt(this)" value=${h.hashTag }>
-                    <label for="chk1"> # ${h.hashTag }>${h.hashTag } --%>
+                    <form action="" method="post" name="hashtagChk"> 
 
-                	    <%-- 	<input type="checkbox" name="chkbox" id="chk1" value=${h.hashTag }>${h.hashTag }				
-						<form action="" method="post" name="hashtagChk">  --%>
-                    <input type="checkbox" name="tagChkbox" class="tagChkbox" id="chk${h.hashNum }" onclick="chkboxCnt(this)" value=${h.hashTag }>
-                    <label for="chk${h.hashNum }" > # ${h.hashTag }<%-- >${h.hashTag } --%>
+                <input type="checkbox" name="tagChkbox" class="tagChkbox" id="chk${h.hashNum }" onclick="chkboxCnt(this)" value=${h.hashTag }>
+                <label for="chk${h.hashNum }" > # ${h.hashTag }
 
-                    </label>
+                </label>
 
-						</form>
+                    </form>
 
-					<!-- 	</form> -->
+                <!-- 	</form> -->
 
-                	    </c:if>
-                	    <c:set var="count" value="${count+1 }"/>
-            		</c:forEach>
-            		
-
-                </div>
+                    </c:if>
+                    <c:set var="count" value="${count+1 }"/>
+                </c:forEach>
                 
-                        
+
             </div>
-                
-                <div class="tagtag">
-                <form action="/book/inserthashtag">
-                
-                <c:choose>
-                	<c:when test="${hashtagCookieCheck }">
-               	 		 <input type="text" name="emoTag" class="emoTag" placeholder ="이 책에 대한 나만의 #감성태그를 달아주세요">
-               	 		 <input type="hidden" name="bookNum" value="${bookdetail.bookNum }">
-            		 	<input type="button" value="등록" class="inputBtn">
-                	</c:when>
-                	<c:otherwise>
-               	 		<input type="text" name="hashTag" class="emoTag" placeholder ="해시태그는 24시간에 1번만 입력 가능합니다." readonly="readonly">
-                	</c:otherwise>
-                </c:choose>
-            	</form>
-            </div> 
+            
+                    
         </div>
+            
+            <div class="tagtag">
+            <form action="/book/inserthashtag">
+            
+            <c:choose>
+                <c:when test="${hashtagCookieCheck }">
+                         <input type="text" name="emoTag" class="emoTag" placeholder ="이 책에 대한 나만의 #감성태그를 달아주세요">
+                         <input type="hidden" name="bookNum" value="${bookdetail.bookNum }">
+                     <input type="button" value="등록" class="inputBtn">
+                </c:when>
+                <c:otherwise>
+                        <input type="text" name="hashTag" class="emoTag" placeholder ="해시태그는 24시간에 1번만 입력 가능합니다." readonly="readonly">
+                </c:otherwise>
+            </c:choose>
+            </form>
+        </div> 
+    </div>
+
+        <!-- firstBox end -->
+
         <div class="secondBox">
             <h2> 책소개 </h2>
             <div class="bookDetail">
-            <!-- 책 소개 부분 없음 -->
+
                 책소개하는 칸입니다. 
 
 ‘이 소설 자체가 순수한 마법’이라는 최고의 극찬을 받으며 2017년 뉴베리 수상의 영광을 차지한 작품이다. 고요하지만 위험한 숲속에 해마다 아기가 버려진다. 또한 매년 그런 아기를 구하러 오는 마녀가 있다. 그런데 이상하다. 마녀 잰은 유독 이번 아기에게 눈길을 빼앗긴다. 그러다가 그만 실수로 아기에게 달빛을 먹이고 만다. 사실 달빛에는 어마어마한 마법이 깃들어 있다.
@@ -238,30 +231,38 @@
         </div>
         <div class="fourthBox">
             <h2> 리뷰 </h2>
-           	<div class="reviewDetail">
-           	<c:forEach var="r" items="${bookreview}">	<!-- 리뷰 -->
-           		${r.reviewTitle }<br/>
-           		${r.reviewContent }
-           	</c:forEach>
-           	
-          <!--  	 <div class="reviewDetail"> 
+            <div class="reviewDetail"> 
                 <table>
                     <tbody>
+             <c:forEach var="r" items="${bookreview}">
                     <tr>
                         <td>★★★★☆</td>
                         <td>abc1234</td>
                         <td>2019/11/09</td>
                     </tr>
                     <tr>
-                        <td colspan="3">제목입니다.</td>
+                        <td colspan="3">${r.reviewTitle }</td>
                     </tr>
-                    <tr><td colspan="3"><textarea name="reviewContent" id="reviewContent"></textarea></td></tr>
+                    <tr><td colspan="3"><textarea name="reviewContent" id="reviewContent">
+                        ${r.reviewContent }
+                    </textarea></td></tr>
+                </c:forEach>
                 </tbody>
-                </table> -->
+                </table>
             </div>
-           	
-           	</div>
             <input type="button" value="더보기" class="moreChk3">
+        </div>
+        <div class="fifthBox">
+            <h2> 관련 도서 </h2>
+            <div class="similarBook">
+                <img src="../../resources/image/similarBook.jpg" alt="error">
+                <img src="../../resources/image/similarBook.jpg" alt="error">
+                <img src="../../resources/image/similarBook.jpg" alt="error">
+                <img src="../../resources/image/similarBook.jpg" alt="error">
+                <img src="../../resources/image/similarBook.jpg" alt="error">
+                
+            </div>
+
         </div>
 
     </div>
@@ -271,249 +272,318 @@
 <!-- wrapper end -->
 
 
-<script>
-$(function() {
-    
-    var cnt=0;
-    $('.moreChk').click(function(){
-        cnt++;
-        if(cnt%2==1) {
-        var aa = $('.bookDetail');
-        aa.height(700);
-         }else { 
-        var aa = $('.bookDetail');
-        aa.height(110);
-         }
-
-    });
-
-    $('.moreChk2').click(function(){
-        cnt++;
-        if(cnt%2==1) {
-        var aa = $('.listDetail');
-        aa.height(700);
-         }else {
-        var aa = $('.listDetail');
-        aa.height(110);
-         }
-
-    });
-
-    $('.moreChk3').click(function(){
-        cnt++;
-        if(cnt%2==1) {
-        var aa = $('.reviewDetail');
-        aa.height(700);
-         }else {
-            var aa = $('.reviewDetail');
-        aa.height(110);
+<footer class="fixed">
+    <div class="container">
+      <ul>
+        <li>
+          <a href="/">
+            <i class="far fa-home-alt"></i>
+            <span>홈</span>
+          </a>
+        </li>
+        <li>
+          <a href="search">
+            <i class="far fa-search"></i>
+            <span>검색</span>
+          </a>
+        </li>
+        <li>
+          <a href="feed">
+            <i class="fad fa-stream"></i>
+            <span>피드</span>
+          </a>
+        </li>
+        <li>
+          <a href="my-library">
+            <i class="fas fa-books"></i>
+            <span>내서재</span>
+          </a>
+        </li>
+        <li>
+          <a href="my-account">
+            <i class="far fa-user"></i>
+            <span>관리</span>
+          </a>
+        </li>
+      </ul>
+      <button type="button" class="scroll-to-top">
+        <i class="fad fa-chevron-double-up"></i>
+      </button>
+      <!-- add scroll-to-top function -->
+      <script>
+        $(document).ready(function () {
+          const button = document.querySelector("footer .scroll-to-top");
+          button.addEventListener("click", () => {
+            document.documentElement.style.scrollBehavior = "smooth";
+            document.documentElement.scrollTop = 0;
+            document.documentElement.style.scrollBehavior = "";
+          });
+  
+          let timeoutID = null;
+          window.addEventListener("scroll", () => {
+            if (document.documentElement.scrollTop === 0) {
+              button.classList.remove("visible");
+              return;
+            }
+            if (!button.classList.contains("visible")) {
+              button.style.transition = "";
+              button.classList.add("visible");
+            }
+            timeoutID =
+              clearTimeout(timeoutID) ||
+              setTimeout(() => {
+                button.style.transition = "0.4s ease";
+                button.classList.remove("visible");
+              }, 1200);
+          });
+        });
+      </script>
+    </div>
+  </footer>
+  
+  <script>
+    $(function() {
         
-         }
-
+        var cnt=0;
+        $('.moreChk').click(function(){
+            cnt++;
+            if(cnt%2==1) {
+            var aa = $('.bookDetail');
+            aa.height(700);
+             }else { 
+            var aa = $('.bookDetail');
+            aa.height(110);
+             }
+    
+        });
+    
+        $('.moreChk2').click(function(){
+            cnt++;
+            if(cnt%2==1) {
+            var aa = $('.listDetail');
+            aa.height(700);
+             }else {
+            var aa = $('.listDetail');
+            aa.height(110);
+             }
+    
+        });
+    
+        $('.moreChk3').click(function(){
+            cnt++;
+            if(cnt%2==1) {
+            var aa = $('.reviewDetail');
+            aa.height(700);
+             }else {
+                var aa = $('.reviewDetail');
+            aa.height(110);
+            
+             }
+    
+        });
+    
+    
     });
-
-
-});
-</script>
-
-
-<script>
-
-var count=0;
-$(function() {
-
-    $('#heartClick').click(function() {
-        $.ajax({
-            url: "/book/insertlike",
+    </script>
+    
+    
+    <script>
+    
+    var count=0;
+    $(function() {
+    
+        $('#heartClick').click(function() {
+            $.ajax({
+                url: "/book/insertlike",
+                type: "get",
+                data: {
+                    booknumber: '${booknumber}'
+                    
+                },
+    
+                success: function () {
+                    heartCount();
+                },
+            })
+       
+        })
+    
+            function heartCount() {
+            
+        }
+        $.ajax( {
+            url: "heartNumber.do",
             type: "get",
             data: {
-                booknumber: '${booknumber}'
                 
             },
-
-            success: function () {
-                heartCount();
+            success: function (count) {
+                $(".countNum").val(count);
             },
-        })
-   
-    })
-
-        function heartCount() {
-    	
-    }
-    $.ajax( {
-        url: "heartNumber.do",
-        type: "get",
-        data: {
-            
-        },
-        success: function (count) {
-            $(".countNum").val(count);
-        },
+        
+            })
+        };
     
-        })
-    };
-
-    heartCount();
-
-
-</script>
-
-<script>
-
- var modal = document.getElementById('modalGo');
- var openBtn = document.getElementById('modalOpen');
- var closeBtn = document.getElementById('modalCloseBtn');
-
- openBtn.onclick = function() {
-    modal.style.display = "block";
-
-
- }
-
- closeBtn.onclick = function() {
-     modal.style.display ="none";
-
- }
-
-window.onclick = function(event){
-    if(event.target==modal) {
-        modal.style.display = "none";
-
+        heartCount();
+    
+    
+    </script>
+    
+    <script>
+    
+     var modal = document.getElementById('modalGo');
+     var openBtn = document.getElementById('modalOpen');
+     var closeBtn = document.getElementById('modalCloseBtn');
+    
+     openBtn.onclick = function() {
+        modal.style.display = "block";
+    
+    
+     }
+    
+     closeBtn.onclick = function() {
+         modal.style.display ="none";
+    
+     }
+    
+    window.onclick = function(event){
+        if(event.target==modal) {
+            modal.style.display = "none";
+    
+        }
     }
-}
-
-</script>
-
-<script>
-$('a[href="#modalGo"]').click(function(event){
-    event.preventDefault();
-
-    $(this).modal({
-        fadeDuration:250
-    });
-
-});
-
-</script>
-
-
-<script>
-
-var maxChkbox = 3; 
-var cnt=0;
-
-function chkboxCnt(gogo) {
-    if(gogo.checked) {
-        cnt +=1;
-    }else {
-        cnt -=1;
-    }
-
-    if(cnt > maxChkbox) {
-        alert("3개까지 선택가능합니다. ");
-        gogo.checked=false;
-        cnt -= 1;
-        
-    }
-
-}
-
-
-</script>
-
-<script>
-
-
-$("#chk1").change(function() {
-    var isChk = this.checked;
-    if(isChk) {
-        $(".emoTag").val($(".chkbox").val());
-        
-    }
-});
-
-
-</script>
-
-
-
-
-<script>
-
-function chkboxCnt(gogo) {
-    var chkvalue = gogo.val();
-    $.ajax( {
-        url:"/book/inserthashtag",
-        type:"post",
-        data : {
-            bookNum : '${bookdetail.bookNum}',
-            hashTag : chkvalue
-
-        },
-        
-        success:function (hashtagList) {
-
-        },
-
-    })
-}
-
-</script>
-
-
-<script>
-	
-	var count = 0;
-	
-    $(function() {
-        $('.inputBtn').click(function(){
-
-            $.ajax({
-                url: "/book/inserthashtag",
-                type:'post',
-                data : {
-
-                    bookNum: '${bookdetail.bookNum}',
-                    hashTag: $('#hashTag').val()
-				   },
-
-
-                success:function(data) {
-                	/* var result = data.json;
-                	alert(data); */
-                	$('.hashTag').html('');
-                	$.each(data, function(idx, val){
-                		$(".hashTag").append("<label>"+val.hashTag+"</label>");
-                		count++;
-                		if(count == 5){
-                			return false;
-                		}
-                	});
-    		      },
-
-            });
-
+    
+    </script>
+    
+    <script>
+    $('a[href="#modalGo"]').click(function(event){
+        event.preventDefault();
+    
+        $(this).modal({
+            fadeDuration:250
         });
-    })
-
-</script>
-
-
-<script> 
-
-$('.bookStarScore span').click(function(){
     
-    $(this).parent().children('span').removeClass('on');
-    $(this).addClass('on').prevAll('span').addClass('on');
-    $('.starJum01').click(function(){
-        $('#starTxt').val($(this).length);
+    });
+    
+    </script>
+    
+    
+    <script>
+    
+    var maxChkbox = 3; 
+    var cnt=0;
+    
+    function chkboxCnt(gogo) {
+        if(gogo.checked) {
+            cnt +=1;
+        }else {
+            cnt -=1;
+        }
+    
+        if(cnt > maxChkbox) {
+            alert("3개까지 선택가능합니다. ");
+            gogo.checked=false;
+            cnt -= 1;
+            
+        }
+    
+    }
+    
+    
+    </script>
+    
+    <script>
+    
+    
+    $("#chk1").change(function() {
+        var isChk = this.checked;
+        if(isChk) {
+            $(".emoTag").val($(".chkbox").val());
+            
+        }
+    });
+    
+    
+    </script>
+    
+    
+    
+    
+    <script>
+    
+    function chkboxCnt(gogo) {
+        var chkvalue = gogo.val();
+        $.ajax( {
+            url:"/book/inserthashtag",
+            type:"post",
+            data : {
+                bookNum : '${bookdetail.bookNum}',
+                hashTag : chkvalue
+    
+            },
+            
+            success:function (hashtagList) {
+    
+            },
+    
+        })
+    }
+    
+    </script>
+    
+    
+    <script>
         
-    })
-
-});
-
-
-</script>
+        var count = 0;
+        
+        $(function() {
+            $('.inputBtn').click(function(){
+    
+                $.ajax({
+                    url: "/book/inserthashtag",
+                    type:'post',
+                    data : {
+    
+                        bookNum: '${bookdetail.bookNum}',
+                        hashTag: $('#hashTag').val()
+                       },
+    
+    
+                    success:function(data) {
+                        /* var result = data.json;
+                        alert(data); */
+                        $('.hashTag').html('');
+                        $.each(data, function(idx, val){
+                            $(".hashTag").append("<label>"+val.hashTag+"</label>");
+                            count++;
+                            if(count == 5){
+                                return false;
+                            }
+                        });
+                      },
+    
+                });
+    
+            });
+        })
+    
+    </script>
+    
+    
+    <script> 
+    
+    $('.bookStarScore span').click(function(){
+        
+        $(this).parent().children('span').removeClass('on');
+        $(this).addClass('on').prevAll('span').addClass('on');
+        $('.starJum01').click(function(){
+            $('#starTxt').val($(this).length);
+            
+        })
+    
+    });
+    
+    
+    </script>
 </body>
 </html>
