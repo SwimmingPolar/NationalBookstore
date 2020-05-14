@@ -42,13 +42,13 @@ public class OrderObjectMapperTests {
 		
 		
 		CartVO cart = new CartVO();
-		cart.setBookNum(254);
-		cart.setMemberEmail("abc1234@naver.com");
-		cart.setBookCount(12);
+		cart.setBookNum(210);
+		cart.setMemberEmail("abc12345@naver.com");
+		cart.setBookCount(1);
 		CartVO cart1 = new CartVO();
 		cart1.setBookNum(197);
-		cart1.setMemberEmail("abc1234@naver.com");
-		cart1.setBookCount(11);
+		cart1.setMemberEmail("abc12345@naver.com");
+		cart1.setBookCount(3);
 		cartBuyList.add(cart);
 		cartBuyList.add(cart1);
 

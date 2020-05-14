@@ -22,11 +22,11 @@ public class DetailBookMapperTest {
 	
 	@Setter(onMethod_ = {@Autowired})
 	private DetailBookMapper mapper;
-/*	
-	@Test
-	public void bookLike() {
-		log.info(mapper.bookLike(197));
-	}*/
+//
+//	@Test
+//	public void bookLike() {
+//		log.info(mapper.bookLike(197));
+//	}
 	/*
 	@Test
 	public void bookGrade() {
@@ -34,13 +34,13 @@ public class DetailBookMapperTest {
 	}
 	*/
 	
-	
-	@Test
-	public void  hashtag() {
-		log.info(mapper.hashtag(197));
-	}
-	
-	
+//	
+//	@Test
+//	public void  hashtag() {
+//		log.info(mapper.hashtag(197));
+//	}
+//	
+//	
 	
 	
 //	@Test
@@ -71,18 +71,18 @@ public class DetailBookMapperTest {
 	}
 	
 	*/
-/*
+
 	@Test
 	public void insertLike() {
 		BookLikeVO vo = new BookLikeVO();
 		
-		vo.setLikeNum(1);
-		vo.setBookNum(1);
+
+		vo.setBookNum(210);
 		vo.setMemberEmail("abc1234@naver.com");
 		
 		log.info(mapper.insertLike(vo));
 	}
-	*/
+	
 
 	/*
 	@Test

@@ -17,7 +17,7 @@ INSERT enquriry_Board
 			#{memberEmail},
 			#{boardTitle},
 			#{boardContent},
-			#{boardRegdate},
+			sysdate,
 			#{boardState}
 		)
 </insert>
@@ -42,6 +42,10 @@ INSERT enquriry_Board
 		WHERE board_num = #{boardNum}
 </update>
 
+<select id="numChk">
+select board_num from enquriry_Board where board_num = #{boardNum}
+</select>
+
 
 <insert id="insertReply" parameterType="com.admin.domain.board.ReplyVO">
 INSERT reply
@@ -50,7 +54,7 @@ INSERT reply
 			board_num,
 			writer,
 			reply_content,
-			reply_regdate,
+			reply_regdate
 		)
 		VALUES
 		(
@@ -58,7 +62,7 @@ INSERT reply
 			#{boardNum},
 			#{writer},
 			#{replyContent},
-			#{replyRegdate},
+			sysdate
 		)
 </insert>
 
@@ -67,10 +71,60 @@ INSERT reply
 		WHERE reply_num = #{replyNum}
 </delete>
 
+<delete id="deleteAllReply" parameterType="com.admin.domain.board.EnquiryBoardVO">
+		DELETE FROM reply
+		WHERE board_num = #{boardNum}
+</delete>
+
 <update id="updateReply" parameterType="com.admin.domain.board.ReplyVO">
 		UPDATE FROM reply
 		SET reply_content = #{boardContent},
 		reply_regdate = #{boardRegdate},
 		WHERE reply_num = #{replyNum}
 </update>
+
+<select id="selectEq" parameterType="int">
+		SELECT * FROM enquriry_Board
+		WHERE board_num = #{boardNum}
+</select>
+
+<select id="selectReplyList" parameterType="int">
+		SELECT * FROM reply
+		WHERE board_num = #{boardNum}
+		ORDER BY reply_regdate DESC
+</select>
+
+<select id="selectLastSeqNum" parameterType="com.admin.domain.board.EnquiryBoardVO">
+		SELECT * FROM enquriry_Board
+		WHERE member_email = #{memberEmail}
+		ORDER BY board_num
+</select>
+
+<insert id="insertFile" parameterType="com.admin.domain.board.FileVO">
+INSERT file_Board
+		(
+			file_num,
+			board_num,
+			origin_file_name,
+			stored_file_name
+		)
+		VALUES
+		(
+			fileNum.NEXTVAL,
+			#{boardNum},
+			#{originFileName},
+			#{storedFileName}
+		)
+</insert>
+
+<delete id="deleteFile" parameterType="int">
+		DELETE FROM file_Board
+		WHERE board_num = #{boardNum}
+</delete>
+
+<delete id="deleteAllFiles" parameterType="int">
+		DELETE FROM file_Board
+		WHERE board_num = #{boardNum}
+</delete>
+
 </mapper>

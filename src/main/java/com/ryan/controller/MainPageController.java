@@ -13,8 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ryan.domain.book.EBookVO;
+import com.ryan.domain.main.FilterSearchVO;
 import com.ryan.domain.member.MemberVO;
 import com.ryan.mapper.MainMapper;
 import com.ryan.service.main.MainPageService;
@@ -30,10 +32,21 @@ public class MainPageController {
 	private MainPageService service;
 	
 	@GetMapping("/")
-	public String mainPage(HttpServletRequest request) {
+	public String mainPage(HttpServletRequest request, Model model) {
+		
+		model.addAttribute("todayBook", service.getTodayBookList());
+		model.addAttribute("bestReadBook", service.getBestReadBook());
+		model.addAttribute("disCountBook", service.getDisCountBook());
 		
 		return "main";
 	}
+	
+	
+	@GetMapping("/ajaxBestSeller")
+	public @ResponseBody ArrayList<EBookVO> responseBestSeller(@RequestParam("time") String time, @RequestParam("category") String category){
+		return service.getBestSeller(time, category);
+	}
+	
 	
 //	@GetMapping("/search")
 //	public String search(@RequestParam("type") String type , @RequestParam("keyword") String keyword, Model model) {
@@ -53,6 +66,15 @@ public class MainPageController {
 //		
 //		return "search";
 //	}
+	
+	
+	@GetMapping("/filterSearch")
+	public String filterSearch(FilterSearchVO filterSearch, Model model) {
+		
+		model.addAttribute("키", service.getFilterSearch(filterSearch));
+		
+		return "주소";
+	}
 	
 	@RequestMapping(value="/paper")
 	public String Paper() {

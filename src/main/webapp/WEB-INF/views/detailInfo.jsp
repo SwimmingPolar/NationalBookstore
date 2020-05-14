@@ -40,7 +40,7 @@
     <div class="top-container">
         <div class="leftBox">
     <div class="imageBox">
-     <img src="../../resources/image/book02.jpg" alt="없음">
+     <img src="${pageContext.request.contextPath }${bookdetail.bookThumbnail }" alt="없음">
     </div>
     <div class="preview">
     <a href="preview.html" onclick="window.open(this.href, '좋아요','width=1000, height=700');return false;" target="_blank" 
@@ -58,6 +58,14 @@
         <fmt:formatDate value="${bookdetail.bookPbDate }" pattern="yyyy.MM.dd"/></li>
         <li style="color:lightgray;"> 장르/분류 : ${bookdetail.bookCategory } > ${bookdetail.firstCategory } </li>
     </ul> 
+    
+        <div class ="bookStarScore">
+            <span><i class="fas fa-star starJum01"></i></span>
+            <span><i class="fas fa-star starJum02"></i></span>
+            <span><i class="fas fa-star starJum03"></i></span>
+            <span><i class="fas fa-star starJum04"></i></span>
+            <span><i class="fas fa-star starJum05"></i></span>
+    </div>
 
     <div class="choiceBtnOne">
     	<form action="/book/insertreadbook">
@@ -73,14 +81,10 @@
         <a href="#" id="modalOpen">
         <span class="likePeople">
              <c:forEach var="p" items="${likepeople}">
+           		 <i class="far fa-user-circle prof" ></i>
+           		 <i class="far fa-user-circle prof" ></i>
            		 <i class="far fa-user-circle prof" ></i>${p.memberNickName }
              </c:forEach>
-            <i class="fas fa-user-circle prof" ></i>
-            <i class="far fa-user-circle prof" ></i>
-          
-        </span>
-   
-        <span class="likePeople2" style="color: black;">	<!-- 좋아요 한 사람들 -->
           
         </span>
       
@@ -116,11 +120,30 @@
 <div id ="modalGo" class="modal">
     
     <div class="modal_content">
-    <span id="modalCloseBtn"> &times; </span>
-    <p>모달창 예시입니다.</p>
-    </div>
+    <p> <i class="far fa-laugh-beam"></i> 좋아요한 사람들 </p>
+        <div class="allList">
+    <div class = "likeList"> 
 
-</div>
+      <ul>
+          <li> <span><img id="myFaceImage" src="NationalBookstore/src/main/webapp/resources/images/myLibrary/picture1.png" >
+          </span>
+          <span> 
+              <a>지혜로운 셀럽님</a> <br>
+              <a>by 아이디</a>
+          </ul> </span> 
+        </li>
+      </ul>
+      
+        <!-- forEach, ajax  좋아요한 사람들 불러올거임-->
+    </div>
+<!-- likelist end -->
+    </div>
+    <!-- modal_content end -->
+    <span id="modalCloseBtn">
+        <button type="button" id="peopleChkBtn" > 확인 </button>
+    </span>
+    </div>
+    <!-- modalGo end -->
 
     </div>
 
@@ -146,8 +169,8 @@
 
                 	    	<%-- <input type="checkbox" name="chkbox" id="chk1" value=${h.hashTag }>${h.hashTag }	 --%>			
 						<form action="" method="post" name="hashtagChk"> 
-                    <input type="checkbox" name="chkbox" class="tagChkbox" id="chk1" onclick="chkboxCnt(this)" value=${h.hashTag }>${h.hashTag }> 
-                    <label for="chk1"> # ${h.hashTag }>${h.hashTag }
+                   <%--  <input type="checkbox" name="chkbox" class="tagChkbox" id="chk1" onclick="chkboxCnt(this)" value=${h.hashTag }>
+                    <label for="chk1"> # ${h.hashTag }>${h.hashTag } --%>
 
                 	    <%-- 	<input type="checkbox" name="chkbox" id="chk1" value=${h.hashTag }>${h.hashTag }				
 						<form action="" method="post" name="hashtagChk">  --%>
@@ -247,35 +270,8 @@
 </div>
 <!-- wrapper end -->
 
-<div class="footer">
-    <div class="ulStyle" style="text-align: center; margin:10px; ">
-        
-            <ul>
-                <li><a href="#">
-                    <img src="../../resources/image/home.png" alt="없음" width=24 height=24>
-                홈</a> </li>
-                <li><a href="#">
-                    <img src="../../resources/image/search.png" alt="없음" width=24 height=24>
-                    검색</a></li>
-                <li><a href="#">
-                    <img src="../../resources/image/book.png" alt="없음" width=24 height=24>
-                    피드 </a></li>
-                <li><a href="myLibrary.html">
-                    <img src="../../resources/image/book.png" alt="없음" width=24 height=24>
-                    내서재</a></li>
-                <li><a href="#">
-                    <img src="../../resources/image/person.png" alt="없음" width=24 height=24>
-                    관리</a></li>
-
-            </ul>
-
-    </div>
-
-</div>
-
 
 <script>
-
 $(function() {
     
     var cnt=0;
@@ -283,7 +279,7 @@ $(function() {
         cnt++;
         if(cnt%2==1) {
         var aa = $('.bookDetail');
-        aa.height(600);
+        aa.height(700);
          }else { 
         var aa = $('.bookDetail');
         aa.height(110);
@@ -295,7 +291,7 @@ $(function() {
         cnt++;
         if(cnt%2==1) {
         var aa = $('.listDetail');
-        aa.height(600);
+        aa.height(700);
          }else {
         var aa = $('.listDetail');
         aa.height(110);
@@ -307,7 +303,7 @@ $(function() {
         cnt++;
         if(cnt%2==1) {
         var aa = $('.reviewDetail');
-        aa.height(600);
+        aa.height(700);
          }else {
             var aa = $('.reviewDetail');
         aa.height(110);
@@ -500,6 +496,23 @@ function chkboxCnt(gogo) {
 
         });
     })
+
+</script>
+
+
+<script> 
+
+$('.bookStarScore span').click(function(){
+    
+    $(this).parent().children('span').removeClass('on');
+    $(this).addClass('on').prevAll('span').addClass('on');
+    $('.starJum01').click(function(){
+        $('#starTxt').val($(this).length);
+        
+    })
+
+});
+
 
 </script>
 </body>

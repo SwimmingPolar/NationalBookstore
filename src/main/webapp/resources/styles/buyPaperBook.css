@@ -1,0 +1,227 @@
+li {
+    list-style:none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.tabWrapper {
+
+    width:800px;
+    margin:0 auto;
+
+}
+
+.newItemInsert {
+    /* display:inline-block; */
+    /* border:2px solid blue; */
+    /* margin-left: 240px; */
+    display: flex;
+    width:100%;
+    flex-direction: column;
+    /* border:2px solid blue; */
+
+
+}
+
+.statusChk {
+    /* border:2px solid green; */
+    margin:10px;
+}
+
+
+.orderTable .statusChk a:nth-child(1) {
+    color:black;
+    /* font-weight:bold; */
+}
+
+.newItemInsert ul li {
+
+    display:inline;
+    border:1px solid lightgray;
+    margin:3px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0,0,0,.05);
+
+}
+
+.tabs {
+   padding-left:0px;
+   margin-bottom:8px;
+}
+
+.tabs li {
+    /* border:2px solid yellow; */
+    padding:10px 20px 10px 20px;
+    cursor: pointer;
+
+}
+
+
+.orderTable table {
+    background-color:white;
+    width: 100%;
+    /* box-shadow: 0 0 10px rgba(0,0,0,.05); */
+    /* margin:20px; */
+    margin-bottom:10px;
+    text-align: left;
+    border:1px solid #e8e8e8;
+    /* border: 1px solid rgba(0, 153, 255, 0.205); */
+    border-radius: 5px;
+    margin-top:10px;
+    margin:0 auto;
+    text-indent:20px;
+}
+
+.orderTable table table ul{
+    margin:0;
+    padding:0;
+}
+
+.orderTable table ul li {
+    display:flex;
+    
+    justify-content: space-between;
+}
+
+.orderTable table th {
+    color:#888585;
+    font-weight: normal;
+    padding:10px;
+    text-align:center;
+    /* border-bottom:1px solid lightgray; */
+    background-color:#F3F4F6; 
+   
+}
+
+.orderTable table th:nth-child(1) {
+    text-align: center; 
+    width:30px;
+}
+
+
+.orderTable table th:nth-child(2) {
+    /* display:block; */
+    padding:10px;
+}
+
+
+.orderTable table td {
+    /* background-color:#f9f9f9; */
+    padding:10px 10px 30px 10px;
+    /* padding:20px; */
+    /* border-left:1px solid #f9f9f9;
+    border-right:1px solid #f9f9f9; */
+
+    
+}
+
+.orderTable span:nth-child(1) {
+
+    display:block;
+
+}
+
+/* .adjustHere {
+    display:block;
+    padding:10px;
+
+} */
+.adjustHere img {
+    width :90px;
+}
+
+.adjustHere span {
+    vertical-align: center;
+}
+
+
+
+.orderTable table button {
+    /* border:2px solid pink; */
+    width:80px;
+    height: 40px;
+    font-size: 15px;
+    border-radius: 7px;
+    border:1px solid #0099FF;
+    background-color:white;
+    color: #0099ff;
+    cursor: pointer;
+    display:block;
+    margin-top:5px;
+    outline:none;
+    
+}
+
+.orderTable table button:hover {
+    font-weight:bold;
+    background-color:#F3F4F6;
+   
+
+}
+
+.orderTable .statusChk {
+    font-size:13px;
+    margin-left:10px;
+}
+
+.orderTable i {
+
+    color:rgb(170, 167, 167);
+    font-size: 13px;
+}
+
+.orderTable select {
+    width: 100px;
+    height: 30px;
+}
+
+.orderTable input[type="text"] {
+    height: 24px;
+}
+
+.orderTable input[type="button"] {
+    width: 50px;
+    height: 30px;
+    outline:none;
+
+}
+
+.orderTable input[type="button"]:hover {
+
+        background-color: #0099FF;
+        color:white;
+        font-weight: bold;
+        border:none;
+}
+
+.orderTable .tableTitle{
+    float:right;
+    /* border:2px solid green; */
+    margin:0px 10px 10px 10px;
+}
+
+.dateBtn {
+    margin:10px 0px 0px 10px;
+}
+
+.dateBtn input[type="date"]{
+     height:27px;
+    text-align: center;
+    }
+
+
+.orderTable span > a {
+    /* display: block; */
+    color:#5198bd;
+}
+
+.orderTable span > a:hover {
+    font-weight:bold;
+}
+
+.adjustHere span:nth-child(1) {
+    color:rgb(27, 122, 177);
+}  
+

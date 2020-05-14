@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -206,12 +207,9 @@
               </ul>
             </div>
             <div class="slider infinite-slider">
-              <div class="slide infinite-slide"><a href="" src="#"><img src="https://via.placeholder.com/250x320/aaafff" alt=""></a></div>
-              <div class="slide infinite-slide"><a href="" src="#"><img src="https://via.placeholder.com/250x320/faaaff" alt=""></a></div>
-              <div class="slide infinite-slide"><a href="" src="#"><img src="https://via.placeholder.com/250x320/ffaaaf" alt=""></a></div>
-              <div class="slide infinite-slide"><a href="" src="#"><img src="https://via.placeholder.com/250x320/fffaaa" alt=""></a></div>
-              <div class="slide infinite-slide"><a href="" src="#"><img src="https://via.placeholder.com/250x320/afffaa" alt=""></a></div>
-              <div class="slide infinite-slide"><a href="" src="#"><img src="https://via.placeholder.com/250x320/aafffa" alt=""></a></div>
+            	<c:forEach var="today" items="${todayBook }">
+            		<div class="slide infinite-slide"><a href="${pageContext.request.contextPath}/book/bookdetail?booknumber=${today.bookNum} " src="#"><img src="${pageContext.request.contextPath }${today.bookThumbnail}" alt="" width="250px" height="320px"></a></div>
+            	</c:forEach>
             </div>
           </div>
         </div>
@@ -360,150 +358,26 @@
         </script>
         <div class="list-container">
           <ul>
-            <li>
-              <a href="#">
-                <div class="img-wrapper">
-                  <img src="https://via.placeholder.com/50x75" alt="">
-                </div>
-                <div class="text-wrapper">
-                  <div class="ranking">
-                    <h3>1</h3>
-                  </div>
-                  <div class="meta-data">
-                    <span class="title">title</span>
-                    <span class="author">author</span>
-                  </div>
-                </div>
-              </a>
+          	<c:set var="count" value="${1 }"/>
+          	<c:forEach var="read" items="${bestReadBook }">
+          		<li>
+              	<a href="${pageContext.request.contextPath}/book/bookdetail?booknumber=${read.bookNum}">
+                	<div class="img-wrapper">
+                  		<img src="${pageContext.request.contextPath}${read.bookThumbnail}" alt="" width="50px" height="75px">
+                	</div>
+                	<div class="text-wrapper">
+                  	<div class="ranking">
+                    	<h3><c:out value="${count }"/> </h3>
+                  	</div>
+                  	<div class="meta-data">
+                    	<span class="title">${read.bookTitle }</span>
+                    	<span class="author">author</span>
+                  	</div>
+                	</div>
+              	</a>
             </li>
-            <li>
-              <a href="#">
-                <div class="img-wrapper">
-                  <img src="https://via.placeholder.com/50x75" alt="">
-                </div>
-                <div class="text-wrapper">
-                  <div class="ranking">
-                    <h3>2</h3>
-                  </div>
-                  <div class="meta-data">
-                    <span class="title">title</span>
-                    <span class="author">author</span>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <div class="img-wrapper">
-                  <img src="https://via.placeholder.com/50x75" alt="">
-                </div>
-                <div class="text-wrapper">
-                  <div class="ranking">
-                    <h3>3</h3>
-                  </div>
-                  <div class="meta-data">
-                    <span class="title">title</span>
-                    <span class="author">author</span>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <div class="img-wrapper">
-                  <img src="https://via.placeholder.com/50x75" alt="">
-                </div>
-                <div class="text-wrapper">
-                  <div class="ranking">
-                    <h3>4</h3>
-                  </div>
-                  <div class="meta-data">
-                    <span class="title">title</span>
-                    <span class="author">author</span>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <div class="img-wrapper">
-                  <img src="https://via.placeholder.com/50x75" alt="">
-                </div>
-                <div class="text-wrapper">
-                  <div class="ranking">
-                    <h3>5</h3>
-                  </div>
-                  <div class="meta-data">
-                    <span class="title">title</span>
-                    <span class="author">author</span>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <div class="img-wrapper">
-                  <img src="https://via.placeholder.com/50x75" alt="">
-                </div>
-                <div class="text-wrapper">
-                  <div class="ranking">
-                    <h3>6</h3>
-                  </div>
-                  <div class="meta-data">
-                    <span class="title">title</span>
-                    <span class="author">author</span>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <div class="img-wrapper">
-                  <img src="https://via.placeholder.com/50x75" alt="">
-                </div>
-                <div class="text-wrapper">
-                  <div class="ranking">
-                    <h3>7</h3>
-                  </div>
-                  <div class="meta-data">
-                    <span class="title">title</span>
-                    <span class="author">author</span>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <div class="img-wrapper">
-                  <img src="https://via.placeholder.com/50x75" alt="">
-                </div>
-                <div class="text-wrapper">
-                  <div class="ranking">
-                    <h3>8</h3>
-                  </div>
-                  <div class="meta-data">
-                    <span class="title">title</span>
-                    <span class="author">author</span>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <div class="img-wrapper">
-                  <img src="https://via.placeholder.com/50x75" alt="">
-                </div>
-                <div class="text-wrapper">
-                  <div class="ranking">
-                    <h3>9</h3>
-                  </div>
-                  <div class="meta-data">
-                    <span class="title">title</span>
-                    <span class="author">author</span>
-                  </div>
-                </div>
-              </a>
-            </li>
+            <c:set var="count" value="${count + 1 }"/>
+          	</c:forEach>
           </ul>
         </div>
       </section>
@@ -819,90 +693,20 @@
           <h3><span class="fal fa-file-check"></span>이달의 할인</h3>
           <div class="list-container slider-wrapper flexible-slider-window">
             <ul class="slider flexible-slider"> 
-              <li class="flexible-slide">
-                <a href="#">
-                  <div class="thumbnail-wrapper">
-                    <span class="discount-rate">10<span>%</span></span>
-                    <img src="https://via.placeholder.com/150x200" alt="">
-                  </div>
-                  <div class="text-wrapper">
-                    <strong>title</strong>
-                    <span>author</span>
-                  </div>
-                </a>
-              </li>
-              <li class="flexible-slide">
-                <a href="#">
-                  <div class="thumbnail-wrapper">
-                    <span class="discount-rate">10<span>%</span></span>
-                    <img src="https://via.placeholder.com/150x200" alt="">
-                  </div>
-                  <div class="text-wrapper">
-                    <strong>title</strong>
-                    <span>author</span>
-                  </div>
-                </a>
-              </li>
-              <li class="flexible-slide">
-                <a href="#">
-                  <div class="thumbnail-wrapper">
-                    <span class="discount-rate">10<span>%</span></span>
-                    <img src="https://via.placeholder.com/150x200" alt="">
-                  </div>
-                  <div class="text-wrapper">
-                    <strong>title</strong>
-                    <span>author</span>
-                  </div>
-                </a>
-              </li>
-              <li class="flexible-slide">
-                <a href="#">
-                  <div class="thumbnail-wrapper">
-                    <span class="discount-rate">10<span>%</span></span>
-                    <img src="https://via.placeholder.com/150x200" alt="">
-                  </div>
-                  <div class="text-wrapper">
-                    <strong>title</strong>
-                    <span>author</span>
-                  </div>
-                </a>
-              </li>
-              <li class="flexible-slide">
-                <a href="#">
-                  <div class="thumbnail-wrapper">
-                    <span class="discount-rate">10<span>%</span></span>
-                    <img src="https://via.placeholder.com/150x200" alt="">
-                  </div>
-                  <div class="text-wrapper">
-                    <strong>title</strong>
-                    <span>author</span>
-                  </div>
-                </a>
-              </li>
-              <li class="flexible-slide">
-                <a href="#">
-                  <div class="thumbnail-wrapper">
-                    <span class="discount-rate">10<span>%</span></span>
-                    <img src="https://via.placeholder.com/150x200" alt="">
-                  </div>
-                  <div class="text-wrapper">
-                    <strong>title</strong>
-                    <span>author</span>
-                  </div>
-                </a>
-              </li>
-              <li class="flexible-slide">
-                <a href="#">
-                  <div class="thumbnail-wrapper">
-                    <span class="discount-rate">10<span>%</span></span>
-                    <img src="https://via.placeholder.com/150x200" alt="">
-                  </div>
-                  <div class="text-wrapper">
-                    <strong>title</strong>
-                    <span>author</span>
-                  </div>
-                </a>
-              </li>
+              <c:forEach var="disCount" items="${disCountBook }">
+              			<li class="flexible-slide">
+                			<a href="${pageContext.request.contextPath}/book/bookdetail?booknumber=${disCount.bookNum}">
+                  		<div class="thumbnail-wrapper">
+                    		<span class="discount-rate">${disCount.bookDiscount }<span>%</span></span>
+                    		<img src="${pageContext.request.contextPath }${disCount.bookThumbnail}" alt="" width="150px" height="200px">
+                  		</div>
+                  		<div class="text-wrapper">
+                    		<strong>${disCount.bookTitle }</strong>
+                    		<span>author</span>
+                  		</div>
+                		</a>
+              		</li>
+              </c:forEach>
             </ul>
           </div>
         </div>
