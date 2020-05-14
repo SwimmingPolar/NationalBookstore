@@ -33,6 +33,7 @@ public class EnquiryBoardController {
 		return "입력view";
 	}
 	
+	//문의사항을 등록할때는 문의사항 객체와 파일 어레이객체(이건 안넘어왇도됨) 넘김
 	@RequestMapping(value="/write", method=RequestMethod.POST)
 	public String enquiryWrite(Model model,EnquiryBoardVO enquiry,HttpServletRequest request,ArrayList<MultipartFile> files) {
 		HttpSession session = request.getSession();
@@ -59,7 +60,7 @@ public class EnquiryBoardController {
 				model.addAttribute("message", "문의사항 입력 실패");
 			return "redirect:/board/enquiry/showList";
 		}else {
-			model.addAttribute("message", "선택된 내용이 없습니다.");
+			model.addAttribute("message", "입력한 내용이 없습니다.");
 			return "redirect:/board/enquiry/showList";
 		}
 	}
@@ -69,6 +70,7 @@ public class EnquiryBoardController {
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("ryanMember");	
 		if(enquiry!=null&&enquiry.getMemberEmail().equals(member.getMemberEmail())) {
+			
 			if(service.eqDelete(enquiry))
 				model.addAttribute("message", "문의사항 삭제 성공");
 			else
@@ -85,9 +87,18 @@ public class EnquiryBoardController {
 		return "입력view";
 	}
 	
+	//문의사항 
 	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public String enquiryUpdate(Model model,EnquiryBoardVO enquiry) {
-		return "";
+	public String enquiryUpdate(Model model,EnquiryBoardVO enquiry,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		MemberVO member = (MemberVO) session.getAttribute("ryanMember");	
+		if(enquiry!=null&&enquiry.getMemberEmail().equals(member.getMemberEmail())) {
+			service.eqUpdate(enquiry);
+			return "";
+		}else {
+			model.addAttribute("message", "수정할 내용이 없습니다.");
+			return "redirect:/board/enquiry/showList";
+		}
 	}
 	
 	//문의사항 리스트가 보임

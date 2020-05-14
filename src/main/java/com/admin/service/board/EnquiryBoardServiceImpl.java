@@ -23,16 +23,15 @@ public class EnquiryBoardServiceImpl implements EnquiryBoardService{
 
 	@Override
 	public boolean eqWrite(EnquiryBoardVO enquiry) {
-		// TODO Auto-generated method stub
-		return false;
+		return mapper.insertEq(enquiry)>0?true:false;
 	}
 
 	@Override
 	public boolean eqDelete(EnquiryBoardVO enquiry) {
 		if(enquiry.getBoardNum()>0||mapper.numChk(enquiry.getBoardNum())>0) {
+			mapper.deleteAllFiles(enquiry.getBoardNum());
 			mapper.deleteAllReply(enquiry);
-			mapper.deleteEq(enquiry);
-			return true;
+			return mapper.deleteEq(enquiry)>0?true:false;
 		}else
 			return false;
 	}
@@ -95,6 +94,11 @@ public class EnquiryBoardServiceImpl implements EnquiryBoardService{
 			flag=mapper.insertFile(vo)>0?true:false;
 		}
 		return flag;
+	}
+
+	@Override
+	public boolean deleteFile(int fileNum) {
+		return false;
 	}
 
 }
