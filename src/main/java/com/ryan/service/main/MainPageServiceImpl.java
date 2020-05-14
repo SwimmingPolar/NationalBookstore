@@ -31,7 +31,7 @@ public class MainPageServiceImpl implements MainPageService {
 
 	@Override
 	public ArrayList<EBookVO> getTodayBookList() {
-		return null;
+		return mapper.getTodayBookList();
 	}
 
 	@Override
@@ -42,6 +42,16 @@ public class MainPageServiceImpl implements MainPageService {
 	@Override
 	public ArrayList<EBookVO> getFilterSearch(FilterSearchVO filterSearch) {
 		return mapper.getFilterSearch(filterSearch);
+	}
+
+	@Override
+	public ArrayList<EBookVO> getBestSeller(String time, String category) {
+		return mapper.getBestSeller(time, category);
+	}
+
+	@Override
+	public ArrayList<EBookVO> getDisCountBook() {
+		return mapper.getDisCountBook();
 	}
 	
 	

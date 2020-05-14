@@ -39,10 +39,7 @@
   cursor: grab;
   display: flex;
 }
-/* to be removed */
-.infinite-slider {
-  counter-reset: slider;
-}
+
 .flexible-slider:active,
 .infinite-slider:active {
   cursor: grabbing;
@@ -50,24 +47,6 @@
 .flexible-slider .flexible-slide,
 .infinite-slider .infinite-slide {
   flex: 1;
-}
-/* to be removed */
-.infinite-slider .infinite-slide {
-  counter-increment: slider;
-  position: relative;
-}
-/* to be removed */
-.infinite-slider .infinite-slide::after {
-  position: absolute;
-  content: counter(slider);
-  display: block;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  line-height: 320px;
-  text-align: center;
-  font-size: 150px;
 }
 
 .fadeInUp {

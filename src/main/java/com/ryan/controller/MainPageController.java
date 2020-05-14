@@ -33,10 +33,10 @@ public class MainPageController {
 	
 	@GetMapping("/")
 	public String mainPage(HttpServletRequest request, Model model) {
-		log.info(service.getBestReadBook().size());
 		
-		
+		model.addAttribute("todayBook", service.getTodayBookList());
 		model.addAttribute("bestReadBook", service.getBestReadBook());
+		model.addAttribute("disCountBook", service.getDisCountBook());
 		
 		return "main";
 	}
@@ -44,9 +44,8 @@ public class MainPageController {
 	
 	@GetMapping("/ajaxBestSeller")
 	public @ResponseBody ArrayList<EBookVO> responseBestSeller(@RequestParam("time") String time, @RequestParam("category") String category){
-		return null;
+		return service.getBestSeller(time, category);
 	}
-	
 	
 	
 //	@GetMapping("/search")

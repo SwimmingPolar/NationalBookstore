@@ -21,6 +21,14 @@ public interface MainPageService {
 	//사람들이 많이 읽은 책
 	public ArrayList<EBookVO> getBestReadBook();
 	
+	//베스트셀러
+	public ArrayList<EBookVO> getBestSeller(@Param("time") String time , @Param("category") String category);
+	
+	//세일
+	public ArrayList<EBookVO> getDisCountBook();
+	
+	
+	//필터 예시
 	public ArrayList<EBookVO> getFilterSearch(FilterSearchVO filterSearch); 
 	
 }

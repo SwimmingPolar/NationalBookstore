@@ -84,4 +84,9 @@ public class MainMapperTests {
 //		
 //	}
 	
+	@Test
+	public void getDisCountBookTests() {
+		
+		mapper.getDisCountBook().forEach(ebook -> log.info(ebook));
+	}
 }
