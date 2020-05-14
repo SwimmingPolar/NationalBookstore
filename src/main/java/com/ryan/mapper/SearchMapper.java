@@ -20,4 +20,8 @@ public interface SearchMapper {
 	public List<EBookVO> searchEbookPage(@Param("type") String type,@Param("keyword") String[] keyword, @Param("pageNum") int pageNum);
 	//종이책 페이징
 	public List<EBookVO> searchPaperbookPage(@Param("type") String type,@Param("keyword") String[] keyword, @Param("pageNum") int pageNum);
+	//전체 책.
+	public List<EBookVO> getFilterSearch(@Param("genre") String genre, @Param("sub_genre") String sub_genre, @Param("page") String page, @Param("sort") String sort );
+	//전체 책 갯수.
+	public List<EBookVO> getFilterSearchCount(@Param("genre") String genre, @Param("sub_genre") String sub_genre, @Param("page") String page );
 }

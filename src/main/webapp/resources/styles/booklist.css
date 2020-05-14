@@ -1,0 +1,286 @@
+/* .header {
+	position: fixed;
+	top: 0; left: 0;
+	width: 100%; height: 50px;
+	background: #FFFFFF;
+	color: #FF0000;
+	text-align: center;
+	font-size: 2em;
+	font-family: 
+	box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.5);
+	z-index: 999;
+}
+
+.header + span {
+	display: block;
+	width: 100%; height: 50px;
+} */
+
+body {
+	width: 820px;
+	margin: 0 auto;
+	padding-top: 50px;
+}
+
+.btn {
+	cursor: pointer;
+	outline: none;
+	background: none;
+	border: 0;
+	font-family: 'Nanum Gothic', 'Roboto', 'Noto Sans KR', sans-serif;
+}
+
+a {
+	text-decoration: none;
+	color: #000000;
+}
+
+div.header {
+	position: fixed;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	top: 0; left: 0;
+	width: 100%; height: 50px;
+	box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.5);
+}
+
+div.header > .title {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 820px;
+}
+
+div.header > .title > a > .btn.history {
+	position: absolute;
+	top: 0; left: 0;
+	transform: translate(0, -20%);
+	font-size: 2em;
+}
+
+div.sort {
+	clear: both;
+	display: flex;
+	justify-content: flex-end;
+	width: 100%;
+	font-size: 1em;
+	padding: 10px 0;
+}
+
+div.sort > form > * {
+	margin: 5px;
+	font-family: 'Nanum Gothic', 'Roboto', 'Noto Sans KR', sans-serif;
+}
+
+div.sort > form > .btn.sort {
+	cursor: pointer;
+	outline: none;
+	background: none;
+	border: 0;
+	font-size: 1em;
+}
+
+.nav {
+	float: left;
+	width: 20%; height: 100%;
+}
+
+.nav > form > span {
+	display: block;
+	padding: 5px 10px;
+	width: 100%;
+	background: var(--main-color);
+	color: #FFFFFF;
+	font-size: 1em;
+	font-family: 'Nanum Gothic', 'Roboto', 'Noto Sans KR', sans-serif;
+	font-weight: bold;
+}
+
+.genre {
+	list-style: none;
+	/* background: #FFEECC; */
+	background: var(--light-gray-color);
+	padding: 5px;
+	border: 2px solid rgba(0, 0, 0, 0.3);
+	border-top: 0;
+	border-radius: 0 0 2px 2px;
+}
+
+.genre ul {
+	list-style: square;
+}
+
+.genre ul li {
+	margin-left: 20px;
+}
+
+li {
+	cursor: pointer;
+	margin: 5px;
+}
+
+.genre > li {
+	padding-bottom: 5px;
+	border-bottom: 1px solid rgba(0, 0, 0, 1.0);
+}
+
+.genre > li:last-child {
+	border: 0;
+}
+
+.genre > li > ul {
+	display: none;
+}
+
+.genre > li:hover > ul {
+	display: block;
+}
+
+.genre button {
+	cursor: pointer;
+	outline: none;
+	background: none;
+	border: 0;
+	font-family: 'Nanum Gothic', 'Roboto', 'Noto Sans KR', sans-serif;
+}
+
+/* .genre > li:first-child > button{
+	color: var(--main-color);
+} */
+
+body > div.container {
+	float: left;
+	display: flex;
+	flex-direction: column;
+	width: 80%; height: 100%;
+}
+
+.books {
+	/*display: flex;
+	flex-wrap: wrap; */
+	height: 585px;
+	padding-left: 28px;
+}
+
+.books h3 {
+	width: 100%;
+	text-align: center;
+	line-height: 480px;
+}
+
+.book {
+	float: left;
+	display: flex;
+	flex-direction: column;
+	margin: 2.9%;
+	justify-content: center;
+	align-items: center;
+	width: 110px; height: 170px;
+}
+
+.book:first-child { margin-top: 0; }
+.book:nth-child(2) { margin-top: 0; }
+.book:nth-child(3) { margin-top: 0; }
+.book:nth-child(4) { margin-top: 0; }
+
+.book > .cover {
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 110px; height: 150px;
+	border-radius: 5px;
+	box-shadow: 1px 1px 3px -1px rgba(0, 0, 0, 0.8);
+	transition-property: transform;
+	transition-duration: 0.1s;
+}
+
+.cover > .btn.detail {
+	cursor: pointer;
+	display: none;
+	width: 100%; height: 50px;
+	outline: none;
+	background: rgba(0, 0, 0, 0.5);
+	color: #FFF;
+	font-size: 2em;
+	border: 0;
+}
+
+.cover:hover > .btn.detail {
+	display: block;
+}
+.cover:active {
+	transform: scale(0.99);
+}
+
+.book > .title {
+	position: relative;
+	width: 131px; height: 20px;
+}
+
+.book > .title > button {
+	cursor: pointer;
+	outline: none;
+	background: none;
+	width: 131px; height: 20px;
+	border: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-family: 'Nanum Gothic', 'Roboto', 'Noto Sans KR', sans-serif;
+}
+
+div.page {
+	display: flex;
+	justify-content: center;
+	margin: 30px;
+}
+
+.btn.page {
+	cursor: pointer;
+	outline: none;
+	background: none;
+	border: 0;
+	font-size: 1.5em;
+	margin: 0 5px;
+	font-family: 'Nanum Gothic', 'Roboto', 'Noto Sans KR', sans-serif;
+}
+
+.btn.page:first-child {	margin-left: 0; }
+.btn.page:last-child {	margin-left: 0; }
+
+.btn.page:nth-child(2) {
+	color: #FF0000;
+}
+
+.btn.page:hover {
+	color: red;
+}
+.btn.page:disabled {
+	cursor: default;
+	color: rgba(0, 0, 0, 0.1);
+}
+
+.side {
+	float: left;
+	width: 5%; height: 100%;
+}
+
+.side > form {
+	display: flex;
+}
+
+.sf {
+	display: block;
+	width: 100%; height: 50px;
+}
+
+.footer {
+	position: fixed;
+	bottom: 0; left: 0;
+	width: 100%; height: 50px;
+	background: #FFF;
+	z-index: 999;
+}
