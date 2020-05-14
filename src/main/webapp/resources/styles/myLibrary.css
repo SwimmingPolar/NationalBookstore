@@ -5,7 +5,7 @@ li{
 
 a {
 
-    text-decoration: none;
+    /* text-decoration: none; */
 }
 
 body{
@@ -34,7 +34,7 @@ body{
 position:sticky;
 top:0;
 width:100%;
-height: 350px;
+height: 400px;
 border-radius: 15px;
 /* background-repeat: no-repeat;
 background-size:cover; */
@@ -43,7 +43,7 @@ background-size:cover; */
 z-index: 1;
 box-shadow: 0 0 10px rgba(0,0,0,.05);
 /* border:2px solid red; */
-padding:40px 20px 20px 20px;
+padding:30px 20px 20px 20px;
 
 }
 
@@ -61,7 +61,7 @@ padding:40px 20px 20px 20px;
     top:0;
     left:0;
     z-index:-1;
-    opacity: 0.8;
+    opacity: 0.7;
     box-shadow: 0 0 10px rgba(0,0,0,.05);
     
 
@@ -114,7 +114,7 @@ input[type="radio"]:checked + label {
 
 }
 
-.secondColumn label {
+.secondColumn > label {
     /* border:1px solid lightgray; */
     position:sticky;
     top:0;
@@ -138,6 +138,8 @@ input[type="radio"]:checked + label {
     /* background-color: #CAC9C9; */
     width: 100%;
     margin:0 auto;
+    height: 500px;
+    overflow: auto;
     /* height: 350px; */
     /* overflow:hidden; */
     margin-top:10px;
@@ -210,15 +212,36 @@ input[type="radio"]:checked + label {
 
 .firstColumn .myImage {
     position: relative;
-    /* margin: 20px;  */
-    font-size:80px;
+    border:1px solid #e8e8e8;
+    border-radius: 50%;
+    width:80px;
+    height:80px;
+    /* margin:0 auto; */
+    /* margin-top: 20px; */
+    display: block;
+    margin-bottom:10px;
+    margin-left:20px;
+    
+}
+
+
+.firstColumn .myImage img {
+   position: absolute;
+   width:100%;
+   height:100%;
+   border-radius:50%;
+
 }
 
 
 .firstColumn .myImage a {
-   
-    background-color:white;
-    /* color:rgb(223, 214, 187); */
+    cursor: pointer;
+}
+
+.bigbox {
+
+    margin-top: 50px;
+
 }
 
 .myImage i {
@@ -236,7 +259,7 @@ input[type="radio"]:checked + label {
     width:300px;
     /* border:2px solid red; */
     display:block;
-    font-size:22px;
+    font-size:25px;
     /* font-weight:bold; */
     color:rgb(92, 92, 92);
     font-family: 'Noto Sans KR', sans-serif;
@@ -248,14 +271,14 @@ input[type="radio"]:checked + label {
     font-weight:bold;
 }
 
-.myNickname a:nth-child(2) {
+/* .myNickname a:nth-child(2) {
     color:white;
-    font-size:15px;
+    font-size:18px;
     display:block;
-    /* text-align:center; */
-    text-indent: 20px;
+    text-align:center;
+    text-indent: 10px;
     margin-top:5px;
-}
+} */
 
 .infoSetting {
     
@@ -275,10 +298,11 @@ input[type="radio"]:checked + label {
     bottom:0;
     left:0;
     right:0;
+    margin-left: 15px;
 }
 
 .manyBtn ul {
-    height: 100px;
+    height: 80px;
 }
 
 
@@ -287,13 +311,15 @@ input[type="radio"]:checked + label {
 }
 
 .manyBtn ul li a {
-    border:1px solid lightgray;
-    color:rgb(92, 92, 92);
-    border-radius: 20px;
+    /* border:1px solid lightgray; */
+    color:#fff;
+    border-radius: 15px;
     margin: 6px;
-    padding: 8px 30px 8px 30px;
-    background-color: rgb(235, 232, 232);
+    padding:5px;
+    /* padding: 8px 30px 8px 30px; */
+    background-color: #749097;
     font-family: 'Noto Sans KR', sans-serif;
+    text-decoration:none;
     /* opacity: 1; */
     
 }
@@ -301,45 +327,51 @@ input[type="radio"]:checked + label {
 .manyBtn ul li a b {
     color:white;
     font-size: 18px;
-    text-shadow: 1px 1px 1px gray;
+    /* text-shadow: 1px 1px 1px gray; */
 
 }
 
 
 .goSubscribe {
-
+    width:200px;
+    float:right;
     bottom:0;
-    left:0;
+    /* left:0; */
     right:0;
     padding:10px 10px 10px 20px;
     /* border:2px solid blue; */
-    border-top:1px solid white;
+    /* border-top:1px solid white; */
     position: absolute;
     margin:5px;
     font-family: 'Noto Sans KR', sans-serif;
 
 }
 
+
 .goSubscribe a {
     color:white;
     /* font-weight:bold; */
-    font-size:13px;
-    width:100%;
-    display:block;
+    /* display: block; */
+    cursor: pointer;
+    font-size:17px;
+    /* width:100%; */
+    /* display:block; */
+    width: 110px;
+    float: right;
+    text-align:right;
+    margin-bottom:2px;
     /* border:2px solid blue; */
     
     
 }
-
-
+/* 
 .goSubscribe b {
     font-size:15px;
-}
+} */
 
 .goSubscribe em {
     font-style:normal;
-    color: rgb(253, 231, 89);
-    text-shadow:0.1em 0.1em 0.2em rgb(109, 109, 109);
+    color:  #0099FF;
     margin-bottom:7px;
 }
 
@@ -357,18 +389,30 @@ input[type="radio"]:checked + label {
 
 .postInputBtn {
     text-align: right;
+}
+
+.postInputBtn button {
+    text-align: center;
+    width: 110px;
+    height: 40px;
+    border-radius: 5px;
+   border: 1px solid #0099FF;
+    background-color:white;
+    font-size: 16px;
+    color: #0099FF;
+    margin:10px;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer;
+    outline: none;
+    padding:2px;
+
 
 }
 
-#postInput {
-    border-radius: 6px;
-    background-color: #FFF190;
-    width:120px;
-    height: 40px;
-    border:none;
-    font-size: 16px;
-    cursor: pointer;
-    outline:none;
+.postInputBtn button:hover {
+    font-weight:bold;
+    background-color: #F3F4F6;
+    /* color:#333; */
 
 }
 
@@ -479,10 +523,10 @@ input[type="radio"]:checked + label {
     width: 150px;
     height: 40px;
     border-radius: 20px;
-    border:1px solid #9268bb;
+   border: 1px solid #0099FF;
     background-color:white;
     font-size: 16px;
-    color: #9268bb;
+    color: #0099FF;
     margin:10px;
     font-family: 'Noto Sans KR', sans-serif;
     cursor: pointer;
@@ -492,7 +536,8 @@ input[type="radio"]:checked + label {
 
 .postEndBtn button:hover {
     font-weight:bold;
-    background-color:rgb(223, 223, 223);
+    background-color: #F3F4F6;
+    /* color:#333; */
 
 }
 
@@ -608,36 +653,160 @@ input[type="radio"]:checked + label {
 }
 
 
+/*  모달창 띄우기  */
 
-.footer a {
 
-    /* margin:60px; */
-    /* position:efixed; */
-    color:gray;
-    margin: 50px;
-    height:50px;
-   
-}
 
-.footer {
-
-    margin:0 auto;
-    background: #e8e8e8;
+.modal {
+    display:none;
     position:fixed;
-    left:0;
-    right:0;
-    bottom:0;
-    height:4rem;
-    z-index:40;
-    border-top: 1px solid #eee;
-    background: #fff;
-    font-size: 14px;
+    left:0; 
+    top:0;
+    width:100%;
+    height:100%;
+    overflow:auto;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 3;
 
 }
 
 
-.footer ul li{
+.close {
+   float:right;
+   color:#aaa;
+   /* top:0;
+   right:0; */
+   font-size: 28px;
+   font-weight:bold;
+   margin-right:10px;
+   margin-top:5px;
+}
 
-    display:inline;
+.close:hover, .close:focus {
+    color:black;
+    text-decoration:none;
+    cursor:pointer;
+}
 
+.modal .modal_content {
+
+    background-color:  #fefefe;
+    margin:5% auto;
+    padding:5px;
+    /* margin-top:80px; */
+    border:1px solid #888;
+    width: 70%;
+    height: 80%;
+    text-align: center;
+    
+ }
+ 
+ .modal_content img {
+     max-width: 100%;
+     height: 90%;
+     margin:0 auto;
+     /* border:2px solid blue; */
+
+ }
+/* 
+ .mark {
+
+    position: absolute;
+    top:0;
+    left:0;
+    border:1px solid gray;
+    height: 60px;
+ }
+
+ .mark div {
+    width: 100px;
+    background-color:#0099FF;
+    transform: rotate(-45deg) translate(-25px, -5px);
+    text-align:center;
+
+ } */
+
+ .ebookList {
+     width:100%;
+     /* border:1px solid blue; */
+ }
+
+.ebookList table img {
+
+    width: 90px;
+}
+.ebookList table {
+    width: 90%;
+    text-align:left;
+    text-indent:20px;
+    font-size:14px;
+    margin:0 auto;
+
+}
+
+.ebookList table td:nth-child(1) {
+        width:40px;
+}
+
+.ebookList table button {
+
+    width: 90px;
+    height: 35px;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 6px;
+    /* border:1px solid lightgray; */
+    background-color: #F3F4F6;
+    border:1px solid #0099FF;
+    color:#333;
+    outline: none;
+    
+
+}
+.ebookList table button:hover{
+    border:2px solid #0099FF;
+    font-weight: bold;
+}
+
+
+.bookshelf {
+    width:100%;
+    height:15px;
+    border: 1px solid #e8e8e8;
+
+}
+
+.ebooks {
+
+    margin-top:10px;
+
+}
+
+.listTitle {
+
+    border-top:2px solid rgb(95, 95, 95);
+    border-bottom:1px solid lightgray;
+    padding:6px;
+    margin-bottom:10px;
+
+}
+
+.totalBtn input[type="checkbox"] {
+    
+}
+
+.totalBtn label {
+    /* border:2px solid blue; */
+    border:1px solid lightgray;
+    padding:3px 7px 3px 7px;
+    font-size:12px;
+
+}
+
+.totalBtn {
+    margin:10px;
+}
+
+.ebookList table td:nth-child(4) {
+    text-align: right;
 }
