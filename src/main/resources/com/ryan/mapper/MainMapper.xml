@@ -84,7 +84,7 @@
 	<select id="getBestSeller" resultType="com.ryan.domain.book.EBookVO">
 		SELECT * FROM
 		(
-			SELECT ROW_NUMBER() OVER (ORDER BY sum(o.book_count) DESC) rn,e.book_num,e.book_title  FROM ebook e, first_category f , second_category s , order_object o , order_number n
+			SELECT ROW_NUMBER() OVER (ORDER BY sum(o.book_count) DESC) rn,e.book_num,e.book_title, e.book_thumbnail, e.book_writer  FROM ebook e, first_category f , second_category s , order_object o , order_number n
 		<where>
 			e.category_num = s.category_num and s.first_num = f.first_num and o.book_num = e.book_num and o.order_number = n.order_number
 			
@@ -119,11 +119,12 @@
 				</when>
 			</choose>
 		</where>
-		group by e.book_num, e.book_title
+		group by e.book_num, e.book_title,e.book_thumbnail,e.book_writer
 		)
 		<![CDATA[
-		WHERE rn <=6;
+		WHERE rn <=10
 		]]>
+		ORDER BY rn DESC
 	</select>
 	
 	<!-- 세일 -->

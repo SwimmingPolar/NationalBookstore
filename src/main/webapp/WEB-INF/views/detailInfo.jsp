@@ -248,21 +248,37 @@
                     <!--  	 <div class="reviewDetail"> 
                 <table>
                     <tbody>
+             <c:forEach var="r" items="${bookreview}">
                     <tr>
                         <td>★★★★☆</td>
                         <td>abc1234</td>
                         <td>2019/11/09</td>
                     </tr>
                     <tr>
-                        <td colspan="3">제목입니다.</td>
+                        <td colspan="3">${r.reviewTitle }</td>
                     </tr>
-                    <tr><td colspan="3"><textarea name="reviewContent" id="reviewContent"></textarea></td></tr>
+                    <tr><td colspan="3"><textarea name="reviewContent" id="reviewContent">
+                        ${r.reviewContent }
+                    </textarea></td></tr>
+                </c:forEach>
                 </tbody>
-                </table> -->
-                </div>
+                </table>
             </div>
             <input type="button" value="더보기" class="moreChk3">
         </div>
+        <div class="fifthBox">
+            <h2> 관련 도서 </h2>
+            <div class="similarBook">
+                <img src="../../resources/image/similarBook.jpg" alt="error">
+                <img src="../../resources/image/similarBook.jpg" alt="error">
+                <img src="../../resources/image/similarBook.jpg" alt="error">
+                <img src="../../resources/image/similarBook.jpg" alt="error">
+                <img src="../../resources/image/similarBook.jpg" alt="error">
+                
+            </div>
+
+        </div>
+
     </div>
     <!-- body-container -->
     </div>
@@ -357,7 +373,6 @@
             $(this).modal({
                 fadeDuration: 250
             });
-
         });
     </script>
     <script>
