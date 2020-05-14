@@ -359,6 +359,31 @@ header {
 
 }
 
+.likeList {
+    margin-top:20px;
+    border-bottom:1px solid #e8e8e8;
+}
+
+.allList {
+    /* border:2px solid blue; */
+    height:80%;
+    overflow: auto;
+}
+.likeList >ul>li span{
+    border-radius: 50%;
+    display:line;
+}
+
+.likeList >ul>li span img {
+    width:50px;
+}
+
+.likeList > ul >li >span:nth-child(2) {
+    float:right;
+    margin-right: 40px;
+}
+
+
  .modal {
     display:none;
     position:fixed;

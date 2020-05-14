@@ -3,7 +3,6 @@ package com.ryan.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -11,17 +10,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 
 import com.admin.service.revenue.RevenueService;
 import com.ryan.domain.member.EmailCheckVO;
@@ -125,7 +119,7 @@ public class MemberController {
 		return "업데이트 완료후 보여줄 페이지 경로";
 	}
 	
-	@PostMapping("/signin")
+	@GetMapping("/signin")
 	public String memberLogin(@RequestParam(required = false, name = "rememberMe") String remeberMe , MemberVO member ,HttpServletRequest request, HttpServletResponse response , Model model) {
 		//정지중인 유저인지 체크하는 서비스 호출에서 검사할것 아직안함.
 		
@@ -136,7 +130,7 @@ public class MemberController {
 				memberService.addCookie(member, response);
 			}
 			HttpSession session = request.getSession();
-			session.setAttribute("ryanMember", member);
+			session.setAttribute("ryanMember", memberService.getLoginMemberInfo(member));
 			log.info(request.getRemoteAddr());
 			return "redirect:/member/test"; 
 		} else {
@@ -219,7 +213,7 @@ public class MemberController {
 	
 	@GetMapping("/test")
 	public String test() {
-		return "Test";
+		return "test";
 	}
 	
 	

@@ -121,6 +121,12 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
+	@Override
+	public MemberVO getLoginMemberInfo(MemberVO member) {
+		return mapper.getLoginMemberInfo(member);
+	}
+
+
 	
 
 

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ryan.domain.book.EBookVO;
+import com.ryan.domain.main.FilterSearchVO;
 import com.ryan.mapper.MainMapper;
 
 import lombok.Setter;
@@ -26,6 +27,21 @@ public class MainPageServiceImpl implements MainPageService {
 	@Override
 	public ArrayList<EBookVO> getBookList(String type, String[] keyword) {
 		return mapper.getBookList(type, keyword);
+	}
+
+	@Override
+	public ArrayList<EBookVO> getTodayBookList() {
+		return null;
+	}
+
+	@Override
+	public ArrayList<EBookVO> getBestReadBook() {
+		return mapper.getBestReadBook();
+	}
+
+	@Override
+	public ArrayList<EBookVO> getFilterSearch(FilterSearchVO filterSearch) {
+		return mapper.getFilterSearch(filterSearch);
 	}
 	
 	

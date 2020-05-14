@@ -65,8 +65,134 @@
 	<!-- 사람들이 많이 읽은 책 -->
 	<select id="getBestReadBook" resultType="com.ryan.domain.book.EBookVO">
 		SELECT * FROM
+		(
+			SELECT ROW_NUMBER() OVER (ORDER BY count(m.book_num) DESC) rnn, e.book_num ,e.book_title , e.book_thumbnail , count(m.book_num) count 
+			FROM ebook e, my_read_book m
+			<where>
+				e.book_num = m.book_num
+			</where>
+			GROUP BY e.book_num, e.book_title,e.book_thumbnail
+		)
+		<where>
+			<![CDATA[
+				rnn <= 9
+			]]>
+		</where>
+	</select>
+	
+	<!-- 베스트셀러 -->
+	<select id="getBestSeller" resultType="com.ryan.domain.book.EBookVO">
+		SELECT * FROM
+		(
+			SELECT ROW_NUMBER() OVER (ORDER BY sum(o.book_count) DESC) rn,e.book_num,e.book_title  FROM ebook e, first_category f , second_category s , order_object o , order_number n
+		<where>
+			e.category_num = s.category_num and s.first_num = f.first_num and o.book_num = e.book_num and o.order_number = n.order_number
+			
+			<choose> <!-- 카테고리별 추가 when -->
+				<when test="category.equals('소설')">
+					and f.first_num = 2
+				</when>
+				<when test="category.equals('시/에세이')">
+					and f.first_num = 3
+				</when>
+			</choose>
+			<choose>
+				<when test="time.equals('연간')">
+					<![CDATA[
+						and TO_CHAR(n.order_date,'YYYYMMDD') >= TO_CHAR(SYSDATE-365,'YYYYMMDD') and TO_CHAR(n.order_date,'YYYYMMDD') <= TO_CHAR(SYSDATE,'YYYYMMDD')
+					]]>
+				</when>
+				<when test="time.equals('월간')">
+					<![CDATA[
+						and TO_CHAR(n.order_date,'YYYYMMDD') >= TO_CHAR(SYSDATE-31,'YYYYMMDD') and TO_CHAR(n.order_date,'YYYYMMDD') <= TO_CHAR(SYSDATE,'YYYYMMDD')
+					]]>
+				</when>
+				<when test="time.equals('주간')">
+					<![CDATA[
+						and TO_CHAR(n.order_date,'YYYYMMDD') >= TO_CHAR(SYSDATE-7,'YYYYMMDD') and TO_CHAR(n.order_date,'YYYYMMDD') <= TO_CHAR(SYSDATE,'YYYYMMDD')
+					]]>
+				</when>
+				<when test="time.equals('일간')">
+					<![CDATA[
+						and TO_CHAR(n.order_date,'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD')
+					]]>
+				</when>
+			</choose>
+		</where>
+		group by e.book_num, e.book_title
+		)
+		<![CDATA[
+		WHERE rn <=6;
+		]]>
+	</select>
+	
+	<!-- 세일 -->
+	<select id="getDisCountBook">
+		<![CDATA[
+			SELECT * FROM ebook
+			WHERE book_discount > 0
+			ORDER BY book_discount DESC
+		]]>
+	</select>	
+	
+	<select id="getRandomHashTag" resultType="com.ryan.domain.book.HashtagVO">
+		SELECT * FROM
+		(
+			SELECT book_num , hash_tag FROM book_hashtag
+			GROUP BY book_num, hash_tag 
+			ORDER BY DBMS_RANDOM.RANDOM
+		)
+		<![CDATA[
+			WHERE ROWNUM <=1
+		]]>
+	</select>
+	
+	<select id="getHashTagBook" resultType="com.ryan.domain.book.EBookVO">
+		SELECT e.book_num , e.book_thumbnail 
+		FROM ebook e, book_hashtag h
+		<where>
+			e.book_Num = h.book_num
+			and h.hash_tag
+			<foreach collection="list" item="hash" open="in (" separator="," close=")">
+				#{hash.hashTag}
+			</foreach>
+		</where>
+		GROUP BY e.book_num , e.book_thumbnail
 	</select>
 	
 	
+	<!-- 검색 -->
+	
+	<select id="getFilterSearch" resultType="com.ryan.domain.book.EBookVO">
+		SELECT e.* FROM ebook e
+		<choose>
+			<when test="firstCategory != null">
+				, first_category f , second_category s
+				<where>
+					e.category_num = s.category_num and s.first_num = f.first_num
+					and
+					<choose>
+						<when test="firstCategory.equals('자기계발')"> <!-- 계속해서 when 으로 추가해주시면 됩니다. -->
+							f.first_num = 11
+						</when>
+					</choose>
+				</where>
+			</when>
+			<when test="secondCategory != null">
+				, second_category s
+				<where>
+					e.category_num = s.category_num
+					and
+					<choose>
+						<when test="secondCategory.equals('인간관계')">
+							s.category_num = 21
+						</when>
+					</choose>
+				</where>
+			</when>
+		</choose>
+		<!-- GROUP BY 필요하면 여기에 추가. -->
 		
+	</select>
+	
 </mapper>

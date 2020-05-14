@@ -15,4 +15,6 @@ public class BookGradeVO {
 
     // 평점 
     private double gradeScore;
+    
+    private String bookTitle;
 }

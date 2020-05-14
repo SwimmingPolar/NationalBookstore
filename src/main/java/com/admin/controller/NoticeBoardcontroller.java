@@ -10,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.admin.domain.board.NoticeBoardVO;
 import com.admin.domain.board.PageVO;
-import com.admin.service.board.FileService;
 import com.admin.service.board.NoticeBoardService;
 
 @Controller
@@ -19,9 +18,6 @@ public class NoticeBoardcontroller {
 	
 	@Autowired
 	private NoticeBoardService service;
-	
-	@Autowired
-	private FileService fileS;
 
 	@RequestMapping("/writeForm")
 	public String noticeWriteForm() {
@@ -55,12 +51,15 @@ public class NoticeBoardcontroller {
 		return service.noticeDelete(notice)?"업로드 성공시 이동":"실패시 이동";
 	}
 	
+	//공지사항 페이지로 들어감
 	@RequestMapping("/page")
 	public String noticePage(Model model,@RequestParam(value="page", defaultValue="1")int page,String type) {
 		
 		PageVO pagevo=new PageVO(page,service.selectCount(type));
 		
+		//해당패이지 게시물 리스트 넘김
 		model.addAttribute("pageList", service.selectPageList(pagevo, type));
+		//페이지객체 저장해서 넘김
 		model.addAttribute("pagevo", pagevo);
 		
 		return "";
