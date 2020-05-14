@@ -54,7 +54,7 @@ pageEncoding="UTF-8"%>
             return;
           }
           if (!button.classList.contains("visible")) {
-            button.style.transition = "";
+            button.style.transition = '';
             button.classList.add("visible");
           }
           timeoutID =
