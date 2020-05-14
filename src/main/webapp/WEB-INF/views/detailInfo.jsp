@@ -6,16 +6,17 @@
 <html>
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>도서 상세 - ${bookdetail.bookTitle}</title>
-  <!-- Google Fonts -->
-  <link
-    href="https://fonts.googleapis.com/css?family=Black+Han+Sans|Nanum+Gothic|Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap"
-    rel="stylesheet" />
-  <!-- Fontawesome API-->
-  <script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
-  <!--
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>도서 상세 - ${bookdetail.bookTitle}</title>
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Black+Han+Sans|Nanum+Gothic|Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap"
+        rel="stylesheet" />
+    <!-- Fontawesome API-->
+    <script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
+    <!--
     Available Fonts
     Main Font:
     font-family: 'Kaushan Script', cursive;
@@ -32,25 +33,26 @@
     font-family: 'Nanum Gothic', sans-serif;
     -->
 
-  <!-- css reset -->
-  <link rel="stylesheet" href="../../resources/styles/reset.css" />
-  <!-- individual page stylesheet -->
-  <link rel="stylesheet" href="../../resources/styles/detailInfo.css">
-  <link rel="stylesheet" href="../../resources/styles/common.css" />
+    <!-- css reset -->
+    <link rel="stylesheet" href="../../resources/styles/reset.css" />
+    <!-- individual page stylesheet -->
+    <link rel="stylesheet" href="../../resources/styles/detailInfo.css">
+    <link rel="stylesheet" href="../../resources/styles/common.css" />
 
-  <!-- jQuery CDN -->
-  <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
-  <!-- slidify sliders and fadeInUp reveal -->
-  <script src="../../resources/js/common.js"></script>
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <!-- slidify sliders and fadeInUp reveal -->
+    <script src="../../resources/js/common.js"></script>
 </head>
+
 <body>
     <header class="topbar">
-    <nav>
-        <div class="container">
-        <a href="javascript: history.back();"><i class="far fa-arrow-left"></i></a>
-            <h2>도서 상세 - ${bookdetail.bookTitle}</h2>
-        </div>
-    </nav>
+        <nav>
+            <div class="container">
+                <a href="javascript: history.back();"><i class="far fa-arrow-left"></i></a>
+                <h2>도서 상세 - ${bookdetail.bookTitle}</h2>
+            </div>
+        </nav>
     </header>
     <div class="wrapper">
         <div class="top-container">
@@ -77,6 +79,7 @@
                     </li>
                 </ul>
                 <div class="bookStarScore">
+                    ${bookgrade }
                     <span><i class="fas fa-star starJum01"></i></span>
                     <span><i class="fas fa-star starJum02"></i></span>
                     <span><i class="fas fa-star starJum03"></i></span>
@@ -87,18 +90,16 @@
                     <form action="/book/insertreadbook">
                         <input type="submit" value="바로보기" class="choiceBtn">
                         <input type="hidden" name="booknumber" value="${bookdetail.bookNum }">
+                        <input type="button" value="다운로드" class="choiceBtn">
+                        <input type="button" value="종이책 구매" class="choiceBtn">
                     </form>
-                    <input type="button" value="다운로드" class="choiceBtn">
-                    <input type="button" value="종이책 구매" class="choiceBtn">
                 </div>
                 <div class="likeChk">
                     <a href="#" id="modalOpen">
                         <span class="likePeople">
-                            <c:forEach var="p" items="${likepeople}">
-                                <i class="far fa-user-circle prof"></i>
-                                <i class="far fa-user-circle prof"></i>
-                                <i class="far fa-user-circle prof"></i>${p.memberNickName }
-                            </c:forEach>
+                            <i class="far fa-user-circle prof"></i>
+                            <i class="far fa-user-circle prof"></i>
+                            <i class="far fa-user-circle prof"></i>
                         </span>
                     </a>
                     <span class="likeBtn">
@@ -107,19 +108,22 @@
                         </div>
                         <div class="heartC">
                             <!-- <c:if test="${id != null}"> -->
-                            <form action="/book/insertlike">
-                                <input type="checkbox" id="heartClick">
-                            </form>
                             <c:choose>
                                 <c:when test="${likecheck }">
-                                    <label for="heartClick">
-                                        <i class="fa fa-heart" aria-hidden="true"></i>
-                                    </label>
+                                    <form action="/book/insertlike">
+                                        <input type="checkbox" id="heartClick">
+                                        <label for="heartClick">
+                                            <i class="far fa-heart"></i>
+                                        </label>
+                                    </form>
                                 </c:when>
                                 <c:otherwise>
-                                    <label for="heartClick">
-                                        <i class="far fa-heart" aria-hidden="true"></i>
-                                    </label>
+                                    <form action="/book/insertlike">
+                                        <input type="checkbox" id="heartClick">
+                                        <label for="heartClick">
+                                            <i class="fa fa-heart"></i>
+                                        </label>
+                                    </form>
                                 </c:otherwise>
                             </c:choose>
                             <!-- </c:if> -->
@@ -133,16 +137,19 @@
                         <p> <i class="far fa-laugh-beam"></i> 좋아요한 사람들 </p>
                         <div class="allList">
                             <div class="likeList">
-                                <ul>
-                                    <li> <span><img id="myFaceImage"
-                                                src="NationalBookstore/src/main/webapp/resources/images/myLibrary/picture1.png">
-                                        </span>
-                                        <span>
-                                            <a>지혜로운 셀럽님</a> <br>
-                                            <a>by 아이디</a>
-                                </ul> </span>
-                                </li>
-                                </ul>
+                                <c:forEach var="p" items="${likepeople}">
+                                    <ul>
+                                        <li> <span>
+                                                <img id="myFaceImage"
+                                                    src="${pageContext.request.contextPath }/resources/images/myLibrary/picture1.png">
+                                            </span>
+                                            <span>
+                                                <a>지혜로운 셀럽님</a> <br>
+                                                <a>by ${p.memberNickName }</a>
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </c:forEach>
                                 <!-- forEach, ajax  좋아요한 사람들 불러올거임-->
                             </div>
                             <!-- likelist end -->
@@ -245,44 +252,45 @@
                         ${r.reviewTitle }<br />
                         ${r.reviewContent }
                     </c:forEach>
-                    <!--  	 <div class="reviewDetail"> 
-                <table>
-                    <tbody>
-             <c:forEach var="r" items="${bookreview}">
-                    <tr>
-                        <td>★★★★☆</td>
-                        <td>abc1234</td>
-                        <td>2019/11/09</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3">${r.reviewTitle }</td>
-                    </tr>
-                    <tr><td colspan="3"><textarea name="reviewContent" id="reviewContent">
+                    <div class="reviewDetail">
+                        <table>
+                            <tbody>
+                                <c:forEach var="r" items="${bookreview}">
+                                    <tr>
+                                        <td>★★★★☆</td>
+                                        <td>abc1234</td>
+                                        <td>2019/11/09</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">${r.reviewTitle }</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3"><textarea name="reviewContent" id="reviewContent">
                         ${r.reviewContent }
-                    </textarea></td></tr>
-                </c:forEach>
-                </tbody>
-                </table>
+                    </textarea></td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                    <input type="button" value="더보기" class="moreChk3">
+                </div>
+             
             </div>
-            <input type="button" value="더보기" class="moreChk3">
+               <div class="fifthBox">
+                    <h2> 관련 도서 </h2>
+                    <div class="similarBook">
+                        <img src="../../resources/image/similarBook.jpg" alt="error">
+                        <img src="../../resources/image/similarBook.jpg" alt="error">
+                        <img src="../../resources/image/similarBook.jpg" alt="error">
+                        <img src="../../resources/image/similarBook.jpg" alt="error">
+                        <img src="../../resources/image/similarBook.jpg" alt="error">
+                    </div>
+                </div>
+            <!-- body-container -->
         </div>
-        <div class="fifthBox">
-            <h2> 관련 도서 </h2>
-            <div class="similarBook">
-                <img src="../../resources/image/similarBook.jpg" alt="error">
-                <img src="../../resources/image/similarBook.jpg" alt="error">
-                <img src="../../resources/image/similarBook.jpg" alt="error">
-                <img src="../../resources/image/similarBook.jpg" alt="error">
-                <img src="../../resources/image/similarBook.jpg" alt="error">
-                
-            </div>
-
-        </div>
-
+        <!-- wrapper end -->
     </div>
-    <!-- body-container -->
-    </div>
-    <!-- wrapper end -->
     <script>
         $(function () {
             var cnt = 0;
@@ -453,4 +461,5 @@
     </script>
     <%@ include file="template/footer.jsp" %>
 </body>
+
 </html>

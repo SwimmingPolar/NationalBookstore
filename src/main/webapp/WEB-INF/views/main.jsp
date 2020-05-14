@@ -200,12 +200,16 @@
             </div>
             <div class="slider-indicator">
               <ul>
-                <li class="active"><label for=""><input type="radio"></label></li>
-                <li><label for=""><input type="radio"></label></li>
-                <li><label for=""><input type="radio"></label></li>
-                <li><label for=""><input type="radio"></label></li>
-                <li><label for=""><input type="radio"></label></li>
-                <li><label for=""><input type="radio"></label></li>
+              	<c:forEach begin="1" end="${todayBook.size()}" step="1" var="todayCount">
+              		<c:choose>
+              			<c:when test="${todayCount == 1 }">
+              				<li class="active"><label for=""><input type="radio"></label></li>
+              			</c:when>
+              			<c:otherwise>
+              				<li><label for=""><input type="radio"></label></li>
+              			</c:otherwise>
+              		</c:choose>
+              	</c:forEach>
               </ul>
             </div>
             <div class="slider infinite-slider">
