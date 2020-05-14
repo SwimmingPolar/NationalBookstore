@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import com.ryan.domain.book.EBookVO;
 import com.ryan.domain.book.HashtagVO;
 import com.ryan.domain.main.FilterSearchVO;
+import com.ryan.domain.main.KeywordAutoCompletionVO;
 
 public interface MainMapper {
 	
@@ -37,6 +38,12 @@ public interface MainMapper {
 	public ArrayList<EBookVO> getHashTagBook(ArrayList<HashtagVO> hashTagList);
 	
 	/////////////////////////////////////
+	
+	//검색기능 자동완성
+	public ArrayList<KeywordAutoCompletionVO> getAutoKeyword(@Param("type") String type , @Param("keyword") String keyoword);
+	//타이틀 검색일경우 해시태그 가져오기
+	public ArrayList<String> getAutoKeywordHashtag(int bookNum);
+	
 	//필터검색
 	
 	public ArrayList<EBookVO> getFilterSearch(FilterSearchVO filterSearch); 
