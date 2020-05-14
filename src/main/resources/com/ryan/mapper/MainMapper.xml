@@ -127,7 +127,7 @@
 	</select>
 	
 	<!-- 세일 -->
-	<select id="getDisCountBook">
+	<select id="getDisCountBook" resultType="com.ryan.domain.book.EBookVO">
 		<![CDATA[
 			SELECT * FROM ebook
 			WHERE book_discount > 0

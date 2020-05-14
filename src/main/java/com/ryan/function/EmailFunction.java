@@ -12,7 +12,6 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ryan.domain.member.EmailCheckVO;
@@ -77,7 +76,7 @@ public class EmailFunction {
 			
 			//받는사람
 			
-			InternetAddress to = new InternetAddress(email.getEmailAuth());
+			InternetAddress to = new InternetAddress(email.getMemberEmail());
 			
 			msg.setRecipient(Message.RecipientType.TO, to);
 			

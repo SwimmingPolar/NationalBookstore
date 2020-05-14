@@ -59,7 +59,7 @@ public class MemberController {
 		else return "회원가입 실패 페이지";		
 	}
 	
-	@RequestMapping("/signUpCheck")
+	@PostMapping("/signUpCheck")
 	public @ResponseBody Map<String, Boolean> signUpCheck(MemberVO member) {
 		
 		Map<String, Boolean> resultMap = new HashMap<String, Boolean>();
@@ -73,7 +73,7 @@ public class MemberController {
 		}
 	}
 	
-	@RequestMapping("/emailAuthentication")
+	@PostMapping("/emailAuthentication")
 	public @ResponseBody Map<String, Boolean> emailAuthenticationCodeSend(EmailCheckVO email) {
 		
 		log.info("컨트롤러" + email);
