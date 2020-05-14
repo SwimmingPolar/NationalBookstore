@@ -56,11 +56,18 @@ public class MainPageServiceImpl implements MainPageService {
 	}
 
 	@Override
-	public ArrayList<KeywordAutoCompletionVO> getAutoKeyword(String type, String keyowrd) {
+	public ArrayList<KeywordAutoCompletionVO> getAutoKeyword(String type, String keyoword) {
+		
+		ArrayList<KeywordAutoCompletionVO> keywordList = mapper.getAutoKeyword(type, keyoword);
+		
+		if(type.equals("title")) {
+			for(KeywordAutoCompletionVO keyword : keywordList) {
+				keyword.setHashTagList(mapper.getAutoKeywordHashtag(keyword.getBookNum()));
+			}
+		}
 		
 		
-		
-		return null;
+		return keywordList;
 	}
 	
 	

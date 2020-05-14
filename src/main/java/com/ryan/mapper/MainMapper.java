@@ -40,7 +40,7 @@ public interface MainMapper {
 	/////////////////////////////////////
 	
 	//검색기능 자동완성
-	public ArrayList<KeywordAutoCompletionVO> getAutoKeyword(@Param("type") String type , @Param("keyword") String keyowrd);
+	public ArrayList<KeywordAutoCompletionVO> getAutoKeyword(@Param("type") String type , @Param("keyword") String keyoword);
 	//타이틀 검색일경우 해시태그 가져오기
 	public ArrayList<String> getAutoKeywordHashtag(int bookNum);
 	

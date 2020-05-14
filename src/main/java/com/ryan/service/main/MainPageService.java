@@ -28,7 +28,7 @@ public interface MainPageService {
 	//세일
 	public ArrayList<EBookVO> getDisCountBook();
 	
-	public ArrayList<KeywordAutoCompletionVO> getAutoKeyword(String type ,String keyowrd);
+	public ArrayList<KeywordAutoCompletionVO> getAutoKeyword(String type ,String keyoword);
 	
 	//필터 예시
 	public ArrayList<EBookVO> getFilterSearch(FilterSearchVO filterSearch); 
