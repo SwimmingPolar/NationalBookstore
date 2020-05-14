@@ -99,32 +99,4 @@ INSERT reply
 		WHERE member_email = #{memberEmail}
 		ORDER BY board_num
 </select>
-
-<insert id="insertFile" parameterType="com.admin.domain.board.FileVO">
-INSERT file_Board
-		(
-			file_num,
-			board_num,
-			origin_file_name,
-			stored_file_name
-		)
-		VALUES
-		(
-			fileNum.NEXTVAL,
-			#{boardNum},
-			#{originFileName},
-			#{storedFileName}
-		)
-</insert>
-
-<delete id="deleteFile" parameterType="int">
-		DELETE FROM file_Board
-		WHERE board_num = #{boardNum}
-</delete>
-
-<delete id="deleteAllFiles" parameterType="int">
-		DELETE FROM file_Board
-		WHERE board_num = #{boardNum}
-</delete>
-
 </mapper>
