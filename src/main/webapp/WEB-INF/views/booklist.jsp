@@ -6,11 +6,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=0.5" charset="UTF-8">
-<link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>전체 도서</title>
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Black+Han+Sans|Nanum+Gothic|Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap"
+    rel="stylesheet" />
+  <!-- Fontawesome API -->
+  <script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
+  <!--
+    Available Fonts
+    Main Font:
+    font-family: 'Kaushan Script', cursive;
+
+    Article Choices:
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+
+    Korean Font:
+    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'Black Han Sans', sans-serif;
+    font-family: 'Nanum Gothic', sans-serif;
+    -->
+  <!-- css reset -->
+  <link rel="stylesheet" href="../../resources/styles/reset.css" />
+  <!-- individual page stylesheet -->
+	<link rel="stylesheet" href="../../resources/styles/booklist.css" />
+  <link rel="stylesheet" href="../../resources/styles/common.css" />
 <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
-<script src="resources/script/common.js" ></script>
-<script src="resources/script/booklist.js" ></script>
+<script src="../../resources/js/common.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		var currentpage = "${param.page }";
@@ -79,17 +104,25 @@
 		})
 	});
 </script>
-<link rel="stylesheet" type="text/css" href="../../resources/styles/reset.css" />
-<link rel="stylesheet" type="text/css" href="../../resources/styles/booklist.css" />
 <title>Insert title here</title>
 </head>
 <body>
-	<div class="header" >
+	<!-- <div class="header" >
 		<div class="title" >
 			<h3><a href="booklist">전체 책</a></h3>
 			<a href="/" ><button class="btn history" ><</button></a>
 		</div>
-	</div>
+	</div> -->
+	<header class="topbar">
+		<nav>
+			<div class="container">
+				<a href="/"><i class="far fa-arrow-left"></i></a>
+				<h2>전체 도서</h2>
+			</div>
+		</nav>
+	</header>
+	<div class="main-container" >
+	
     <div class="sort" >
     	<form action="booklist" method="GET" >
 		   	<span>정렬 방식 : </span>
@@ -100,7 +133,7 @@
 			<input type="hidden" name="sub_genre" value="${param.sub_genre }" />
 	   	</form>
     </div>
-	<div class="nav" >
+	<div class="nav fadeInUp" >
 		<form action="booklist" method="get">
 			<input type="hidden" name="sort" value="${param.sort }" />
 			<span>장르</span>
@@ -130,7 +163,7 @@
 			</ul>
 		</form>
 	</div>
-	<div class="container" >
+	<div class="container fadeInUp" >
 		<div class="content">
 			<div class="books" >
 				<c:choose>
@@ -154,7 +187,7 @@
 				</c:choose>
 			</div>
 		</div>
-		<div class="page" >
+		<div class="page fadeInUp" >
 			<form action="booklist" method="GET">
 				<input type="hidden" name="genre" value="${param.genre }" />
 				<input type="hidden" name="sub_genre" value="${param.sub_genre }" />
@@ -167,5 +200,7 @@
 			</form>
 		</div>
 	</div>
+	</div>
+	<%@ include file="template/footer.jsp" %>
 </body>
 </html>
