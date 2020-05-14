@@ -60,32 +60,31 @@
     </ul> 
     
         <div class ="bookStarScore">
+        	${bookgrade }
             <span><i class="fas fa-star starJum01"></i></span>
             <span><i class="fas fa-star starJum02"></i></span>
             <span><i class="fas fa-star starJum03"></i></span>
             <span><i class="fas fa-star starJum04"></i></span>
             <span><i class="fas fa-star starJum05"></i></span>
-    </div>
+   		 </div>
 
     <div class="choiceBtnOne">
     	<form action="/book/insertreadbook">
         	<input type="submit" value="바로보기" class="choiceBtn">
         	<input type="hidden" name="booknumber" value="${bookdetail.bookNum }">
+        	<input type="button" value="다운로드" class="choiceBtn">
+     		<input type="button" value="종이책 구매" class="choiceBtn">		
        	</form>
-        <input type="button" value="다운로드" class="choiceBtn">
-        <input type="button" value="종이책 구매" class="choiceBtn">
+
 
     </div>
     <div class ="likeChk">
     
         <a href="#" id="modalOpen">
         <span class="likePeople">
-             <c:forEach var="p" items="${likepeople}">
            		 <i class="far fa-user-circle prof" ></i>
            		 <i class="far fa-user-circle prof" ></i>
-           		 <i class="far fa-user-circle prof" ></i>${p.memberNickName }
-             </c:forEach>
-          
+           		 <i class="far fa-user-circle prof" ></i>       
         </span>
       
     </a>
@@ -94,46 +93,47 @@
           	  <input type="text" value="${booklike}" id='countNum' size='5' >
             </div>
             <div class="heartC">
-            <!-- <c:if test="${id != null}"> -->
-            <form action="/book/insertlike">
-            	<input type="checkbox" id="heartClick">             
-            </form>            
+
             	<c:choose>
             	<c:when test="${likecheck }">
-            	<label for="heartClick">
-                	<i class="fa fa-heart" aria-hidden="true"></i>
-                </label>
+            	 <form action="/book/insertlike">
+            		<input type="checkbox" id="heartClick">  
+            		<label for="heartClick">
+                	<i class="far fa-heart" aria-hidden="true"></i>
+                </label>           
+            	</form>   
             	</c:when>
             	<c:otherwise>
-            	<label for="heartClick">
-                	<i class="far fa-heart" aria-hidden="true"></i>
+            	   <form action="/book/insertlike">
+            		<input type="checkbox" id="heartClick">  
+          			  <label for="heartClick">
+                	<i class="fa fa-heart" aria-hidden="true"></i>
                 </label>
+                </form>   
             	</c:otherwise>                
                 </c:choose>               
-           
-          <!-- </c:if> -->
             </div>
         </span>
 	
     </div>  
     <!-- likeChk end -->
 <div id ="modalGo" class="modal">
-    
+
     <div class="modal_content">
     <p> <i class="far fa-laugh-beam"></i> 좋아요한 사람들 </p>
         <div class="allList">
     <div class = "likeList"> 
-
+	   <c:forEach var="p" items="${likepeople}">
       <ul>
           <li> <span><img id="myFaceImage" src="NationalBookstore/src/main/webapp/resources/images/myLibrary/picture1.png" >
           </span>
           <span> 
               <a>지혜로운 셀럽님</a> <br>
-              <a>by 아이디</a>
+              <a>by ${p.memberNickName}</a>
           </ul> </span> 
         </li>
       </ul>
-      
+      </c:forEach>
         <!-- forEach, ajax  좋아요한 사람들 불러올거임-->
     </div>
 <!-- likelist end -->
@@ -331,7 +331,7 @@ $(function() {
                 
             },
 
-            success: function () {
+            success: function (data) {
                 heartCount();
             },
         })
@@ -352,7 +352,7 @@ $(function() {
         },
     
         })
-    };
+    });
 
     heartCount();
 

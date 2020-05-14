@@ -17,7 +17,7 @@
 
 <select id="bookLike" resultType="_int">
 	<![CDATA[
-		SELECT NVL(sum(like_num),0) FROM book_Like WHERE book_num=#{bookNum}
+		SELECT NVL(count(like_num),0) FROM book_Like WHERE book_num=#{bookNum}
 	]]>
 	
 </select>
