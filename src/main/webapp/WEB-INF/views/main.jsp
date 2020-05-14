@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -11,7 +11,7 @@
   <link
     href="https://fonts.googleapis.com/css?family=Black+Han+Sans|Nanum+Gothic|Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap"
     rel="stylesheet" />
-  <!-- Fontawesome API -->
+  <!-- Fontawesome API-->
   <script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
   <!--
     Available Fonts
@@ -24,10 +24,12 @@
     font-family: 'Montserrat', sans-serif;
 
     Korean Font:
+    font-family: '맑은 고딕', sans-serif;
     font-family: 'Noto Sans KR', sans-serif;
     font-family: 'Black Han Sans', sans-serif;
     font-family: 'Nanum Gothic', sans-serif;
     -->
+
   <!-- css reset -->
   <link rel="stylesheet" href="../../resources/styles/reset.css" />
   <!-- individual page stylesheet -->
@@ -56,8 +58,8 @@
           </div>
           <form action="#" method="get">
             <button><span class="far fa-search"></span></button>
-            <input class="hasResult" name="query" type="text" placeholder="제목, 저자, 해쉬태그 검색" autocomplete="off" spellcheck="false">
-            <input type="hidden" name="filter" value="title">
+            <input class="hasResult" name="keyword" type="text" placeholder="제목, 저자, 해쉬태그 검색" autocomplete="off" spellcheck="false">
+            <input type="hidden" name="type" value="title">
             <div class="search-result hasResult">
               <ul>
                 <li>아이언</li>
@@ -90,7 +92,7 @@
               '저자': 'author',
               '해쉬태그': 'hashtag'
             };
-            const filterHiddenInput = document.querySelector('.search-wrapper input[name="filter"]');
+            const filterHiddenInput = document.querySelector('.search-wrapper input[name="type"]');
 
             filterList.addEventListener('click', event => {
               filterList.classList.toggle('active');
@@ -198,16 +200,20 @@
             </div>
             <div class="slider-indicator">
               <ul>
-                <li class="active"><label for=""><input type="radio"></label></li>
-                <li><label for=""><input type="radio"></label></li>
-                <li><label for=""><input type="radio"></label></li>
-                <li><label for=""><input type="radio"></label></li>
-                <li><label for=""><input type="radio"></label></li>
-                <li><label for=""><input type="radio"></label></li>
+              	<c:forEach begin="1" end="${todayBook.size()}" step="1" var="todayCount">
+              		<c:choose>
+              			<c:when test="${todayCount == 1 }">
+              				<li class="active"><label for=""><input type="radio"></label></li>
+              			</c:when>
+              			<c:otherwise>
+              				<li><label for=""><input type="radio"></label></li>
+              			</c:otherwise>
+              		</c:choose>
+              	</c:forEach>
               </ul>
             </div>
             <div class="slider infinite-slider">
-            	<c:forEach var="today" items="${todayBook }">
+            	<c:forEach var="today" items="${todayBook}">
             		<div class="slide infinite-slide"><a href="${pageContext.request.contextPath}/book/bookdetail?booknumber=${today.bookNum} " src="#"><img src="${pageContext.request.contextPath }${today.bookThumbnail}" alt="" width="250px" height="320px"></a></div>
             	</c:forEach>
             </div>
@@ -332,7 +338,7 @@
         <h2 class="section-heading">
           <div class="clock">
             <i class="fas fa-clock"></i>
-            <span>10시 13분</span>
+            <span></span>
           </div>
           사람들이 많이 읽은 책
         </h2>
@@ -393,8 +399,8 @@
             </div>
             <div class="category-filter">
               <ul>
-                <li class="selected"><button type="button">종합</button></li>
-                <li><button type="button">소설</button></li>
+                <li><button type="button">종합</button></li>
+                <li class="selected"><button type="button">소설</button></li>
                 <li><button type="button">트렌딩</button></li>
                 <li><button type="button">교양</button></li>
               </ul>
@@ -409,20 +415,22 @@
               
               console.log('ajax fired: time=' + timeFilter + '&category=' + categoryFilter);
 
-              // const xhr = new XMLHttpRequest();
-              // xhr.open('GET', 'controller-url');
-              // xhr.onreadystatechange = () => {
-              //   if (!(xhr.readyState === 4 && xhr.status === 200)) return;
+              const xhr = new XMLHttpRequest();
+              xhr.open('GET', '/best-seller');
+              xhr.onreadystatechange = () => {
+                if (!(xhr.readyState === 4 && xhr.status === 200)) return;
 
-              //   const result = JSON.parse(xhr.response);
-
-              //   // ajax 작업
-              //   // ajax 작업
-              //   // ajax 작업
-              // };
-              // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-              // xhr.send('time=' + timeFilter + '&category=' + categoryFilter);
+                // const result = JSON.parse(xhr.response);
+                  console.table(JSON.parse(xhr.response));
+              };
+              xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+              xhr.send('time=' + timeFilter + '&category=' + categoryFilter);
             }
+            // initiate best seller list fetch
+            $(document).ready(function() {
+              updateBestSeller();
+            });
+            // add time filter click event
             $(document).ready(function() {
               const filterList = document.querySelector('.best-seller .time-filter ul');
               const filterMenus = ['월간', '일간', '주간', '연간'];
@@ -450,6 +458,7 @@
                 }
               });
             });
+            // add category filter click event
             $(document).ready(function() {
               const filterButtonContainer = document.querySelector('.best-seller .category-filter ul');
               const filterButtons = [...(document.querySelectorAll('.best-seller .category-filter li'))];
@@ -487,202 +496,6 @@
                   </div>
                 </a>
               </li>
-              <li>
-                <a href="#">
-                  <div class="thumbnail-wrapper">
-                    <img src="https://via.placeholder.com/100x150" alt="">
-                  </div>  
-                  <div class="text-wrapper">
-                    <div class="meta-data">
-                      <h3>2</h3>
-                      <strong>title</strong>
-                      <span>author  </span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li class="flexible-slide">
-                <a href="#">
-                  <div class="thumbnail-wrapper">
-                    <img src="https://via.placeholder.com/100x150" alt="">
-                  </div>  
-                  <div class="text-wrapper">
-                    <div class="meta-data">
-                      <h3>3</h3>
-                      <strong>title</strong>
-                      <span>author  </span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <div class="thumbnail-wrapper">
-                    <img src="https://via.placeholder.com/100x150" alt="">
-                  </div>  
-                  <div class="text-wrapper">
-                    <div class="meta-data">
-                      <h3>4</h3>
-                      <strong>title</strong>
-                      <span>author  </span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li class="flexible-slide">
-                <a href="#">
-                  <div class="thumbnail-wrapper">
-                    <img src="https://via.placeholder.com/100x150" alt="">
-                  </div>  
-                  <div class="text-wrapper">
-                    <div class="meta-data">
-                      <h3>5</h3>
-                      <strong>title</strong>
-                      <span>author  </span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <div class="thumbnail-wrapper">
-                    <img src="https://via.placeholder.com/100x150" alt="">
-                  </div>  
-                  <div class="text-wrapper">
-                    <div class="meta-data">
-                      <h3>6</h3>
-                      <strong>title</strong>
-                      <span>author  </span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li class="flexible-slide">
-                <a href="#">
-                  <div class="thumbnail-wrapper">
-                    <img src="https://via.placeholder.com/100x150" alt="">
-                  </div>  
-                  <div class="text-wrapper">
-                    <div class="meta-data">
-                      <h3>7</h3>
-                      <strong>title</strong>
-                      <span>author  </span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <div class="thumbnail-wrapper">
-                    <img src="https://via.placeholder.com/100x150" alt="">
-                  </div>  
-                  <div class="text-wrapper">
-                    <div class="meta-data">
-                      <h3>8</h3>
-                      <strong>title</strong>
-                      <span>author  </span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li class="flexible-slide">
-                <a href="#">
-                  <div class="thumbnail-wrapper">
-                    <img src="https://via.placeholder.com/100x150" alt="">
-                  </div>  
-                  <div class="text-wrapper">
-                    <div class="meta-data">
-                      <h3>9</h3>
-                      <strong>title</strong>
-                      <span>author  </span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <div class="thumbnail-wrapper">
-                    <img src="https://via.placeholder.com/100x150" alt="">
-                  </div>  
-                  <div class="text-wrapper">
-                    <div class="meta-data">
-                      <h3>10</h3>
-                      <strong>title</strong>
-                      <span>author  </span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li class="flexible-slide">
-                <a href="#">
-                  <div class="thumbnail-wrapper">
-                    <img src="https://via.placeholder.com/100x150" alt="">
-                  </div>  
-                  <div class="text-wrapper">
-                    <div class="meta-data">
-                      <h3>11</h3>
-                      <strong>title</strong>
-                      <span>author  </span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <div class="thumbnail-wrapper">
-                    <img src="https://via.placeholder.com/100x150" alt="">
-                  </div>  
-                  <div class="text-wrapper">
-                    <div class="meta-data">
-                      <h3>12</h3>
-                      <strong>title</strong>
-                      <span>author  </span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li class="flexible-slide">
-                <a href="#">
-                  <div class="thumbnail-wrapper">
-                    <img src="https://via.placeholder.com/100x150" alt="">
-                  </div>  
-                  <div class="text-wrapper">
-                    <div class="meta-data">
-                      <h3>13</h3>
-                      <strong>title</strong>
-                      <span>author  </span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <div class="thumbnail-wrapper">
-                    <img src="https://via.placeholder.com/100x150" alt="">
-                  </div>  
-                  <div class="text-wrapper">
-                    <div class="meta-data">
-                      <h3>14</h3>
-                      <strong>title</strong>
-                      <span>author  </span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li class="flexible-slide">
-                <a href="#">
-                  <div class="thumbnail-wrapper">
-                    <img src="https://via.placeholder.com/100x150" alt="">
-                  </div>  
-                  <div class="text-wrapper">
-                    <div class="meta-data">
-                      <h3>15</h3>
-                      <strong>title</strong>
-                      <span>author  </span>
-                    </div>
-                  </div>
-                </a>
-              </li>
             </ul>
           </div>
         </div>
@@ -691,8 +504,8 @@
         <h2 class="section-heading">빈 책장을 채우는 기회</h2>
         <div class="content-wrapper">
           <h3><span class="fal fa-file-check"></span>이달의 할인</h3>
-          <div class="list-container slider-wrapper flexible-slider-window">
-            <ul class="slider flexible-slider"> 
+          <div class="list-container flexible-slider-window">
+            <ul class="flexible-slider"> 
               <c:forEach var="disCount" items="${disCountBook }">
               			<li class="flexible-slide">
                 			<a href="${pageContext.request.contextPath}/book/bookdetail?booknumber=${disCount.bookNum}">
@@ -1209,6 +1022,6 @@ Mollit et velit minim qui reprehenderit labore irure Lorem do consequat elit.</p
       [ul, li].forEach(element => element.classList.add('active'));
     });
   </script>
-	<%@ include file="template/footer.jsp" %>
+  <%@ include file="template/footer.jsp" %>
 </body>
 </html>

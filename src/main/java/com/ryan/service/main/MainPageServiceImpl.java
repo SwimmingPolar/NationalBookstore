@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ryan.domain.book.EBookVO;
 import com.ryan.domain.main.FilterSearchVO;
+import com.ryan.domain.main.KeywordAutoCompletionVO;
 import com.ryan.mapper.MainMapper;
 
 import lombok.Setter;
@@ -52,6 +53,21 @@ public class MainPageServiceImpl implements MainPageService {
 	@Override
 	public ArrayList<EBookVO> getDisCountBook() {
 		return mapper.getDisCountBook();
+	}
+
+	@Override
+	public ArrayList<KeywordAutoCompletionVO> getAutoKeyword(String type, String keyoword) {
+		
+		ArrayList<KeywordAutoCompletionVO> keywordList = mapper.getAutoKeyword(type, keyoword);
+		
+		if(type.equals("title")) {
+			for(KeywordAutoCompletionVO keyword : keywordList) {
+				keyword.setHashTagList(mapper.getAutoKeywordHashtag(keyword.getBookNum()));
+			}
+		}
+		
+		
+		return keywordList;
 	}
 	
 	
