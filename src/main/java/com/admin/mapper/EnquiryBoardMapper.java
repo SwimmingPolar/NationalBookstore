@@ -42,7 +42,17 @@ public interface EnquiryBoardMapper {
 	//해당게시물 리플 리스트
 	public ArrayList<ReplyVO> selectReplyList(int boardNum);
 	
+	
 	public ArrayList<EnquiryBoardVO> selectLastSeqNum(EnquiryBoardVO enquiry);
 	
+	//파일 등록
 	public int insertFile(FileVO file);
+	
+	//파일 삭제
+	public int deleteFile(int fileNum);
+	
+	//해당게시물 모든 파일 삭제
+	public int deleteAllFiles(int boardNum);
+	
+	
 }

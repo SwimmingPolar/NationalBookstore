@@ -1,5 +1,9 @@
 package com.admin.controller;
 
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,12 +29,12 @@ public class NoticeBoardcontroller {
 	}
 	
 	@RequestMapping(value="/write", method=RequestMethod.POST)
-	public String noticeWrite(NoticeBoardVO notice,MultipartFile uploadFile) {
+	public String noticeWrite(NoticeBoardVO notice,MultipartFile uploadFile,HttpServletRequest request,ArrayList<MultipartFile> files) {
 		boolean flag = service.noticeWrite(notice);
-		
-		if(flag) {
+		if(flag&&notice!=null&&files.isEmpty()&&files.size()>0) {
+			String path = request.getSession().getServletContext().getRealPath("\\")+"\\NationalBookstore\\src\\main\\webapp\\resources\\noticeFile";
+			boolean flag2=false;
 			
-				
 		}
 		
 		return "";

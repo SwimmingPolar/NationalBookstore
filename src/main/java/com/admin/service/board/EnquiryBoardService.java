@@ -29,7 +29,11 @@ public interface EnquiryBoardService {
 	//선택 문의사항 파일리스트 반환
 	public ArrayList<FileVO> selectEqFileList(int boardNum);
 	
+	//파일등록
 	public boolean insertFiles(EnquiryBoardVO enquiry,ArrayList<MultipartFile> files,String path) throws IOException;
+	
+	//파일삭제
+	public boolean deleteFile(int fileNum);
 	
 	//리블 작성
 	public boolean replyWrite(ReplyVO reply);

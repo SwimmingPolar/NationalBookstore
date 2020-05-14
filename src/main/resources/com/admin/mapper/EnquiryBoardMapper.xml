@@ -117,4 +117,14 @@ INSERT file_Board
 		)
 </insert>
 
+<delete id="deleteFile" parameterType="int">
+		DELETE FROM file_Board
+		WHERE board_num = #{boardNum}
+</delete>
+
+<delete id="deleteAllFiles" parameterType="int">
+		DELETE FROM file_Board
+		WHERE board_num = #{boardNum}
+</delete>
+
 </mapper>
