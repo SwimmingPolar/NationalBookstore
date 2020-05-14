@@ -28,7 +28,7 @@
 
 <div class="myNickname">
         <a> ${ryanMember.memberNickName } </a> 님의 서재 
-        <a> ${ryanMember.memberEmail } </a>
+      <%--   <a> ${ryanMember.memberEmail } </a> --%>
 </div>
 </div>
 
@@ -83,7 +83,7 @@
             			
             			<tr>
                 <td><input type="checkbox" name="chkbox" id="chkbox"></td>
-                <td><img src="../../resources/images/myLibrary/book02.jpg" ></td>
+                <td><img src="${pageContext.request.contextPath }${readbook.bookThumbnail }" ></td>
                 <td>
                   <ul>
                     <li> <strong>${readbook.bookTitle}</strong> </li>
@@ -96,10 +96,6 @@
 
                 
               </tr>
-
-              <tr>
-                <td colspan="4"> </td>
-              </tr>	
             	 	</c:forEach>   	
             	 	</table>		
            		</c:when>
@@ -113,15 +109,14 @@
            </c:choose>
             	
         </div>
-     
+        </div>
+    </div> 
     <div class="content two">
         <div class="mybookTitle">
             <a>${libcount}</a> 개의 책장
         </div>
-    
         <div class="makeNewBook">
             <div class="mybook_Content">
-
              <c:choose>
            		<c:when test="${libbooklist.size() >0 }">
            			<c:forEach var="book" items="${libbooklist }">
@@ -187,11 +182,11 @@
             </select>
             <div class ="bookStarScore">
                 <b>별점 등록</b>     
-                <span><i class="fas fa-star starJum01"></i></span>
-                <span><i class="fas fa-star starJum02"></i></span>
-                <span><i class="fas fa-star starJum03"></i></span>
-                <span><i class="fas fa-star starJum04"></i></span>
-                <span><i class="fas fa-star starJum05"></i></span>
+                <span id="starJum01"><i class="fas fa-star starJum01"></i></span>
+                <span id="starJum02"><i class="fas fa-star starJum02"></i></span>
+                <span id="starJum03"><i class="fas fa-star starJum03"></i></span>
+                <span id="starJum04"><i class="fas fa-star starJum04"></i></span>
+                <span id="starJum05"><i class="fas fa-star starJum05"></i></span>
                 <b> 점</b>
             </div>
             <div class="postImgFile">  

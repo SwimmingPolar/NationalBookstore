@@ -79,7 +79,6 @@
                     </li>
                 </ul>
                 <div class="bookStarScore">
-                    ${bookgrade }
                     <span><i class="fas fa-star starJum01"></i></span>
                     <span><i class="fas fa-star starJum02"></i></span>
                     <span><i class="fas fa-star starJum03"></i></span>
@@ -88,8 +87,8 @@
                 </div>
                 <div class="choiceBtnOne">
                     <form action="/book/insertreadbook">
+                  		<input type="hidden" name="booknumber" value="${bookdetail.bookNum }">
                         <input type="submit" value="바로보기" class="choiceBtn">
-                        <input type="hidden" name="booknumber" value="${bookdetail.bookNum }">
                         <input type="button" value="다운로드" class="choiceBtn">
                         <input type="button" value="종이책 구매" class="choiceBtn">
                     </form>
