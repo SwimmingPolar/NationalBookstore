@@ -1,29 +1,24 @@
-
-body {
-    background-color: #f1f1f1;
-
+li {
+    list-style:none;
 }
 
-a{
+a {
     text-decoration: none;
 }
 
-li{
-    list-style: none;
+.tabWrapper {
 
-}
+    width:800px;
+    margin:0 auto;
 
-.choiceOrders h3 {
-    padding-left:10px;
-    color:gray;
 }
 
 .newItemInsert {
     /* display:inline-block; */
     /* border:2px solid blue; */
-    margin-left: 240px;
+    /* margin-left: 240px; */
     display: flex;
-    width:80%;
+    width:100%;
     flex-direction: column;
     /* border:2px solid blue; */
 
@@ -64,32 +59,39 @@ li{
 }
 
 
-.tabContent {
-    /* border:2px solid red; */
-    
-    border:1px solid lightgray;
-    margin:2px 0 0 3px;
-    box-shadow: 0 0 10px rgba(0,0,0,.05);
-    
-}
-
-
-
 .orderTable table {
-    background-color:#ffffff;
+    background-color:white;
     width: 100%;
     /* box-shadow: 0 0 10px rgba(0,0,0,.05); */
     /* margin:20px; */
     margin-bottom:10px;
     text-align: left;
+    border:1px solid #e8e8e8;
+    /* border: 1px solid rgba(0, 153, 255, 0.205); */
+    border-radius: 5px;
+    margin-top:10px;
+    margin:0 auto;
+    text-indent:20px;
 }
 
+.orderTable table table ul{
+    margin:0;
+    padding:0;
+}
+
+.orderTable table ul li {
+    display:flex;
+    
+    justify-content: space-between;
+}
 
 .orderTable table th {
     color:#888585;
     font-weight: normal;
     padding:10px;
-    border-bottom:1px solid lightgray;
+    text-align:center;
+    /* border-bottom:1px solid lightgray; */
+    background-color:#F3F4F6; 
    
 }
 
@@ -106,7 +108,7 @@ li{
 
 
 .orderTable table td {
-    background-color:#f9f9f9;
+    /* background-color:#f9f9f9; */
     padding:10px 10px 30px 10px;
     /* padding:20px; */
     /* border-left:1px solid #f9f9f9;
@@ -126,15 +128,37 @@ li{
     padding:10px;
 
 } */
-
-
-.choiceOrders {
-    /* border:2px solid red; */
-    border-bottom:1px solid #e8e8e8;
+.adjustHere img {
+    width :90px;
 }
 
-.orderTable {
+.adjustHere span {
+    vertical-align: center;
+}
+
+
+
+.orderTable table button {
     /* border:2px solid pink; */
+    width:80px;
+    height: 40px;
+    font-size: 15px;
+    border-radius: 7px;
+    border:1px solid #0099FF;
+    background-color:white;
+    color: #0099ff;
+    cursor: pointer;
+    display:block;
+    margin-top:5px;
+    outline:none;
+    
+}
+
+.orderTable table button:hover {
+    font-weight:bold;
+    background-color:#F3F4F6;
+   
+
 }
 
 .orderTable .statusChk {
@@ -146,10 +170,6 @@ li{
 
     color:rgb(170, 167, 167);
     font-size: 13px;
-}
-
-.endbtnOrders {
-    /* border:2px solid yellow; */
 }
 
 .orderTable select {
@@ -164,6 +184,8 @@ li{
 .orderTable input[type="button"] {
     width: 50px;
     height: 30px;
+    outline:none;
+
 }
 
 .orderTable input[type="button"]:hover {
@@ -189,29 +211,6 @@ li{
     text-align: center;
     }
 
-.choiceStatus {
-    padding: 10px 10px 10px 50px;
-}
-
-.choiceStatus select{
-
-    width:100px;
-    height: 35px;
-}
-.choiceStatus input[type="button"] {
-
-    width:50px;
-    height: 35px;
-
-}
-
-.choiceStatus input[type="button"]:hover {
-
-    background-color: #0099FF;
-    color:white;
-    font-weight: bold;
-    border:none;
-}
 
 .orderTable span > a {
     /* display: block; */
@@ -225,34 +224,4 @@ li{
 .adjustHere span:nth-child(1) {
     color:rgb(27, 122, 177);
 }  
-
-.statusChk ul li {
-
-    border:none;
-    padding: 0 10px 0 10px;
-    position: relative;
-    background-color: #f1f1f1;
-    
-}
-
-.statusChk ul li::before {
-    content:'';
-    width:1px;
-    height:14px;
-    top:50%;
-    left:0;
-    margin-top:-7px;
-    background-color:lightgray;
-    position: absolute;
-    
-}
-
-.statusChk ul li:nth-child(1)::before {
-    display:none;
-}
-
-.statusChk ul li a:hover {
-    font-weight: bold;
-}
-
 

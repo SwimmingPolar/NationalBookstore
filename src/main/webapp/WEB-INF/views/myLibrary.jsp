@@ -12,23 +12,28 @@
 <link rel="stylesheet" href="../../resources/styles/myLibrary.css">
 </head>
 <body>
+<header class="topbar">
+        <nav>
+          <div class="container">
+            <a href="javascript: history.back();"><i class="far fa-arrow-left"></i></a>
+            <h2>내 서재</h2>
+          </div>
+        </nav>
+      </header>
+
 
 <div class="wrapper">
 <div class="firstColumn">
 <!-- 배경화면 넣는곳 -->
-
+<div class="bigbox">
 <div class="myImage"> 
-    <a href="#"> <i class="fas fa-user-circle"></i> </a>    
+     <a href="#modalGo" id="modalOpen"><img id="myFaceImage" src="NationalBookstore/src/main/webapp/resources/images/myLibrary/picture1.png" ></a>      
 </div>
 
 <div class="myNickname">
         <a> ${ryanMember.memberNickName } </a> 님의 서재 
         <a> ${ryanMember.memberEmail } </a>
 </div>
-
-<div class="infoSetting">
-   <a href="#"><i class="fas fa-users-cog"></i></a> 
-
 </div>
 
 <div class = "manyBtn">
@@ -42,10 +47,13 @@
 </div>
 
 <div class="goSubscribe">
-<a href="#"> 
-  <b>지금 바로 <em>정기구독</em> 을 시작하세요.</b><br>
-    목표와 함께라면 독서가 일상이 됩니다.
+<a href="goSubscribe.jsp"> 
+
+  <b> 정기구독 시작 </b><br>
+  <em> 바로가기 </em> 
+  <i class="fas fa-arrow-circle-right"></i>
 </a>
+
 
     
 </div>
@@ -63,22 +71,60 @@
         <div class="mybookTitle">
             <a>${readbookcount }</a> 권의 도서
         </div>
-        <div class="mybook_Content">
-           
+        
+   <!--      <div class="ebooks">
+          <div class="listTitle">
+            <strong> e-book 다운로드 </strong> 
+          </div>
+          <div class="totalBtn">
+            <label for="allChk">
+            <input type="checkbox" name="allChk" id="allChk"> 전체선택
+            </label>          
+          </div>
+          <div class="ebookList"> 
+            <table>
+              <tr>
+              
+                <td><input type="checkbox" name="chkbox" id="chkbox"></td>
+                <td><img src="./NationalBookstore/src/main/webapp/resources/images/myLibrary/book02.jpg" ></td>
+                <td>
+                  <ul>
+                    <li> <strong>달빛마신 소녀</strong> </li>
+                    <li> <a>shadow harry 지음</a>  리더스북</li>
+                    <li> <span>구매일: 2020.05.02</span></li>
+                  </ul>
 
+                </td>
+                <td><button type="button" id="goRead">바로보기</button></td>
+
+                
+              </tr>
+            </table>
+           <div class="bookshelf">
+             
+           </div>
+
+          </div>
+
+        </div>  -->
+        
+        
+        
            <c:choose>
            		<c:when test="${readbooklist.size() >0 }">
            			<c:forEach var="readbook" items="${readbooklist }">
             			${readbook.bookTitle} <br/>
             	 	</c:forEach>
            		</c:when>
+           		
+           		
            		<c:otherwise>
-           			<span> <i class="fas fa-books"></i></span>
-           				등록된 도서가 없습니다
+           			<div class="mybook_Content">
+           <span> <i class="fas fa-books"></i></span>
+            서재에 등록된 도서가 없습니다
+        </div>
            		</c:otherwise>
            </c:choose>
-            	
-        </div>
         
     </div>
     <div class="content two">
@@ -104,19 +150,9 @@
          </div>
         </div>
     </div>
-    <div class="content three">
+   <div class="content four">
         <div class="mybookTitle">
-            <a>0</a> 권의 종이책 주문
-        </div>
-        <div class="mybook_Content">
-            <span> <i class="fas fa-book"></i></span>
-        	     종이책 주문 정보가 존재하지 않습니다
-         </div>
-
-    </div>
-    <div class="content four">
-        <div class="mybookTitle">
-        	   나의 포스트 <a>0</a> 개
+           나의 포스트 <a>0</a> 개
         </div>
         <div class ="postInputBtn">
         <button type= "button" id = postInput onclick="openNewPost()"> <i class="fas fa-pencil-alt"></i> 포스트 작성</button>
@@ -173,7 +209,7 @@
             <div class="postImgFile">  
                 <input type="file" name="postImageFile" id="postImageFile" onchange="uploadImg(this);">
                     <div class="postImage" id="postImage">
-                        <img id ="imgimg" width=200>
+                        <img id ="imgimg">
                     </div>
                     
             </div>
@@ -193,6 +229,93 @@
     </div>
 
 </div>
+<script>
+    $(document).ready(() => {
+      const li = document.querySelector('footer.fixed a[href="my-library"]').parentElement;
+      const ul = li.parentElement;
+      [ul, li].forEach(element => element.classList.add('active'));
+    });
+  </script>
+
+<footer class="fixed">
+    <div class="container">
+      <ul>
+        <li>
+          <a href="/">
+            <i class="far fa-home-alt"></i>
+            <span>홈</span>
+          </a>
+        </li>
+        <li>
+          <a href="search">
+            <i class="far fa-search"></i>
+            <span>검색</span>
+          </a>
+        </li>
+        <li>
+          <a href="feed">
+            <i class="fad fa-stream"></i>
+            <span>피드</span>
+          </a>
+        </li>
+        <li>
+          <a href="my-library">
+            <i class="fas fa-books"></i>
+            <span>내서재</span>
+          </a>
+        </li>
+        <li>
+          <a href="my-account">
+            <i class="far fa-user"></i>
+            <span>관리</span>
+          </a>
+        </li>
+      </ul>
+      <button type="button" class="scroll-to-top">
+        <i class="fad fa-chevron-double-up"></i>
+      </button>
+      <!-- add scroll-to-top function -->
+      <script>
+        $(document).ready(function () {
+          const button = document.querySelector("footer .scroll-to-top");
+          button.addEventListener("click", () => {
+            document.documentElement.style.scrollBehavior = "smooth";
+            document.documentElement.scrollTop = 0;
+            document.documentElement.style.scrollBehavior = "";
+          });
+  
+          let timeoutID = null;
+          window.addEventListener("scroll", () => {
+            if (document.documentElement.scrollTop === 0) {
+              button.classList.remove("visible");
+              return;
+            }
+            if (!button.classList.contains("visible")) {
+              button.style.transition = "";
+              button.classList.add("visible");
+            }
+            timeoutID =
+              clearTimeout(timeoutID) ||
+              setTimeout(() => {
+                button.style.transition = "0.4s ease";
+                button.classList.remove("visible");
+              }, 1200);
+          });
+        });
+      </script>
+    </div>
+  </footer>
+  <div id ="modalGo" class="modal">
+    
+    <div class="modal_content">
+      <span class="close"><i class="fas fa-times"></i></span>
+  
+      <img src="NationalBookstore/src/main/webapp/resources/images/myLibrary/picture1.png" >
+
+    </div>
+  
+  </div>
+
 
 <script> 
 
@@ -202,7 +325,7 @@
         $(this).addClass('on').prevAll('span').addClass('on');
         $('.starJum01').click(function(){
             $('#starTxt').val($(this).length);
-            
+          
         })
     
     });
@@ -251,7 +374,7 @@
     </script>
 
 
-<!--     <script>
+    <script>
     var cnt=0;
     var array =['.starJum01'];
         $(function(){
@@ -262,9 +385,70 @@
             })
         })
 
-    </script> -->
+    </script>
 
 
+<!-- <script>
+
+  var $allChk = $('#allChk');
+  $allChk.change(function () {
+      var $this = $(this);
+      var checked = $this.prop('checked');
+      $('input[name="chkbox"]').prop('checked', checked);
+
+  });
+
+</script> -->
+
+
+<script>
+
+function 
+
+</script>
+
+<!-- <script>
+
+  $('a[href="#modalGo"]').click(function(event){
+      event.preventDefault();
+  
+      $(this).modal({
+          fadeDuration:250
+      });
+  
+  });
+  
+  </script> -->
+
+<script>
+
+  var modal = document.getElementById('modalGo');
+  var openBtn = document.getElementById('modalOpen');
+  var closeBtn = document.getElementsByClassName('close')[0];
+  
+  openBtn.onclick = function() {
+     modal.style.display = "block";
+   
+ 
+  }
+  closeBtn.onclick = function() {
+    modal.style.display = "none";
+  }
+ 
+ 
+ window.onclick = function(event){
+     if(event.target==modal) {
+         modal.style.display = "none";
+ 
+     }
+ }
+ 
+
+
+
+
+
+ </script>
 
 </body>
 </html>
