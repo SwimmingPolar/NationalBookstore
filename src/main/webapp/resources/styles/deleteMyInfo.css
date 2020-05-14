@@ -26,8 +26,8 @@ a {
     }
 
     .wrapper {
-        width:700px;
-       margin: 0 auto;
+        width: 700px;
+        margin: 0 auto;
         margin-top:100px;     
 
     }
@@ -162,29 +162,31 @@ a {
     cursor: pointer;
     border:none;
     outline:none;
-    color:#333;
+    color:white;
     font-size:16px;
     width:100%;
 }
 
 #doLater {
-    background-color:#eee;
-
+   
+    background-color:rgb(207, 207, 207);
+    
 }
 
 #goRightNow {
-    background-color: #ffeb60;
+    
+    background-color:#0099FF;
     margin-left:12px;
 
 }
 
 #doLater:hover {
 
-    background-color:rgb(223, 223, 223);
+    background-color:rgb(168, 168, 168);
 
 }
 
 #goRightNow:hover {
-    background-color: #f1dd5a;
+    background-color: rgb(4, 139, 230);
    
 }

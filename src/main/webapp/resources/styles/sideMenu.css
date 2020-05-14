@@ -1,4 +1,6 @@
+
 body{
+
 background-color: #f1f1f1;
 
 }
@@ -7,9 +9,11 @@ a {
     text-decoration: none;
 }
 
+
 li {
     list-style: none;
 }
+
 
 .sideMenu {
     width: 210px;

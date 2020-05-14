@@ -10,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.admin.domain.board.NoticeBoardVO;
 import com.admin.domain.board.PageVO;
-import com.admin.service.board.FileService;
 import com.admin.service.board.NoticeBoardService;
 
 @Controller
@@ -52,7 +51,7 @@ public class NoticeBoardcontroller {
 		return service.noticeDelete(notice)?"업로드 성공시 이동":"실패시 이동";
 	}
 	
-	//공지사항 페이지지로 들어감
+	//공지사항 페이지로 들어감
 	@RequestMapping("/page")
 	public String noticePage(Model model,@RequestParam(value="page", defaultValue="1")int page,String type) {
 		

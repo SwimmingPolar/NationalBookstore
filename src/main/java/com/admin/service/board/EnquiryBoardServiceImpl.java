@@ -1,9 +1,14 @@
 package com.admin.service.board;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.admin.domain.board.EnquiryBoardVO;
 import com.admin.domain.board.FileVO;
@@ -44,9 +49,11 @@ public class EnquiryBoardServiceImpl implements EnquiryBoardService{
 	}
 
 	@Override
-	public EnquiryBoardVO select(EnquiryBoardVO enquiry) {
-		// TODO Auto-generated method stub
-		return null;
+	public EnquiryBoardVO selectEq(int boardNum) {
+		if(mapper.numChk(boardNum)>0)
+			return mapper.selectEq(boardNum);
+		else
+			return null;
 	}
 
 	@Override
@@ -72,6 +79,22 @@ public class EnquiryBoardServiceImpl implements EnquiryBoardService{
 	@Override
 	public boolean replyUpdate(ReplyVO reply) {
 		return mapper.updateReply(reply)>0?true: false;
+	}
+
+	@Override
+	public boolean insertFiles(EnquiryBoardVO enquiry,ArrayList<MultipartFile> files,String path) throws IOException {
+		ArrayList<EnquiryBoardVO> tmp=mapper.selectLastSeqNum(enquiry);
+		boolean flag=false;
+		for(MultipartFile file : files)  {
+			FileVO vo=new FileVO();
+			vo.setBoardNum(tmp.get(tmp.size()).getBoardNum());
+			vo.setOriginFileName(file.getOriginalFilename());
+			vo.setStoredFileName(UUID.randomUUID().toString()+"_"+file.getOriginalFilename());
+			File target=new File(path,vo.getStoredFileName());
+			FileCopyUtils.copy(file.getBytes(), target);
+			flag=mapper.insertFile(vo)>0?true:false;
+		}
+		return flag;
 	}
 
 }

@@ -28,40 +28,49 @@ public class ReviewController {
 	}
 	
 	@RequestMapping("/write")
-	public String insertEbookReview(@ModelAttribute("review") ReviewVO review,HttpServletRequest request) {
+	public String insertEbookReview(@ModelAttribute("review") ReviewVO review,HttpServletRequest request,Model model) {
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("ryanMember");	
 		String memberEmail=member.getMemberEmail();
 		
 		if(memberEmail.equals((String)review.getMemberEmail())) {
 			return service.insertReview(review)? "정상입력시 갈 jsp":"실패시";
-		}else
-			return "본인 reivew가 아님";
+		}else {
+			model.addAttribute("message", "본인이 작성한 리뷰가 아닙니다");
+			return "";
+		}
 	}
 	
 	@RequestMapping("/delete")
-	public String deleteReview(HttpServletRequest request,@ModelAttribute("review")  ReviewVO review) {
+	public String deleteReview(HttpServletRequest request,@ModelAttribute("review")  ReviewVO review,Model model) {
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
 		String memberEmail=member.getMemberEmail();
 		
 		if(memberEmail.equals((String)review.getMemberEmail())) {
 			return service.delecteReview(review)? "정상삭제시 갈 jsp":"실패시";
-		}else
-			return "본인 reivew가 아님";
-		
+		}else {
+			model.addAttribute("message", "본인이 작성한 리뷰가 아닙니다");
+			return "";
+		}
 	}
 	
 	@RequestMapping("/update")
-	public String updateReview(@ModelAttribute("review") ReviewVO review,HttpServletRequest request) {
+	public String updateReview(@ModelAttribute("review") ReviewVO review,HttpServletRequest request,Model model) {
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
 		String memberEmail=member.getMemberEmail();
 		
 		if(memberEmail.equals(review.getMemberEmail())) {
-			return service.updateReview(review)? "정상수정시 갈 jsp":"실패시";
-		}else
-			return "본인 reivew가 아님";
+			if(service.updateReview(review))
+				model.addAttribute("message", "");
+			else
+				model.addAttribute("message", "본인이 작성한 리뷰가 아닙니다");
+			return "";
+		}else {
+			model.addAttribute("message", "본인이 작성한 리뷰가 아닙니다");
+			return "";
+		}
 	}
 	
 	@RequestMapping("/myReviewList")

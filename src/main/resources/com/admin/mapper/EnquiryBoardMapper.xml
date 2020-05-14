@@ -17,7 +17,7 @@ INSERT enquriry_Board
 			#{memberEmail},
 			#{boardTitle},
 			#{boardContent},
-			#{boardRegdate},
+			sysdate,
 			#{boardState}
 		)
 </insert>
@@ -54,7 +54,7 @@ INSERT reply
 			board_num,
 			writer,
 			reply_content,
-			reply_regdate,
+			reply_regdate
 		)
 		VALUES
 		(
@@ -62,7 +62,7 @@ INSERT reply
 			#{boardNum},
 			#{writer},
 			#{replyContent},
-			#{replyRegdate},
+			sysdate
 		)
 </insert>
 
@@ -82,4 +82,39 @@ INSERT reply
 		reply_regdate = #{boardRegdate},
 		WHERE reply_num = #{replyNum}
 </update>
+
+<select id="selectEq" parameterType="int">
+		SELECT * FROM enquriry_Board
+		WHERE board_num = #{boardNum}
+</select>
+
+<select id="selectReplyList" parameterType="int">
+		SELECT * FROM reply
+		WHERE board_num = #{boardNum}
+		ORDER BY reply_regdate DESC
+</select>
+
+<select id="selectLastSeqNum" parameterType="com.admin.domain.board.EnquiryBoardVO">
+		SELECT * FROM enquriry_Board
+		WHERE member_email = #{memberEmail}
+		ORDER BY board_num
+</select>
+
+<insert id="insertFile" parameterType="com.admin.domain.board.FileVO">
+INSERT file_Board
+		(
+			file_num,
+			board_num,
+			origin_file_name,
+			stored_file_name
+		)
+		VALUES
+		(
+			fileNum.NEXTVAL,
+			#{boardNum},
+			#{originFileName},
+			#{storedFileName}
+		)
+</insert>
+
 </mapper>
