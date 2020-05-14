@@ -120,7 +120,7 @@
         <nav class="lnb">
           <ul>
             <li>
-              <a href="books">
+              <a href="booklist">
                 <span>전체 도서</span>
               </a>
             </li>
