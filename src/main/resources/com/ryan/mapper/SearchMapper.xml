@@ -151,4 +151,78 @@
 		SELECT * FROM result
 		WHERE num BETWEEN ((${param3 }*12)-11) AND (${param3 }*12)
 	</select>
+	<!-- 전체 책 출력 -->
+	<select id="getFilterSearch" resultType="com.ryan.domain.book.EBookVO">
+		WITH result as
+		(SELECT e.* FROM ebook e
+		<choose>
+			<when test="genre == 0" >
+			</when>
+			<when test="genre != null">
+				, first_category f , second_category s
+				<where>
+					e.category_num = s.category_num and s.first_num = f.first_num
+					and f.first_num = #{genre }
+				</where>
+			</when>
+			<when test="sub_genre != null">
+				, second_category s
+				<where>
+					e.category_num = s.category_num
+					and s.category_num = #{sub_genre }
+				</where>
+			</when>
+		</choose>
+		<choose>
+			<when test="sort == null" >
+				ORDER BY book_title
+			</when>
+			<when test="sort == ''">
+				ORDER BY book_title
+			</when>
+			<when test="sort == 'title'">
+				ORDER BY book_title
+			</when>
+			<when test="sort == 'author'" >
+				ORDER BY book_writer
+			</when>
+			<when test="sort == 'publisher'" >
+				ORDER BY book_publisher
+			</when>
+		</choose>
+		),
+		rowresult AS
+		(SELECT ROWNUM num, r.* FROM result r)
+		SELECT * FROM rowresult
+		<choose>
+			<when test="page == null" >
+				WHERE num BETWEEN 1 AND 12
+			</when>
+			<when test="page != null" >
+				WHERE num BETWEEN TO_NUMBER(#{page })*12-11 AND TO_NUMBER(#{page })*12
+			</when>
+		</choose>
+	</select>
+	<!-- 데이터 갯수 카운트 -->
+	<select id="getFilterSearchCount" resultType="com.ryan.domain.book.EBookVO">
+		SELECT ROWNUM num, e.* FROM ebook e
+		<choose>
+			<when test="genre == 0" >
+			</when>
+			<when test="genre != null">
+				, first_category f , second_category s
+				<where>
+					e.category_num = s.category_num and s.first_num = f.first_num
+					and f.first_num = #{genre }
+				</where>
+			</when>
+			<when test="sub_genre != null">
+				, second_category s
+				<where>
+					e.category_num = s.category_num
+					and s.category_num = #{sub_genre }
+				</where>
+			</when>
+		</choose>
+	</select>
 </mapper>
