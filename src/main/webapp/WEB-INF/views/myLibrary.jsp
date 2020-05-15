@@ -124,7 +124,7 @@
                           
                           <tr>
                   <td><input type="checkbox" name="chkbox" id="chkbox"></td>
-                  <td><img src="${pageContext.request.contextPath }${readbook.bookThumbnail }" alt="없음">
+                  <td><img src="${pageContext.request.contextPath }${bookdetail.bookThumbnail }" alt="없음">
                   </td>
                   <td>
                     <ul>

@@ -384,7 +384,8 @@
             });
         });
     </script>
-    <script>
+
+    <!-- <script>
     
         var count = 0;
         $(function () {
@@ -414,7 +415,29 @@
             })
         });
         heartCount();
+
+    </script>  -->
+
+    <script>
+  $(document).ready(function(){ 
+            $('#heartClick').change(function () {
+                $.ajax({
+                    url: "/book/insertlike",
+                    type: "get",
+                    data: {
+                        booknumber: '${booknumber}'
+                    },
+                    dataType:"json",
+                    success: function (response) {
+                        $("#countNum").replaceWith("<span>"+response.booklike+"</span>");
+                    },
+                    error: function(request, error) {
+                        alert(error);
+                    },
+                });
+            })
     </script>
+
     <script>
         var modal = document.getElementById('modalGo');
         var openBtn = document.getElementById('modalOpen');
