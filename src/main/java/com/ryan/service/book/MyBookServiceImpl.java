@@ -35,7 +35,11 @@ public class MyBookServiceImpl implements MyBookService{
 	public ArrayList<EBookVO> libBook(HttpSession session) {	//찜 책장 조회
 		// TODO Auto-generated method stub		
 		MemberVO vo = (MemberVO) session.getAttribute("ryanMember");
-		ArrayList<EBookVO> list = mapper.libBook(vo.getMemberEmail());		
+		ArrayList<EBookVO> list = new ArrayList<EBookVO>();
+		if(vo != null) {
+			list = mapper.libBook(vo.getMemberEmail());
+			return list;
+		}		
 		return list;
 	}
 

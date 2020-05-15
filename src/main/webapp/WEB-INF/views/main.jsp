@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -11,7 +11,7 @@
   <link
     href="https://fonts.googleapis.com/css?family=Black+Han+Sans|Nanum+Gothic|Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap"
     rel="stylesheet" />
-  <!-- Fontawesome API -->
+  <!-- Fontawesome API-->
   <script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
   <!--
     Available Fonts
@@ -24,10 +24,12 @@
     font-family: 'Montserrat', sans-serif;
 
     Korean Font:
+    font-family: '맑은 고딕', sans-serif;
     font-family: 'Noto Sans KR', sans-serif;
     font-family: 'Black Han Sans', sans-serif;
     font-family: 'Nanum Gothic', sans-serif;
     -->
+
   <!-- css reset -->
   <link rel="stylesheet" href="../../resources/styles/reset.css" />
   <!-- individual page stylesheet -->
@@ -207,7 +209,7 @@
               </ul>
             </div>
             <div class="slider infinite-slider">
-            	<c:forEach var="today" items="${todayBook }">
+            	<c:forEach var="today" items="${todayBook}">
             		<div class="slide infinite-slide"><a href="${pageContext.request.contextPath}/book/bookdetail?booknumber=${today.bookNum} " src="#"><img src="${pageContext.request.contextPath }${today.bookThumbnail}" alt="" width="250px" height="320px"></a></div>
             	</c:forEach>
             </div>
@@ -332,7 +334,7 @@
         <h2 class="section-heading">
           <div class="clock">
             <i class="fas fa-clock"></i>
-            <span>10시 13분</span>
+            <span></span>
           </div>
           사람들이 많이 읽은 책
         </h2>
@@ -691,8 +693,8 @@
         <h2 class="section-heading">빈 책장을 채우는 기회</h2>
         <div class="content-wrapper">
           <h3><span class="fal fa-file-check"></span>이달의 할인</h3>
-          <div class="list-container slider-wrapper flexible-slider-window">
-            <ul class="slider flexible-slider"> 
+          <div class="list-container flexible-slider-window">
+            <ul class="flexible-slider"> 
               <c:forEach var="disCount" items="${disCountBook }">
               			<li class="flexible-slide">
                 			<a href="${pageContext.request.contextPath}/book/bookdetail?booknumber=${disCount.bookNum}">
@@ -1209,6 +1211,6 @@ Mollit et velit minim qui reprehenderit labore irure Lorem do consequat elit.</p
       [ul, li].forEach(element => element.classList.add('active'));
     });
   </script>
-	<%@ include file="template/footer.jsp" %>
+  <%@ include file="template/footer.jsp" %>
 </body>
 </html>

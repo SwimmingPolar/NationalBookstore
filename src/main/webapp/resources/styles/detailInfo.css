@@ -1,5 +1,4 @@
 a {
-
     text-decoration: none;
 }
 
@@ -45,7 +44,6 @@ header {
     background-color:#EEF0F4;
 }
 
-
 .imageBox img{
     max-width: 100%;
 
@@ -81,7 +79,7 @@ header {
     border-radius:5px;
     margin:10px;
     border:1px solid lightgray;
-    color:#a451f7;
+    color:#0099FF;
     /* font-weight: bold;
     color:white; */
     /* border:none; */
@@ -89,9 +87,13 @@ header {
     background-color:white;
     margin-top: 80px;
     margin-bottom: 10px;
+    outline:none;
+    cursor: pointer;
 
 
 }
+
+
 
 .choiceBtnOne input[type="button"]:hover {
     background-color:#0099FF;
@@ -152,6 +154,10 @@ header {
 
 
 }
+.firstBox h2 {
+	margin-bottom: 20px;
+}
+
 .emoTag {
     padding-top:5px;
     font-size:13px;
@@ -160,7 +166,7 @@ header {
 
 
 .tagtag {
-    border:1px solid #9268bb;
+    border:1px solid #0099FF;
     border-radius:15px;
     height:25px;
     position: relative;
@@ -186,7 +192,7 @@ header {
     height:25px;
     font-size:13px;
     color:white;
-    background-color:#9268bb;
+    background-color:#0099FF;
     border:none;
     outline:none;
     right:0;
@@ -194,6 +200,7 @@ header {
     margin-right:-1px;
     cursor: pointer;
     padding:0 12px 0 12px;
+    
 
 }
 
@@ -205,7 +212,7 @@ header {
 }
 
 .moreChk, .moreChk2, .moreChk3 {
-    
+    cursor: pointer; 
     width:100%; 
     height:50px;
     background-color:#FAFFFF;
@@ -237,14 +244,8 @@ header {
 
 }
 
-.likeChk .likeP {
-  background-image: url('https://ofbxchnhqinp910256.cdn.ntruss.com/160/468c5f2….png?type=w&w=160&quality=100');
-  width:28px;
-  height:28px;
 
-}
 
-}
 
 .likeBtn input[type="text"] {
     text-align: right;
@@ -264,6 +265,7 @@ header {
     width: 14px;
     height:14px;
     display:inline-block;
+    cursor:pointer;
 
 }
 
@@ -282,6 +284,7 @@ header {
 
 .likeBtn input[type="checkbox"]:checked + label i:last-child {
     opacity:1;
+    
 }
 
 .heartSoo {
@@ -296,10 +299,12 @@ header {
 
 }
 
-.heartSoo input {
+.heartSoo input[type="text"] {
     border:none;
     text-align: right;
+    outline:none;
 }
+
 
 
 .likePeople {
@@ -361,7 +366,10 @@ header {
 
 .likeList {
     margin-top:20px;
-    border-bottom:1px solid #e8e8e8;
+    /* border-bottom:1px solid #e8e8e8; */
+    overflow:auto;
+    height:280px;
+    
 }
 
 .allList {
@@ -417,13 +425,27 @@ header {
     position: relative;
     background-color:  #fefefe;
     margin:13% auto;
-    padding:20px;
-    border:1px solid #888;
+    padding: 15px 8px 20px 20px;
+    /* border:1px solid #888; */
     width: 300px;
     height: 400px;
 
  }
  
+.modal_content i {
+    color: #dd5e46;
+    font-size:20px;
+}
+
+.modal_content ul {
+    border-bottom:1px solid #e8e8e8;
+}
+
+.modal_content ul li span:nth-child(2) {
+
+        color:rgb(61, 61, 61);
+        font-size:15px;
+}
 
 /* #modalCloseBtn:hover, 
 #modalCloseBtn:focus {
@@ -522,9 +544,3 @@ border:1px dotted #e8e8e8;
 
 }
 
-
-.modal_content .likeList {
-
-
-
-}

@@ -1,5 +1,9 @@
 package com.ryan.service;
 
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpSession;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.ryan.domain.book.BookGradeVO;
 import com.ryan.domain.book.BookLikeVO;
+import com.ryan.domain.member.MemberVO;
 import com.ryan.mapper.DetailBookMapper;
 import com.ryan.service.book.DetailBookService;
 
@@ -37,10 +42,10 @@ public class DetailBookServiceTest {
 //	
 //	
 //	
-	@Test
-	public void  hashtag() {
-		log.info(service.hashtag(197));
-	}
+//	@Test
+//	public void  hashtag() {
+//		log.info(service.hashtag(197));
+//	}
 	
 //	
 	
@@ -107,7 +112,27 @@ public class DetailBookServiceTest {
 			}	
 	*/
 
-	
+	@Test
+	public void checkLike() {
+		boolean flag= false;
+		
+		ArrayList<BookLikeVO> list = mapper.bookLikeList(210);
+		
+		MemberVO vo = new MemberVO();
+		vo.setMemberEmail("abc1234@naver.com");
+		if(vo!=null) {
+			for(int i=0; i<list.size();i++) {
+				if(list.get(i).getMemberEmail().equals(vo.getMemberEmail())) {
+					flag = true;
+					break;
+				}
+			}	
+		}else {
+			log.info("리턴값 " + flag);
+		}
+			
+		log.info("리턴값  " + flag);
+	}
 	
 
 }

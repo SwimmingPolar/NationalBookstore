@@ -20,6 +20,9 @@
 <div class="wrapper">
 <div class="firstColumn">
 <!-- 배경화면 넣는곳 -->
+<div class="follow">
+    <button type="button" id="followBtn"> <i class="fas fa-plus-circle"></i> 팔로우 </button>
+  </div>
 <div class="bigbox">
 
 <div class="myImage"> 
@@ -63,54 +66,37 @@
     
     <div class="content one">
         <div class="mybookTitle">
-            <a>${readbookcount }</a> 권의 도서
+            <a> ${readbookcount} </a> 권의 도서
         </div>
-      
-       <div class="ebooks">
-          <div class="listTitle">
-            <strong> e-book 다운로드 </strong> 
-          </div>
-          <div class="totalBtn">
-            <label for="allChk">
-            <input type="checkbox" name="allChk" id="allChk"> 전체선택
-            </label>          
-          </div>
-          <div class="ebookList"> 
-           <c:choose>
-           		<c:when test="${readbooklist.size() >0 }">
-            	<table>
-           			<c:forEach var="readbook" items="${readbooklist}">
-            			
-            			<tr>
-                <td><input type="checkbox" name="chkbox" id="chkbox"></td>
-                <td><img src="../../resources/images/myLibrary/book02.jpg" ></td>
-                <td>
-                  <ul>
-                    <li> <strong>${readbook.bookTitle}</strong> </li>
-                    <li> <a>${readbook.bookWriter} 지음</a>  ${readbook.bookPublisher}</li>
-                    <li> <span>${readbook.bookNum}</span></li>
-                  </ul>
-
-                </td>
-                <td><button type="button" id="goRead">바로보기</button></td>
-
-                
-              </tr>
-
-              <tr>
-                <td colspan="4"> </td>
-              </tr>	
-            	 	</c:forEach>   	
-            	 	</table>		
-           		</c:when>
-           
-           		<c:otherwise>
-           			 <div class="mybook_Content">
+         <c:choose>
+          <c:when test="${readbooklist.size() >0 }">
+        <div class="myBookbook">
+          <ul>
+            <c:forEach var="readbook" items="${readbooklist}">
+            	<li>
+              	<a href="#">
+              	<div class="books"> 
+              	<div class="mybookimage">
+                    <img src="${pageContext.request.contextPath }${bookdetail.bookThumbnail }" alt="없음">
+              	</div>
+              	<div class="names">
+                <strong>${readbook.bookTitle}</strong> <br>
+                <span>${readbook.bookWriter}</span> 
+              	</div>
+              	</div> <!-- books end -->
+           		 </a>
+            	</li>
+          	</c:forEach>
+          </ul>
+   		 </div> <!-- myBookbook end -->  
+   		 </c:when>     
+           	<c:otherwise>
+           		 <div class="mybook_Content">
         	   <span> <i class="fas fa-books"></i></span>
-        		    	서재에 등록된 도서가 없습니다
-      		         </div>
-           		</c:otherwise>
-           </c:choose>
+        	    	서재에 등록된 도서가 없습니다
+      		     </div>
+           	</c:otherwise>
+          </c:choose>
             	
         </div>
      
@@ -119,23 +105,53 @@
             <a>${libcount}</a> 개의 책장
         </div>
     
-        <div class="makeNewBook">
-            <div class="mybook_Content">
-
+        <div class="ebooks">
+            <div class="listTitle">
+              <strong> e-book 다운로드 </strong> 
+            </div>
+            <div class="totalBtn">
+              <label for="allChk">
+              <input type="checkbox" name="allChk" id="allChk"> 전체선택
+              </label>    
+              <button type="button" id="allDelete"> 전체삭제 </button>      
+            </div>
+            <div class="ebookList"> 
              <c:choose>
-           		<c:when test="${libbooklist.size() >0 }">
-           			<c:forEach var="book" items="${libbooklist }">
-            			${book.bookTitle }
-            	 	</c:forEach>
-           		</c:when>
-           		<c:otherwise>
-           			<span> <i class="fas fa-books"></i></span>
-             	   		나만의 책장을 만들어보세요
-          	 	  <button type="button" id=makeBookCart> <i class="fas fa-plus"></i> 새 책장 만들기 </button>
-           		</c:otherwise>
-           </c:choose>
-         </div>
-        </div>
+                     <c:when test="${libbooklist.size() >0 }">
+                  <table>
+                         <c:forEach var="book" items="${libbooklist}">
+                          
+                          <tr>
+                  <td><input type="checkbox" name="chkbox" id="chkbox"></td>
+                  <td><img src="../../resources/images/myLibrary/book02.jpg" ></td>
+                  <td>
+                    <ul>
+                      <li> <strong>${book.bookTitle}</strong> </li>
+                      <li> <a>${book.bookWriter} 지음</a>  </li>
+                      <li> <span>${book.bookPublisher}</span></li>
+                    </ul>
+  
+                  </td>
+                  <td><button type="button" id="goRead">바로보기</button>
+                  <a href="#" id=eachDelete>삭제</a></td>
+  
+                  
+                </tr>
+                       </c:forEach>   	
+                       </table>		
+                     </c:when>
+             
+                     <c:otherwise>
+                         <span> <i class="fas fa-books"></i></span>
+                              나만의 책장을 만들어보세요
+                       <button type="button" id=makeBookCart> <i class="fas fa-plus"></i> 새 책장 만들기 </button>
+  
+                     </c:otherwise>
+             </c:choose>
+                  
+          </div>
+
+
     </div>
   
     <div class="content four">

@@ -22,6 +22,7 @@
 
 body {
   position: relative;
+  margin-bottom: 50px;
 }
 
 /* top fixed header */
@@ -66,7 +67,7 @@ header.topbar nav a {
 }
 /* bottom fixed footer */
 footer.fixed {
-  position: sticky;
+  position: fixed;
   z-index: 99999;
   bottom: 0;
   width: 100%;
