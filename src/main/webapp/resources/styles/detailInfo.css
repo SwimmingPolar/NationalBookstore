@@ -497,11 +497,10 @@ border:1px dotted #e8e8e8;
 
 }
 
-
+/* 
 .bookStarScore .full {
-    /* position: absolute; */
     color:#f1c40f;
-}
+} */
 
 .hashTag input[type="checkbox"] {
         display:none;
@@ -528,10 +527,9 @@ border:1px dotted #e8e8e8;
     cursor: pointer;
 
 }
-.bookStarScore .full {
-    /* position: absolute; */
+/* .bookStarScore .full {
     color:#f1c40f;
-}
+} */
 
 
 .bookStarScore span{

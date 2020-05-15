@@ -137,12 +137,13 @@
                     <li style="color:lightgray;"> 장르/분류 :${bookdetail.firstCategory } <i class="fas fa-chevron-right"></i> ${bookdetail.bookCategory }  
                     </li>
                 </ul>
-                <div class="bookStarScore">
-                    <span><i class="fas fa-star starJum01"></i></span>
-                    <span><i class="fas fa-star starJum02"></i></span>
-                    <span><i class="fas fa-star starJum03"></i></span>
-                    <span><i class="fas fa-star starJum04"></i></span>
-                    <span><i class="fas fa-star starJum05"></i></span>
+                <!-- data-rate 숫자에 따라 색 칠해짐,,,,, -->
+                <div class="bookStarScore" data-rate="${bookgrade}">
+                  <span id="starScore"><i class="fas fa-star"></i></span>
+          		  <span id="starScore"><i class="fas fa-star"></i></span>
+            	  <span id="starScore"><i class="fas fa-star"></i></span>
+            	  <span id="starScore"><i class="fas fa-star"></i></span>
+            	  <span id="starScore"><i class="fas fa-star"></i></span>
                 </div>
                 <div class="choiceBtnOne">
                     <form action="/book/insertreadbook">
@@ -531,17 +532,25 @@
         })
     </script>
 
-    
-    <script>
-        $('.bookStarScore span').click(function () {
-            $(this).parent().children('span').removeClass('on');
-            $(this).addClass('on').prevAll('span').addClass('on');
-            $('.starJum01').click(function () {
-                $('#starTxt').val($(this).length);
-            })
-        });
 
+
+    <script>
+    
+    $(function() {
+    var rating = $('.bookStarScore');
+
+    rating.each(function(){
+        var targetScore = $(this).attr('data-rate');
+        console.log(targetScore);
+        $(this).find('span:nth-child(-n+'+targetScore+')').css({color:'#f1c40f'});
+
+    });
+
+ });
+    
     </script>
+    
+
     <%@ include file="template/footer.jsp" %>
 </body>
 
