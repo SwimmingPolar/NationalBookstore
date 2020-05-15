@@ -49,7 +49,6 @@
 			startpage = currentpage/10;
 		}
 		startpage = startpage*10-9;
-		console.dir("startpage:"+startpage);
 		var setpages = startpage;
 		$(".page.num").each(function() {
 			$(this).addClass(""+setpages).attr("value", setpages).text(setpages);
@@ -76,14 +75,12 @@
 		var resultlength = "${length }";
 		//var endpage = parseInt(resultlength/3)+1;
 		var endpage = Math.ceil(resultlength/12);
-		console.dir("endpage:"+endpage);
 		for(var index=0;index<=endpage;index++) {
 			$(".page."+index).attr("disabled", false);
 		}
 		//이전, 다음 페이지 버튼
 		var firsto = $(".page.num").first().val();
 		var lasto = $(".page.num").last().val();
-		console.dir("lasto:"+lasto);
 		if(startpage == 1)
 			$(".page.before").attr("disabled", true);
 		else
@@ -102,6 +99,10 @@
 		$(document).on("click", ".book > .cover, .book > .title", function(e) {
 			console.dir(e.target);
 		})
+		//topbar
+		$(".topbar h2").click(function() {
+			location.href="booklist";
+		});
 	});
 </script>
 <title>Insert title here</title>
