@@ -103,29 +103,22 @@
                     </a>
                     <span class="likeBtn">
                         <div class="heartSoo">
-                            <input type="text" value="${booklike}" id='countNum' size='5'>
+                            <input type="text" value="${booklike}" id="countNum" size='5'>
                         </div>
                         <div class="heartC">
-                            <!-- <c:if test="${id != null}"> -->
+                            <input type="checkbox" id="heartClick">
                             <c:choose>
                                 <c:when test="${likecheck }">
-                                    <form action="/book/insertlike">
-                                        <input type="checkbox" id="heartClick">
                                         <label for="heartClick">
                                             <i class="far fa-heart"></i>
                                         </label>
-                                    </form>
                                 </c:when>
                                 <c:otherwise>
-                                    <form action="/book/insertlike">
-                                        <input type="checkbox" id="heartClick">
                                         <label for="heartClick">
                                             <i class="fa fa-heart"></i>
                                         </label>
-                                    </form>
                                 </c:otherwise>
                             </c:choose>
-                            <!-- </c:if> -->
                         </div>
                     </span>
 
@@ -329,18 +322,22 @@
         var count = 0;
         $(function () {
             $('#heartClick').click(function () {
+            	alert('${bookdetail.bookNum }');
                 $.ajax({
                     url: "/book/insertlike",
                     type: "get",
                     data: {
-                        booknumber: '${booknumber}'
+                        booknumber: '${bookdetail.bookNum }'
                     },
-                    success: function () {
-                        heartCount();
+                    success: function (data) {
+                    	alert(data);
+                    	 $("#countNum").html(data);
+                        //heartCount();
                     },
                 })
             })
-            function heartCount() {
+        })
+/*             function heartCount() {
             }
             $.ajax({
                 url: "heartNumber.do",
@@ -352,7 +349,7 @@
                 },
             })
         });
-        heartCount();
+        heartCount(); */
     </script>
     <script>
         var modal = document.getElementById('modalGo');

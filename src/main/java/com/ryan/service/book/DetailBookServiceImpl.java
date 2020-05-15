@@ -126,8 +126,8 @@ public class DetailBookServiceImpl implements DetailBookService{
 		ArrayList<BookLikeVO> list = mapper.bookLikeList(booknumber);
 		HttpSession session = request.getSession();	
 		BookLikeVO vo = (BookLikeVO) session.getAttribute("ryanmember");
-		vo.setBookNum(booknumber);
 		if(vo != null) {
+			vo.setBookNum(booknumber);
 			for(int i=0; i<list.size();i++) {
 				if(list.get(i).getMemberEmail().equals(vo.getMemberEmail())) {
 					mapper.deleteLike(vo);
