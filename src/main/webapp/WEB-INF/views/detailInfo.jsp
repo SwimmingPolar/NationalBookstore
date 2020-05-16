@@ -67,8 +67,7 @@
                         <i class="fas fa-search"></i> 미리보기</a>
                 </div>
             </div>
-
-
+            <!-- leftbox end -->
 </div>  
     <!-- likeChk end -->
 <div id ="modalGo" class="modal">
@@ -164,7 +163,7 @@
                     </a>
                     <span class="likeBtn">
                         <div class="heartSoo">
-                            <input type="text" value="${booklike}" id='countNum' size='5'>
+                            <input type="text" value="${booklike}" id='countNum' size='5' readonly>
                         </div>
                         <div class="heartC">
                             <!-- <c:if test="${id != null}"> -->
@@ -174,6 +173,7 @@
                                         <input type="checkbox" id="heartClick">
                                         <label for="heartClick">
                                             <i class="far fa-heart"></i>
+                                            <i class="fa fa-heart"></i>
                                         </label>
                                     </form>
                                 </c:when>
@@ -181,7 +181,8 @@
                                     <form action="/book/insertlike">
                                         <input type="checkbox" id="heartClick">
                                         <label for="heartClick">
-                                            <i class="fa fa-heart"></i>
+                                            <i class="far fa-heart"></i>
+                                            <i class="far fa-heart"></i>
                                         </label>
                                     </form>
                                 </c:otherwise>

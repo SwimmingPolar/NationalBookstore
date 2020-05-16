@@ -45,16 +45,21 @@ header {
 }
 
 .imageBox img{
-    max-width: 100%;
+    max-width: 220px;
+    width: 100%;
+    box-sizing: border-box;
 
 }
 
 .imageBox {
     padding:10px;
     margin-left:20px;
-    width: 240px;
-    height: 350px;
-    
+    overflow: hidden;
+    position: relative;
+    min-height: 280px;
+    min-width: 220px;
+    box-shadow:  4px 8px 8px rgba(0,0,0,.1), 
+    0 0 2px rgba(0,0,0,.24);
 
 }
 
