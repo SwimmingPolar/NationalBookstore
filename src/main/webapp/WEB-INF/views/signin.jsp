@@ -51,7 +51,7 @@
         <div class="email">
           <h3>이메일 로그인</h3>
           <div class="selection">
-            <a href="/email-signin"><span class="fas fa-envelope-square"></span>이메일</a>
+            <a href="/member/email-signin"><span class="fas fa-envelope-square"></span>이메일</a>
           </div>
         </div>
         <div class="social">
