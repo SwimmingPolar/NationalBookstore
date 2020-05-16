@@ -139,11 +139,12 @@
                 </ul>
                 <!-- data-rate 숫자에 따라 색 칠해짐,,,,, -->
                 <div class="bookStarScore" data-rate="${bookgrade}">
-                  <span id="starScore"><i class="fas fa-star"></i></span>
-          		  <span id="starScore"><i class="fas fa-star"></i></span>
-            	  <span id="starScore"><i class="fas fa-star"></i></span>
-            	  <span id="starScore"><i class="fas fa-star"></i></span>
-            	  <span id="starScore"><i class="fas fa-star"></i></span>
+                  <span><i class="fas fa-star"></i></span>
+          		  <span><i class="fas fa-star"></i></span>
+            	  <span><i class="fas fa-star"></i></span>
+            	  <span><i class="fas fa-star"></i></span>
+                  <span><i class="fas fa-star"></i></span>
+                  <span id="starScore"> 0 </span> 점
                 </div>
                 <div class="choiceBtnOne">
                     <form action="/book/insertreadbook">
@@ -317,14 +318,14 @@
                                 <c:forEach var="r" items="${bookreview}">
                                     <tr>
                                         <td>★★★★☆</td>
-                                        <td>abc1234</td>
-                                        <td>2019/11/09</td>
+                                        <td>${memberEmail}</td>
+                                        <td>${r.reviewRegdate}</td>
                                     </tr>
                                     <tr>
                                         <td colspan="3">${r.reviewTitle }</td>
                                     </tr>
                                     <tr>
-                                        <td colspan="3"><textarea name="reviewContent" id="reviewContent">
+                                        <td colspan="3"><textarea name="reviewContent" id="reviewContent" readonly>
                         ${r.reviewContent }
                     </textarea></td>
                                     </tr>
@@ -543,15 +544,15 @@
         var targetScore = $(this).attr('data-rate');
         console.log(targetScore);
         $(this).find('span:nth-child(-n+'+targetScore+')').css({color:'#f1c40f'});
-
+        $('#starScore').html(targetScore);
     });
 
  });
     
     </script>
     
-
     <%@ include file="template/footer.jsp" %>
+    
 </body>
 
 </html>

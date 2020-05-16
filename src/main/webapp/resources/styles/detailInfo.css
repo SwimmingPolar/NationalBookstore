@@ -135,7 +135,10 @@ header {
 .reviewDetail textarea {
     width: 90%;
     height:100px;
-
+    resize:none;
+    outline:none;
+    border:none;
+    border-top:1px solid #e8e8e8;
 }
 
 
@@ -537,8 +540,13 @@ border:1px dotted #e8e8e8;
     color:rgb(151, 151, 151);
 }
 
-.bookStarScore span.on{
+/* .bookStarScore span.on{
     color:#f1c40f;
 
 }
+ */
 
+ #starScore {
+    margin-left:10px;
+    
+ }

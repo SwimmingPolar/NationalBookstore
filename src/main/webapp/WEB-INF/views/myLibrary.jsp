@@ -174,18 +174,16 @@
                 <tr>
                     <td> 달빛 마신 마녀 </td>
                     <td> ★★★★☆ </td>
-                    <td> 2019-04-30 </td>
+                    <td> ${reviewRegdate} </td>
                 </tr>
                 <tr>
                     <td colspan="3">
                         <input type="text" name="postTitleChk" id="postTitleChk" 
-                        value="인생 책입니다." readonly>
+                        value="${reviewTitle}" readonly>
                         
                         <textarea name="postText" id="postText" readonly>
-                            좋아요. 재밌고 흥미로워요~~!! 좋아요. 재밌고 흥미로워요~~!! 좋아요. 재밌고 흥미로워요~~!!
-                            좋아요. 재밌고 흥미로워요~~!! 좋아요. 재밌고 흥미로워요~~!! 좋아요. 재밌고 흥미로워요~~!!
-                            좋아요. 재밌고 흥미로워요~~!! 좋아요. 재밌고 흥미로워요~~!! 좋아요. 재밌고 흥미로워요~~!!
-                           
+                            
+                            ${reviewContent}
 
                         </textarea>
                        
@@ -205,12 +203,12 @@
             </select>
             <div class ="bookStarScore">
                 <b>별점 등록</b>     
-                <span id="starJum01"><i class="fas fa-star starJum01"></i></span>
-                <span id="starJum02"><i class="fas fa-star starJum02"></i></span>
-                <span id="starJum03"><i class="fas fa-star starJum03"></i></span>
-                <span id="starJum04"><i class="fas fa-star starJum04"></i></span>
-                <span id="starJum05"><i class="fas fa-star starJum05"></i></span>
-                <b> 점</b>
+                <span><i class="fas fa-star"></i></span>
+                <span><i class="fas fa-star"></i></span>
+                <span><i class="fas fa-star"></i></span>
+                <span><i class="fas fa-star"></i></span>
+                <span><i class="fas fa-star"></i></span>
+                <span id=starScore> 0 </span> 점
             </div>
             <div class="postImgFile">  
                 <input type="file" name="postImageFile" id="postImageFile" onchange="uploadImg(this);">
@@ -232,7 +230,7 @@
    	 </div>
     </div>
 </div>
-
+<!-- 
 <script> 
 
     $('.bookStarScore span').click(function(){
@@ -242,6 +240,19 @@
             $('#starTxt').val($(this).length);       
         })
     }); 
+    </script> -->
+    <!-- 별점 구현 -->
+    <script>
+$(function() {
+
+$('.bookStarScore span').click(function() {
+  var starNum = $(this).index() +1;
+  $('.bookStarScore span').css({color:'#979797'});
+  $('.bookStarScore span:nth-child(-n+'+starNum+')').css({color:'#f1c40f'});
+  $('#starScore').html(starNum-1);
+});
+
+});
     </script>
     <script>    
         function openNewPost() {          
