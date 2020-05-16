@@ -485,21 +485,32 @@ input[type="radio"]:checked + label {
 }
 
 
-.bookStarScore .full {
-    /* position: absolute; */
+/* .bookStarScore .full {
+    position: absolute;
     color:#f1c40f;
+} */
+
+.starScore span {
+    color:#979797;
+    
+}
+
+.myPostCheck table tr:nth-child(2)>td:nth-child(2) {
+    width:60%;
 }
 
 
 .bookStarScore span{
 
-    color:rgb(151, 151, 151);
+    color:#979797;
+    cursor: pointer;
 }
 
-.bookStarScore span.on{
+/* .bookStarScore span.on{
     color:#f1c40f;
 
-}
+} */
+
 
 .bookStarScore {
     width:92%;
@@ -512,9 +523,12 @@ input[type="radio"]:checked + label {
     font-weight:normal;
     margin-right:15px;
 
-
 }
 
+#starScore {
+    margin-left:7px;
+
+}
 
 .postEndBtn {
 
@@ -939,11 +953,24 @@ input[type="radio"]:checked + label {
     float:right;
 }
 
-.follow button{
+.follow #followBtn{
     width: 80px;
     height: 40px;
     border-radius: 20px;
-    background-color: rgb(23, 119, 156);
+    background-color: #17769c;
+    color:white;
+    border:1px solid #F3F4F6;
+    outline: none;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.follow #followBtn2{
+    display:none;
+    width: 80px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: transparent;
     color:white;
     border:1px solid #F3F4F6;
     outline: none;
@@ -953,5 +980,5 @@ input[type="radio"]:checked + label {
 
 .follow button:hover {
     font-weight: bold;
-    background-color: rgb(33, 95, 136);
+    /* background-color: rgb(33, 95, 136); */
 }

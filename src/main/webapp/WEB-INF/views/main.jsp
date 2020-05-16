@@ -56,7 +56,7 @@
               <li class="selected">제목</li>
             </ul>
           </div>
-          <form action="#" method="get">
+          <form action="search" method="get">
             <button><span class="far fa-search"></span></button>
             <input class="hasResult" name="keyword" type="text" placeholder="제목, 저자, 해쉬태그 검색" autocomplete="off" spellcheck="false">
             <input type="hidden" name="type" value="title">
