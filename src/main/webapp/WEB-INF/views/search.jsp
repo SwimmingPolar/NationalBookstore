@@ -249,6 +249,7 @@
 			<button class="btn-search fas fa-search" name="category" value="all" ></button>
 		</div>
 	</form>
+	<%-- 빈 화면에 내보낼 것들 --%>
 	<c:if test="${empty param.keyword }" >
 		<div class="empty-spot" >
 			<h3>호호아아!</h3>
@@ -290,8 +291,6 @@
 			</div>
 		</div>
 	</c:if>
-	<%-- 빈 화면에 내보낼 것들 --%>
-	
 	<%-- 검색결과 --%>
 	<!-- ebook -->
 	<c:if test="${param.category ne 'paper' }" >

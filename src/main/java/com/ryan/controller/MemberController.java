@@ -50,12 +50,13 @@ public class MemberController {
 	@Setter(onMethod_ = {@Autowired})
 	private RegularPaymentService paymentService;
 	
+	//통계
 	@Setter(onMethod_ = {@Autowired})
 	private RevenueService revenueService;
 	
 	@PostMapping("/signUp")
 	public String memberSignUp(MemberVO member) {
-		if (memberService.memberSignUp(member)) return "회원가입 성공 페이지";
+		if (memberService.memberSignUp(member)) return "main";
 		else return "회원가입 실패 페이지";		
 	}
 	
@@ -88,11 +89,6 @@ public class MemberController {
 		
 		return resultMap;
 	}
-		
-//	//인증코드 5분 지나면
-//	@RequestMapping("미정")
-//	public @ResponseBody Map<String, Boolean> sadsafoka() {
-//	}
 	
 	//인증완료
 	@PostMapping("/authenticationCheck")
@@ -119,7 +115,7 @@ public class MemberController {
 		return "업데이트 완료후 보여줄 페이지 경로";
 	}
 	
-	@GetMapping("/signin")
+	@PostMapping("/signin")
 	public String memberLogin(@RequestParam(required = false, name = "rememberMe") String remeberMe , MemberVO member ,HttpServletRequest request, HttpServletResponse response , Model model) {
 		//정지중인 유저인지 체크하는 서비스 호출에서 검사할것 아직안함.
 		
@@ -132,9 +128,9 @@ public class MemberController {
 			HttpSession session = request.getSession();
 			session.setAttribute("ryanMember", memberService.getLoginMemberInfo(member));
 			log.info(request.getRemoteAddr());
-			return "redirect:/member/test"; 
+			return "redirect:/"; 
 		} else {
-			return "redirect:/member/signin";
+			return "redirect:/email-signin";
 		}
 
 	}
@@ -152,10 +148,10 @@ public class MemberController {
 	public String getEmailLogin() {
 		return "email-signin";
 	}
-//	@GetMapping("/signin")
-//	public String getSignIn() {
-//		return "signin";
-//	}
+	@GetMapping("/signin")
+	public String getSignIn() {
+		return "signin";
+	}
 	@GetMapping("/signup")
 	public String getMemberSignUp() {
 		return "signup";
@@ -186,7 +182,7 @@ public class MemberController {
 	}
 	
 	
-	//
+	//레뒤
 	@PostMapping("/paymentReady")
 	public String memberPaymentReady(@ModelAttribute("ryanMember") MemberVO member) {
 		
@@ -194,6 +190,7 @@ public class MemberController {
 		return "redirect:" + paymentService.regularPaymentReady(member);
 	}
 	
+	//성공~
 	@GetMapping("/paymentSuccess")
 	public String memberPaymentSuccess(@RequestParam("pg_token") String pg_token, @ModelAttribute("ryanMember") MemberVO member, Model model) {
 		
@@ -209,6 +206,12 @@ public class MemberController {
 		}
 		
 		return "결제 실패";
+	}
+	
+	//환불~
+	@GetMapping("/regularPaymentStop")
+	public String temp() {
+		return null;
 	}
 	
 	@GetMapping("/test")

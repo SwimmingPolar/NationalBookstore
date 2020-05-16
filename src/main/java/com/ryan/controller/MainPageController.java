@@ -45,11 +45,10 @@ public class MainPageController {
 	
 	@GetMapping("/best-seller")
 	public @ResponseBody ArrayList<EBookVO> responseBestSeller(@RequestParam("time") String time, @RequestParam("category") String category){
-		log.info(time + " " + category);
 		return service.getBestSeller(time, category);
 	}
 	
-	@GetMapping("/autoKeyword")
+	@GetMapping("/search-preview")
 	public @ResponseBody ArrayList<KeywordAutoCompletionVO> autoKeyword(@RequestParam("type") String type , @RequestParam("keyword") String keyword) {
 		
 		return service.getAutoKeyword(type, keyword);

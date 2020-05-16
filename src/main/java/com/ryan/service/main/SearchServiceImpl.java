@@ -1,8 +1,12 @@
 package com.ryan.service.main;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +17,8 @@ import com.ryan.mapper.SearchMapper;
 public class SearchServiceImpl implements SearchService{
 	@Autowired
 	private SearchMapper mapper;
+	@Autowired
+	private SqlSessionFactory sqlFactory;
 	
 	@Override
 	public ArrayList<EBookVO> bookList(String type, String[] keyword) {
@@ -76,5 +82,28 @@ public class SearchServiceImpl implements SearchService{
 	@Override
 	public List<EBookVO> paperCount(String type, String[] keyword, String page) {
 		return mapper.paperCount(type, keyword, page);
+	}
+	//장르별 종이책 검색
+	@Override
+	public List<EBookVO> getPaperByGenre(String type, String[] keyword, String page, String genre) {
+		return mapper.getPaperByGenre(type, keyword, page, genre);
+	}
+	//장르별 종이책 검색 count
+	@Override
+	public List<EBookVO> getPaperByGenreCount(String type, String[] keyword, String page, String genre) {
+		return mapper.getPaperByGenreCount(type, keyword, page, genre);
+	}
+	//aasdasd
+	@Override
+	public List<HashMap<String, String>> getGenreCount(@Param("type") String type, @Param("keyword") String[] keyword, @Param("page") String page, @Param("genre") String genre) {
+		SqlSession sqlSession = sqlFactory.openSession();
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("type", "BOOK_TITLE");
+		params.put("keyword", new String[] {"룬의"});
+		params.put("page", "");
+		params.put("genre", "2");
+		//List<HashMap<String, String>> result = sqlSession.selectList("com.ryan.mapper.SearchMapper.getGenreCount", params);
+		List<HashMap<String, String>> result = mapper.getGenreCount(type, keyword, page, genre);
+		return result;
 	}
 }

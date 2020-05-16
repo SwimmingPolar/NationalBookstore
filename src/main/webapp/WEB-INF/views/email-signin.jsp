@@ -4,11 +4,10 @@
 <%@ page session="false" %>
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>로그인 - National Bookstore</title>
+  <title>이메일 로그인 - National Bookstore</title>
   <!-- Google Fonts -->
   <link
     href="https://fonts.googleapis.com/css?family=Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap"
@@ -36,25 +35,28 @@
 
   <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 </head>
-
 <body>
-  <div class="title-bar">
-    <a href="/">
-      <h2>National Bookstore</h2>
-    </a>
-  </div>
-  <div class="container">
+  <header class="topbar">
+    <nav>
+      <div class="container">
+        <a href="javascript: history.back();"><i class="far fa-arrow-left"></i></a>
+        <h2>이메일 로그인</h2>
+      </div>
+    </nav>
+  </header>
+  <div class="body-wrapper">
     <div class="selection-container">
       <div>
         <h3>이메일 로그인</h3>
-        <form id="login-form" action="signin" method="post">
+        <form id="login-form" action="/member/signin" method="post">
           <div class="form-container">
             <label>이메일</label>
-            <input type="text" placeholder="nationalbookstore@gmail.com" spellcheck="false" autocomplete="off" />
+            <input type="text" placeholder="nationalbookstore@gmail.com" spellcheck="false" autocomplete="off" name="memberEmail"/>
             <label>비밀번호</label>
-            <input type="password" placeholder="영어, 숫자 포함 4자리 이상 입력해주세요." />
+            <input type="password" placeholder="영어, 숫자 포함 4자리 이상 입력해주세요." name="memberPw"/>
             <div class="find-my-account">
-              <a href="/member/find-passwd">비밀번호 찾기</a>
+              <a href="#">아이디 찾기</a>
+              <a href="#">비밀번호 찾기</a>
             </div>
             <button type="submit" disabled="disabled">로그인</button>
             <a href="/member/signup">회원가입</a>
