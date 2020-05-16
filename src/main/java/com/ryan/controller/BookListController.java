@@ -11,6 +11,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,12 +21,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ryan.domain.book.EBookVO;
 import com.ryan.domain.payment.CartVO;
+import com.ryan.service.main.MainPageService;
 import com.ryan.service.main.SearchService;
 
 @Controller
 public class BookListController {
 	@Autowired
 	private SearchService sv;
+	@Autowired
+	private MainPageService service;
 	
 	@RequestMapping(value="/booklist")
 	public String getBooks(@RequestParam(value="genre", required=false) String genre, @RequestParam(value="sub_genre", required=false) String sub_genre, @RequestParam(value="page", required=false) String page, @RequestParam(value="sort", required=false) String sort, Model model) throws ClassNotFoundException, SQLException {
@@ -122,4 +127,16 @@ public class BookListController {
 		model.addAttribute("paperCount", sv.getPaperByGenreCount(type, keywordArr, page, genre).size());
 		return "paper";
 	}
+	
+	//베스트셀러
+	@RequestMapping(value="/best")
+	public String BestSeller(@RequestParam(value="time", defaultValue="주간") String time, @RequestParam(value="category", defaultValue="소설") String category, Model model) {
+		model.addAttribute("result", service.getBestSeller(time, category));
+		return "best";
+	}
+	//@GetMapping("/best")
+	//public @ResponseBody ArrayList<EBookVO> responseBestSeller(@RequestParam("time") String time, @RequestParam("category") String category){
+	//	return service.getBestSeller(time, category);
+	//}
+	
 }

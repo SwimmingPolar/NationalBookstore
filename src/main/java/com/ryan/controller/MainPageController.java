@@ -55,26 +55,6 @@ public class MainPageController {
 		
 	}
 	
-//	@GetMapping("/search")
-//	public String search(@RequestParam("type") String type , @RequestParam("keyword") String keyword, Model model) {
-//		
-//		String[] keywordArr = keyword.split(" ");
-//		
-//		HashMap<String, ArrayList<EBookVO>> result = new HashMap<String, ArrayList<EBookVO>>();
-//		//model.addAttribute("ebook", sv.searchEbook(vo));
-//		//model.addAttribute("paper", sv.searchPaperbook(vo));
-//		model.addAttribute("result", result);
-//		return "search";
-//		
-//	}
-//	
-//	@GetMapping("/test")
-//	public String searchTest() {
-//		
-//		return "search";
-//	}
-	
-	
 	@GetMapping("/filterSearch")
 	public String filterSearch(FilterSearchVO filterSearch, Model model) {
 		
@@ -87,20 +67,4 @@ public class MainPageController {
 	public String Paper() {
 		return "paper";
 	}
-	
-	@RequestMapping(value="/books")
-	public String Books() {
-		return "books";
-	}
-	
-	@RequestMapping(value="/books/all")
-	public String BooksAll() {
-		return "all";
-	}
-	
-	@RequestMapping(value="/bestseller")
-	public String BestSeller() {
-		return "all";
-	}
-	
 }
