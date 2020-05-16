@@ -170,7 +170,7 @@
       // append spinner to label
       const emailLabel = document.querySelector('.email-container label');
       const spinner = document.createElement('img');
-      spinner.setAttribute('src', './ajax-loading.svg');
+      spinner.setAttribute('src', '../../resources/images/ajax-loading.svg');
       emailLabel.appendChild(spinner);
 
       const xhr = new XMLHttpRequest();
@@ -319,7 +319,7 @@
     function validateNickName(nickname) {
       const nicknameLabel = document.querySelector('.nickname-container label');
       const spinner = document.createElement('img');
-      spinner.setAttribute('src', '../../resources/ajax-loading.svg');
+      spinner.setAttribute('src', '../../resources/images/ajax-loading.svg');
       nicknameLabel.appendChild(spinner);
 
       const xhr = new XMLHttpRequest();

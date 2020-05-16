@@ -23,6 +23,7 @@
 body {
   position: relative;
   margin-bottom: 50px;
+  overflow-y: scroll;
 }
 
 /* top fixed header */
@@ -33,7 +34,6 @@ header.topbar {
   position: relative;
 }
 header.topbar nav {
-  position: fixed;
   z-index: 999;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   background-color: #fff;
