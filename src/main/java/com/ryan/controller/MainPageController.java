@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ryan.domain.book.EBookVO;
 import com.ryan.domain.main.FilterSearchVO;
+import com.ryan.domain.main.KeywordAutoCompletionVO;
 import com.ryan.domain.member.MemberVO;
 import com.ryan.mapper.MainMapper;
 import com.ryan.service.main.MainPageService;
@@ -47,6 +48,12 @@ public class MainPageController {
 		return service.getBestSeller(time, category);
 	}
 	
+	@GetMapping("/search-preview")
+	public @ResponseBody ArrayList<KeywordAutoCompletionVO> autoKeyword(@RequestParam("type") String type , @RequestParam("keyword") String keyword) {
+		
+		return service.getAutoKeyword(type, keyword);
+		
+	}
 	
 //	@GetMapping("/search")
 //	public String search(@RequestParam("type") String type , @RequestParam("keyword") String keyword, Model model) {

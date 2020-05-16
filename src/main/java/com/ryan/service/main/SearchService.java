@@ -1,6 +1,5 @@
 package com.ryan.service.main;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,12 +20,15 @@ public interface SearchService {
 
 
 	/////////////////////////////////////이 아래로 제가 수정좀 했습니다.
-	//ebook 검색
-	public List<EBookVO> searchEbook(String type, String[] keyword) throws ClassNotFoundException, SQLException;
-	//종이책 검색
-	public List<EBookVO> searchPaperbook(String type, String[] keyword) throws ClassNotFoundException, SQLException;
-	//ebook 페이징
-	public List<EBookVO> searchEbookPage(@Param("type") String type,@Param("keyword") String[] keyword, @Param("pageNum") int pageNum) throws ClassNotFoundException, SQLException;
-	//종이책 페이징
-	public List<EBookVO> searchPaperbookPage(@Param("type") String type,@Param("keyword") String[] keyword, @Param("pageNum") int pageNum) throws ClassNotFoundException, SQLException;
+	//전체 책.
+	public List<EBookVO> getFilterSearch(@Param("genre") String genre, @Param("sub_genre") String sub_genre, @Param("page") String page, @Param("sort") String sort );
+	//전체 책 갯수.
+	public List<EBookVO> getFilterSearchCount(@Param("genre") String genre, @Param("sub_genre") String sub_genre, @Param("page") String page );
+	//ebook
+	public List<EBookVO> ebook(@Param("type") String type, @Param("keyword") String[] keyword, @Param("page") String page);
+	//paper
+	public List<EBookVO> paper(@Param("type") String type, @Param("keyword") String[] keyword, @Param("page") String page);
+	//count
+	public List<EBookVO> ebookCount(@Param("type") String type, @Param("keyword") String[] keyword, @Param("page") String page);
+	public List<EBookVO> paperCount(@Param("type") String type, @Param("keyword") String[] keyword, @Param("page") String page);
 }

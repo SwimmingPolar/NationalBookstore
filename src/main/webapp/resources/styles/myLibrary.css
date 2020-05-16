@@ -16,6 +16,10 @@ body{
 
 }
 
+button {
+    font-family: 'Montserrat', sans-serif;
+}
+
 .wrapper {
     /* border:2px solid red; */
     display:flex;
@@ -111,7 +115,7 @@ input[type="radio"]:checked + label {
 .secondColumn {
     z-index:2;
     margin-bottom: 100px;
-
+    
 }
 
 .secondColumn > label {
@@ -127,7 +131,6 @@ input[type="radio"]:checked + label {
     border-radius: 10px 10px 0 0;
 }
 
-
 .content {
 
     background-color:white;
@@ -138,8 +141,8 @@ input[type="radio"]:checked + label {
     /* background-color: #CAC9C9; */
     width: 100%;
     margin:0 auto;
-    height: 500px;
-    overflow: auto;
+    /* height: 500px; */
+    /* overflow: auto; */
     /* height: 350px; */
     /* overflow:hidden; */
     margin-top:10px;
@@ -482,21 +485,32 @@ input[type="radio"]:checked + label {
 }
 
 
-.bookStarScore .full {
-    /* position: absolute; */
+/* .bookStarScore .full {
+    position: absolute;
     color:#f1c40f;
+} */
+
+.starScore span {
+    color:#979797;
+    
+}
+
+.myPostCheck table tr:nth-child(2)>td:nth-child(2) {
+    width:60%;
 }
 
 
 .bookStarScore span{
 
-    color:rgb(151, 151, 151);
+    color:#979797;
+    cursor: pointer;
 }
 
-.bookStarScore span.on{
+/* .bookStarScore span.on{
     color:#f1c40f;
 
-}
+} */
+
 
 .bookStarScore {
     width:92%;
@@ -509,9 +523,12 @@ input[type="radio"]:checked + label {
     font-weight:normal;
     margin-right:15px;
 
-
 }
 
+#starScore {
+    margin-left:7px;
+
+}
 
 .postEndBtn {
 
@@ -791,29 +808,177 @@ input[type="radio"]:checked + label {
 
 }
 
-.totalBtn input[type="checkbox"] {
-    
-}
 
 .totalBtn label {
     /* border:2px solid blue; */
     border:1px solid lightgray;
     padding:3px 7px 3px 7px;
     font-size:12px;
+    cursor: pointer;
+}
 
+.totalBtn button {
+    border:1px solid lightgray;
+    padding:4px 8px 4px 8px;
+    font-size:12px; 
+    background-color:white; 
+    margin-left: 10px;
+    font-family: 'Montserrat', sans-serif;
+    outline:none;
+    cursor: pointer;
 }
 
 .totalBtn {
     margin:10px;
 }
 
+.ebookList #eachDelete {
+    color: #333;
+    display:block;
+    text-align:center;
+    padding-left:50px;
+    padding-top:6px;
+
+}
+.ebookList table td {
+    border-bottom:1px solid #e8e8e8;
+    padding-top:5px;
+    /* padding-bottom:5px; */
+}
+
 .ebookList table td:nth-child(4) {
     text-align: right;
 }
 
-.ebookList table tr:nth-child(2)>td {
+/* .ebookList table tr:nth-child(2)>td {
 
     border:1px solid #e8e8e8;
     height:15px;
 
+} */
+
+/* .ebookList table td a{
+    position: relative;
+}
+
+.ebookList table td a::after {
+    
+    position: absolute;
+    content:"";
+    top:50%;
+    left:0;
+    background-color:gray;
+    width:1px;
+    height:10px;   
+
+} */
+
+
+.ebookList table td ul li:nth-child(2) {
+    font-weight: normal;
+}
+
+.myBookbook {
+    position: relative;
+    z-index:10px;
+    margin-top:15px;
+
+}
+
+.myBookbook ul {
+    display:flex;
+    flex-wrap:wrap;
+    margin:0 -6px;
+    padding:0;
+}
+
+.myBookbook > ul>li{
+   width: 20%;
+   margin-bottom:14px;
+   padding:0 6px;
+   box-sizing: border-box;
+}
+.myBookbook >ul>li > a {
+    display: block;
+    text-decoration: none;
+}
+
+.myBookbook > ul>li .books {
+    position: relative;
+    /* width:124px;
+    height:182px; */
+
+}
+.myBookbook > ul>li .mybookimage {
+    position: relative;
+    overflow:hidden;
+    height:0;
+    border-radius: 0 3px 3px 0;
+    box-shadow: 2px 2px 6px rgba(0,0,0,.1), 0 0 2px rgba(0,0,0,.2);
+    padding-top: 138%;
+}
+
+.myBookbook > ul>li .mybookimage img {
+    position: absolute;
+    left:0;
+    top:0;
+    right:0;
+    min-height: 100%;
+    width:100%;
+    display: block;
+    /* vertical-align: top; */
+    
+}
+
+.books .names  {
+    font-size: 14px;
+    /* text-indent: 20px; */
+    /* font-weight:normal; */
+    margin-top:5px;
+    
+}   
+
+.books .names strong {
+    color: #000;
+    font-weight: normal;
+}
+
+.books .names span {
+    color: #777;
+    font-weight: normal;
+
+}
+
+.follow {
+    float:right;
+}
+
+.follow #followBtn{
+    width: 80px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: #17769c;
+    color:white;
+    border:1px solid #F3F4F6;
+    outline: none;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.follow #followBtn2{
+    display:none;
+    width: 80px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: transparent;
+    color:white;
+    border:1px solid #F3F4F6;
+    outline: none;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.follow button:hover {
+    font-weight: bold;
+    /* background-color: rgb(33, 95, 136); */
 }

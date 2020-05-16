@@ -71,26 +71,23 @@ public class DetailBookMapperTest {
 	}
 	
 	*/
-
+/*
 	@Test
 	public void insertLike() {
 		BookLikeVO vo = new BookLikeVO();
 		
 
 		vo.setBookNum(210);
-		vo.setMemberEmail("abc1234@naver.com");
+		vo.setMemberEmail("abc1234554@naver.coms");
 		
 		log.info(mapper.insertLike(vo));
 	}
-	
+	*/
 
-	/*
+	
 	@Test
 	public void deleteLike() {
-		BookLikeVO vo = new BookLikeVO();
-		vo.setBookNum(1);
-		vo.setMemberEmail("abc1234@naver.com");
 		
-		log.info(mapper.deleteLike(vo));
-	}*/
+		log.info(mapper.deleteLike(81));
+	}
 }

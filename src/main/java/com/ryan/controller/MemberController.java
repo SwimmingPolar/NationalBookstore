@@ -50,6 +50,7 @@ public class MemberController {
 	@Setter(onMethod_ = {@Autowired})
 	private RegularPaymentService paymentService;
 	
+	//통계
 	@Setter(onMethod_ = {@Autowired})
 	private RevenueService revenueService;
 	
@@ -186,7 +187,7 @@ public class MemberController {
 	}
 	
 	
-	//
+	//레뒤
 	@PostMapping("/paymentReady")
 	public String memberPaymentReady(@ModelAttribute("ryanMember") MemberVO member) {
 		
@@ -194,6 +195,7 @@ public class MemberController {
 		return "redirect:" + paymentService.regularPaymentReady(member);
 	}
 	
+	//성공~
 	@GetMapping("/paymentSuccess")
 	public String memberPaymentSuccess(@RequestParam("pg_token") String pg_token, @ModelAttribute("ryanMember") MemberVO member, Model model) {
 		
@@ -209,6 +211,12 @@ public class MemberController {
 		}
 		
 		return "결제 실패";
+	}
+	
+	//환불~
+	@GetMapping("/regularPaymentStop")
+	public String temp() {
+		return null;
 	}
 	
 	@GetMapping("/test")

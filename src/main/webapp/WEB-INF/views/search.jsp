@@ -9,15 +9,38 @@
 <head>
 <meta charset="UTF-8">
 <title>검색</title>
-<link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap" rel="stylesheet">
-<!-- Fontawesome -->
-<script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
-<!-- css reset -->
-<link rel="stylesheet" type="text/css" href="../resources/styles/reset.css" />
-<link rel="stylesheet" type="text/css" href="../resources/styles/search.css" />
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>전체 도서</title>
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Black+Han+Sans|Nanum+Gothic|Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap"
+    rel="stylesheet" />
+  <!-- Fontawesome API -->
+  <script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
+  <!--
+    Available Fonts
+    Main Font:
+    font-family: 'Kaushan Script', cursive;
+
+    Article Choices:
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+
+    Korean Font:
+    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'Black Han Sans', sans-serif;
+    font-family: 'Nanum Gothic', sans-serif;
+    -->
+  <!-- css reset -->
+  <link rel="stylesheet" href="../../resources/styles/reset.css" />
+  <!-- individual page stylesheet -->
+  <link rel="stylesheet" href="../../resources/styles/common.css" />
+  <link rel="stylesheet" href="../../resources/styles/search.css" />
 <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
-	<fmt:formatNumber var="ebookPage" value="${(ebookCount/3)+(1-((ebookCount/3)%1))%1}" pattern="0"/>
-	<fmt:formatNumber var="paperPage" value="${(paperCount/3)+(1-((paperCount/3)%1))%1}" pattern="0"/>
+<script src="../../resources/js/common.js"></script>
 <%
 	String type = request.getParameter("type");
 	String keyword = request.getParameter("keyword");
@@ -25,7 +48,7 @@
 	String pageNum = request.getParameter("page");
 	
 	if(type == null)
-		type = "BOOK_TITLE";
+		type = "title";
 	if(keyword == null)
 		keyword = "";
 	if(category == null)
@@ -83,65 +106,162 @@
 			}
 		})
 		//장바구니 추가
+		$(".to-cart").click(function(e) {
+			e.preventDefault();
+		});
 		$(".btn-cart-outer").click(function() {
 			var cartList = [];
 			$(".checkbox-cart").each(function() {
 				if($(this).prop("checked") == true)
 					cartList.push({ bookNum : $(this).val(), bookCount : "1" });
 			})
-			console.dir(cartList);
-			$.ajax({
-				url : "/controller/search/cart",
-				dataType : "json",
-				contentType : "application/json",
-				data : JSON.stringify(cartList),
-				type : "POST"
-			})
-			.done(function(response) {
-				console.dir(response.doneM);
-			})
-			.fail(function(response) {
-				console.dir(response.failM);
-			})
+			if(cartList.length == 0)
+				alert("추가할 도서를 선택해주세요.");
+			else {
+				$.ajax({
+					url : "/search/cart",
+					dataType : "json",
+					contentType : "application/json",
+					data : JSON.stringify(cartList),
+					type : "POST"
+				})
+				.done(function(response) {
+					var moveToCart = confirm("장바구니로 이동 하시겠습니까?");
+					if(moveToCart == true)
+						location.href="/cartPage";
+				})
+				.fail(function(response) {
+					alert("장바구니 담기에 실패했습니다. 다시 시도해주세요.")
+				})
+			}
 		})
+		//페이징
+		var currentpage = "${param.page }"; //현재 페이지
+		var startpage = 0; //시작 페이지 초기화
+		//현재 페이지가 널이아니고 비어있으면 1.
+		if(currentpage=="") 
+			currentpage = 1;
+		//시작 페이지 지정.
+		if(currentpage%10 != 0) {
+			startpage = parseInt(currentpage/10)+1;
+		} else if(currentpage%10 == 0) {
+			startpage = currentpage/10;
+		}
+		startpage = startpage*10-9; //ex)11페이지로 가면 스타트페이지는 11페이지부터
+		//페이지 버튼들에 순차적으로 번호 부여.
+		var setpages = startpage;
+		$(".page.num").each(function() {
+			$(this).addClass(""+setpages).attr("value", setpages).text(setpages);
+			setpages++;
+		});
+		//현재 페이지 점등
+		if(currentpage=="") {
+			$(".page.1").css("color", "red");
+		} else {
+			$(".page."+currentpage).css("color", "red");
+		}
+		if("${param.genre}" != ""){
+			$("li > button").css("color", "black");
+		}
+		//검색결과 길이
+		var ebooklength = ${ebookCount };
+		var paperlength = ${paperCount };
+		var length = 0;
+		if("${param.category }" == "ebook")
+			length = ebooklength;
+		else
+			length = paperlength;
+		//결과 있는 페이지까지만 enable
+		$(".page.num").attr("disabled", true);
+		var endpage = Math.ceil(length/12);
+		for(var index=0;index<=endpage;index++) {
+			$(".page."+index).attr("disabled", false);
+		}
+		//이전, 다음 페이지 버튼
+		var firsto = $(".page.num").first().val();
+		var lasto = $(".page.num").last().val();
+		if(startpage == 1)
+			$(".page.before").attr("disabled", true);
+		else
+			$(".page.before").attr("value", (firsto-10));
 		
-		//페이지 버튼 관리
-		$(".btn-page."+${ebookPage }).nextAll().attr("disabled", true);
-		$(".btn-page.move").click(function(e) {
+		if(endpage <= lasto)
+			$(".page.after").attr("disabled", true);
+		else
+			$(".page.after").attr("value", parseInt(lasto)+1);
+		$("button[value=all]").click(function(e) {
 			e.preventDefault();
-			$(".btn-page.num").each(function() {
-				$(this).val(parseInt($(this).val())+10)
-				$(this).text($(this).val());
-			});
-		})
+			$("form.search-form").submit();
+		});
+		//topbar
+		$(".topbar h2").click(function() {
+			location.href="search";
+		});
+		$(".topbar h2").append("::${param.keyword }");
+		//책정보 보기
+		$(".book .title, .book .cover").click(function() {
+			var bookNum = $(this).parents(".search")[0].classList[1];
+			location.href = "book/bookdetail?booknumber="+bookNum;
+		});
+		//해당 기준으로 다시 검색
+		$(".book .author, .book .publisher").click(function(e) {
+			var type = e.target.className;
+			var keywordo = e.target.innerHTML;
+			location.href = "?type="+type+"&keyword="+keywordo;
+		});
+		//바로보기
+		$(".btn-read").click(function() {
+			var bookNum = $(this).parents(".search")[0].classList[1];
+			location.href = "viewer?booknumber="+bookNum;
+		});
+		//바로구매
+		$(".btn-purchase").click(function(e) {
+			var bookNum = $(this).parents(".search")[0].classList[1];
+			location.href = "purchase?booknumber="+bookNum;
+		});
 	});
 </script>
 </head>
 <body>
-	<div class="div-title" >
+	<!-- <div class="div-title" >
 		<h3>National Bookstore</h3>
 	</div>
-	<div ></div>
+	<div ></div> -->
+	<header class="topbar">
+		<nav>
+			<div class="container">
+				<a href="/"><i class="far fa-arrow-left"></i></a>
+				<h2>검색</h2>
+			</div>
+		</nav>
+	</header>
+	<div class="main-container" >
 	<!-- 검색바 -->
-	<form action="/controller/search/searchtest" method="GET" >
+	<!-- <form action="/search/searchtest" method="GET" > -->
+	<form class="search-form" action="/search" method="GET" >
 		<div class="search-bar" >
 			<select class="type" name="type" >
-				<option value="BOOK_TITLE" >제목</option>
-				<option value="BOOK_WRITER" >저자</option>
-				<option value="BOOK_PUBLISHER" >출판사</option>
+				<option value="title" >제목</option>
+				<option value="author" >저자</option>
+				<option value="publisher" >출판사</option>
 			</select>
 			<input class="keyword" type="text" name="keyword" placeholder="검색어를 입력해주세요" autocomplete="off" spellcheck="false"/>
 			<button class="btn-search fas fa-search" name="category" value="all" ></button>
 		</div>
 	</form>
+	<c:if test="${empty param.keyword }" >
+		<div class="empty-spot" >
+			<h3>호호아아!</h3>
+		</div>
+	</c:if>
 	<!-- 검색 결과 요약 -->
 	<c:if test="${not empty param.keyword }" >
 		<!-- 카테고리 선택 -->
-		<form action="/controller/search/pagetest" method="GET" >
+		<form action="/search" method="GET" >
 			<div class="category-list" >
 				<input class="type" type="hidden" name="type" />
 				<input class="keyword" type="hidden" name="keyword" />
-				<input type="hidden" name="pageNum" value="1" />
+				<input type="hidden" name="page" value="1" />
 				<button name="category" value="all" class="btn-category selected">통합검색</button>
 				<button name="category" value="ebook" class="btn-category">ebook</button>
 				<button name="category" value="paper" class="btn-category">종이책</button>
@@ -153,7 +273,7 @@
 			</div>
 			<span class="scount" >총<span class="result-count" >
 				<c:choose >
-					<c:when test="${param.category eq 'all' }" >
+					<c:when test="${param.category eq 'all' or param.category eq null }" >
 						${resultCount }
 					</c:when>
 					<c:when test="${param.category eq 'ebook' }" >
@@ -169,157 +289,144 @@
 					<button class="btn-layout btn-grid fas grid fa-th-large"></button>
 			</div>
 		</div>
-		<c:choose>
-			<%-- 통합검색일때 --%>
-			<c:when test="${param.category eq 'all' }" >
-				<c:forEach var="list" items="${result }" >
-					<div class="search-list">
-						<%-- 카테고리 벨트 --%>
-						<div class="category-belt" >
-							<form action="/controller/search/pagetest" method="GET" >
-								<input type="hidden" name="pageNum" value="1" />
-								<input class="type" type="hidden" name="type" />
-								<input class="keyword" type="hidden" name="keyword" />
-								<button name="category" value="${list.getKey() }" class="btn-category-belt" >
-									<c:choose>
-										<c:when test="${list.getKey() eq 'ebook' }" >
-											<span class="category-title" >EBOOK</span>
-											<span class="category-count" >${ebookCount }</span>
-										</c:when>
-										<c:when test="${list.getKey() eq 'paper' }" >
-											<span class="category-title" >종이책</span>
-											<span class="category-count" >${paperCount }</span>
-										</c:when>
-									</c:choose>
-									<span class="fas fa-chevron-right"></span>
-								</button>
-							</form>
-						</div>
-						<%-- 카테고리 벨트 끝 --%>
-						<%-- 책리스트 --%>
-						<div class="search-result" >
-							<c:set var="loop_flag" value="true" />
-							<c:forEach var="book" items="${list.getValue() }" begin="0" end="3" varStatus="status" >
-								<c:if test="${loop_flag }" >
-									<div class="search" >
-										<div class="book ${book.bookNum }" >
-											<!-- 책 커버 -->
-											<img class="cover" />
-											<!-- 책 정보 -->
-											<div class="info" >
-												<div class="title" >${book.bookTitle }</div>
-												<div>
-													<span class="author" >${book.bookWriter }</span>
-													<span class="publisher" >${book.bookPublisher }</span>
-												</div>
-											</div>
-										</div>
-										<div class="interact" >
-											<c:choose>
-												<c:when test="${list.getKey() eq 'ebook' }" >
-													<button class="btn-read" >바로보기</button>
-												</c:when>
-												<c:when test="${list.getKey() eq 'paper' }" >
-													<button class="btn-purchase" >구매</button>
-												</c:when>
-											</c:choose>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
-						<%-- 책리스트 끝 --%>
-					</div>
-				</c:forEach>
-			</c:when>
-			<%-- 통합검색일때 끝 --%>
-			<%-- 단일 카테고리일때 --%>
-			<c:otherwise>
-				<div class="search-list" >
+	</c:if>
+	<%-- 빈 화면에 내보낼 것들 --%>
+	
+	<%-- 검색결과 --%>
+	<!-- ebook -->
+	<c:if test="${param.category ne 'paper' }" >
+		<c:if test="${param.keyword ne null and param.keyword ne ''}" >
+			<div class="search-list fadeInUp">
 				<%-- 카테고리 벨트 --%>
 				<div class="category-belt" >
-					<input class="type" type="hidden" name="type" />
-					<input class="keyword" type="hidden" name="keyword" />
-					<input type="hidden" name="pageNum" value="1" />
-					<button class="btn-category-belt" style="cursor:default;" >
-						<c:choose>
-							<c:when test="${param.category eq 'ebook' }" >
-								<span class="category-title" >EBOOK</span>
-								<span class="category-count" >${ebookCount }</span>
-							</c:when>
-							<c:when test="${param.category eq 'paper' }" >
-								<span class="category-title" >종이책</span>
-								<span class="category-count" >${paperCount }</span>
-							</c:when>
-						</c:choose>
-						<%-- 종이책일때는 장바구니 추가 버튼 생성 --%>
-						<c:if test="${param.category eq 'paper' }">
-							<span class="to-cart" ><span class="btn-cart-outer far fa-check-square" ><span class="btn-cart" >&nbsp;장바구니 추가</span></span></span>
-						</c:if>
-						<span class="fas fa-chevron-right" style="display:none;"></span>
-					</button>
+					<form action="/search" method="GET" >
+						<input class="type" type="hidden" name="type" />
+						<input class="keyword" type="hidden" name="keyword" />
+						<input type="hidden" name="page" value="1" />
+						<button name="category" value="ebook" class="btn-category-belt" >
+							<span class="category-title" >EBOOK</span>
+							<span class="category-count" >${ebookCount }</span>
+							<span class="fas fa-chevron-right"></span>
+						</button>
+					</form>
 				</div>
 				<%-- 카테고리 벨트 끝 --%>
 				<%-- 책리스트 --%>
-				<div class="search-result" >
-					<%-- <c:forEach var="book" items="${result.get(param.category) }" > --%>
-					<c:forEach var="book" items="${result.get(param.category) }" >
-						<div class="search" >
-							<div class="book ${book.bookNum }" >
-								<!-- 책 커버 -->
-								<img class="cover" />
-								<c:if test="${param.category eq 'paper' }" >
-									<input class="checkbox-cart btn-grid-cart" type="checkbox" name="cart" value="${book.bookNum }"/>
-								</c:if>
-								<!-- 책 정보 -->
-								<div class="info" >
-									<div class="title" >${book.bookTitle }</div>
-									<div>
-										<span class="author" >${book.bookWriter }</span>
-										<span class="publisher" >${book.bookPublisher }</span>
+				<c:choose>
+					<c:when test="${ebookCount eq 0 }" >
+						<h3>결과가 없습니다.</h3>
+					</c:when>
+					<c:otherwise>
+						<div class="search-result" >
+							<c:forEach var="book" items="${ebook }">
+								<div class="search ${book.bookNum }" >
+									<div class="book" >
+										<!-- 책 커버 -->
+										<img class="cover" src="${book.bookThumbnail }"/>
+										<!-- 책 정보 -->
+										<div class="info" >
+											<div class="title" >${book.bookTitle }</div>
+											<div>
+												<span class="author" >${book.bookWriter }</span>
+												<span class="publisher" >${book.bookPublisher }</span>
+											</div>
+										</div>
+									</div>
+									<div class="interact" >
+										<button class="btn-read" >바로보기</button>
+										<!-- <button class="btn-purchase" >구매</button> -->
 									</div>
 								</div>
-							</div>
-							<div class="interact" >
-								<c:choose>
-									<c:when test="${param.category eq 'ebook' }" >
-										<button class="btn-read" >바로보기</button>
-									</c:when>
-									<c:when test="${param.category eq 'paper' }" >
-										<button class="btn-purchase" >구매</button>
-										<input class="checkbox-cart btn-list-cart" type="checkbox" name="cart" value="${book.bookNum }" />
-									</c:when>
-								</c:choose>
-							</div>
+							</c:forEach>
 						</div>
-					</c:forEach>
-				</div>
+					</c:otherwise>
+				</c:choose>
 				<%-- 책리스트 끝 --%>
-				</div>
-				<form action="/controller/search/pagetest" >
-				<div class="div-page" >
-					<c:choose>
-						<c:when test="${param.category eq 'ebook' }" >
-							<input type="hidden" name="existence" value="0" />
-							<input type="hidden" name="category" value="ebook" />
-						</c:when>
-						<c:otherwise>
-							<input type="hidden" name="existence" value="1" />
-							<input type="hidden" name="category" value="paper" />
-						</c:otherwise>
-					</c:choose>
-					<input type="hidden" name="type" value="${param.type }" />
-					<input type="hidden" name="keyword" value="${param.keyword }"/>
-					<button class="btn-page move before" name="pageNum" value="before"><</button>
-					<c:forEach var="i" begin="0" end="9" >
-						<button class="btn-page ${i+1 } num" name="pageNum" value="${i+1 }" >${i+1 }</button>
-					</c:forEach>
-					<button class="btn-page move next" name="pageNum" value="after">></button>
-				</div>
-				</form>
-			</c:otherwise>
-			<%-- 단일 카테고리일때 끝 --%>
-		</c:choose>
+			</div>
+		</c:if>
 	</c:if>
+	<!-- paper -->
+	<c:if test="${param.category ne 'ebook' }" >
+		<c:if test="${param.keyword ne null and param.keyword ne ''}" >
+			<div class="search-list fadeInUp">
+				<%-- 카테고리 벨트 --%>
+				<div class="category-belt" >
+					<form action="/search" method="GET" >
+						<input class="type" type="hidden" name="type" />
+						<input class="keyword" type="hidden" name="keyword" />
+						<input type="hidden" name="page" value="1" />
+						<button name="category" value="paper" class="btn-category-belt" >
+							<span class="category-title" >종이책</span>
+							<span class="category-count" >${paperCount }</span>
+							<c:choose>
+								<c:when test="${param.category eq 'paper' }">
+									<%-- 종이책일때는 장바구니 추가 버튼 생성 --%>
+									<span class="to-cart" ><span class="btn-cart-outer far fa-check-square" ><span class="btn-cart" >&nbsp;장바구니 추가</span></span></span>
+									<span class="fas fa-chevron-right" style="display:none;"></span>
+								</c:when>
+								<c:otherwise>
+									<span class="fas fa-chevron-right"></span>
+								</c:otherwise>
+							</c:choose>
+						</button>
+					</form>
+				</div>
+				<%-- 카테고리 벨트 끝 --%>
+				<%-- 책리스트 --%>
+				<c:choose>
+					<c:when test="${paperCount eq 0 }" >
+						<h3>결과가 없습니다.</h3>
+					</c:when>
+					<c:otherwise>
+						<div class="search-result" >
+							<c:forEach var="book" items="${paper }">
+								<div class="search ${book.bookNum }" >
+									<div class="book" >
+										<!-- 책 커버 -->
+										<img class="cover"  src="${book.bookThumbnail }"/>
+										<!-- 책 정보 -->
+										<div class="info" >
+											<div class="title" >${book.bookTitle }</div>
+											<div>
+												<span class="author" >${book.bookWriter }</span>
+												<span class="publisher" >${book.bookPublisher }</span>
+											</div>
+										</div>
+									</div>
+									<div class="interact" >
+										<button class="btn-purchase" >구매</button>
+										<c:if test="${param.category eq 'paper' }" >
+											<input class="checkbox-cart btn-list-cart" type="checkbox" name="cart" value="${book.bookNum }" />
+										</c:if>
+									</div>
+								</div>
+							</c:forEach>
+						</div>
+					</c:otherwise>
+				</c:choose>
+				<%-- 책리스트 끝 --%>
+			</div>
+		</c:if>
+	</c:if>
+	<%--검색결과 끝 --%>
+	<%-- 페이징 --%>
+	<c:if test="${(param.category ne null) }" >
+		<c:if test="${param.category ne 'all'}" >
+		<div class="page" >
+			<form action="/search" method="GET">
+				<input type="hidden" name="type" value="${param.type }" />
+				<input type="hidden" name="keyword" value="${param.keyword }" />
+				<input type="hidden" name="category" value="${param.category }" />
+				<button class="btn page before" name="page" ><</button>
+				<c:forEach var="i" begin="0" end="9" >
+					<button class="btn page num" name="page" ></button>
+				</c:forEach>
+				<button class="btn page after" name="page" >></button>
+			</form>
+		</div>
+		</c:if>
+	</c:if>
+	</div>
+	<%@ include file="template/footer.jsp" %>
 </body>
 </html>

@@ -54,8 +54,8 @@
 	INSERT INTO book_like (member_Email, book_Num) VALUES( #{memberEmail}, #{bookNum})
 </insert>
 
-<delete id="deleteLike" parameterType="com.ryan.domain.book.BookLikeVO">
-	DELETE FROM book_like WHERE book_num = #{bookNum} and member_Email=#{memberEmail}
+<delete id="deleteLike" parameterType="int">
+	DELETE FROM book_like WHERE like_Num = #{likenum}
 </delete>
 
 <!-- 현재 조회수  -->

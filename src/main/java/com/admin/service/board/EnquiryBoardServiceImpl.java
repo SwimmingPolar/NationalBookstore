@@ -14,12 +14,16 @@ import com.admin.domain.board.EnquiryBoardVO;
 import com.admin.domain.board.FileVO;
 import com.admin.domain.board.ReplyVO;
 import com.admin.mapper.EnquiryBoardMapper;
+import com.admin.mapper.FileBoardMapper;
 
 @Service
 public class EnquiryBoardServiceImpl implements EnquiryBoardService{
 	
 	@Autowired
 	private EnquiryBoardMapper mapper;
+	
+	@Autowired
+	private FileBoardMapper fileMapper;
 
 	@Override
 	public boolean eqWrite(EnquiryBoardVO enquiry) {
@@ -29,7 +33,7 @@ public class EnquiryBoardServiceImpl implements EnquiryBoardService{
 	@Override
 	public boolean eqDelete(EnquiryBoardVO enquiry) {
 		if(enquiry.getBoardNum()>0||mapper.numChk(enquiry.getBoardNum())>0) {
-			mapper.deleteAllFiles(enquiry.getBoardNum());
+			fileMapper.deleteAllFiles(enquiry.getBoardNum());
 			mapper.deleteAllReply(enquiry);
 			return mapper.deleteEq(enquiry)>0?true:false;
 		}else
@@ -91,7 +95,7 @@ public class EnquiryBoardServiceImpl implements EnquiryBoardService{
 			vo.setStoredFileName(UUID.randomUUID().toString()+"_"+file.getOriginalFilename());
 			File target=new File(path,vo.getStoredFileName());
 			FileCopyUtils.copy(file.getBytes(), target);
-			flag=mapper.insertFile(vo)>0?true:false;
+			flag=fileMapper.insertFile(vo)>0?true:false;
 		}
 		return flag;
 	}

@@ -84,9 +84,10 @@ public class DetailBookController {
 	
 	//좋아요 입력
 	@RequestMapping("/insertlike")
-	public @ResponseBody int insertLike(@RequestParam("booknumber") int booknumber, HttpServletRequest request) {
-		log.info("insertlike 실행" + booknumber);
-		return service.insertLike(booknumber, request);
+	public @ResponseBody String insertLike(@RequestParam("booknumber") int booknumber, HttpServletRequest request, Model model) {
+		int result = service.insertLike(booknumber, request);
+		boolean check =  service.checkLike(booknumber, request);
+		return result+"+"+check;
 	}
 	
 	//찜 책장에 추가
