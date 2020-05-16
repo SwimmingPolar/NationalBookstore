@@ -49,7 +49,7 @@ public class MainPageController {
 		return service.getBestSeller(time, category);
 	}
 	
-	@GetMapping("/autoKeyword")
+	@GetMapping("/search-preview")
 	public @ResponseBody ArrayList<KeywordAutoCompletionVO> autoKeyword(@RequestParam("type") String type , @RequestParam("keyword") String keyword) {
 		
 		return service.getAutoKeyword(type, keyword);

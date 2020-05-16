@@ -74,7 +74,7 @@ public class CartController {
 	@RequestMapping("/remove")
 	public String remove(@RequestParam("cartNum") int cartNum) {
 		 //삭제를 원하는 상품의 cartNum 을 보내주세요 , Ajax 비동기 처리방식 필요하면 말해주세요.
-		
+		//회원검사 세션 으로 sql or 인터셉터
 		
 		if(cartService.remove(cartNum)) return "redirect:/cart/list";
 		else return "실패";
