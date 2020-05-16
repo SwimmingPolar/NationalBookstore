@@ -1,6 +1,9 @@
 package com.admin.service.board;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.admin.domain.board.FileVO;
 import com.admin.domain.board.NoticeBoardVO;
@@ -22,5 +25,14 @@ public interface NoticeBoardService {
 	public ArrayList<NoticeBoardVO> selectPageList(PageVO pagevo,String type);
 	
 	public ArrayList<FileVO> selectNoticeFileList(int boardNum);
+	
+	//파일등록
+	public boolean insertFiles(NoticeBoardVO notice,ArrayList<MultipartFile> files,String path) throws IOException;
+		
+	//파일삭제
+	public boolean deleteFile(int fileNum);
+	
+	//공지사항 클릭시 해당 공지사항객체반환
+	public NoticeBoardVO selectNotice(int noticeNo);
 
 }

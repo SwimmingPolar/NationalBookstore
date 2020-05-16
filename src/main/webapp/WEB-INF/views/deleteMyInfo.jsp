@@ -57,12 +57,26 @@
 
     </div>
     <div class="finishBtn">
-        <button type="button" id="doLater">나중에 하기</button>
-        <button type="button" id="goRightNow" onclick="location.href='deleteNext.jsp'">계속 진행하기</button>
+        <button type="button" id="doLater" onclick="location.href='myManage.jsp'">나중에 하기</button>
+        <button type="button" id="goRightNow" onclick="goDeleteNext()">계속 진행하기</button>
 
     </div>
 
+    
     </div>
     <!-- wrapper end -->
+
+    <script>
+    function goDeleteNext(){
+            var agreeBtn = document.getElementById('agreeBtn');
+            if(agreeBtn.checked==false) {
+                alert("체크박스에 동의해주세요.");
+            }else {
+                location.href='deleteNext.jsp';
+            }
+
+        }
+
+    </script>
 </body>
 </html>

@@ -9,9 +9,60 @@ font-family: 'Montserrat', sans-serif;
 Korean Font:
 font-family: 'Noto Sans KR', sans-serif;
 */
-body > * {
+/* body > * {
 	width: 700px;
 	margin: 0 auto;
+} */
+
+* {
+	font-family: 'Nanum Gothic', 'Montserrat', 'sans-serif';
+	font-weight: bold;
+}
+
+.btn {
+	cursor: pointer;
+	outline: none;
+	background: none;
+	border: 0;
+	font-family: 'Nanum Gothic', 'Roboto', 'Noto Sans KR', sans-serif;
+}
+
+a {
+	display: block;
+	text-decoration: none;
+	color: #000000;
+}
+
+div.main-container {
+	width: 800px;
+	margin: 0 auto;
+	margin-top: 20px;
+	margin-bottom: 90px;
+}
+
+div.header {
+	position: fixed;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	top: 0; left: 0;
+	width: 100%; height: 50px;
+	box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.5);
+}
+
+div.header > .title {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 820px;
+}
+
+div.header > .title > a > .btn.history {
+	position: absolute;
+	top: 0; left: 0;
+	transform: translate(0, -20%);
+	font-size: 2em;
 }
 
 .div-title {
@@ -66,7 +117,15 @@ body > * {
 	cursor: pointer;
 	flex-basis: 10%;
 	color: var(--white-color);
-	background-color: var(--main-color);
+	background-color: var(--emphasis-color);
+}
+
+/* 비어있을때 채워넣을 내용 */
+.empty-spot {
+	width: 800px; height: 700px;
+	margin: 17px 0;
+	border-radius: 15px;
+	box-shadow: 1px 1px 3px -1px rgba(0, 0, 0, 0.5);
 }
 
 /* 카테고리 (통합검색, ebook, 종이책) */
@@ -141,6 +200,12 @@ body > * {
 	display: flex;
 	flex-direction: column;
 	margin-top: 5px;
+	border-radius: 15px;
+}
+
+.search-list > h3 {
+	text-align: center;
+	color: rgba(0, 0, 0, 0.5);
 }
 
 .category-belt { /* 카테고리 벨트 */
@@ -149,12 +214,12 @@ body > * {
 	cursor: pointer;
 	background: none;
 	height: 30px;
-	margin: 5px 0;
+	margin-bottom: 10px;
 }
 
 .category-belt > form {
 	display: flex;
-	width: 700px;
+	width: 100%;
 	height: 30px;
 }
 
@@ -187,15 +252,17 @@ body > * {
 }
 
 .to-cart {
+	cursor: default;
 	flex-basis: 82%;
 	display: flex;
 	justify-content: flex-end;
+	align-self: center;
 }
 
 .btn-cart-outer {
 	cursor: pointer;
 	background: var(--gray-color);
-	padding: 5px;
+	padding: 10px;
 	border-radius: 5px;
 	color: rgba(0, 0, 0, 1);
 	font-size: 0.8em;
@@ -238,11 +305,14 @@ body > * {
 }
 
 .cover {
+	cursor: pointer;
 	width: 120px;
 	height: 140px;
-	background: url("http://placehold.it/120X140.jpg");
 	border-radius: 5px 0 0 5px;
 	box-shadow: 1px 0px 1px -2px rgba(0, 0, 0, 0.5);
+}
+.cover:hover {
+	opacity: 0.5;
 }
 
 .info {
@@ -251,18 +321,32 @@ body > * {
 	padding: 10px;
 }
 
-.info * {
-	font-family: var(--korean-font);
-}
-
 .title {
+	cursor: pointer;
 	font-size: 1.3em;
+}
+.title:hover {
+	opacity: 0.5;
 }
 
 .info > div:nth-child(2) {
 	display: flex;
 	color: rgba(0, 0, 0, 0.4);
 	font-size: 1.1em;
+}
+
+.info .author {
+	cursor: pointer;
+}
+.info .author:hover {
+	opacity: 0.5;
+}
+
+.info .publisher {
+	cursor: pointer;
+}
+.info .publisher:hover {
+	opacity: 0.5;
 }
 
 .author::after {
@@ -290,11 +374,20 @@ body > * {
 }
 
 .btn-read {
-	background-color: var(--main-color);
+	border: 1px solid var(--emphasis-color);
+}
+.btn-read:hover {
+	background: var(--emphasis-color);
+	color: #FFFFFF;
 }
 
 .btn-purchase {
-	background-color: #0066CC;
+	/* background-color: #0066CC; */
+	border: 1px solid var(--emphasis-color);
+}
+.btn-purchase:hover {
+	background: var(--emphasis-color);
+	color: #FFFFFF;
 }
 
 .checkbox-cart {
@@ -304,7 +397,7 @@ body > * {
 }
 
 /* 페이징 버튼 */
-.div-page {
+/* .div-page {
 	display: flex;
 	justify-content: center;
 }
@@ -320,6 +413,36 @@ body > * {
 
 .btn-page:disabled {
 	cursor: default;
+} */
+div.page {
+	display: flex;
+	justify-content: center;
+	margin: 30px;
+}
+
+.btn.page {
+	cursor: pointer;
+	outline: none;
+	background: none;
+	border: 0;
+	font-size: 1.5em;
+	margin: 0 5px;
+	font-family: 'Nanum Gothic', 'Roboto', 'Noto Sans KR', sans-serif;
+}
+
+.btn.page:first-child {	margin-left: 0; }
+.btn.page:last-child {	margin-left: 0; }
+
+.btn.page:nth-child(2) {
+	color: #FF0000;
+}
+
+.btn.page:hover {
+	color: red;
+}
+.btn.page:disabled {
+	cursor: default;
+	color: rgba(0, 0, 0, 0.1);
 }
 
 /* ---------그리드 레이아웃---------- */
@@ -330,9 +453,9 @@ body > * {
 }
 
 .grid-layout .search {
-	flex-basis: 22.3%;
+	flex-basis: 19.3%;
 	flex-direction: column;
-	margin: 10px 1.75%;
+	margin: 10px 3.61%;
 }
 
 .grid-layout .book {
@@ -345,7 +468,6 @@ body > * {
 .grid-layout .cover {
 	border-radius: 5px 5px 0px 0px;
 	width: 156.6px;
-	background: url("http://placehold.it/157X140.jpg");
 }
 
 .grid-layout .author::after {

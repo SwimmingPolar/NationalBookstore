@@ -114,7 +114,7 @@ public class EnquiryBoardController {
 	//리스트중 특정 문의사항 클릭시
 	@RequestMapping("/select")
 	//클릭한 문의사항관련 객체를 EnquiryBoardVO enquiry로 넘겨야 합니다
-	public String enquirySelect(Model model,@RequestParam(value="boardNum")int boardNum,HttpServletRequest request) {
+	public String enquirySelect(Model model,@RequestParam(value="boardNum", defaultValue="1")int boardNum,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
 		EnquiryBoardVO enquiry=service.selectEq(boardNum);
