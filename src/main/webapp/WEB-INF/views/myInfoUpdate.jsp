@@ -24,7 +24,7 @@
     </div>
     <div class="newMyInfo">
         <div class="imageBox">
-            <img id="myFaceImage" src="NationalBookstore/src/main/webapp/resources/images/myLibrary/picture1.png" >
+            <img id="myFaceImage" src="${pageContext.request.contextPath}/resources/images/myLibrary/picture1.png" >
             <!-- 사진 넣을거임 -->
             <label for="camera">
                 <i class="fas fa-camera-retro"></i>

@@ -89,11 +89,6 @@ public class MemberController {
 		
 		return resultMap;
 	}
-		
-//	//인증코드 5분 지나면
-//	@RequestMapping("미정")
-//	public @ResponseBody Map<String, Boolean> sadsafoka() {
-//	}
 	
 	//인증완료
 	@PostMapping("/authenticationCheck")
@@ -133,9 +128,9 @@ public class MemberController {
 			HttpSession session = request.getSession();
 			session.setAttribute("ryanMember", memberService.getLoginMemberInfo(member));
 			log.info(request.getRemoteAddr());
-			return "redirect:/member/test"; 
+			return "redirect:/"; 
 		} else {
-			return "redirect:/member/signin";
+			return "redirect:/email-signin";
 		}
 
 	}
