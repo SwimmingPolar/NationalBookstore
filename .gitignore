@@ -126,3 +126,5 @@ pom.properties
 
 # End of https://www.gitignore.io/api/java,windows,eclipse
 /target/
+
+MANIFEST.MF
