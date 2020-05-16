@@ -61,71 +61,13 @@
                     <img src="${pageContext.request.contextPath }${bookdetail.bookThumbnail }" alt="없음">
                 </div>
                 <div class="preview">
-                    <a href="preview.html"
+                    <a href="preview.jsp"
                         onclick="window.open(this.href, '좋아요','width=1000, height=700');return false;" target="_blank"
                         style="color:black;">
-                        <i class="fas fa-search"></i> 미리보기</a>
+                        <i class="fas fa-search"></i><span>미리보기</span> 
+                    </a>
                 </div>
             </div>
-            <!-- leftbox end -->
-</div>  
-    <!-- likeChk end -->
-<div id ="modalGo" class="modal">
-    
-    <div class="modal_content">
-    <p> <i class="far fa-laugh-beam"></i> 좋아요한 사람들 </p>
-        <div class="allList">
-    <div class = "likeList"> 
-
-      <ul>
-          <li> <span><img id="myFaceImage" src="../../resources/images/myLibrary/picture1.png" >
-          </span>
-          <span> 
-              <a>지혜로운 셀럽님</a> <br>
-              <a>by 아이디</a>
-          </ul> </span> 
-        </li>
-      </ul>
-      
-        <!-- forEach, ajax  좋아요한 사람들 불러올거임-->
-    </div>
-<!-- likelist end -->
-    </div>
-    <!-- modal_content end -->
-    <span id="modalCloseBtn">
-        <button type="button" id="peopleChkBtn" > 확인 </button>
-    </span>
-    </div>
-    <!-- modalGo end -->
-
-</div>
-
-    </div>
-    <!-- introWrite -->
-        </div> 
-    <!-- top-container -->
-
-    <div class="body-container"> 
-
-        <div class="firstBox">
-        	
-            <h2>  # 해시태그 </h2>    
-            
-        
-        <div class="hashtagDetail"> 
-            <div class="hashTag">
-                <c:set var="count" value="${1 }" />
-                <c:forEach var="h" items="${hashtag}">
-                    <c:if test="${count <= 5 }">		
-
-                    <form action="" method="post" name="hashtagChk"> 
-
-                <input type="checkbox" name="tagChkbox" class="tagChkbox" id="chk${h.hashNum }" onclick="chkboxCnt(this)" value=${h.hashTag }>
-                <label for="chk${h.hashNum }" > # ${h.hashTag }
-
-                </label>
-
-            <!-- imageBox -->
             <div class="introWrite">
                 <h3> ${bookdetail.bookTitle} </h3>
                 <ul>
@@ -143,37 +85,41 @@
             	  <span><i class="fas fa-star"></i></span>
             	  <span><i class="fas fa-star"></i></span>
                   <span><i class="fas fa-star"></i></span>
-                  <span id="starScore"> 0 </span> 점
+                  <span id="starScore"> 0 </span> <a>점</a> 
                 </div>
                 <div class="choiceBtnOne">
                     <form action="/book/insertreadbook">
                   		<input type="hidden" name="booknumber" value="${bookdetail.bookNum }">
-                        <input type="submit" value="바로보기" class="choiceBtn">
-                        <input type="button" value="다운로드" class="choiceBtn">
+                        <input type="submit" value="바로읽기" class="choiceBtn">
+                        <button type="button" class="choiceBtn"><i class="fas fa-plus-circle"></i> 찜하기</button>
                         <input type="button" value="종이책 구매" class="choiceBtn">
                     </form>
                 </div>
                 <div class="likeChk">
                     <a href="#" id="modalOpen">
-                        <span class="likePeople">
-                            <i class="far fa-user-circle prof"></i>
-                            <i class="far fa-user-circle prof"></i>
-                            <i class="far fa-user-circle prof"></i>
-                        </span>
+                        <div class="likelists">
+                            <div class="likePeople">
+                                <c:forEach var="p" items="${likepeople}" begin="1" end="3">
+                                <img src="${pageContext.request.contextPath}">
+                                </c:forEach>
+                            </div>
+                            </div> 
+                            <span id="people"> 좋아하는 사람들</span>
                     </a>
                     <span class="likeBtn">
                         <div class="heartSoo">
-                            <input type="text" value="${booklike}" id='countNum' size='5' readonly>
+                            <input type="text" value="${booklike}" id="countNum" size='5' readonly>
                         </div>
                         <div class="heartC">
-                            <!-- <c:if test="${id != null}"> -->
+                            <!-- <input type="checkbox" id="heartClick">
+                            <label for="heartClick" id="heartStyle"> -->
                             <c:choose>
                                 <c:when test="${likecheck }">
                                     <form action="/book/insertlike">
                                         <input type="checkbox" id="heartClick">
                                         <label for="heartClick">
                                             <i class="far fa-heart"></i>
-                                            <i class="fa fa-heart"></i>
+                                            <i class="fas fa-heart"></i>
                                         </label>
                                     </form>
                                 </c:when>
@@ -182,13 +128,13 @@
                                         <input type="checkbox" id="heartClick">
                                         <label for="heartClick">
                                             <i class="far fa-heart"></i>
-                                            <i class="far fa-heart"></i>
+                                            <i class="fas fa-heart"></i>
                                         </label>
                                     </form>
                                 </c:otherwise>
                             </c:choose>
                             <!-- </c:if> -->
-                        </div>
+                      </div>
                     </span>
 
                 </div>
@@ -225,6 +171,12 @@
             </div>
             <!-- introWrite -->
         </div>
+
+
+    <!-- top-container -->
+
+    <div class="body-container"> 
+
         <!-- top-container -->
         <div class="body-container">
             <div class="firstBox">
@@ -318,17 +270,16 @@
                             <tbody>
                                 <c:forEach var="r" items="${bookreview}">
                                     <tr>
-                                        <td>★★★★☆</td>
                                         <td>${memberEmail}</td>
                                         <td>${r.reviewRegdate}</td>
                                     </tr>
                                     <tr>
-                                        <td colspan="3">${r.reviewTitle }</td>
+                                        <td colspan="2">${r.reviewTitle }</td>
                                     </tr>
                                     <tr>
-                                        <td colspan="3"><textarea name="reviewContent" id="reviewContent" readonly>
-                        ${r.reviewContent }
-                    </textarea></td>
+                                        <td colspan="2"><textarea name="reviewContent" id="reviewContent" readonly>
+                                           ${r.reviewContent }
+                                         </textarea></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -351,6 +302,7 @@
             <!-- body-container -->
         </div>
         <!-- wrapper end -->
+    </div>
     </div>
     <script>
         $(function () {
@@ -393,52 +345,58 @@
         var count = 0;
         $(function () {
             $('#heartClick').click(function () {
+            	alert('${bookdetail.bookNum }');
                 $.ajax({
                     url: "/book/insertlike",
                     type: "get",
                     data: {
-                        booknumber: '${booknumber}'
+                        booknumber: '${bookdetail.bookNum }'
                     },
-                    success: function () {
-                        heartCount();
+                    success: function (data) {
+                    	alert(data);
+                    	 $("#countNum").html(data);
+                        //heartCount();
                     },
                 })
-            })
-            
-            function heartCount() {
-            }
-            $.ajax({
-                url: "heartNumber.do",
-                type: "get",
-                data: {
-                },
-                success: function (count) {
-                    $(".countNum").val(count);
-                },
-            })
-        });
-        heartCount();
 
     </script>  -->
-
     <script>
   $(document).ready(function(){ 
+	  var check = "${likecheck}";
+	  alert(check);
             $('#heartClick').change(function () {
-                $.ajax({
-                    url: "/book/insertlike",
-                    type: "get",
-                    data: {
-                        booknumber: '${booknumber}'
-                    },
-                    dataType:"json",
-                    success: function (response) {
-                        $("#countNum").replaceWith("<span>"+response.booklike+"</span>");
-                    },
-                    error: function(request, error) {
-                        alert(error);
-                    },
-                });
-            })
+            	var memberId = "${ryanMember.memberNickName}";
+            	if(memberId==""){
+            		alert("로그인을 먼저 해주세요");	
+            	}else{
+                    $.ajax({
+                        url: "/book/insertlike",
+                        type: "get",
+                        data: {
+                            booknumber: '${bookdetail.bookNum}'
+                        },
+                 //       dataType:"json",
+                        success: function (response) {
+    						var result = response.split("+");
+  //  		                $("#countNum").replaceWith("<span>"+result[0]+"</span>");
+  							if(result[1]){
+  								$("#countNum").replaceWith("<input type='text' value="+result[0]+" id='countNum' size='5'>");
+  								$("#fa fa-heart").attr("class","far fa-heart");
+  							}else if(!result[1]){
+  								$("#countNum").replaceWith("<input type='text' value="+result[0]+" id='countNum' size='5'>");
+  								$("#far fa-heart").attr("class","fa fa-heart");
+  							}
+    		                
+                        },
+                        error: function(request,status, error) {
+                            alert("code = "+reqeust.status+"message = "+request.responseText);
+                        },
+                    });
+            	}
+            	
+            	})
+            });
+
     </script>
 
     <script>
