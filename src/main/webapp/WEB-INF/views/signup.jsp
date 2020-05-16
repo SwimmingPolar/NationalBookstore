@@ -38,34 +38,41 @@
 </head>
 
 <body>
-  <div class="title-bar">
-    <a href="/">
-      <h2>National Bookstore</h2>
-    </a>
-  </div>
-  <div class="container">
-    <form id="signup-form" action="/member/signup" method="post">
+  <header class="topbar">
+    <nav>
+      <div class="container">
+        <a href="javascript: history.back();"><i class="far fa-arrow-left"></i></a>
+        <h2>회원가입</h2>
+      </div>
+    </nav>
+  </header>
+  <div class="body-wrapper">
+    <form id="signup-form" action="#" method="post">
       <div class="form-container">
         <div class="email-container">
           <label for="email">
             <input id="email" name="email" type="text" required spellcheck="false" autocomplete="off">
             <span class="placeholder">이메일</span>
           </label>
-          <button type="button" disabled>인증</button>
+          <button type="button" class="auth-btn" disabled>인증</button>
+          <label for="email-auth">
+            <input id="email-auth" name="email-auth" type="text" required spellcheck="false" autocomplete="off" placeholder="인증 코드를 입력해주세요.">
+            <span class="timer">04:13</span>
+          </label>
           <span class="warning-msg"><span class="far fa-exclamation-circle"></span></span>
         </div>
-        <div>
+        <div class="passwd-container">
           <label for="passwd">
             <input id="passwd" name="passwd" type="password" required onblur="validatePasswd()">
             <span class="placeholder">비밀번호</span>
           </label>
           <label for="passwdConfirm">
-            <input id="passwdConfirm" name="passwdConfirm" type="password" required onblur="validatePasswd()">
+            <input id="passwdConfirm" name="passwdConfirm" type="password" required onblur="validatePasswdConfirm()">
             <span class="placeholder">비밀번호 확인</span>
           </label>
           <span class="warning-msg"><span class="far fa-exclamation-circle"></span></span>
         </div>
-        <div>
+        <div class="nickname-container">
           <label for="nickname">
             <input id="nickname" name="nickname" type="text" required spellcheck="false" autocomplete="off">
             <span class="placeholder">닉네임</span>
@@ -74,12 +81,14 @@
         </div>
         <div class="address-container">
           <label for="zipcode" onclick="openAddressAPI()">
-            <input id="zipcode" name="zipcode" type="text" required spellcheck="false" autocomplete="off" tabindex="-1" disabled="disabled">
+            <input id="zipcode" name="zipcode" type="text" required spellcheck="false" autocomplete="off" tabindex="-1"
+              disabled="disabled">
             <span class="placeholder">우편번호</span>
           </label>
           <button type="button" onclick="openAddressAPI()">우편번호 찾기</button>
           <label for="roadAddress" onclick="openAddressAPI()">
-            <input id="roadAddress" name="roadAddress" type="text" required spellcheck="false" autocomplete="off" tabindex="-1" disabled="disabled">
+            <input id="roadAddress" name="roadAddress" type="text" required spellcheck="false" autocomplete="off"
+              tabindex="-1" disabled="disabled">
             <span class="placeholder">주소</span>
           </label>
           <label for="detailAddress">
@@ -88,23 +97,26 @@
           </label>
           <span class="warning-msg"><span class="far fa-exclamation-circle"></span></span>
         </div>
-        <div>
+        <div class="tel-container">
           <label for="tel">
-            <input id="tel" name="tel" type="text" required spellcheck="false" autocomplete="off" onblur="validateTel()">
+            <input id="tel" name="tel" type="text" required spellcheck="false" autocomplete="off"
+              onblur="validateTel()">
             <span class="placeholder">휴대폰 번호</span>
           </label>
           <span class="warning-msg"><span class="far fa-exclamation-circle"></span></span>
         </div>
-        <button type="submit" disabled>회원 가입 완료</button>
+        <button class="submit" type="button" disabled>회원 가입 완료</button>
       </div>
     </form>
   </div>
   <!-- change z-index of overlapping input elements on focus -->
   <script>
     $(document).ready(function () {
+      const email = document.getElementById('email');
+      const emailAuth = document.getElementById('email-auth');
       const passwdInput = document.getElementById('passwd');
       const passwdConfirmInput = document.getElementById('passwdConfirm');
-      const inputs = [passwdInput, passwdConfirmInput];
+      const inputs = [email, emailAuth, passwdInput, passwdConfirmInput];
       inputs.forEach(input => {
         input.addEventListener('focus', () => {
           inputs.forEach(input => input.parentElement.style.zIndex = 1);
@@ -133,7 +145,7 @@
       if (!isAddressWindowOpened) {
         isAddressWindowOpened = true;
         const addressWindow = new daum.Postcode({
-          oncomplete: function(data) {
+          oncomplete: function (data) {
             isAddressWindowOpened = false;
             const zipcodePlaceholder = document.querySelector('label[for="zipcode"] .placeholder');
             const roadAddressPlaceholder = document.querySelector('label[for="roadAddress"] .placeholder');
@@ -142,9 +154,9 @@
             zipcodePlaceholder.style.transform = 'scale(0.8) translateX(-10%) translateY(-70%)';
             roadAddressPlaceholder.style.transform = 'scale(0.8) translateX(-10%) translateY(-70%)';
             zipcode.value = data.zonecode;
-            roadAddress.value = data.address;
+            roadAddress.value = data.address;x
           },
-          onclose: function() {
+          onclose: function () {
             isAddressWindowOpened = false;
           }
         });
@@ -154,53 +166,74 @@
   </script>
   <!-- 이메일 인증 버튼 활성화 -->
   <script>
-    $(document).ready(function() {
-      function isValidFormat(email) {
-        const emailPattern = /^[\d\w]+@(=?.*?[\w]+)[\d\w]*\.[\w]+(\.[\w]+){0,1}$/;
-        return emailPattern.test(email);
-      }
-      function validateEmail(email, emailAuthButton) {
-        // append spinner to label
-        const emailLabel = document.querySelector('.email-container > label[for="email"]');
-        const spinner = document.createElement('img');
-        spinner.setAttribute('src', '../../resources/images/ajax-loading.svg');
-        emailLabel.appendChild(spinner);
+    function validateEmail(email, emailAuthButton) {
+      // append spinner to label
+      const emailLabel = document.querySelector('.email-container label');
+      const spinner = document.createElement('img');
+      spinner.setAttribute('src', './ajax-loading.svg');
+      emailLabel.appendChild(spinner);
 
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/member/signUpCheck');
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', '/member/signUpCheck');
 
-        // unload spinenr on 'loadend'
-        xhr.addEventListener('loadend', () => {
-          emailLabel.removeChild(spinner);
-          const check = document.createElement('span');
-          check.className = 'fal fa-check validated';
-          emailLabel.appendChild(check);
-        });
+      // unload spinenr on 'loadend'
+      xhr.addEventListener('loadend', () => {
+        emailLabel.removeChild(spinner);
+        const check = document.createElement('span');
+        check.className = 'fal fa-check validated';
+        emailLabel.appendChild(check);
+      });
 
-        xhr.onreadystatechange = function() {
-          if (xhr.readyState === 4 && xhr.status === 200) {
-            emailAuthButton.removeAttribute('disabled');
-            console.dir(xhr.responseText);
-          }
-        };
+      // activate email authentication button on available email account
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          emailAuthButton.removeAttribute('disabled');
+          console.dir(xhr.responseText); 
+        }
+      };
 
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.send('memberEmail=' + email);
-      }
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.send('memberEmail=' + email);
+    }
+    function isValidFormat(email) {
+      const emailPattern = /^[\d\w]+@(=?.*?[\w]+)[\d\w]*\.[\w]+(\.[\w]+){0,1}$/;
+      return emailPattern.test(email);
+    }
+    $(document).ready(function () {
+      const emailWrapper = document.querySelector('.email-container');
       const emailInput = document.getElementById('email');
       const emailAuthButton = document.querySelector('.email-container > button')
+      const warningMsg = document.querySelector('label[for="email"] ~ .warning-msg');
+
       let validationTimer = null;
-      emailInput.addEventListener('input', function() {
+      emailInput.addEventListener('input', function () {
         // remove check mark on input
         const check = document.querySelector('.email-container .validated');
         if (check) check.parentElement.removeChild(check);
+        // remove validation schedule
+        clearTimeout(validationTimer);
 
-        if (isValidFormat(emailInput.value.trim()))
-          validationTimer = clearTimeout(validationTimer) || setTimeout(function() {
+        if (isValidFormat(emailInput.value.trim())) {
+          warningMsg.style.display = 'none';
+          emailWrapper.style.marginBottom = '25px';
+          validationTimer = setTimeout(function () {
             validateEmail(emailInput.value.trim(), emailAuthButton)
           }, 750);
+        }
         else
           emailAuthButton.setAttribute('disabled', 'disabled');
+      });
+      emailInput.addEventListener('blur', () => {
+        if (isValidFormat(emailInput.value.trim())) return;
+        warningMsg.innerHTML = '<span class="far fa-exclamation-circle">이메일 양식을 확인해주세요.</span>';
+        warningMsg.style.display = 'block';
+        // emailWrapper.style.marginBottom = '0';
+
+        emailWrapper.classList.remove('getAuth');
+      });
+      emailInput.addEventListener('focus', () => {
+        emailWrapper.classList.add('getAuth');
+        emailAuthButton.removeAttribute('disabled');
       });
     });
   </script>
@@ -211,57 +244,120 @@
       const passwdConfirm = document.getElementById('passwdConfirm').value.trim();
       const passwdPattern = /^(?=.*?[^\s])[\w\d]{4,}$/;
       const warningMsg = document.querySelector('label[for="passwd"] ~ .warning-msg');
-      const wrapperDiv =  warningMsg.parentElement;
+      const passwdWrapper = warningMsg.parentElement;
 
-      if (!(passwdPattern.test(passwd))) {
-        wrapperDiv.style.marginBottom = '0';
-        warningMsg.style.display = 'block';
-        warningMsg.innerHTML = '<span class="far fa-exclamation-circle">유효한 비밀번호를 입력해주세요.</span>'
-      } else if (passwd !== passwdConfirm) {
-        wrapperDiv.style.marginBottom = '0';
-        warningMsg.style.display = 'block';
-        warningMsg.innerHTML = '<span class="far fa-exclamation-circle">비밀번호가 일치하지 않습니다.</span>'
-      } else {
-        wrapperDiv.style.marginBottom = '25px';
+      // 패스워드칸을 지울 경우 경고 메세지도 가림
+      if (passwd.length <= 0) {
         warningMsg.style.display = 'none';
+        passwdWrapper.style.marginBottom = '25px';
       }
+      // 유효하지 않은 비밀번호 일 경유
+      else if (!(passwdPattern.test(passwd))) {
+        warningMsg.innerHTML = '<span class="far fa-exclamation-circle">유효한 비밀번호를 입력해주세요.</span>'
+        warningMsg.style.display = 'block';
+        passwdWrapper.style.marginBottom = '0';
+      } 
+      // 비밀번호 확인칸에 입력이 있지만 일치하지 않을 경우
+      else if (passwdConfirm !== passwd) {
+        warningMsg.innerHTML = '<span class="far fa-exclamation-circle">비밀번호가 일치하지 않습니다.</span>'
+        warningMsg.style.display = 'block';
+        passwdWrapper.style.marginBottom = '0';
+      }
+      // 유효한 비밀번호 일 경우 true를 반환
+      else {
+        warningMsg.style.display = 'none';
+        passwdWrapper.style.marginBottom = '25px';
+        return true;
+      }
+      return false;
+    }
+    function validatePasswdConfirm() {
+      const passwd = document.getElementById('passwd').value.trim();
+      const passwdConfirm = document.getElementById('passwdConfirm').value.trim();
+      const passwdPattern = /^(?=.*?[^\s])[\w\d]{4,}$/;
+      const warningMsg = document.querySelector('label[for="passwd"] ~ .warning-msg');
+      const wrapperDiv = warningMsg.parentElement;
+      const isValidatedPasswd = validatePasswd();
+
+      if (!isValidatedPasswd) return false;
+
+      if (passwd !== passwdConfirm) {
+        warningMsg.innerHTML = '<span class="far fa-exclamation-circle">비밀번호가 일치하지 않습니다.</span>'
+        warningMsg.style.display = 'block';
+        wrapperDiv.style.marginBottom = '0';
+        return true;
+      }
+      return false;
     }
   </script>
   <!-- 핸드폰번호 유효성 검사 -->
   <script>
     function validateTel() {
       const tel = document.getElementById('tel').value.trim().replace(/-/g, '').replace(/[\s]/g, '');
-      const telPattern = /[\D]/gi;
+      const telPattern = /\d{11}/;
       const telWrapper = document.querySelector('label[for="tel"]').parentElement;
       const warningMsg = telWrapper.querySelector('.warning-msg');
 
-      if (telPattern.test(tel) || tel.length !== 11) {
+      if (tel.length <= 0) {
+        warningMsg.style.display = 'none';
+        telWrapper.style.marginBottom = '25px';
+      } else if (!(telPattern.test(tel)) || tel.length > 11) {
         telWrapper.style.marginBottom = '0';
         warningMsg.style.display = 'block';
         warningMsg.innerHTML = '<span class="far fa-exclamation-circle">유효한 휴대폰 번호를 입력해주세요.</span>'
       } else {
-        telWrapper.style.marginBottom = '25px';
+        // 핸드폰 입력 양식이 맞을 경우
         warningMsg.style.display = 'none';
+        telWrapper.style.marginBottom = '25px';
+        return true;
       }
+      return false;
     }
   </script>
   <!-- 닉네임 유효성 검사 -->
   <script>
-    $(document).ready(function() {
+    function validateNickName(nickname) {
+      const nicknameLabel = document.querySelector('.nickname-container label');
+      const spinner = document.createElement('img');
+      spinner.setAttribute('src', '../../resources/ajax-loading.svg');
+      nicknameLabel.appendChild(spinner);
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', '/member/signUpCheck');
+
+      xhr.addEventListener('loadend', () => {
+        nicknameLabel.removeChild(spinner);
+        const check = document.createElement('span');
+        check.className = 'fal fa-check validated';
+        nicknameLabel.appendChild(check);
+      });
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && ready.status === 200) {
+          console.dir(xhr.responseText);
+        }
+      }
+
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.send('memberNickName=' + nickname);
+    }
+    $(document).ready(function () {
       const nicknameInput = document.getElementById('nickname');
       const nicknamePattern = /^[a-zA-Z][\d\w]{3,11}/;
       const nicknameWrapper = document.querySelector('label[for="nickname"]').parentElement;
       const warningMsg = nicknameWrapper.querySelector('.warning-msg');
       let validationTimer = null;
 
-      nicknameInput.addEventListener('input', function() {
-        const nickname = document.getElementById('nickname').value.trim();
+      nicknameInput.addEventListener('input', function () {
+        const check = document.querySelector('.nickname-container .validated');
+        if (check) check.parentElement.removeChild(check);
+        clearTimeout(validationTimer);
+
         if (nicknamePattern.test(nickname)) {
-          validationTimer = clearTimeout(validationTimer) || setTimeout(function() {
-            
+          validationTimer = setTimeout(function () {
+            validateNickName(nicknameInput.value.trim());
           }, 750);
         }
-      }); 
+      });
     });
   </script>
 </body>

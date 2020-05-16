@@ -35,8 +35,8 @@ function flexibleSlidify(sliderWindow) {
   // prevent clicking on 'a' and/or 'button' tag after moving slider
   document.addEventListener('click', event => {
     if (!isMoved) return;
-    // event.stopPropagation();
-    // event.preventDefault();
+    event.stopPropagation();
+    event.preventDefault();
   });
   document.addEventListener('mousedown', event => {
     // enable sliding only if event target is descendant of slider
