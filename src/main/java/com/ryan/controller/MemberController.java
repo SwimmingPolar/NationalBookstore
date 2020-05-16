@@ -56,7 +56,7 @@ public class MemberController {
 	
 	@PostMapping("/signUp")
 	public String memberSignUp(MemberVO member) {
-		if (memberService.memberSignUp(member)) return "회원가입 성공 페이지";
+		if (memberService.memberSignUp(member)) return "main";
 		else return "회원가입 실패 페이지";		
 	}
 	
@@ -120,7 +120,7 @@ public class MemberController {
 		return "업데이트 완료후 보여줄 페이지 경로";
 	}
 	
-	@GetMapping("/signin")
+	@PostMapping("/signin")
 	public String memberLogin(@RequestParam(required = false, name = "rememberMe") String remeberMe , MemberVO member ,HttpServletRequest request, HttpServletResponse response , Model model) {
 		//정지중인 유저인지 체크하는 서비스 호출에서 검사할것 아직안함.
 		
@@ -153,10 +153,10 @@ public class MemberController {
 	public String getEmailLogin() {
 		return "email-signin";
 	}
-//	@GetMapping("/signin")
-//	public String getSignIn() {
-//		return "signin";
-//	}
+	@GetMapping("/signin")
+	public String getSignIn() {
+		return "signin";
+	}
 	@GetMapping("/signup")
 	public String getMemberSignUp() {
 		return "signup";
