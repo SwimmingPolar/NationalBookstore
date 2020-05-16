@@ -42,7 +42,6 @@ public class BookListController {
 	@RequestMapping(value="/search")
 	public String searchnew(@RequestParam(value="type", required=false) String type, @RequestParam(value="keyword", required=false) String keyword, @RequestParam(value="page", required=false) String page, HttpSession session, Model model) throws ClassNotFoundException, SQLException {
 		System.out.println(String.format("검색 실행 (param1:%s;param2:%s;param3:%s)", type, keyword, page));
-		HashMap<String, List<EBookVO>> result = new HashMap<String, List<EBookVO>>();
 		if(type == null) {
 			type = "BOOK_TITLE";
 		}
@@ -55,10 +54,6 @@ public class BookListController {
 			System.out.println("keyword is not null");
 			keywordArr = keyword.split(" ");
 		}
-		result.put("ebook", sv.ebook(type, keywordArr, page));
-		result.put("paper", sv.paper(type, keywordArr, page));
-		model.addAttribute("result", result);
-		
 		int ebookCount = sv.ebookCount(type, keywordArr, page).size();
 		int paperCount = sv.paperCount(type, keywordArr, page).size();
 		model.addAttribute("ebook", sv.ebook(type, keywordArr, page));
@@ -84,5 +79,47 @@ public class BookListController {
 			System.out.println("리스트가 비어있습니다.");
 		}
 		return resultMessage;
+	}
+	
+	@RequestMapping(value="/paper/searchbak")
+	public String PaperSearch(@RequestParam(value="type", required=false) String type, @RequestParam(value="keyword", required=false) String keyword, @RequestParam(value="page", required=false) String page, HttpSession session, Model model) throws ClassNotFoundException, SQLException {
+		System.out.println(String.format("종이책 검색 실행 (param1:%s;param2:%s;param3:%s)", type, keyword, page));
+		if(type == null) {
+			type = "BOOK_TITLE";
+		}
+		String[] keywordArr;
+		if(keyword == null) {
+			System.out.println("keyword is null");
+			keywordArr = new String[] {""};
+			System.out.println("검색어는 기본으로'"+keywordArr[0]+"'로 지정될 것입니다.");
+		} else {
+			System.out.println("keyword is not null");
+			keywordArr = keyword.split(" ");
+		}
+		model.addAttribute("paper", sv.paper(type, keywordArr, page));
+		model.addAttribute("paperCount", sv.paperCount(type, keywordArr, page).size());
+		return "paper";
+	}
+	//종이책 구매 검색
+	@RequestMapping(value="/paper/search")
+	public String getPaperByGenre(@RequestParam(value="type", required=false) String type, @RequestParam(value="keyword", required=false) String keyword, @RequestParam(value="page", required=false) String page, @RequestParam(value="genre", required=false) String genre, HttpSession session, Model model) {
+		System.out.println(String.format("종이책 검색 실행 (param1:%s;param2:%s;param3:%s)", type, keyword, page));
+		if(type == null) {
+			type = "BOOK_TITLE";
+		}
+		String[] keywordArr;
+		if(keyword == null) {
+			System.out.println("keyword is null");
+			keywordArr = new String[] {""};
+			System.out.println("검색어는 기본으로'"+keywordArr[0]+"'로 지정될 것입니다.");
+		} else {
+			System.out.println("keyword is not null");
+			keywordArr = keyword.split(" ");
+		}
+		
+		model.addAttribute("counto", sv.getGenreCount(type, keywordArr, page, genre));
+		model.addAttribute("paper", sv.getPaperByGenre(type, keywordArr, page, genre));
+		model.addAttribute("paperCount", sv.getPaperByGenreCount(type, keywordArr, page, genre).size());
+		return "paper";
 	}
 }
