@@ -67,7 +67,7 @@
                         <i class="fas fa-search"></i> 미리보기</a>
                 </div>
             </div>
-            <!-- imageBox -->
+			   <!-- imageBox -->
             <div class="introWrite">
                 <h3> ${bookdetail.bookTitle} </h3>
                 <ul>
@@ -75,15 +75,16 @@
                     <li style="color:gray; "> ${bookdetail.bookPublisher } /
                         <fmt:formatDate value="${bookdetail.bookPbDate }" pattern="yyyy.MM.dd" />
                     </li>
-                    <li style="color:lightgray;"> 장르/분류 : ${bookdetail.bookCategory } > ${bookdetail.firstCategory }
+                    <li style="color:lightgray;"> 장르/분류 :${bookdetail.firstCategory } <i class="fas fa-chevron-right"></i> ${bookdetail.bookCategory }  
                     </li>
                 </ul>
-                <div class="bookStarScore">
-                    <span><i class="fas fa-star starJum01"></i></span>
-                    <span><i class="fas fa-star starJum02"></i></span>
-                    <span><i class="fas fa-star starJum03"></i></span>
-                    <span><i class="fas fa-star starJum04"></i></span>
-                    <span><i class="fas fa-star starJum05"></i></span>
+                <!-- data-rate 숫자에 따라 색 칠해짐,,,,, -->
+                <div class="bookStarScore" data-rate="${bookgrade}">
+                  <span id="starScore"><i class="fas fa-star"></i></span>
+          		  <span id="starScore"><i class="fas fa-star"></i></span>
+            	  <span id="starScore"><i class="fas fa-star"></i></span>
+            	  <span id="starScore"><i class="fas fa-star"></i></span>
+            	  <span id="starScore"><i class="fas fa-star"></i></span>
                 </div>
                 <div class="choiceBtnOne">
                     <form action="/book/insertreadbook">
@@ -107,18 +108,16 @@
                         </div>
                         <div class="heartC">
                             <input type="checkbox" id="heartClick">
+                            <label for="heartClick" id="heartStyle">
                             <c:choose>
-                                <c:when test="${likecheck }">
-                                        <label for="heartClick">
-                                            <i class="far fa-heart"></i>
-                                        </label>
-                                </c:when>
-                                <c:otherwise>
-                                        <label for="heartClick">
-                                            <i class="fa fa-heart"></i>
-                                        </label>
-                                </c:otherwise>
-                            </c:choose>
+                            	<c:when test="${likecheck}">
+                                     <i class="far fa-heart"></i> 
+                            	</c:when>
+                         	   <c:otherwise>
+                         	          <i  class="fa fa-heart"></i>
+                         	   </c:otherwise> 
+                         	 </c:choose> 
+                         	 </label>               
                         </div>
                     </span>
 
@@ -133,11 +132,11 @@
                                     <ul>
                                         <li> <span>
                                                 <img id="myFaceImage"
-                                                    src="${pageContext.request.contextPath }/resources/images/myLibrary/picture1.png">
+                                                    src="${pageContext.request.contextPath}">
                                             </span>
                                             <span>
-                                                <a>지혜로운 셀럽님</a> <br>
-                                                <a>by ${p.memberNickName }</a>
+                                                <a>${p.memberNickName } 님</a> <br>
+                                                <a>by ${p.memberEmail }</a>
                                             </span>
                                         </li>
                                     </ul>
@@ -156,6 +155,12 @@
             </div>
             <!-- introWrite -->
         </div>
+
+
+    <!-- top-container -->
+
+    <div class="body-container"> 
+
         <!-- top-container -->
         <div class="body-container">
             <div class="firstBox">
@@ -283,6 +288,7 @@
         </div>
         <!-- wrapper end -->
     </div>
+    </div>
     <script>
         $(function () {
             var cnt = 0;
@@ -318,7 +324,9 @@
             });
         });
     </script>
-    <script>
+
+    <!-- <script>
+    
         var count = 0;
         $(function () {
             $('#heartClick').click(function () {
@@ -335,22 +343,47 @@
                         //heartCount();
                     },
                 })
-            })
-        })
-/*             function heartCount() {
-            }
-            $.ajax({
-                url: "heartNumber.do",
-                type: "get",
-                data: {
-                },
-                success: function (count) {
-                    $(".countNum").val(count);
-                },
-            })
-        });
-        heartCount(); */
+
+    </script>  -->
+    <script>
+  $(document).ready(function(){ 
+	  var check = "${likecheck}";
+	  alert(check);
+            $('#heartClick').change(function () {
+            	var memberId = "${ryanMember.memberNickName}";
+            	if(memberId==""){
+            		alert("로그인을 먼저 해주세요");	
+            	}else{
+                    $.ajax({
+                        url: "/book/insertlike",
+                        type: "get",
+                        data: {
+                            booknumber: '${bookdetail.bookNum}'
+                        },
+                 //       dataType:"json",
+                        success: function (response) {
+    						var result = response.split("+");
+  //  		                $("#countNum").replaceWith("<span>"+result[0]+"</span>");
+  							if(result[1]){
+  								$("#countNum").replaceWith("<input type='text' value="+result[0]+" id='countNum' size='5'>");
+  								$("#fa fa-heart").attr("class","far fa-heart");
+  							}else if(!result[1]){
+  								$("#countNum").replaceWith("<input type='text' value="+result[0]+" id='countNum' size='5'>");
+  								$("#far fa-heart").attr("class","fa fa-heart");
+  							}
+    		                
+                        },
+                        error: function(request,status, error) {
+                            alert("code = "+reqeust.status+"message = "+request.responseText);
+                        },
+                    });
+            	}
+            	
+            	})
+            });
+
     </script>
+
     <script>
         var modal = document.getElementById('modalGo');
         var openBtn = document.getElementById('modalOpen');
@@ -370,15 +403,9 @@
             }
         }
     </script>
-    <script>
-        $('a[href="#modalGo"]').click(function (event) {
-            event.preventDefault();
+    
+    
 
-            $(this).modal({
-                fadeDuration: 250
-            });
-        });
-    </script>
     <script>
         var maxChkbox = 3;
         var cnt = 0;
@@ -396,6 +423,7 @@
             }
         }
     </script>
+    
     <script>
         $("#chk1").change(function () {
             var isChk = this.checked;
@@ -404,6 +432,8 @@
             }
         });
     </script>
+    
+    
     <script>
         function chkboxCnt(gogo) {
             var chkvalue = gogo.val();
@@ -446,15 +476,26 @@
             });
         })
     </script>
+
+
+
     <script>
-        $('.bookStarScore span').click(function () {
-            $(this).parent().children('span').removeClass('on');
-            $(this).addClass('on').prevAll('span').addClass('on');
-            $('.starJum01').click(function () {
-                $('#starTxt').val($(this).length);
-            })
-        });
+    
+    $(function() {
+    var rating = $('.bookStarScore');
+
+    rating.each(function(){
+        var targetScore = $(this).attr('data-rate');
+        console.log(targetScore);
+        $(this).find('span:nth-child(-n+'+targetScore+')').css({color:'#f1c40f'});
+
+    });
+
+ });
+    
     </script>
+    
+
     <%@ include file="template/footer.jsp" %>
 </body>
 

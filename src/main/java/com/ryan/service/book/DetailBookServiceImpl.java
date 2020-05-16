@@ -125,17 +125,27 @@ public class DetailBookServiceImpl implements DetailBookService{
 		int result = 0;
 		ArrayList<BookLikeVO> list = mapper.bookLikeList(booknumber);
 		HttpSession session = request.getSession();	
-		BookLikeVO vo = (BookLikeVO) session.getAttribute("ryanmember");
-		if(vo != null) {
-			vo.setBookNum(booknumber);
-			for(int i=0; i<list.size();i++) {
-				if(list.get(i).getMemberEmail().equals(vo.getMemberEmail())) {
-					mapper.deleteLike(vo);
-				}else {
-					mapper.insertLike(vo);
+		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
+			if(!list.isEmpty()) {
+				for(int i=0; i<list.size(); i++) {
+					if(list.get(i).getMemberEmail().equals(member.getMemberEmail())) {
+						mapper.deleteLike(list.get(i).getLikeNum());
+						break;
+					}else {
+						BookLikeVO vo = new BookLikeVO();
+						vo.setBookNum(booknumber);
+						vo.setMemberEmail(member.getMemberEmail());
+						mapper.insertLike(vo);
+						break;
+					}
 				}
-			}
-		}
+			}else {
+				BookLikeVO vo = new BookLikeVO();
+				vo.setBookNum(booknumber);
+				vo.setMemberEmail(member.getMemberEmail());
+				mapper.insertLike(vo);
+			}			
+
 		result = mapper.bookLike(booknumber);
 		return result;	
 	}
