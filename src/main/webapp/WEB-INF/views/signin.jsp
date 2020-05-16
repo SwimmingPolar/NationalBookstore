@@ -38,15 +38,20 @@
     <link rel="stylesheet" href="../../resources/styles/signin.css" />
   </head>
   <body>
-    <div class="title-bar">
-      <a href="/"><h2>National Bookstore</h2></a>
-    </div>
-    <div class="container">
+    <header class="topbar">
+      <nav>
+        <div class="container">
+          <a href="javascript: history.back();"><i class="far fa-arrow-left"></i></a>
+          <h2>로그인</h2>
+        </div>
+      </nav>
+    </header>
+    <div class="body-wrapper">
       <div class="selection-container">
         <div class="email">
           <h3>이메일 로그인</h3>
           <div class="selection">
-            <a href="/member/email-signin"><span class="fas fa-envelope-square"></span>이메일</a>
+            <a href="/email-signin"><span class="fas fa-envelope-square"></span>이메일</a>
           </div>
         </div>
         <div class="social">
