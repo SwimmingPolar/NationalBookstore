@@ -79,6 +79,7 @@ public class MemberController {
 	public @ResponseBody Map<String, Boolean> emailAuthenticationCodeSend(EmailCheckVO email) {
 		
 		Map<String, Boolean> resultMap = new HashMap<String, Boolean>(); 
+		resultMap.put("result", false);
 		
 		if(emailService.authenticationReady(email)) { // DB에 인증정보 입력성공시 PK키 리턴.. 
 			if(emailService.authenticationCodeSend(email)) { //메일보내기 성공하면
@@ -94,7 +95,6 @@ public class MemberController {
 	//인증완료
 	@PostMapping("/authenticationCheck")
 	public @ResponseBody Map<String, Boolean> authenticationCheck(EmailCheckVO email) {
-		
 		Map<String, Boolean> resultMap = new HashMap<String, Boolean>();
 		
 		if(emailService.authenticationCheck(email)) { // 인증성공 true
