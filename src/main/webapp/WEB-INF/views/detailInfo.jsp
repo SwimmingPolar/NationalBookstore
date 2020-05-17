@@ -389,7 +389,7 @@
     		                
                         },
                         error: function(request,status, error) {
-                            alert("code = "+reqeust.status+"message = "+request.responseText);
+                            alert("code = "+request.status+"message = "+request.responseText);
                         },
                     });
             	}
