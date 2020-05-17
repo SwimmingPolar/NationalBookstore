@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -77,30 +78,45 @@ public class MemberController {
 	@PostMapping("/emailAuthentication")
 	public @ResponseBody Map<String, Boolean> emailAuthenticationCodeSend(EmailCheckVO email) {
 		
-		log.info("컨트롤러" + email);
 		Map<String, Boolean> resultMap = new HashMap<String, Boolean>(); 
+		resultMap.put("result", false);
 		
-		if(emailService.insertEmailCode(email)) { // DB에 인증정보 입력성공시 PK키 리턴.. 
+		if(emailService.authenticationReady(email)) { // DB에 인증정보 입력성공시 PK키 리턴.. 
 			if(emailService.authenticationCodeSend(email)) { //메일보내기 성공하면
 				resultMap.put("result", true);
 				return resultMap;
 			}
-		}
+		}		
 		
 		return resultMap;
 	}
+	//pk키 추가해주기 or 5분뒤 삭제
 	
 	//인증완료
 	@PostMapping("/authenticationCheck")
 	public @ResponseBody Map<String, Boolean> authenticationCheck(EmailCheckVO email) {
-		
 		Map<String, Boolean> resultMap = new HashMap<String, Boolean>();
 		
 		if(emailService.authenticationCheck(email)) { // 인증성공 true
+			if(emailService.updateAuthComplete(email)) {
+				resultMap.put("result", true);
+			}
+		} else {
+			resultMap.put("result", false);
+		}
+		return resultMap;
+	}
+	
+	@PostMapping("/authenticationCompleteCheck")
+	public @ResponseBody Map<String, Boolean> authenticationCompleteCheck(EmailCheckVO email) {
+		
+		Map<String, Boolean> resultMap = new HashMap<String, Boolean>();
+		if(emailService.authCompleteCheck(email)) {
 			resultMap.put("result", true);
 		} else {
 			resultMap.put("result", false);
 		}
+		
 		return resultMap;
 	}
 	
