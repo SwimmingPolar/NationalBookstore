@@ -6,8 +6,26 @@
 		VALUES(#{memberEmail},#{emailCode})
 	</insert>
 	
+	<select id="checkEmailAuthData" resultType="int">
+		SELECT count(*) FROM email_check
+		<where>
+			member_email = #{memberEmail}
+		</where>
+	</select>
+	
 	<select id="authenticationCheck" resultType="int">
 		SELECT count(*) FROM email_check 
 		WHERE member_email = #{memberEmail} and email_code = #{emailCode}
 	</select>
+	
+	<update id="updateAuthenticationCode">
+		UPDATE email_check
+		<set>
+			email_code = #{emailCode}
+		</set>
+		<where>
+			member_email = #{memberEmail}
+		</where>
+	</update>
+	
 </mapper>
