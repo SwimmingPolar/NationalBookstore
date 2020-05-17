@@ -1,11 +1,16 @@
 package com.admin.service.board;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.admin.domain.board.FileVO;
@@ -29,13 +34,18 @@ public class NoticeBoardServiceImpl implements NoticeBoardService{
 	}
 	
 	@Override
-	public boolean noticeDelete(NoticeBoardVO notice) {
+	public boolean noticeDelete(NoticeBoardVO notice,HttpServletRequest request) {
+		String path=request.getSession().getServletContext().getRealPath("\\")+"\\NationalBookstore\\src\\main\\webapp\\resources\\noticeFile";
 		if(mapper.numChk(notice.getNoticeNo())>0) {
-			//fileMapper.deleteAllFiles(enquiry.getBoardNum());
-			//return mapper?true:false;
+			ArrayList<FileVO> tmp=fileMapper.selectNoticeFileList(notice.getNoticeNo());
+			if(tmp!=null&&tmp.size()>0&&fileMapper.deleteAllNoticeFiles(notice.getNoticeNo())>0) {
+				for(FileVO file : tmp) {
+					new File(path+"\\"+file.getStoredFileName()).delete();
+				}
+			}
+			return mapper.deleteNotice(notice)>0?true:false;
 		}else
 			return false;
-		return mapper.deleteNotice(notice)>0?true:false;
 	}
 	
 	@Override
@@ -56,15 +66,24 @@ public class NoticeBoardServiceImpl implements NoticeBoardService{
 	}
 
 	@Override
-	public ArrayList<FileVO> selectNoticeFileList(int boardNum) {
-		// TODO Auto-generated method stub
+	public ArrayList<FileVO> selectNoticeFileList(int noticeNo) {
 		return null;
 	}
 
 	@Override
-	public boolean insertFiles(NoticeBoardVO notice, ArrayList<MultipartFile> files, String path) throws IOException {
-		
-		return false;
+	public boolean insertFiles(NoticeBoardVO notice, ArrayList<MultipartFile> files,HttpServletRequest request) throws IOException {
+		String path = request.getSession().getServletContext().getRealPath("\\")+"\\NationalBookstore\\src\\main\\webapp\\resources\\noticeFile";
+		boolean flag=false;
+		for(MultipartFile file : files)  {
+			FileVO vo=new FileVO();
+			vo.setNoticeNo(notice.getNoticeNo());
+			vo.setOriginFileName(file.getOriginalFilename());
+			vo.setStoredFileName(UUID.randomUUID().toString()+"_"+file.getOriginalFilename());
+			File target=new File(path,vo.getStoredFileName());
+			FileCopyUtils.copy(file.getBytes(), target);
+			flag=fileMapper.insertFile(vo)>0?true:false;
+		}
+		return flag;
 	}
 
 	@Override
@@ -79,5 +98,38 @@ public class NoticeBoardServiceImpl implements NoticeBoardService{
 			return mapper.selectNotice(noticeNo);
 		else
 			return null;
+	}
+
+	@Override
+	public boolean updateFileList(NoticeBoardVO notice, ArrayList<MultipartFile> files,HttpServletRequest request) {
+		String path = request.getSession().getServletContext().getRealPath("\\")+"\\NationalBookstore\\src\\main\\webapp\\resources\\noticeFile";
+		boolean flag=true;
+		if(notice!=null) {
+			ArrayList<FileVO> tmp=fileMapper.selectNoticeFileList(notice.getNoticeNo());
+			if(tmp!=null) {
+				for(FileVO file : tmp) {
+					fileMapper.deleteFile(file.getFileNum());
+					new File(path+"\\"+file.getStoredFileName()).delete();
+				}
+			}
+			for(MultipartFile file : files) {
+				FileVO vo=new FileVO();
+				vo.setNoticeNo(notice.getNoticeNo());
+				vo.setOriginFileName(file.getOriginalFilename());
+				vo.setStoredFileName(UUID.randomUUID().toString()+"_"+file.getOriginalFilename());
+				File target=new File(path,vo.getStoredFileName());
+				try {
+					FileCopyUtils.copy(file.getBytes(), target);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if(fileMapper.insertFile(vo)<1)
+					flag=false;
+				
+			}
+		}
+		
+		return flag;
 	}
 }
