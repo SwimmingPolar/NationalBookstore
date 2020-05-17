@@ -74,7 +74,7 @@ public class MemberController {
 		}
 	}
 	
-	@GetMapping("/emailAuthentication")
+	@PostMapping("/emailAuthentication")
 	public @ResponseBody Map<String, Boolean> emailAuthenticationCodeSend(EmailCheckVO email) {
 		
 		log.info("컨트롤러" + email);
