@@ -4,14 +4,13 @@
 <%@ page session="false" %>
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>회원가입 - National Bookstore</title>
   <!-- Google Fonts -->
   <link
-    href="https://fonts.googleapis.com/css?family=Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap"
+    href="https://fonts.googleapis.com/css?family=Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto+Mono|Roboto&display=swap"
     rel="stylesheet" />
   <!-- Fontawesome -->
   <script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
@@ -29,14 +28,14 @@
     -->
 
   <!-- css reset -->
-  <link rel="stylesheet" href="../../resources/styles/reset.css" />
+  <link rel="stylesheet" href="../../resources/styles/reset.css">
 
   <!-- individual page stylesheet -->
-  <link rel="stylesheet" href="../../resources/styles/signup.css" />
+  <link rel="stylesheet" href="../../resources/styles/signup.css">
 
+  <!-- jQuery CDN -->
   <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 </head>
-
 <body>
   <header class="topbar">
     <nav>
@@ -57,7 +56,7 @@
           <button type="button" class="auth-btn" disabled>인증</button>
           <label for="email-auth">
             <input id="email-auth" name="email-auth" type="text" required spellcheck="false" autocomplete="off" placeholder="인증 코드를 입력해주세요.">
-            <span class="timer">04:13</span>
+            <span class="timer"></span>
           </label>
           <span class="warning-msg"><span class="far fa-exclamation-circle"></span></span>
         </div>
@@ -67,7 +66,7 @@
             <span class="placeholder">비밀번호</span>
           </label>
           <label for="passwdConfirm">
-            <input id="passwdConfirm" name="passwdConfirm" type="password" required onblur="validatePasswdConfirm()">
+            <input id="passwdConfirm" name="passwdConfirm" type="password" required onblur="validatePasswd()">
             <span class="placeholder">비밀번호 확인</span>
           </label>
           <span class="warning-msg"><span class="far fa-exclamation-circle"></span></span>
@@ -154,7 +153,7 @@
             zipcodePlaceholder.style.transform = 'scale(0.8) translateX(-10%) translateY(-70%)';
             roadAddressPlaceholder.style.transform = 'scale(0.8) translateX(-10%) translateY(-70%)';
             zipcode.value = data.zonecode;
-            roadAddress.value = data.address;x
+            roadAddress.value = data.address;
           },
           onclose: function () {
             isAddressWindowOpened = false;
@@ -164,9 +163,129 @@
       }
     }
   </script>
+  <script>
+    function markChecked(label) {
+      if (!label) return;
+
+      const check = document.createElement('span');
+      check.className = 'fal fa-check validated';
+      label.appendChild(check);
+    }
+  </script>
   <!-- 이메일 인증 버튼 활성화 -->
   <script>
-    function validateEmail(email, emailAuthButton) {
+    function startTimer(timer) {
+      timer.style.color = 'var(--violet-color)';
+
+      // get time from timer element's data attribute
+      let countdown = 60;
+      // clear previous timer if any
+      const previousCountdown = timer.getAttribute('data-countdown-timer-id');
+      if (previousCountdown) clearInterval(previousCountdown);
+
+      // update timer element every second
+      const intervalId = setInterval(() => {
+        let minutes = String(Math.floor(countdown/60));
+        minutes = (minutes.length === 1 ? '0' : '') + minutes;
+
+        let seconds = String(Math.floor(countdown%60));
+        seconds = (seconds.length === 1 ? '0' : '') + seconds;
+
+        timer.innerHTML = minutes + ':' + seconds;
+
+        // decrease timer
+        countdown -= 1;
+        // update timer data and save on timer element
+        timer.setAttribute('data-countdown', countdown);
+
+        // if countdown is less then 10 seconds change font color to red on next coundown repaint
+        if (countdown <= 10) timer.style.color = 'var(--red-color)';
+
+        // stop timer on 0 second
+        if (countdown < 0) clearInterval(intervalId);
+      }, 1000);
+      // set setInterval id to timer element
+      timer.setAttribute('data-countdown-timer-id', intervalId);
+    }
+    function requestVerificationCodeConfirmation() {
+      const countdownTime = Number(document.querySelector('.email-container span.timer').value.trim());
+      if (countdownTime < 0) {
+        alert('인증 코드가 만료되었습니다.')
+        return;
+      }
+      const emailInput = document.getElementById('email');
+      const email = emailInput.value.trim();
+      const code = document.getElementById('email-auth').value.trim();
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', '/emailAuthenticationCheck');
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.onreadystatechange = function() {
+        if (!(xhr.readyState === 4 && xhr.status === 200)) return;
+          const isValid = JSON.parse(xhr.response).result;
+          console.log('verification completed: ' + isValid);
+          if (isValid) {
+            // lock email input
+            emailInput.setAttribute('data-locked', true); 
+            // hide authentication code input
+            emailWrapper.classList.remove('getAuth');
+            // mark checked
+            const emailLabel = document.querySelector('.email-container label[for="email"]');
+            markChecked(emailLabel);
+
+            warningMsg.style.display = 'none';
+            emailWrapper.style.marginBottom = '25px';
+          } else {
+            alert('일치하지 않는 인증 코드 입니다.');
+          }
+      }
+      xhr.send('memberEmail=' + email + '&emailCode=' + code);
+    }
+    // 이메일 인증 코드 전송 요청
+    function requestEmailVerificationCode() {
+      const emailWrapper = document.querySelector('.email-container');
+      const emailAuthButton = document.querySelector('.email-container > button');
+      const warningMsg = document.querySelector('label[for="email"] ~ .warning-msg');
+
+      // enable authentication code input label
+      if (!emailWrapper.classList.contains('getAuth'))
+        emailWrapper.classList.add('getAuth');
+      // change button text
+      emailAuthButton.textContent = '확인';
+
+      // add code confirm request handler
+      emailAuthButton.addEventListener('click', () => {
+        const email = document.getElementById('email').value.trim();
+        
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/emailAuthentication');
+
+        xhr.onerror = () => 
+        xhr.onreadystatechange = function() {
+          if (!(xhr.readyState === 4 && xhr.status === 200)) return;
+
+          const isValid = JSON.parse(xhr.response).result;
+          console.log('request verification code: ' + isValid);
+          if (!isValid) {
+            alert('이메일 인증 오류: 관리자에게 문의해주세요.');
+            return;
+          }
+
+          const newEmailAuthButton = emailAuthButton.cloneNode(true);
+          // add authentication code request handler
+          newEmailAuthButton.addEventListener('click', requestVerificationCodeConfirmation);
+          // remove all previous event handler
+          emailAuthButton.parentElement.replaceChild(newEmailAuthButton, emailAuthButton);
+        };
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send('memberEmail=' + email);
+      });
+    }
+    function validateEmail() {
+      const emailAuthButton = document.querySelector('.email-container > button');
+      const emailInput = document.getElementById('email');
+      const email = emailInput.value.trim();
+
       // append spinner to label
       const emailLabel = document.querySelector('.email-container label');
       const spinner = document.createElement('img');
@@ -177,63 +296,119 @@
       xhr.open('POST', '/member/signUpCheck');
 
       // unload spinenr on 'loadend'
-      xhr.addEventListener('loadend', () => {
-        emailLabel.removeChild(spinner);
-        const check = document.createElement('span');
-        check.className = 'fal fa-check validated';
-        emailLabel.appendChild(check);
-      });
+      xhr.addEventListener('loadend', () => emailLabel.removeChild(spinner));
 
       // activate email authentication button on available email account
       xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          emailAuthButton.removeAttribute('disabled');
-          console.dir(xhr.responseText); 
+        if (!(xhr.readyState === 4 && xhr.status === 200)) return;
+
+        const emailWrapper = document.querySelector('.email-container');
+        const emailInput = document.getElementById('email');
+        const warningMsg = document.querySelector('label[for="email"] ~ .warning-msg');
+
+        // mark email input as validated (whether valid or not, available or not)
+        emailInput.setAttribute('data-is-validated', true);
+
+        const isValid = JSON.parse(xhr.response).result;
+
+        // remove all previous event handler
+        const newEmailAuthButton = emailAuthButton.cloneNode(true);
+
+        // if email is valid & available
+        if (isValid) {
+          // change warning message
+          warningMsg.innerHTML = '<span class="far fa-check-circle info-msg"> 이메일 인증을 진행해주세요.</span>';
+
+          // enable authentication button
+          newEmailAuthButton.removeAttribute('disabled');
+          
+          // add authentication code request handler
+          newEmailAuthButton.addEventListener('click', requestEmailVerificationCode);
+
+          emailAuthButton.parentElement.replaceChild(newEmailAuthButton, emailAuthButton);
+
+          // start timer when email confirmation code is successfully sent
+          const timer = emailWrapper.querySelector('span.timer');
+          startTimer(timer);
+
+          // hold off alert message
+          setTimeout(() => alert('이메일을 확인해주세요!', 0));
         }
+        // if email in in use
+        else {
+          warningMsg.innerHTML = '<span class="far fa-exclamation-circle"> 이메일이 이미 사용되고 있습니다.</span>';
+        }
+        warningMsg.style.display = 'block';
+        emailWrapper.style.marginBottom = '0';
       };
 
       xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
       xhr.send('memberEmail=' + email);
     }
-    function isValidFormat(email) {
+    function isValidEmailFormat(email) {
       const emailPattern = /^[\d\w]+@(=?.*?[\w]+)[\d\w]*\.[\w]+(\.[\w]+){0,1}$/;
       return emailPattern.test(email);
     }
     $(document).ready(function () {
       const emailWrapper = document.querySelector('.email-container');
       const emailInput = document.getElementById('email');
-      const emailAuthButton = document.querySelector('.email-container > button')
+      const emailAuthButton = document.querySelector('.email-container > button');
       const warningMsg = document.querySelector('label[for="email"] ~ .warning-msg');
 
       let validationTimer = null;
       emailInput.addEventListener('input', function () {
+        const email = emailInput.value.trim();
         // remove check mark on input
         const check = document.querySelector('.email-container .validated');
         if (check) check.parentElement.removeChild(check);
-        // remove validation schedule
-        clearTimeout(validationTimer);
 
-        if (isValidFormat(emailInput.value.trim())) {
-          warningMsg.style.display = 'none';
-          emailWrapper.style.marginBottom = '25px';
-          validationTimer = setTimeout(function () {
-            validateEmail(emailInput.value.trim(), emailAuthButton)
-          }, 750);
-        }
-        else
-          emailAuthButton.setAttribute('disabled', 'disabled');
+        // remove email validation processed marking
+        emailInput.removeAttribute('data-is-validated');
+        // disable email authentication button
+        emailAuthButton.setAttribute('disabled', 'disabled');
+        // change button content
+        emailAuthButton.textContent = '인증';
+
+        // if email is not valid format then return
+        if (!isValidEmailFormat(email)) return;
+
+        // clear validation schedule
+        clearTimeout(validationTimer)
+        validationTimer = setTimeout(function () {
+          if (email.length <= 0) return;
+          validateEmail(email, emailAuthButton);
+        }, 850);
       });
       emailInput.addEventListener('blur', () => {
-        if (isValidFormat(emailInput.value.trim())) return;
-        warningMsg.innerHTML = '<span class="far fa-exclamation-circle">이메일 양식을 확인해주세요.</span>';
-        warningMsg.style.display = 'block';
-        // emailWrapper.style.marginBottom = '0';
+        const email = emailInput.value.trim();
+        const isValidated = emailInput.getAttribute('data-is-validated');
+        
+        // if email when through validation process then return
+        if (isValidated) return;
 
-        emailWrapper.classList.remove('getAuth');
+        // if email is not provided then remove warning message
+        if (email.length <= 0) {
+          warningMsg.style.display = 'none';
+          emailWrapper.style.marginBottom = '25px';
+          return;
+        }
+        // if email is valid format, show email authentication process message
+        else if (isValidEmailFormat(email))
+          warningMsg.innerHTML = '<span class="far fa-check-circle info-msg"> 이메일 인증을 진행해주세요.</span>';
+        // if not, show warning message 
+        else
+          warningMsg.innerHTML = '<span class="far fa-exclamation-circle"> 이메일 양식을 확인해주세요.</span>';
+
+        warningMsg.style.display = 'block';
+        emailWrapper.style.marginBottom = '0';
       });
       emailInput.addEventListener('focus', () => {
-        emailWrapper.classList.add('getAuth');
-        emailAuthButton.removeAttribute('disabled');
+        const isLocked = emailInput.getAttribute('data-locked');
+        if (!isLocked) return;
+
+        const onUserConsent = confirm('이메일을 바꾸시겠습니까?');
+        if (onUserConsent)
+          emailInput.removeAttribute('data-locked');
       });
     });
   </script>
@@ -258,44 +433,40 @@
         passwdWrapper.style.marginBottom = '0';
       } 
       // 비밀번호 확인칸에 입력이 있지만 일치하지 않을 경우
-      else if (passwdConfirm !== passwd) {
+      else if (passwdConfirm.length > 0 && passwdConfirm !== passwd) {
         warningMsg.innerHTML = '<span class="far fa-exclamation-circle">비밀번호가 일치하지 않습니다.</span>'
         warningMsg.style.display = 'block';
         passwdWrapper.style.marginBottom = '0';
       }
       // 유효한 비밀번호 일 경우 true를 반환
-      else {
+      else if (passwd === passwdConfirm) {
         warningMsg.style.display = 'none';
         passwdWrapper.style.marginBottom = '25px';
+        [...(document.querySelectorAll('.passwd-container label'))].forEach(label => markChecked(label));
         return true;
       }
       return false;
     }
-    function validatePasswdConfirm() {
-      const passwd = document.getElementById('passwd').value.trim();
-      const passwdConfirm = document.getElementById('passwdConfirm').value.trim();
-      const passwdPattern = /^(?=.*?[^\s])[\w\d]{4,}$/;
-      const warningMsg = document.querySelector('label[for="passwd"] ~ .warning-msg');
-      const wrapperDiv = warningMsg.parentElement;
-      const isValidatedPasswd = validatePasswd();
-
-      if (!isValidatedPasswd) return false;
-
-      if (passwd !== passwdConfirm) {
-        warningMsg.innerHTML = '<span class="far fa-exclamation-circle">비밀번호가 일치하지 않습니다.</span>'
-        warningMsg.style.display = 'block';
-        wrapperDiv.style.marginBottom = '0';
-        return true;
-      }
-      return false;
-    }
+    $(document).ready(function() {
+      const passwdInput = document.getElementById('passwd');
+      const passwdConfirmInput = document.getElementById('passwdConfirm');
+      [passwdInput, passwdConfirmInput].forEach((input, index, arr) => {
+        input.addEventListener('input', () => {
+          // remove check mark on both passwd, passwdConfirm input element on 'input' event
+          [...(document.querySelectorAll('.passwd-container label .validated'))].forEach(checkMark => {
+            if (checkMark) checkMark.parentElement.removeChild(checkMark);
+          });
+        });
+      });
+    });
   </script>
   <!-- 핸드폰번호 유효성 검사 -->
   <script>
     function validateTel() {
-      const tel = document.getElementById('tel').value.trim().replace(/-/g, '').replace(/[\s]/g, '');
-      const telPattern = /\d{11}/;
       const telWrapper = document.querySelector('label[for="tel"]').parentElement;
+      const telLabel = document.querySelector('.tel-container label');
+      const telPattern = /\d{11}/;
+      const tel = document.getElementById('tel').value.trim().replace(/-/g, '').replace(/[\s]/g, '');
       const warningMsg = telWrapper.querySelector('.warning-msg');
 
       if (tel.length <= 0) {
@@ -304,20 +475,34 @@
       } else if (!(telPattern.test(tel)) || tel.length > 11) {
         telWrapper.style.marginBottom = '0';
         warningMsg.style.display = 'block';
-        warningMsg.innerHTML = '<span class="far fa-exclamation-circle">유효한 휴대폰 번호를 입력해주세요.</span>'
+        warningMsg.innerHTML = '<span class="far fa-exclamation-circle">유효한 휴대폰 번호를 입력해주세요.</span>';
       } else {
         // 핸드폰 입력 양식이 맞을 경우
         warningMsg.style.display = 'none';
         telWrapper.style.marginBottom = '25px';
+        markChecked(telLabel);
         return true;
       }
       return false;
     }
+    $(document).ready(function() {
+      const telInput = document.querySelector('.tel-container input');
+
+      telInput.addEventListener('input', () => {
+        const checkMark = document.querySelector('.tel-container label .validated');
+        if (checkMark) checkMark.parentElement.removeChild(checkMark);
+      });
+    });
   </script>
   <!-- 닉네임 유효성 검사 -->
   <script>
     function validateNickName(nickname) {
+      const nicknameWrapper = document.querySelector('label[for="nickname"]').parentElement;
       const nicknameLabel = document.querySelector('.nickname-container label');
+      const nicknameInput = document.getElementById('nickname');
+      const warningMsg = nicknameWrapper.querySelector('.warning-msg');
+
+      // attach spinner on ajax try
       const spinner = document.createElement('img');
       spinner.setAttribute('src', '../../resources/images/ajax-loading.svg');
       nicknameLabel.appendChild(spinner);
@@ -325,38 +510,76 @@
       const xhr = new XMLHttpRequest();
       xhr.open('POST', '/member/signUpCheck');
 
-      xhr.addEventListener('loadend', () => {
-        nicknameLabel.removeChild(spinner);
-        const check = document.createElement('span');
-        check.className = 'fal fa-check validated';
-        nicknameLabel.appendChild(check);
-      });
+      xhr.addEventListener('loadend', () => nicknameLabel.removeChild(spinner));
+
       xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && ready.status === 200) {
-          console.dir(xhr.responseText);
+        if (!(xhr.readyState === 4 && ready.status === 200)) return;
+        const isValid = JSON.parse(xhr.response).result;
+
+        nicknameInput.setAttribute('data-is-validated', true);
+        
+        if (isValid) {
+          warningMsg.style.display = 'none';
+          nicknameWrapper.style.marginBottom = '25px';
+          markChecked(nicknameLabel);
+        }
+        else {
+          warningMsg.innerHTML = '<span class="far fa-exclamation-circle">닉네임이 이미 사용되고 있습니다.</span>';
+          warningMsg.style.display = 'block';
+          nicknameWrapper.style.marginBottom = '0';
         }
       }
 
       xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
       xhr.send('memberNickName=' + nickname);
     }
-    $(document).ready(function () {
-      const nicknameInput = document.getElementById('nickname');
+    function isValidNickNameFormat(nickname) {
       const nicknamePattern = /^[a-zA-Z][\d\w]{3,11}/;
+      return nicknamePattern.test(nickname);
+    }
+    $(document).ready(function () {
       const nicknameWrapper = document.querySelector('label[for="nickname"]').parentElement;
+      const nicknameInput = document.getElementById('nickname');
       const warningMsg = nicknameWrapper.querySelector('.warning-msg');
       let validationTimer = null;
 
-      nicknameInput.addEventListener('input', function () {
+      nicknameInput.addEventListener('input', () => {
+        const nickname = nicknameInput.value.trim();
         const check = document.querySelector('.nickname-container .validated');
         if (check) check.parentElement.removeChild(check);
-        clearTimeout(validationTimer);
 
-        if (nicknamePattern.test(nickname)) {
+        nicknameInput.removeAttribute('data-is-validated');
+
+        clearTimeout(validationTimer);
+        if (isValidNickNameFormat(nickname)) {
           validationTimer = setTimeout(function () {
-            validateNickName(nicknameInput.value.trim());
-          }, 750);
+            if (nickname.length <= 0) return;
+            validateNickName(nickname);
+          }, 850);
         }
+      });
+      nicknameInput.addEventListener('blur', () => {
+        const nickname = nicknameInput.value.trim();
+        const isValidated = nicknameInput.getAttribute('data-is-validated');
+
+        if (isValidated) return;
+
+        if (nickname.length <= 0) {
+          warningMsg.style.display = 'none';
+          nicknameWrapper.style.marginBottom = '25px';
+        }
+        // if nickname is not valid
+        else if (!isValidNickNameFormat(nickname)) {
+          warningMsg.style.display = 'block';
+          nicknameWrapper.style.marginBottom = '0';
+          warningMsg.innerHTML = '<span class="far fa-exclamation-circle">유효하지 않은 닉네임 입니다.</span>';
+        }
+        else {
+          warningMsg.style.display = 'none';
+          nicknameWrapper.style.marginBottom = '25px';
+          return true;
+        }
+        return false;
       });
     });
   </script>

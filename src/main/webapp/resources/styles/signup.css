@@ -103,7 +103,6 @@
   height: 48px;
 }
 .email-container button.auth-btn:not(:disabled) {
-  background-color: rgba(0, 0, 0, 0.15);
   background-color: var(--main-color);
   box-shadow: 0 2px 8px -1px rgba(0, 153, 255, 0.75);
   cursor: pointer;
@@ -127,6 +126,7 @@
   font-weight: bold;
   font-size: 13px;
   font-family: 'Montserrat', sans-serif;
+  font-family: monospace;
   letter-spacing: 1px;
   color: var(--violet-color);
   pointer-events: none;
@@ -145,7 +145,7 @@
   flex-basis: 100%;
 }
 .email-container .warning-msg .info-msg {
-  color: var(--emphasis-color);
+  color: var(--main-color);
 }
 .email-container.getAuth button.auth-btn {
   height: 44px;
