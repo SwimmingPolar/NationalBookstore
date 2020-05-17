@@ -6,6 +6,15 @@
 	http://www.springframework.org/schema/security/spring-security.xsd
 	http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans.xsd">
-
-
+	
+	<security:http>
+		<security:form-login/>
+	</security:http>
+	
+	<security:authentication-manager>
+		<security:authentication-provider>
+				<security:jdbc-user-service data-source-ref="dataSource"/>
+		</security:authentication-provider>
+	</security:authentication-manager>
+	
 </beans>
