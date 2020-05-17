@@ -7,8 +7,13 @@
 		order by lib_num DESC
 	</select>
 	
-	<delete id="deleteLibBook" parameterType="com.ryan.domain.book.EBookVO">
-		delete from my_lib WHERE book_num=#{bookNum} and member_email=#{memberEmail}
+	<delete id="deleteLibBook" parameterType="hashmap">
+		delete from my_lib WHERE 
+	<if test="numberlist != null"> 
+		<foreach collection="numberlist" item="item" separator="or">
+			book_num=#{item.bookNum}  and member_email=#{item.memberEmail}
+		</foreach>
+	</if>		
 	</delete>
 	
 	<insert id="insertLibBook" parameterType="com.ryan.domain.book.MyLibVO">
