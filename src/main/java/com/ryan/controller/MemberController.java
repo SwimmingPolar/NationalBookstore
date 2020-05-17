@@ -98,10 +98,25 @@ public class MemberController {
 		Map<String, Boolean> resultMap = new HashMap<String, Boolean>();
 		
 		if(emailService.authenticationCheck(email)) { // 인증성공 true
+			if(emailService.updateAuthComplete(email)) {
+				resultMap.put("result", true);
+			}
+		} else {
+			resultMap.put("result", false);
+		}
+		return resultMap;
+	}
+	
+	@PostMapping("/authenticationCompleteCheck")
+	public @ResponseBody Map<String, Boolean> authenticationCompleteCheck(EmailCheckVO email) {
+		
+		Map<String, Boolean> resultMap = new HashMap<String, Boolean>();
+		if(emailService.authCompleteCheck(email)) {
 			resultMap.put("result", true);
 		} else {
 			resultMap.put("result", false);
 		}
+		
 		return resultMap;
 	}
 	

@@ -19,14 +19,32 @@
 		WHERE member_email = #{memberEmail} and email_code = #{emailCode}
 	</select>
 	
-	<update id="updateAuthenticationCode">
+	<update id="updateAuthComplete">
 		UPDATE email_check
 		<set>
-			email_code = #{emailCode}
+			email_auth_complete = 1
 		</set>
 		<where>
 			member_email = #{memberEmail}
 		</where>
 	</update>
+	
+	<update id="updateAuthenticationCode">
+		UPDATE email_check
+		<set>
+			email_code = #{emailCode},
+			email_auth_complete = 0
+		</set>
+		<where>
+			member_email = #{memberEmail}
+		</where>
+	</update>
+	
+	<select id="authCompleteCheck" resultType="int">
+		SELECT email_auth_complete FROM email_check
+		<where>
+			member_email = #{memberEmail}
+		</where>
+	</select>
 	
 </mapper>

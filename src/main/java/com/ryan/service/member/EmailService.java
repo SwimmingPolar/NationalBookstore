@@ -13,4 +13,10 @@ public interface EmailService {
 	//인증확인
 	public boolean authenticationCheck(EmailCheckVO email);
 	
+	public boolean updateAuthComplete(EmailCheckVO email);
+	
+	//인증완료된 유저인지 확인
+	
+	public boolean authCompleteCheck(EmailCheckVO email);
+	
 }

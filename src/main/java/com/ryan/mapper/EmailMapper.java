@@ -13,7 +13,13 @@ public interface EmailMapper {
 	//email SELECT Key return
 	public int insertEmailCode(EmailCheckVO email);
 	
-	//인증확인
+	//인증번호확인
 	public int authenticationCheck(EmailCheckVO email);
+	//인증완료되면 인증유효성 업데이트
+	public int updateAuthComplete(EmailCheckVO email);
+	
+	
+	//인증완료된 유저인지 확인.
+	public int authCompleteCheck(EmailCheckVO email);
 	
 }
