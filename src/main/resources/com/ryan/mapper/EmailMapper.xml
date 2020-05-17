@@ -3,8 +3,8 @@
 <mapper namespace="com.ryan.mapper.EmailMapper">
 	
 	<insert id="insertEmailCode">
-		INSERT INTO email_check (email_auth,email_code)
-		VALUES(#{emailAuth},#{emailCode})
+		INSERT INTO email_check (member_email,email_code)
+		VALUES(#{memberEmail},#{emailCode})
 	</insert>
 	
 	<select id="authenticationCheck" resultType="int">
