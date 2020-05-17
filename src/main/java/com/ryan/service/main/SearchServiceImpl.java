@@ -1,9 +1,12 @@
 package com.ryan.service.main;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,8 @@ import com.ryan.mapper.SearchMapper;
 public class SearchServiceImpl implements SearchService{
 	@Autowired
 	private SearchMapper mapper;
+	@Autowired
+	private SqlSessionFactory sqlFactory;
 	
 	@Override
 	public ArrayList<EBookVO> bookList(String type, String[] keyword) {
@@ -49,27 +54,56 @@ public class SearchServiceImpl implements SearchService{
 	}
 	
 	/////////////////////////////////////이 아래로 제가 수정좀 했습니다.
-	//ebook 리스트 가져오기
+	//전체 책.
 	@Override
-	public List<EBookVO> searchEbook(String type, String[] keyword) throws ClassNotFoundException, SQLException {
-		return mapper.searchEbook(type, keyword);
-		//return sqlSession.getMapper(SearchMapper.class).searchEbook(type, keyword);
+	public List<EBookVO> getFilterSearch(String genre, String sub_genre, String page, String sort) {
+		return mapper.getFilterSearch(genre, sub_genre, page, sort);
 	}
-	//종이책 리스트 가져오기
+	//전체 책 갯수.
 	@Override
-	public List<EBookVO> searchPaperbook(String type, String[] keyword) throws ClassNotFoundException, SQLException {
-		return mapper.searchPaperbook(type, keyword);
-		//return sqlSession.getMapper(SearchMapper.class).searchPaperbook(type, keyword);
+	public List<EBookVO> getFilterSearchCount(String genre, String sub_genre, String page) {
+		return mapper.getFilterSearchCount(genre, sub_genre, page);
 	}
-	//ebook 페이징
+	//ebook
 	@Override
-	public List<EBookVO> searchEbookPage(String type, String[] keyword, int pageNum) throws ClassNotFoundException, SQLException {
-		return mapper.searchEbookPage(type, keyword, pageNum);
+	public List<EBookVO> ebook(String type, String[] keyword, String page) {
+		return mapper.ebook(type, keyword, page);
 	}
-
-
+	//paper
 	@Override
-	public List<EBookVO> searchPaperbookPage(String type, String[] keyword,int pageNum) throws ClassNotFoundException, SQLException {
-		return mapper.searchPaperbookPage(type, keyword, pageNum);
+	public List<EBookVO> paper(String type, String[] keyword, String page) {
+		return mapper.paper(type, keyword, page);
+	}
+	//count
+	@Override
+	public List<EBookVO> ebookCount(String type, String[] keyword, String page) {
+		return mapper.ebookCount(type, keyword, page);
+	}
+	@Override
+	public List<EBookVO> paperCount(String type, String[] keyword, String page) {
+		return mapper.paperCount(type, keyword, page);
+	}
+	//장르별 종이책 검색
+	@Override
+	public List<EBookVO> getPaperByGenre(String type, String[] keyword, String page, String genre) {
+		return mapper.getPaperByGenre(type, keyword, page, genre);
+	}
+	//장르별 종이책 검색 count
+	@Override
+	public List<EBookVO> getPaperByGenreCount(String type, String[] keyword, String page, String genre) {
+		return mapper.getPaperByGenreCount(type, keyword, page, genre);
+	}
+	//aasdasd
+	@Override
+	public List<HashMap<String, String>> getGenreCount(@Param("type") String type, @Param("keyword") String[] keyword, @Param("page") String page, @Param("genre") String genre) {
+		SqlSession sqlSession = sqlFactory.openSession();
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("type", "BOOK_TITLE");
+		params.put("keyword", new String[] {"룬의"});
+		params.put("page", "");
+		params.put("genre", "2");
+		//List<HashMap<String, String>> result = sqlSession.selectList("com.ryan.mapper.SearchMapper.getGenreCount", params);
+		List<HashMap<String, String>> result = mapper.getGenreCount(type, keyword, page, genre);
+		return result;
 	}
 }

@@ -46,7 +46,9 @@ a {
 
 }
 
-
+.listChoice ul li:nth-child(2) {
+    border-bottom:none;
+}
 
 .listChoice p {
 
@@ -184,4 +186,28 @@ color:#ccc;
     display:inline;
     font-size: 23px;
     color:#333;
+}
+
+.lastColumn {
+    padding: 16px;
+    margin-top:15px;
+}
+
+.lastColumn button {
+    background: #bec5d0;
+    font-size: 16px;
+    color: #fff;
+    height: 48px;
+    line-height: 48px;
+    display: block;
+    width: 100%;
+    border-radius: 4px;
+    border:none;
+    cursor: pointer;
+    outline: none;
+}
+
+.lastColumn button:hover {
+    font-weight: bold;
+    background: #b5bbc4;
 }

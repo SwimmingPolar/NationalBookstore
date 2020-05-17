@@ -16,10 +16,24 @@ public interface NoticeBoardMapper {
 	//수정
 	public int updateNotice(NoticeBoardVO notice);
 	
+<<<<<<< HEAD
+=======
+	//공지사항 클릭시 해당 공지사항객체반환
+	public NoticeBoardVO selectNotice(int noticeNo);
+	
+>>>>>>> 0d7cf6607dc5a1404e6b3f0c603312aeec65d05c
 	//페이지 작업을 위한 전체 게시물수 받아오기
 	public int selectNoticeCount(String type);
 	
 	//요청페이지 게시물 리스트
 	public ArrayList<NoticeBoardVO> selectNoticePageList(String type,RowBounds rb);
+<<<<<<< HEAD
+=======
+	
+	//해당공지사항이 존제하는지 확인
+	public int numChk(int noticeNo);
+	
+	
+>>>>>>> 0d7cf6607dc5a1404e6b3f0c603312aeec65d05c
 
 }

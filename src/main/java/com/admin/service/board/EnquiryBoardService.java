@@ -3,6 +3,11 @@ package com.admin.service.board;
 import java.io.IOException;
 import java.util.ArrayList;
 
+<<<<<<< HEAD
+=======
+import javax.servlet.http.HttpServletRequest;
+
+>>>>>>> 0d7cf6607dc5a1404e6b3f0c603312aeec65d05c
 import org.springframework.web.multipart.MultipartFile;
 
 import com.admin.domain.board.EnquiryBoardVO;
@@ -15,7 +20,7 @@ public interface EnquiryBoardService {
 	
 	public boolean eqDelete(EnquiryBoardVO enquiry);
 	
-	public boolean eqUpdate(EnquiryBoardVO enquiry);
+	public boolean eqUpdate(EnquiryBoardVO enquiry,ArrayList<MultipartFile> files,HttpServletRequest request);
 	
 	//사용자 문의사항 리스트 반환
 	public ArrayList<EnquiryBoardVO> selectList(String memberEmail);

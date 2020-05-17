@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
@@ -14,12 +16,16 @@ import com.admin.domain.board.EnquiryBoardVO;
 import com.admin.domain.board.FileVO;
 import com.admin.domain.board.ReplyVO;
 import com.admin.mapper.EnquiryBoardMapper;
+import com.admin.mapper.FileBoardMapper;
 
 @Service
 public class EnquiryBoardServiceImpl implements EnquiryBoardService{
 	
 	@Autowired
 	private EnquiryBoardMapper mapper;
+	
+	@Autowired
+	private FileBoardMapper fileMapper;
 
 	@Override
 	public boolean eqWrite(EnquiryBoardVO enquiry) {
@@ -29,7 +35,7 @@ public class EnquiryBoardServiceImpl implements EnquiryBoardService{
 	@Override
 	public boolean eqDelete(EnquiryBoardVO enquiry) {
 		if(enquiry.getBoardNum()>0||mapper.numChk(enquiry.getBoardNum())>0) {
-			mapper.deleteAllFiles(enquiry.getBoardNum());
+			fileMapper.deleteAllFiles(enquiry.getBoardNum());
 			mapper.deleteAllReply(enquiry);
 			return mapper.deleteEq(enquiry)>0?true:false;
 		}else
@@ -37,9 +43,36 @@ public class EnquiryBoardServiceImpl implements EnquiryBoardService{
 	}
 
 	@Override
-	public boolean eqUpdate(EnquiryBoardVO enquiry) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean eqUpdate(EnquiryBoardVO enquiry,ArrayList<MultipartFile> files,HttpServletRequest request) {
+		if(files!=null) {
+			String path = request.getSession().getServletContext().getRealPath("\\")+"\\NationalBookstore\\src\\main\\webapp\\resources\\enquiryFile";
+			boolean flag=true;
+			ArrayList<FileVO> tmp=fileMapper.selectEqFileList(enquiry.getBoardNum());
+			if(tmp!=null) {
+				for(FileVO file : tmp) {
+					fileMapper.deleteFile(file.getFileNum());
+					new File(path+"\\"+file.getStoredFileName()).delete();
+				}
+			}
+			for(MultipartFile file : files) {
+				FileVO vo=new FileVO();
+				vo.setBoardNum(enquiry.getBoardNum());
+				vo.setOriginFileName(file.getOriginalFilename());
+				vo.setStoredFileName(UUID.randomUUID().toString()+"_"+file.getOriginalFilename());
+				File target=new File(path,vo.getStoredFileName());
+				try {
+					FileCopyUtils.copy(file.getBytes(), target);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				fileMapper.insertFile(vo);
+			}
+		}
+		if(enquiry!=null) 
+			return mapper.updateEq(enquiry)>0?true:false;
+		else
+			return false;
 	}
 
 	@Override
@@ -91,7 +124,7 @@ public class EnquiryBoardServiceImpl implements EnquiryBoardService{
 			vo.setStoredFileName(UUID.randomUUID().toString()+"_"+file.getOriginalFilename());
 			File target=new File(path,vo.getStoredFileName());
 			FileCopyUtils.copy(file.getBytes(), target);
-			flag=mapper.insertFile(vo)>0?true:false;
+			flag=fileMapper.insertFile(vo)>0?true:false;
 		}
 		return flag;
 	}

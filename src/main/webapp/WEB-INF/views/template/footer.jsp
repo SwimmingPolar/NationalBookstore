@@ -22,13 +22,13 @@ pageEncoding="UTF-8"%>
         </a>
       </li>
       <li>
-        <a href="my-library">
+        <a href="myLibrary.jsp">
           <i class="fas fa-books"></i>
           <span>내서재</span>
         </a>
       </li>
       <li>
-        <a href="my-account">
+        <a href="myAccount.jsp">
           <i class="far fa-user"></i>
           <span>관리</span>
         </a>
@@ -54,7 +54,7 @@ pageEncoding="UTF-8"%>
             return;
           }
           if (!button.classList.contains("visible")) {
-            button.style.transition = "";
+            button.style.transition = '';
             button.classList.add("visible");
           }
           timeoutID =

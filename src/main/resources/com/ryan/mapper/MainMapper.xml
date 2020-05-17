@@ -84,7 +84,7 @@
 	<select id="getBestSeller" resultType="com.ryan.domain.book.EBookVO">
 		SELECT * FROM
 		(
-			SELECT ROW_NUMBER() OVER (ORDER BY sum(o.book_count) DESC) rn,e.book_num,e.book_title  FROM ebook e, first_category f , second_category s , order_object o , order_number n
+			SELECT ROW_NUMBER() OVER (ORDER BY sum(o.book_count) DESC) rn,e.book_num,e.book_title, e.book_thumbnail, e.book_writer  FROM ebook e, first_category f , second_category s , order_object o , order_number n
 		<where>
 			e.category_num = s.category_num and s.first_num = f.first_num and o.book_num = e.book_num and o.order_number = n.order_number
 			
@@ -119,11 +119,12 @@
 				</when>
 			</choose>
 		</where>
-		group by e.book_num, e.book_title
+		group by e.book_num, e.book_title,e.book_thumbnail,e.book_writer
 		)
 		<![CDATA[
-		WHERE rn <=6;
+		WHERE rn <=10
 		]]>
+		ORDER BY rn DESC
 	</select>
 	
 	<!-- 세일 -->
@@ -192,7 +193,36 @@
 			</when>
 		</choose>
 		<!-- GROUP BY 필요하면 여기에 추가. -->
-		
 	</select>
+	
+	<!-- 자동완성 -->
+	<select id="getAutoKeyword" resultType="com.ryan.domain.main.KeywordAutoCompletionVO">
+		SELECT book_num,book_title, book_writer FROM EBOOK
+		<where>
+			<choose>
+				<when test="type.equals('title')">
+					book_title LIKE #{keyword}||'%'
+				</when>
+				<when test="type.equals('author')">
+					book_writer LIKE #{keyword}||'%'
+				</when>
+			</choose>
+		</where>
+		ORDER BY book_title ASC
+	</select>
+	
+	<select id="getAutoKeywordHashtag" resultType="String">
+		SELECT * FROM
+		(
+			SELECT hash_tag FROM book_hashtag
+			WHERE book_num = #{bookNum}
+			order by DBMS_RANDOM.RANDOM
+		)
+		<where>
+			<![CDATA[
+				rownum <= 3
+			]]>
+		</where>
+	</select>	
 	
 </mapper>

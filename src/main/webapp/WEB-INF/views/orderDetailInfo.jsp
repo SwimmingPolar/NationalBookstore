@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="../../resources/styles/orderDetailInfo.css">
     <script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-
+    <link rel="stylesheet" href="../../resources/styles/reset.css">
+    <link rel="stylesheet" href="../../resources/styles/common.css">
+    <script src="../../resources/js/common.js"></script>
 </head>
 <body>
 

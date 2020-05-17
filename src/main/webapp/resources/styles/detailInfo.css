@@ -1,5 +1,4 @@
 a {
-
     text-decoration: none;
 }
 
@@ -41,26 +40,28 @@ header {
     display:inline-block;
     width:100%;
     /* border:2px solid red; */
-    margin-top:20px;
+    /* margin-top:20px; */
     background-color:#EEF0F4;
 }
 
-
 .imageBox img{
-    max-width: 100%;
+    max-width: 220px;
+    width: 100%;
+    box-sizing: border-box;
 
 }
 
 .imageBox {
+    border-radius: 0 5px 5px 0;
     padding:10px;
     margin-left:20px;
-    width: 240px;
-    height: 350px;
-    
-
+    overflow: hidden;
+    position: relative;
+    min-height: 280px;
+    min-width: 220px;
+    box-shadow:  4px 8px 8px rgba(0,0,0,.1), 
+    0 0 2px rgba(0,0,0,.24);
 }
-
-
 .introWrite {
     /* border:2px solid brown; */
     width: 60%;
@@ -68,36 +69,45 @@ header {
     margin-top:20px;
     /* border:2px solid greenyellow; */
 }
-
 .introWrite h2 {
     margin-top:20px;
 
 }
-
-
+.choiceBtnOne {
+    display:flex;
+}
 .choiceBtn {
-    width: 100px;
-    height: 40px;
-    border-radius:5px;
-    margin:10px;
-    border:1px solid lightgray;
-    color:#a451f7;
+    width: 100%;
+    height: 35px;
+    border-radius:7px;
+    margin:5px;
+    border:1px solid #0099FF;
+    color:#0099FF;
     /* font-weight: bold;
     color:white; */
     /* border:none; */
     font-size:15px;
     background-color:white;
-    margin-top: 80px;
+    margin-top: 35px;
     margin-bottom: 10px;
-
+    outline:none;
+    cursor: pointer;
+    box-shadow: 3px 3px 3px rgba(0,0,0,.08), 0 2px 2px rgba(0,0,0,.16);
 
 }
 
-.choiceBtnOne input[type="button"]:hover {
+
+
+.choiceBtnOne input[type="button"]:hover, button:hover {
     background-color:#0099FF;
     color:white;
     font-weight:bold;
-
+    outline:none;
+}
+.choiceBtnOne input[type="button"]:nth-child(1) {
+    background-color:#0099FF;
+    color:white;
+    
 }
 
 .introWrite li {
@@ -133,7 +143,10 @@ header {
 .reviewDetail textarea {
     width: 90%;
     height:100px;
-
+    resize:none;
+    outline:none;
+    border:none;
+    border-top:1px solid #e8e8e8;
 }
 
 
@@ -152,6 +165,10 @@ header {
 
 
 }
+.firstBox h2 {
+	margin-bottom: 20px;
+}
+
 .emoTag {
     padding-top:5px;
     font-size:13px;
@@ -160,7 +177,7 @@ header {
 
 
 .tagtag {
-    border:1px solid #9268bb;
+    border:1px solid #0099FF;
     border-radius:15px;
     height:25px;
     position: relative;
@@ -186,7 +203,7 @@ header {
     height:25px;
     font-size:13px;
     color:white;
-    background-color:#9268bb;
+    background-color:#0099FF;
     border:none;
     outline:none;
     right:0;
@@ -194,6 +211,7 @@ header {
     margin-right:-1px;
     cursor: pointer;
     padding:0 12px 0 12px;
+    
 
 }
 
@@ -205,7 +223,7 @@ header {
 }
 
 .moreChk, .moreChk2, .moreChk3 {
-    
+    cursor: pointer; 
     width:100%; 
     height:50px;
     background-color:#FAFFFF;
@@ -221,28 +239,19 @@ header {
     }
 
 
-.preview { 
-
-    margin: 10px 0px 0px 150px;
-
-}
-
 .likeChk {
-    margin:20px 0px 20px 0px;
+   display:flex;
+   padding:10px;
+   border-top:1px solid #e8e8e8;
+   margin-top: 20px;
+   justify-content: space-between;
+   
 }
 
 .likeChk .likeBtn {
     margin: 10px;
-    float:right;
-
-}
-
-.likeChk .likeP {
-  background-image: url('https://ofbxchnhqinp910256.cdn.ntruss.com/160/468c5f2….png?type=w&w=160&quality=100');
-  width:28px;
-  height:28px;
-
-}
+    /* float:right; */
+    /* right:0; */
 
 }
 
@@ -264,6 +273,7 @@ header {
     width: 14px;
     height:14px;
     display:inline-block;
+    cursor:pointer;
 
 }
 
@@ -282,6 +292,7 @@ header {
 
 .likeBtn input[type="checkbox"]:checked + label i:last-child {
     opacity:1;
+    
 }
 
 .heartSoo {
@@ -296,19 +307,64 @@ header {
 
 }
 
-.heartSoo input {
+.heartSoo input[type="text"] {
     border:none;
     text-align: right;
+    outline:none;
 }
 
+.likelists {
+    margin-left: 5px;
+    display:inline-block;
+   
+}
+#people{
+    display:inline-block;
+    font-size: 13px;
+    color:#999;
+    font-weight: normal;
+    margin-left: 40px;
+}
+
+#people:hover {
+    font-weight: bold;
+}   
 
 .likePeople {
-    position: relative;
     
-
+    position: relative;
+    width:35px;
+    height:35px;
+    border-radius: 50%;
+    /* margin-left: 20px; */
 }
 
-.likePeople > i {
+.likePeople img {
+    position: absolute;
+    width:100%;
+    min-height:100%;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.likePeople img:nth-child(1) {
+    top:0;
+    left: 0px;
+    z-index: 1;
+}
+
+.likePeople img:nth-child(2) {
+    top:0;
+    left: 17px;
+    z-index: 2;
+}
+
+.likePeople img:nth-child(3) {
+    top:0;
+    left: 34px;
+    z-index: 3;
+}
+/* .likePeople > i {
     position:absolute;
     font-size:28px;
     border-radius: 50%;
@@ -339,14 +395,14 @@ header {
     z-index: 3;
     background-color:white;
   
-}
+} */
 
 
-.likePeople2 {
+/* .likePeople2 {
 
    margin-left:60px;
 
-}
+} */
 
 .likeChk input[type="checkbox"] {
     
@@ -361,7 +417,10 @@ header {
 
 .likeList {
     margin-top:20px;
-    border-bottom:1px solid #e8e8e8;
+    /* border-bottom:1px solid #e8e8e8; */
+    overflow:auto;
+    height:280px;
+    
 }
 
 .allList {
@@ -417,13 +476,27 @@ header {
     position: relative;
     background-color:  #fefefe;
     margin:13% auto;
-    padding:20px;
-    border:1px solid #888;
+    padding: 15px 8px 20px 20px;
+    /* border:1px solid #888; */
     width: 300px;
     height: 400px;
 
  }
  
+.modal_content i {
+    color: #dd5e46;
+    font-size:20px;
+}
+
+.modal_content ul {
+    border-bottom:1px solid #e8e8e8;
+}
+
+.modal_content ul li span:nth-child(2) {
+
+        color:rgb(61, 61, 61);
+        font-size:15px;
+}
 
 /* #modalCloseBtn:hover, 
 #modalCloseBtn:focus {
@@ -441,21 +514,13 @@ header {
     /* cursor:pointer; */
 
 }
-
-
-
-
-.preview i {
-    
-    font-size:23px;
-
-}
-
 .preview {
-
-        margin-top:20px;
-
+    text-align: right;
+    font-size: 16px;
+    padding: 10px;
 }
+
+
 
 
 .similarBook {
@@ -475,11 +540,10 @@ border:1px dotted #e8e8e8;
 
 }
 
-
+/* 
 .bookStarScore .full {
-    /* position: absolute; */
     color:#f1c40f;
-}
+} */
 
 .hashTag input[type="checkbox"] {
         display:none;
@@ -506,25 +570,31 @@ border:1px dotted #e8e8e8;
     cursor: pointer;
 
 }
-.bookStarScore .full {
-    /* position: absolute; */
+/* .bookStarScore .full {
     color:#f1c40f;
+} */
+.bookStarScore {
+    margin-top:50px;
+    padding-left: 8px;
 }
-
 
 .bookStarScore span{
 
     color:rgb(151, 151, 151);
 }
 
-.bookStarScore span.on{
+/* .bookStarScore span.on{
     color:#f1c40f;
 
 }
-
-
-.modal_content .likeList {
-
-
-
-}
+ */
+    
+ #starScore {
+    margin-left:10px;
+    font-size:13px;
+    color:#333;
+ }
+ #starScore + a{
+    font-size:13px;
+ }
+ 

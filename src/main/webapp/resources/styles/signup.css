@@ -1,34 +1,19 @@
-.container {
-  height: calc(100vh - 42px);
+.body-wrapper {
+  height: calc(100vh - 48px);
   display: flex;
-  background-color: var(--gray-color);
   justify-content: center;
   align-items: center;
   min-height: 525px;
-}
-
-.title-bar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--gray-color);
-  height: 42px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.175);
-}
-
-.title-bar a {
-  text-decoration: none;
-}
-
-.title-bar h2 {
-  color: var(--red-color);
-  font-family: 'Kaushan Script', cursive;
-  font-size: 28px;
-  opacity: 0.675;
+  background-color: #fff;
 }
 
 .form-container {
-  width: 345px;
+  box-sizing: content-box;
+  width: 380px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 9px;
+  padding: 32px 32px 16px;
+  box-shadow: 0 1px 12px -2px rgba(0, 0, 0, 0.15);
 }
 .form-container > div {
   margin-bottom: 25px;
@@ -46,6 +31,7 @@
   right: 10px;
   font-size: 18px;
   color: #1abc9c;
+  pointer-events: none;
 }
 .form-container label img {
   position: absolute;
@@ -96,34 +82,80 @@
   font-weight: bold;
   padding-right: 5px;
 }
-
 .email-container {
   display: flex;
   flex-wrap: wrap;
 }
-
-.email-container > label {
+.email-container label[for="email"] {
   flex-basis: 79%;
   margin-right: 1%;
 }
-.email-container > button {
+.email-container button.auth-btn {
+  display: block;
   flex-basis: 20%;
   outline: none;
   border: 0;
   border-radius: 3px;
   color: #fff;
   background-color: rgba(0, 0, 0, 0.15);
-  font-size: 18px;
+  font-size: 14px;
+  transition: 0.2s ease-out;
+  height: 48px;
 }
-.email-container > button:not(:disabled) {
-  background-color: rgba(0, 0, 0, 0.15);
+.email-container button.auth-btn:not(:disabled) {
   background-color: var(--main-color);
-  box-shadow: 0 2px 7px -2px rgba(0, 153, 255, 0.65);
+  box-shadow: 0 2px 8px -1px rgba(0, 153, 255, 0.75);
   cursor: pointer;
 }
-
-.email-container > span {
+.email-container label[for="email-auth"] {
+  margin-top: -1px;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+}
+.email-container.getAuth label[for="email-auth"] {
+  opacity: 1;
+  max-height: 48px;
+}
+.email-container label[for="email-auth"] .timer {
+  display: block;
+  position: absolute;
+  top: 16px;
+  right: 15px;
+  font-weight: bold;
+  font-size: 13px;
+  font-family: 'Montserrat', sans-serif;
+  font-family: monospace;
+  letter-spacing: 1px;
+  color: var(--violet-color);
+  pointer-events: none;
+}
+.email-container label[for="email-auth"] input {
+  padding: 14px 10px 10px;
+}
+.email-container label[for="email-auth"] input::placeholder {
+  display: flex;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.45);
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-size: 16px;
+}
+.email-container .warning-msg {
   flex-basis: 100%;
+}
+.email-container .warning-msg .info-msg {
+  color: var(--main-color);
+}
+.email-container.getAuth button.auth-btn {
+  height: 44px;
+}
+.email-container.getAuth label[for="email"] input {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.email-container.getAuth label[for="email-auth"] input {
+  border-top-left-radius: 0;
+  border: 50%;
 }
 
 #passwd {
@@ -165,7 +197,7 @@ label[for="passwdConfirm"] {
   color: #fff;
   border-radius: 3px;
   font-size: 14px;
-  box-shadow: 0 2px 5px -2px rgba(0, 153, 255, 1);
+  box-shadow: 0 2px 8px -1px rgba(0, 153, 255, 0.75);
   opacity: 0.8;
 }
 .address-container > button:hover {
@@ -191,12 +223,7 @@ label[for="passwdConfirm"] {
   border-top-right-radius: 0;
 }
 
-#tel::-webkit-inner-spin-button,
-#tel::-webkit-outer-spin-button { 
-  -webkit-appearance: none;
-}
-
-.form-container button[type="submit"] {
+.form-container button.submit {
   width: 100%;
   border: 0;
   outline: 0;
@@ -209,12 +236,16 @@ label[for="passwdConfirm"] {
   background-color: rgba(0, 0, 0, 0.15)
 }
 
-.form-container button[type="submit"]:not(:disabled) {
+.form-container button.submit:not(:disabled) {
   background-color: rgba(0, 0, 0, 0.15);
   background-color: var(--main-color);
   box-shadow: 0 2px 7px -2px rgba(0, 153, 255, 0.65);
   cursor: pointer;
 }
-.form-container button[type="submit"]:not(:disabled):hover {
+.form-container button.submit:not(:disabled):hover {
   box-shadow: 0 2px 6px -1px rgba(0, 153, 255, 0.85);
+}
+
+header.topbar .container {
+  width: 520px;
 }

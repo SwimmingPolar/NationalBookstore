@@ -60,95 +60,363 @@
 
 <!--@@@@@@@@@@@@@@@@@@@@@@@@@@@ 이 밑으로 제가 수정 좀 했습니다.   @@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
 	<!-- ebook 검색 -->
-	<select resultType="com.ryan.domain.book.EBookVO" id="searchEbook" >
-		SELECT * FROM EBOOK WHERE
+	<select resultType="com.ryan.domain.book.EBookVO" id="ebook" >
+		WITH result as (SELECT ROWNUM num, e.* FROM EBOOK e
 		<choose>
-			<when test="param1.equals('BOOK_TITLE')" >
-				<foreach collection="param2" index="index" item="search" separator="or">
-					BOOK_TITLE LIKE  '%'||#{search}||'%'
-				</foreach>
+			<when test="param1 != null or param2 != null or param1 != '' or param2 != ''" >
+				<choose>
+					<when test="param1.equals('title')" >
+						<where>
+							<foreach collection="param2" index="index" item="search" separator="or">
+								e.BOOK_TITLE LIKE  '%'||#{search}||'%'
+							</foreach>
+						</where>
+					</when>
+					<when test="param1.equals('author')" >
+						<where>
+							<foreach collection="param2" index="index" item="search" separator="or">
+								e.BOOK_WRITER LIKE  '%'||#{search}||'%'
+							</foreach>
+						</where>
+					</when>
+					<when test="param1.equals('publisher')" >
+						<where>
+							<foreach collection="param2" index="index" item="search" separator="or">
+								e.BOOK_PUBLISHER LIKE  '%'||#{search}||'%'
+							</foreach>
+						</where>
+					</when>
+				</choose>
 			</when>
-			<when test="param1.equals('BOOK_WRITER')" >
-				<foreach collection="param2" index="index" item="search" separator="or" >
-					BOOK_WRITER LIKE '%'||#{search}||'%'
-				</foreach>
+		</choose>),
+		rowresult as (SELECT r.* FROM result r
+		<choose>
+			<when test="page == null or page == ''" >
+				<where>
+					num BETWEEN 1 AND 4
+				</where>
 			</when>
-			<when test="param1.equals('BOOK_PUBLISHER')" >
-				<foreach collection="param2" index="index" item="search" separator="or" >
-					BOOK_PUBLISHER LIKE '%'||#{search }||'%'
-				</foreach>
-			</when>
+			<otherwise>
+				<where>
+					num BETWEEN ((TO_NUMBER(#{page })*12)-11) AND (TO_NUMBER(#{page })*12)
+				</where>
+			</otherwise>
 		</choose>
+		)
+		SELECT rr.* FROM rowresult rr
 	</select>
 	<!-- 종이책 검색 -->
-	<select resultType="com.ryan.domain.book.EBookVO" id="searchPaperbook" >
-		SELECT * FROM EBOOK WHERE
+	<select resultType="com.ryan.domain.book.EBookVO" id="paper" >
+		WITH result as (SELECT ROWNUM num, e.* FROM EBOOK e
+		WHERE BOOK_EXISTENCE LIKE 1
 		<choose>
-			<when test="param1.equals('BOOK_TITLE')" >
-				<foreach collection="param2" index="index" item="search" separator="or">
-					BOOK_TITLE LIKE  '%'||#{search}||'%'
-				</foreach>
+			<when test="param1 != null or param2 != null or param1 != '' or param2 != ''" >
+				<choose>
+					<when test="param1.equals('title')" >
+						<foreach collection="param2" index="index" item="search" separator="or">
+							AND e.BOOK_TITLE LIKE  '%'||#{search}||'%'
+						</foreach>
+					</when>
+					<when test="param1.equals('author')" >
+						<foreach collection="param2" index="index" item="search" separator="or">
+							AND e.BOOK_WRITER LIKE  '%'||#{search}||'%'
+						</foreach>
+					</when>
+					<when test="param1.equals('publisher')" >
+						<foreach collection="param2" index="index" item="search" separator="or">
+							AND e.BOOK_PUBLISHER LIKE  '%'||#{search}||'%'
+						</foreach>
+					</when>
+				</choose>
 			</when>
-			<when test="param1.equals('BOOK_WRITER')" >
-				<foreach collection="param2" index="index" item="search" separator="or" >
-					BOOK_WRITER LIKE '%'||#{search}||'%'
-				</foreach>
+		</choose>),
+		rowresult as (SELECT r.* FROM result r
+		<choose>
+			<when test="page == null or page == ''" >
+				<where>
+					num BETWEEN 1 AND 4
+				</where>
 			</when>
-			<when test="param1.equals('BOOK_PUBLISHER')" >
-				<foreach collection="param2" index="index" item="search" separator="or" >
-					BOOK_PUBLISHER LIKE '%'||#{search }||'%'
-				</foreach>
+			<otherwise>
+				<where>
+					num BETWEEN ((TO_NUMBER(#{page })*12)-11) AND (TO_NUMBER(#{page })*12)
+				</where>
+			</otherwise>
+		</choose>
+		)
+		SELECT rr.* FROM rowresult rr
+	</select>
+	<!-- ebook카운트 -->
+	<select resultType="com.ryan.domain.book.EBookVO" id="ebookCount" >
+		SELECT e.* FROM EBOOK e
+		<choose>
+			<when test="param1 != null or param2 != null or param1 != '' or param2 != ''" >
+				<choose>
+					<when test="param1.equals('title')" >
+						<where>
+							<foreach collection="param2" index="index" item="search" separator="or">
+								e.BOOK_TITLE LIKE  '%'||#{search}||'%'
+							</foreach>
+						</where>
+					</when>
+					<when test="param1.equals('author')" >
+						<where>
+							<foreach collection="param2" index="index" item="search" separator="or">
+								e.BOOK_WRITER LIKE  '%'||#{search}||'%'
+							</foreach>
+						</where>
+					</when>
+					<when test="param1.equals('publisher')" >
+						<where>
+							<foreach collection="param2" index="index" item="search" separator="or">
+								e.BOOK_PUBLISHER LIKE  '%'||#{search}||'%'
+							</foreach>
+						</where>
+					</when>
+				</choose>
 			</when>
 		</choose>
-		AND BOOK_EXISTENCE LIKE 1
 	</select>
-	<!-- ebook page -->
-	<select resultType="com.ryan.domain.book.EBookVO" id="searchEbookPage" >
-		WITH result AS
-		(SELECT ROWNUM num, EBOOK.* FROM EBOOK WHERE
+	<!-- paper카운트-->
+	<select resultType="com.ryan.domain.book.EBookVO" id="paperCount" >
+		SELECT e.* FROM EBOOK e
+		WHERE BOOK_EXISTENCE LIKE 1
 		<choose>
-			<when test="param1.equals('BOOK_TITLE')" >
-				<foreach collection="param2" index="index" item="search" separator="or">
-					BOOK_TITLE LIKE  '%'||#{search}||'%'
-				</foreach>
+			<when test="param1 != null or param2 != null or param1 != '' or param2 != ''" >
+				<choose>
+					<when test="param1.equals('title')" >
+						<foreach collection="param2" index="index" item="search" separator="or">
+							AND e.BOOK_TITLE LIKE  '%'||#{search}||'%'
+						</foreach>
+					</when>
+					<when test="param1.equals('author')" >
+						<foreach collection="param2" index="index" item="search" separator="or">
+							AND e.BOOK_WRITER LIKE  '%'||#{search}||'%'
+						</foreach>
+					</when>
+					<when test="param1.equals('publisher')" >
+						<foreach collection="param2" index="index" item="search" separator="or">
+							AND e.BOOK_PUBLISHER LIKE  '%'||#{search}||'%'
+						</foreach>
+					</when>
+				</choose>
 			</when>
-			<when test="param1.equals('BOOK_WRITER')" >
-				<foreach collection="param2" index="index" item="search" separator="or" >
-					BOOK_WRITER LIKE '%'||#{search}||'%'
-				</foreach>
+		</choose>
+	</select>
+	<!-- 전체 책 출력 -->
+	<select id="getFilterSearch" resultType="com.ryan.domain.book.EBookVO">
+		WITH result as
+		(SELECT e.* FROM ebook e
+		<choose>
+			<when test="genre == 0" >
 			</when>
-			<when test="param1.equals('BOOK_PUBLISHER')" >
-				<foreach collection="param2" index="index" item="search" separator="or" >
-					BOOK_PUBLISHER LIKE '%'||#{search }||'%'
-				</foreach>
+			<when test="genre != null">
+				, first_category f , second_category s
+				<where>
+					e.category_num = s.category_num and s.first_num = f.first_num
+					and f.first_num = #{genre }
+				</where>
+			</when>
+			<when test="sub_genre != null">
+				, second_category s
+				<where>
+					e.category_num = s.category_num
+					and s.category_num = #{sub_genre }
+				</where>
+			</when>
+		</choose>
+		<choose>
+			<when test="sort == null" >
+				ORDER BY book_title
+			</when>
+			<when test="sort == ''">
+				ORDER BY book_title
+			</when>
+			<when test="sort == 'title'">
+				ORDER BY book_title
+			</when>
+			<when test="sort == 'author'" >
+				ORDER BY book_writer
+			</when>
+			<when test="sort == 'publisher'" >
+				ORDER BY book_publisher
+			</when>
+		</choose>
+		),
+		rowresult AS
+		(SELECT ROWNUM num, r.* FROM result r)
+		SELECT * FROM rowresult
+		<choose>
+			<when test="page == null" >
+				WHERE num BETWEEN 1 AND 12
+			</when>
+			<when test="page != null" >
+				WHERE num BETWEEN TO_NUMBER(#{page })*12-11 AND TO_NUMBER(#{page })*12
+			</when>
+		</choose>
+	</select>
+	<!-- 데이터 갯수 카운트 -->
+	<select id="getFilterSearchCount" resultType="com.ryan.domain.book.EBookVO">
+		SELECT ROWNUM num, e.* FROM ebook e
+		<choose>
+			<when test="genre == 0" >
+			</when>
+			<when test="genre != null">
+				, first_category f , second_category s
+				<where>
+					e.category_num = s.category_num and s.first_num = f.first_num
+					and f.first_num = #{genre }
+				</where>
+			</when>
+			<when test="sub_genre != null">
+				, second_category s
+				<where>
+					e.category_num = s.category_num
+					and s.category_num = #{sub_genre }
+				</where>
+			</when>
+		</choose>
+	</select>
+	<!-- 종이책 구매 검색 -->
+	<select id="getPaperByGenre" resultType="com.ryan.domain.book.EBookVO" >
+		WITH result as (SELECT ROWNUM num, e.* FROM EBOOK e
+		<choose>
+			<when test="genre == 0 or genre == null or genre == ''" >
+				WHERE BOOK_EXISTENCE LIKE 1
+			</when>
+			<otherwise>
+				, first_category f , second_category s
+				<where>
+					e.category_num = s.category_num and s.first_num = f.first_num
+					and f.first_num = #{genre } AND BOOK_EXISTENCE LIKE 1
+				</where>
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="param1 != null or param2 != null or param1 != '' or param2 != ''" >
+				<choose>
+					<when test="param1.equals('title')" >
+						<foreach collection="param2" index="index" item="search" separator="or">
+							AND e.BOOK_TITLE LIKE  '%'||#{search}||'%'
+						</foreach>
+					</when>
+					<when test="param1.equals('author')" >
+						<foreach collection="param2" index="index" item="search" separator="or">
+							AND e.BOOK_WRITER LIKE  '%'||#{search}||'%'
+						</foreach>
+					</when>
+					<when test="param1.equals('publisher')" >
+						<foreach collection="param2" index="index" item="search" separator="or">
+							AND e.BOOK_PUBLISHER LIKE  '%'||#{search}||'%'
+						</foreach>
+					</when>
+				</choose>
+			</when>
+		</choose>),
+		rowresult as (SELECT r.* FROM result r
+		<choose>
+			<when test="page == null or page == ''" >
+				<where>
+					num BETWEEN 1 AND 12
+				</where>
+			</when>
+			<otherwise>
+				<where>
+					num BETWEEN ((TO_NUMBER(#{page })*12)-11) AND (TO_NUMBER(#{page })*12)
+				</where>
+			</otherwise>
+		</choose>
+		)
+		SELECT rr.* FROM rowresult rr
+	</select>
+	<!-- 종이책 구매 검색 갯수 -->
+	<select id="getPaperByGenreCount" resultType="com.ryan.domain.book.EBookVO" >
+		WITH result as (SELECT ROWNUM num, e.* FROM EBOOK e
+		<choose>
+			<when test="genre == 0 or genre == null or genre == ''" >
+				WHERE BOOK_EXISTENCE LIKE 1
+			</when>
+			<otherwise>
+				, first_category f , second_category s
+				<where>
+					e.category_num = s.category_num and s.first_num = f.first_num
+					and f.first_num = #{genre } AND BOOK_EXISTENCE LIKE 1
+				</where>
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="param1 != null or param2 != null or param1 != '' or param2 != ''" >
+				<choose>
+					<when test="param1.equals('title')" >
+						<foreach collection="param2" index="index" item="search" separator="or">
+							AND e.BOOK_TITLE LIKE  '%'||#{search}||'%'
+						</foreach>
+					</when>
+					<when test="param1.equals('author')" >
+						<foreach collection="param2" index="index" item="search" separator="or">
+							AND e.BOOK_WRITER LIKE  '%'||#{search}||'%'
+						</foreach>
+					</when>
+					<when test="param1.equals('publisher')" >
+						<foreach collection="param2" index="index" item="search" separator="or">
+							AND e.BOOK_PUBLISHER LIKE  '%'||#{search}||'%'
+						</foreach>
+					</when>
+				</choose>
 			</when>
 		</choose>)
-		SELECT * FROM result
-		WHERE num BETWEEN ((${param3 }*12)-11) AND (${param3 }*12)
+		SELECT r.* FROM result r
 	</select>
-	<!-- 종이책 page -->
-	<select resultType="com.ryan.domain.book.EBookVO" id="searchPaperbookPage" >
-		WITH result AS
-		(SELECT ROWNUM num, EBOOK.* FROM EBOOK WHERE
+	<!-- 검색결과 전체의 갯수 -->
+	<select id="getGenreCount" parameterType="hashmap" resultType="map">
+		WITH result as (SELECT ROWNUM num, f.FIRST_NUM cat_num, e.* FROM EBOOK e
+		<!-- <choose>
+			<when test="genre == 0 or genre == null or genre == ''" > -->
+				, first_category f , second_category s
+				<where>
+					e.category_num = s.category_num and s.first_num = f.first_num
+					and f.first_num LIKE '%' AND BOOK_EXISTENCE LIKE 1
+				</where>
+			<!-- </when>
+			<otherwise>
+				, first_category f , second_category s
+				<where>
+					e.category_num = s.category_num and s.first_num = f.first_num
+					and f.first_num = #{genre } AND BOOK_EXISTENCE LIKE 1
+				</where>
+			</otherwise>
+		</choose> -->
+		<!-- <choose>
+			<when test="param1 != null or param2 != null or param1 != '' or param2 != ''" > -->
 		<choose>
-			<when test="param1.equals('BOOK_TITLE')" >
+			<when test="param1.equals('title')" >
 				<foreach collection="param2" index="index" item="search" separator="or">
-					BOOK_TITLE LIKE  '%'||#{search}||'%'
+					AND e.BOOK_TITLE LIKE  '%'||#{search}||'%')
 				</foreach>
 			</when>
-			<when test="param1.equals('BOOK_WRITER')" >
-				<foreach collection="param2" index="index" item="search" separator="or" >
-					BOOK_WRITER LIKE '%'||#{search}||'%'
+			<when test="param1.equals('author')" >
+				<foreach collection="param2" index="index" item="search" separator="or">
+					AND e.BOOK_WRITER LIKE  '%'||#{search}||'%')
 				</foreach>
 			</when>
-			<when test="param1.equals('BOOK_PUBLISHER')" >
-				<foreach collection="param2" index="index" item="search" separator="or" >
-					BOOK_PUBLISHER LIKE '%'||#{search }||'%'
+			<when test="param1.equals('publisher')" >
+				<foreach collection="param2" index="index" item="search" separator="or">
+					AND e.BOOK_PUBLISHER LIKE  '%'||#{search}||'%')
 				</foreach>
 			</when>
 		</choose>
-		AND BOOK_EXISTENCE LIKE 1)
-		SELECT * FROM result
-		WHERE num BETWEEN ((${param3 }*12)-11) AND (${param3 }*12)
+			<!-- </when>
+		</choose> -->
+		SELECT (SELECT FIRST_CATEGORY FROM FIRST_CATEGORY WHERE FIRST_NUM LIKE CAT_NUM) as category_name, 
+		CAT_NUM, COUNT(*) as count FROM result
+		<!-- SELECT r.FIRST_NUM category_num, COUNT(*) as count FROM result r -->
+		<!-- SELECT e.CATEGORY_NUM category_num, COUNT(*) count FROM EBOOK e -->
+		GROUP BY CAT_NUM
+		ORDER BY CAT_NUM
+		<!-- ORDER BY category_num -->
 	</select>
+	<resultMap type="map" id="getGenreCount" >
+		<result column="CATEGORY_NUM" property="category_num" />
+		<result column="count" property="count" />
+	</resultMap>
 </mapper>

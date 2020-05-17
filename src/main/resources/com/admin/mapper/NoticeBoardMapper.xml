@@ -18,7 +18,7 @@
 			#{noticeTitle},
 			#{noticeContent},
 			#{noticeWriter},
-			#{noticeDate}
+			sysdate
 		)
 </insert>
 
@@ -40,8 +40,13 @@
 <select id="selectNoticeCount">
 select Count(*) from admin_Notice where notice_category=#{type}
 </select>
+
 <select id="selectNoticePageList">
 select * from admin_Notice where notice_category=#{type}
+</select>
+
+<select id="numChk">
+select notice_no from admin_Notice where notice_no = #{noticeNo}
 </select>
 
 </mapper>

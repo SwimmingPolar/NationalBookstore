@@ -122,18 +122,32 @@ public class DetailBookServiceImpl implements DetailBookService{
 */
 	@Override
 	public int insertLike(int booknumber, HttpServletRequest request) {
+		int result = 0;
 		ArrayList<BookLikeVO> list = mapper.bookLikeList(booknumber);
 		HttpSession session = request.getSession();	
-		BookLikeVO vo = (BookLikeVO) session.getAttribute("ryanmember");
-		vo.setBookNum(booknumber);
-		for(int i=0; i<list.size();i++) {
-			if(list.get(i).getMemberEmail().equals(vo.getMemberEmail())) {
-				mapper.deleteLike(vo);
+		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
+			if(!list.isEmpty()) {
+				for(int i=0; i<list.size(); i++) {
+					if(list.get(i).getMemberEmail().equals(member.getMemberEmail())) {
+						mapper.deleteLike(list.get(i).getLikeNum());
+						break;
+					}else {
+						BookLikeVO vo = new BookLikeVO();
+						vo.setBookNum(booknumber);
+						vo.setMemberEmail(member.getMemberEmail());
+						mapper.insertLike(vo);
+						break;
+					}
+				}
 			}else {
+				BookLikeVO vo = new BookLikeVO();
+				vo.setBookNum(booknumber);
+				vo.setMemberEmail(member.getMemberEmail());
 				mapper.insertLike(vo);
-			}
-		}
-		return mapper.bookLike(booknumber);		
+			}			
+
+		result = mapper.bookLike(booknumber);
+		return result;	
 	}
 
 
@@ -178,13 +192,17 @@ public class DetailBookServiceImpl implements DetailBookService{
 		MemberVO vo = (MemberVO) session.getAttribute("ryanMember");
 		
 		boolean flag = false;
-		
-		for(int i=0; i<list.size();i++) {
-			if(list.get(i).getMemberEmail().equals(vo.getMemberEmail())) {
-				flag = true;
-				return flag;
-			}
-		}		
+		if(vo!=null) {
+			for(int i=0; i<list.size();i++) {
+				if(list.get(i).getMemberEmail().equals(vo.getMemberEmail())) {
+					flag = true;
+					break;
+				}
+			}	
+		}else {
+			return flag;
+		}
+			
 		return flag;
 	}
 

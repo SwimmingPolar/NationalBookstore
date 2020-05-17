@@ -10,6 +10,8 @@
     --message-bubble-color-odd: #e5e4e9;
     --message-bubble-color-even: #3ea7f8;
     --sensual-yellow-color: #f1d919;
+    --light-blue-background-color: #ebf6ff;
+    --violet-color: #a451f7;
 }
 
 * {
@@ -19,8 +21,9 @@
 }
 
 body {
-  padding-bottom: 50px;
   position: relative;
+  margin-bottom: 50px;
+  overflow-y: scroll;
 }
 
 /* top fixed header */
@@ -31,7 +34,6 @@ header.topbar {
   position: relative;
 }
 header.topbar nav {
-  position: fixed;
   z-index: 999;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   background-color: #fff;

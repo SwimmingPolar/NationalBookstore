@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.ryan.domain.book.EBookVO;
 import com.ryan.domain.book.HashtagVO;
 import com.ryan.domain.main.FilterSearchVO;
+import com.ryan.domain.main.KeywordAutoCompletionVO;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -84,9 +85,22 @@ public class MainMapperTests {
 //		
 //	}
 	
+//	@Test
+//	public void getDisCountBookTests() {
+//		
+//		mapper.getDisCountBook().forEach(ebook -> log.info(ebook));
+//	}
+	
 	@Test
-	public void getDisCountBookTests() {
+	public void autoKeywordTests() {
 		
-		mapper.getDisCountBook().forEach(ebook -> log.info(ebook));
+		ArrayList<KeywordAutoCompletionVO> keywordList = mapper.getAutoKeyword("title", "룬의");
+		
+		for(KeywordAutoCompletionVO keyword : keywordList) {
+			keyword.setHashTagList(mapper.getAutoKeywordHashtag(keyword.getBookNum()));
+		}
+		
+		keywordList.forEach(keyword -> log.info(keywordList));
+		
 	}
 }

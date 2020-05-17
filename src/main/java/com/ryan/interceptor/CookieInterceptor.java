@@ -32,7 +32,6 @@ public class CookieInterceptor extends HandlerInterceptorAdapter {
 		if(member == null) {
 			member = new MemberVO();
 			Cookie[] cookies = request.getCookies();
-			log.info("쿠키의값: " + cookies);
 			if(cookies != null ) {
 				for(Cookie c : cookies) {
 					if(c.getName().equals("ryanMemberId")) {
@@ -47,7 +46,6 @@ public class CookieInterceptor extends HandlerInterceptorAdapter {
 			
 			if(member.getMemberEmail() != null && member.getMemberNickName() != null) {
 				if(service.autoLogin(member)) { // true 회원정보가 존재
-					log.info("쿠키로 세션생성");
 					session.setAttribute("ryanMember", member);
 					return true;
 				} 

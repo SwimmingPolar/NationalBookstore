@@ -15,5 +15,8 @@ public class FileVO {
 
     // 저장파일이름 
     private String storedFileName;
+    
+    //notice_no
+    private int noticeNo;
 
 }

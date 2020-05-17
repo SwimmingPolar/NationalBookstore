@@ -49,6 +49,7 @@ public class DetailBookController {
 		model.addAttribute("booklist", service.interestbooks(vo.getCategoryNum()));// 카테고리 추천 도서
 
 		model.addAttribute("likecheck", service.checkLike(booknumber, request)); //좋아요 클릭 했는지 확인
+		log.info("좋아요 리턴 값 : "+service.checkLike(booknumber, request));
 		
 		model.addAttribute("booklike", service.bookLike(booknumber)); //좋아요 수
 		
@@ -83,8 +84,10 @@ public class DetailBookController {
 	
 	//좋아요 입력
 	@RequestMapping("/insertlike")
-	public @ResponseBody int insertLike(@RequestParam("booknumber") int booknumber, HttpServletRequest request) {
-		return service.insertLike(booknumber, request);
+	public @ResponseBody String insertLike(@RequestParam("booknumber") int booknumber, HttpServletRequest request, Model model) {
+		int result = service.insertLike(booknumber, request);
+		boolean check =  service.checkLike(booknumber, request);
+		return result+"+"+check;
 	}
 	
 	//찜 책장에 추가
