@@ -56,19 +56,6 @@
 %>
 <script type="text/javascript" >
 	$(document).ready(function() {
-		var genreList = {
-				"0" : "전체",
-				"2" : "소설",
-				"3" : "시/에세이",
-				"4" : "인문",
-				"5" : "역사",
-				"6" : "예술",
-				"7" : "종교",
-				"8" : "사회",
-				"9" : "과학",
-				"10" : "경제/경영",
-				"11" : "자기계발"
-		}
 		var type = "<%=type %>";
 		var keyword = "<%=keyword %>";
 		var genre = "<%=genre %>";

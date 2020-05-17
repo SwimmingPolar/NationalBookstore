@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +11,9 @@
     <link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap" rel="stylesheet">
     <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
     <script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="../../resources/styles/reset.css">
+    <link rel="stylesheet" href="../../resources/styles/common.css">
+    <script src="../../resources/js/common.js"></script>
 </head>
 <body>
  <div class="title">
@@ -19,11 +23,11 @@
     <div class="wrapper">
         <h3> 서재 이용 현황 </h3>
         <div class="useInfo">
-            <p>지혜로운 셀럽 님의 서재</p>
+            <p>${ryanMember.memberNickName } 님의 서재</p>
             <ul>
-                <li><strong>서재에 기록된 도서</strong> <span>0 권</span></li>
+                <li><strong>서재에 기록된 도서</strong> <span>${readbookcount } 권</span></li>
                 <li><strong>서재에 기록된 포스트</strong><span>0 개</span></li>
-                <li><strong>적립된 마일리지</strong><span>0 마일리지</span></li>
+                <li><strong>팔로우 수 </strong><span>${myFollower} 명</span></li>
                 <li><strong>종이책 결제 건수</strong><span>0 권</span></li>
             </ul>
             
@@ -57,7 +61,7 @@
 
     </div>
     <div class="finishBtn">
-        <button type="button" id="doLater" onclick="location.href='myManage.jsp'">나중에 하기</button>
+        <button type="button" id="doLater" onclick="location.href='myAccount.jsp'">나중에 하기</button>
         <button type="button" id="goRightNow" onclick="goDeleteNext()">계속 진행하기</button>
 
     </div>

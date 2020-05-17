@@ -13,13 +13,13 @@ a {
 
 }
 
-.newItemInsert {
+.orderTable {
     /* display:inline-block; */
     /* border:2px solid blue; */
     /* margin-left: 240px; */
     display: flex;
     width:100%;
-    flex-direction: column;
+    /* flex-direction: column; */
     /* border:2px solid blue; */
 
 
@@ -35,97 +35,59 @@ a {
     color:black;
     /* font-weight:bold; */
 }
-
-.newItemInsert ul li {
-
-    display:inline;
-    border:1px solid lightgray;
-    margin:3px;
-    background-color: white;
-    box-shadow: 0 0 10px rgba(0,0,0,.05);
-
+.orderTable table td {
+    text-align:center;
+    border-bottom:1px solid #e8e8e8;
 }
-
-.tabs {
-   padding-left:0px;
-   margin-bottom:8px;
-}
-
-.tabs li {
-    /* border:2px solid yellow; */
-    padding:10px 20px 10px 20px;
-    cursor: pointer;
-
-}
-
 
 .orderTable table {
     background-color:white;
     width: 100%;
+    font-size: 13px;
     /* box-shadow: 0 0 10px rgba(0,0,0,.05); */
     /* margin:20px; */
     margin-bottom:10px;
     text-align: left;
     border:1px solid #e8e8e8;
+    border-bottom:none;
     /* border: 1px solid rgba(0, 153, 255, 0.205); */
     border-radius: 5px;
     margin-top:10px;
     margin:0 auto;
-    text-indent:20px;
+    /* text-indent:20px; */
 }
 
 .orderTable table table ul{
     margin:0;
     padding:0;
 }
-
 .orderTable table ul li {
-    display:flex;
-    
+    display:flex;   
     justify-content: space-between;
+    padding:3px;
 }
-
 .orderTable table th {
     color:#888585;
     font-weight: normal;
     padding:10px;
     text-align:center;
     /* border-bottom:1px solid lightgray; */
-    background-color:#F3F4F6; 
-   
+    background-color:#F3F4F6;   
 }
-
 .orderTable table th:nth-child(1) {
     text-align: center; 
     width:30px;
 }
-
-
 .orderTable table th:nth-child(2) {
     /* display:block; */
     padding:10px;
 }
-
-
-.orderTable table td {
-    /* background-color:#f9f9f9; */
-    padding:10px 10px 30px 10px;
-    /* padding:20px; */
-    /* border-left:1px solid #f9f9f9;
-    border-right:1px solid #f9f9f9; */
-
-    
-}
-
 .orderTable span:nth-child(1) {
 
     display:block;
-
 }
-
-/* .adjustHere {
-    display:block;
-    padding:10px;
+/* .orderTable table tr:nth-child(2)>td:nth-child(6) {
+    padding-left: 20px;
 
 } */
 .adjustHere img {
@@ -135,14 +97,11 @@ a {
 .adjustHere span {
     vertical-align: center;
 }
-
-
-
 .orderTable table button {
     /* border:2px solid pink; */
-    width:80px;
-    height: 40px;
-    font-size: 15px;
+    width:50px;
+    height: 25px;
+    font-size: 13px;
     border-radius: 7px;
     border:1px solid #0099FF;
     background-color:white;
@@ -150,22 +109,16 @@ a {
     cursor: pointer;
     display:block;
     margin-top:5px;
-    outline:none;
-    
+    outline:none;   
 }
-
 .orderTable table button:hover {
     font-weight:bold;
     background-color:#F3F4F6;
-   
-
 }
-
 .orderTable .statusChk {
     font-size:13px;
     margin-left:10px;
 }
-
 .orderTable i {
 
     color:rgb(170, 167, 167);
@@ -195,22 +148,11 @@ a {
         font-weight: bold;
         border:none;
 }
-
 .orderTable .tableTitle{
     float:right;
     /* border:2px solid green; */
     margin:0px 10px 10px 10px;
 }
-
-.dateBtn {
-    margin:10px 0px 0px 10px;
-}
-
-.dateBtn input[type="date"]{
-     height:27px;
-    text-align: center;
-    }
-
 
 .orderTable span > a {
     /* display: block; */
@@ -225,3 +167,123 @@ a {
     color:rgb(27, 122, 177);
 }  
 
+.bigPaperbox {
+    margin-top: 20px;
+    /* height: 200px; */
+    border-radius: 5px;
+    border:1px solid #e8e8e8;
+    padding: 10px;
+    margin:20px 0 20px 0;
+}
+.bigPaperbox ul li {
+    position: relative;
+    margin-bottom: 5px;
+    padding-left: 6px;
+    font-size: 11px;
+    line-height: 1.4;
+    color: #898989;
+
+}
+
+.bigPaperbox ul li  a {
+    color:rgb(218, 100, 100);
+}
+
+.bigPaperbox ul li::before {
+    position:absolute;
+    width:1.5px;
+    height:1.5px;
+    background-color:#999;
+    content: "";
+    top:50%;
+    left:0;    
+}
+
+.bigPaperbox p {
+    font-weight: bold;
+    padding: 10px;
+    color:#0099FF;
+}
+
+.bigPaperbox p i {
+    color:#0099FF;
+    font-size:18px;
+
+}
+
+.boxDesign {
+    display: flex;
+    /* border: 2px solid red; */
+    margin:20px 0 20px 0;
+    
+}
+
+.boxDesign div{
+    margin:5px;
+    width: 20%; 
+    height: 100px;
+    border:1px solid #ccc;
+}
+
+.boxDesign div li:nth-child(1) {
+    background-color:#f2f2f2;
+    font-weight: bold;
+    color: #333;
+    padding:5px;
+    font-size: 13px;
+}
+
+.boxDesign div li:nth-child(2) {
+    color: gray;
+    padding: 10px;
+    font-size: 12px;
+} 
+
+.finishBtn {
+    display: flex;
+}
+
+.finishBtn button{
+    width: 100%; 
+    margin:20px 10px 10px 10px;
+    height: 50px;
+    font-size: 17px;
+    border-radius: 4px;
+    border:1px solid #0099FF;
+    color:#0099FF;
+    background-color:white;
+    cursor: pointer;
+    outline:none;
+}
+
+#chkBtn {
+    background-color:#0099FF;
+    color:white;
+}
+
+#deleteBtn:hover{
+    background-color:#F3F4F6;
+    font-weight: bold;
+}
+
+#chkBtn:hover {
+    font-weight: bold;
+    background-color:rgb(7, 143, 233);
+
+}
+
+.noHave {
+    text-align:center;
+    margin: 17% auto;
+}
+
+.noHave i {
+    font-size: 38px;
+    color: lightgray;
+}
+
+.noHave p {
+    font-size: 14px;
+    margin-top:15px;
+    margin-bottom:15px;
+}

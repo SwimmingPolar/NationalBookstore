@@ -89,7 +89,7 @@ public class MemberController {
 		
 		return resultMap;
 	}
-	
+	//pk키 추가해주기 or 5분뒤 삭제
 	//인증완료
 	@PostMapping("/authenticationCheck")
 	public @ResponseBody Map<String, Boolean> authenticationCheck(EmailCheckVO email) {

@@ -125,7 +125,7 @@
               </a>
             </li>
             <li>
-              <a href="bestseller">
+              <a href="best">
                 <span>베스트 셀러</span>
               </a>
             </li>

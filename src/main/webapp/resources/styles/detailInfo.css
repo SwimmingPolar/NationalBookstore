@@ -40,25 +40,28 @@ header {
     display:inline-block;
     width:100%;
     /* border:2px solid red; */
-    margin-top:20px;
+    /* margin-top:20px; */
     background-color:#EEF0F4;
 }
 
 .imageBox img{
-    max-width: 100%;
+    max-width: 220px;
+    width: 100%;
+    box-sizing: border-box;
 
 }
 
 .imageBox {
+    border-radius: 0 5px 5px 0;
     padding:10px;
     margin-left:20px;
-    width: 240px;
-    height: 350px;
-    
-
+    overflow: hidden;
+    position: relative;
+    min-height: 280px;
+    min-width: 220px;
+    box-shadow:  4px 8px 8px rgba(0,0,0,.1), 
+    0 0 2px rgba(0,0,0,.24);
 }
-
-
 .introWrite {
     /* border:2px solid brown; */
     width: 60%;
@@ -66,40 +69,45 @@ header {
     margin-top:20px;
     /* border:2px solid greenyellow; */
 }
-
 .introWrite h2 {
     margin-top:20px;
 
 }
-
-
+.choiceBtnOne {
+    display:flex;
+}
 .choiceBtn {
-    width: 100px;
-    height: 40px;
-    border-radius:5px;
-    margin:10px;
-    border:1px solid lightgray;
+    width: 100%;
+    height: 35px;
+    border-radius:7px;
+    margin:5px;
+    border:1px solid #0099FF;
     color:#0099FF;
     /* font-weight: bold;
     color:white; */
     /* border:none; */
     font-size:15px;
     background-color:white;
-    margin-top: 80px;
+    margin-top: 35px;
     margin-bottom: 10px;
     outline:none;
     cursor: pointer;
-
+    box-shadow: 3px 3px 3px rgba(0,0,0,.08), 0 2px 2px rgba(0,0,0,.16);
 
 }
 
 
 
-.choiceBtnOne input[type="button"]:hover {
+.choiceBtnOne input[type="button"]:hover, button:hover {
     background-color:#0099FF;
     color:white;
     font-weight:bold;
-
+    outline:none;
+}
+.choiceBtnOne input[type="button"]:nth-child(1) {
+    background-color:#0099FF;
+    color:white;
+    
 }
 
 .introWrite li {
@@ -231,24 +239,21 @@ header {
     }
 
 
-.preview { 
-
-    margin: 10px 0px 0px 150px;
-
-}
-
 .likeChk {
-    margin:20px 0px 20px 0px;
+   display:flex;
+   padding:10px;
+   border-top:1px solid #e8e8e8;
+   margin-top: 20px;
+   justify-content: space-between;
+   
 }
 
 .likeChk .likeBtn {
     margin: 10px;
-    float:right;
+    /* float:right; */
+    /* right:0; */
 
 }
-
-
-
 
 .likeBtn input[type="text"] {
     text-align: right;
@@ -308,15 +313,58 @@ header {
     outline:none;
 }
 
-
-
-.likePeople {
-    position: relative;
-    
-
+.likelists {
+    margin-left: 5px;
+    display:inline-block;
+   
+}
+#people{
+    display:inline-block;
+    font-size: 13px;
+    color:#999;
+    font-weight: normal;
+    margin-left: 40px;
 }
 
-.likePeople > i {
+#people:hover {
+    font-weight: bold;
+}   
+
+.likePeople {
+    
+    position: relative;
+    width:35px;
+    height:35px;
+    border-radius: 50%;
+    /* margin-left: 20px; */
+}
+
+.likePeople img {
+    position: absolute;
+    width:100%;
+    min-height:100%;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.likePeople img:nth-child(1) {
+    top:0;
+    left: 0px;
+    z-index: 1;
+}
+
+.likePeople img:nth-child(2) {
+    top:0;
+    left: 17px;
+    z-index: 2;
+}
+
+.likePeople img:nth-child(3) {
+    top:0;
+    left: 34px;
+    z-index: 3;
+}
+/* .likePeople > i {
     position:absolute;
     font-size:28px;
     border-radius: 50%;
@@ -347,14 +395,14 @@ header {
     z-index: 3;
     background-color:white;
   
-}
+} */
 
 
-.likePeople2 {
+/* .likePeople2 {
 
    margin-left:60px;
 
-}
+} */
 
 .likeChk input[type="checkbox"] {
     
@@ -466,21 +514,13 @@ header {
     /* cursor:pointer; */
 
 }
-
-
-
-
-.preview i {
-    
-    font-size:23px;
-
-}
-
 .preview {
-
-        margin-top:20px;
-
+    text-align: right;
+    font-size: 16px;
+    padding: 10px;
 }
+
+
 
 
 .similarBook {
@@ -533,7 +573,10 @@ border:1px dotted #e8e8e8;
 /* .bookStarScore .full {
     color:#f1c40f;
 } */
-
+.bookStarScore {
+    margin-top:50px;
+    padding-left: 8px;
+}
 
 .bookStarScore span{
 
@@ -545,8 +588,13 @@ border:1px dotted #e8e8e8;
 
 }
  */
-
+    
  #starScore {
     margin-left:10px;
-    
+    font-size:13px;
+    color:#333;
  }
+ #starScore + a{
+    font-size:13px;
+ }
+ 
