@@ -55,8 +55,9 @@ public class MyBookController {
 	
 	
 	@RequestMapping("/deleteLibList")
-	public @ResponseBody List<EBookVO> deleteList(MyLibVO vo) {
-		return service.deleteLibBook(vo);
+	public @ResponseBody List<EBookVO> deleteList(@RequestParam("booknum") int[] booknum, HttpSession session) {
+		log.info("넘어옴?");
+		return service.deleteLibBook(booknum, session);
 	}
 	
 //	@RequestMapping("/readbooklist") 	//읽은 책 조회

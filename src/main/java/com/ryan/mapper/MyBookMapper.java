@@ -2,6 +2,7 @@ package com.ryan.mapper;
 
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.ryan.domain.book.BookGradeVO;
 import com.ryan.domain.book.EBookVO;
@@ -13,7 +14,7 @@ public interface MyBookMapper {
 	//찜 책장 -- 조회, 삭제 입력
 	public ArrayList<EBookVO> libBook(String memberemail);
 	
-	public int deleteLibBook(MyLibVO vo);
+	public int deleteLibBook(Map list);
 	
 	public int insertLibBook(MyLibVO vo);
 	

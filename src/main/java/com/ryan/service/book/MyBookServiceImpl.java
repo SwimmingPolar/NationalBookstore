@@ -6,7 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -44,11 +46,22 @@ public class MyBookServiceImpl implements MyBookService{
 	}
 
 	@Override	//찜 책장 삭제
-	public ArrayList<EBookVO> deleteLibBook(MyLibVO vo) {
+	public ArrayList<EBookVO> deleteLibBook(int[] booknum, HttpSession session) {
 		// TODO Auto-generated method stub
-		int num=mapper.deleteLibBook(vo);
-		ArrayList<EBookVO> list = mapper.libBook(vo.getMemberEmail());		
-		return list;
+		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
+		ArrayList<MyLibVO> number = new ArrayList<MyLibVO>();
+		for(int i : booknum) {
+			MyLibVO mylib = new MyLibVO();
+			mylib.setBookNum(i);
+			mylib.setMemberEmail(member.getMemberEmail());
+			number.add(mylib);
+		}
+			
+		Map list = new HashMap();
+		list.put("numberlist", number);
+		mapper.deleteLibBook(list);
+		ArrayList<EBookVO> libBookList = mapper.libBook(member.getMemberEmail());		
+		return libBookList;
 	}
 
 	@Override 	//찜 책장 추가

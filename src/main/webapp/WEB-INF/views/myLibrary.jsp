@@ -26,7 +26,7 @@
 <div class="bigbox">
 
 <div class="myImage"> 
-    <a href="#modalGo" id="modalOpen"><img id="myFaceImage" src="../../resources/images/myLibrary/picture1.png" ></a>   
+    <a href="#modalGo" id="modalOpen"><img id="myFaceImage" src="${pageContext.request.contextPath }/resources/images/myLibrary/picture1.png" ></a>   
 </div>
 
 <div class="myNickname">
@@ -76,8 +76,11 @@
             	<li>
               	<a href="#">
               	<div class="books"> 
+             
               	<div class="mybookimage">
-                    <img src="${pageContext.request.contextPath }${bookdetail.bookThumbnail }" alt="없음">
+                   <a href="/book/bookdetail?booknumber=${readbook.bookNum }"> 
+                   <img src="${pageContext.request.contextPath }${readbook.bookThumbnail }" alt="없음">	
+                   </a>
               	</div>
               	<div class="names">
                 <strong>${readbook.bookTitle}</strong> <br>
@@ -99,9 +102,7 @@
           </c:choose>
             	
         </div>
-        </div>
-    </div> 
-    <div class="content two">
+           <div class="content two">
         <div class="mybookTitle">
             <a>${libcount}</a> 개의 책장
         </div>
@@ -114,7 +115,7 @@
               <label for="allChk">
               <input type="checkbox" name="allChk" id="allChk"> 전체선택
               </label>    
-              <button type="button" id="allDelete"> 전체삭제 </button>      
+              <button type="button" id="allDelete" onclick="allDelete();"> 전체삭제 </button>      
             </div>
             <div class="ebookList"> 
                  <c:choose>
@@ -124,7 +125,10 @@
                           
                           <tr>
                   <td><input type="checkbox" name="chkbox" id="chkbox"></td>
-                  <td><img src="${pageContext.request.contextPath }${bookdetail.bookThumbnail }" alt="없음">
+                  <td>
+                     <a href="/book/bookdetail?booknumber=${book.bookNum }"> 
+                  		<img src="${pageContext.request.contextPath }${book.bookThumbnail }" alt="없음">
+                  	</a>
                   </td>
                   <td>
                     <ul>
@@ -135,7 +139,7 @@
   
                   </td>
                   <td><button type="button" id="goRead">바로보기</button>
-                  <a href="#" id=eachDelete>삭제</a></td>
+                  <a href="/booklist/deleteLibList?booknum=${book.bookNum }" id=eachDelete>삭제</a></td>
   
                   
                 </tr>
@@ -156,7 +160,9 @@
 
     </div>
   
-    <div class="content four">
+   
+    </div>
+     <div class="content four">
         <div class="mybookTitle">
         	   나의 포스트 <a>0</a> 개
         </div>
@@ -228,7 +234,10 @@
        
         </div>
    	 </div>
-    </div>
+        </div>
+   
+ 
+</div>
 </div>
 <!-- 
 <script> 
@@ -312,6 +321,31 @@ $('.bookStarScore span').click(function() {
          modal.style.display = "none";
  
      }
+ }
+ </script>
+ <script language=JavaScript>
+ function allDelete(){
+	 var array = new Array();
+	 <c:forEach var="book" items="${libbooklist}">
+	 	array.push(${book.bookNum});
+	 </c:forEach>
+	 alert(array);
+	 if(array != null){
+		 $.ajax({
+			 url: "/booklist/deleteLibList",
+			 type: "post",
+			 dataType:"json",
+	         data: {
+	        	 "booknum" : array
+	         },
+	         success: function (response) {
+	        	 alert(response);
+	         },
+	         error: function(request,status, error) {
+	        	 alert("error"+request.status+"message : "+request.message);
+	         }
+		 });
+	 }            
  }
  </script>
 
