@@ -208,7 +208,7 @@
       timer.setAttribute('data-countdown-timer-id', intervalId);
     }
     function requestVerificationCodeConfirmation() {
-      const countdownTime = Number(document.querySelector('.email-container span.timer').value.trim());
+      const countdownTime = Number(document.querySelector('.email-container span.timer').getAttribute('data-countdown'));
       if (countdownTime < 0) {
         alert('인증 코드가 만료되었습니다.')
         return;
@@ -218,12 +218,12 @@
       const code = document.getElementById('email-auth').value.trim();
 
       const xhr = new XMLHttpRequest();
-      xhr.open('POST', '/emailAuthenticationCheck');
+      xhr.open('POST', '/member/authenticationCheck');
       xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
       xhr.onreadystatechange = function() {
         if (!(xhr.readyState === 4 && xhr.status === 200)) return;
           const isValid = JSON.parse(xhr.response).result;
-          console.log('verification completed: ' + isValid);
+
           if (isValid) {
             // lock email input
             emailInput.setAttribute('data-locked', true); 
@@ -246,40 +246,42 @@
       const emailWrapper = document.querySelector('.email-container');
       const emailAuthButton = document.querySelector('.email-container > button');
       const warningMsg = document.querySelector('label[for="email"] ~ .warning-msg');
+      const email = document.getElementById('email').value.trim();
 
-      // enable authentication code input label
-      if (!emailWrapper.classList.contains('getAuth'))
-        emailWrapper.classList.add('getAuth');
-      // change button text
-      emailAuthButton.textContent = '확인';
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', '/member/emailAuthentication');
 
-      // add code confirm request handler
-      emailAuthButton.addEventListener('click', () => {
-        const email = document.getElementById('email').value.trim();
-        
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/emailAuthentication');
+      xhr.onreadystatechange = function() {
+        if (!(xhr.readyState === 4 && xhr.status === 200)) return;
 
-        xhr.onerror = () => 
-        xhr.onreadystatechange = function() {
-          if (!(xhr.readyState === 4 && xhr.status === 200)) return;
+        const isValid = JSON.parse(xhr.response).result;
 
-          const isValid = JSON.parse(xhr.response).result;
-          console.log('request verification code: ' + isValid);
-          if (!isValid) {
-            alert('이메일 인증 오류: 관리자에게 문의해주세요.');
-            return;
-          }
+        if (!isValid) {
+          alert('이메일 인증 오류: 관리자에게 문의해주세요.');
+          return;
+        }
 
-          const newEmailAuthButton = emailAuthButton.cloneNode(true);
-          // add authentication code request handler
-          newEmailAuthButton.addEventListener('click', requestVerificationCodeConfirmation);
-          // remove all previous event handler
-          emailAuthButton.parentElement.replaceChild(newEmailAuthButton, emailAuthButton);
-        };
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.send('memberEmail=' + email);
-      });
+        // enable authentication code input label
+        if (!emailWrapper.classList.contains('getAuth'))
+          emailWrapper.classList.add('getAuth');
+        // change button text
+        emailAuthButton.textContent = '확인';
+
+        const newEmailAuthButton = emailAuthButton.cloneNode(true);
+        // add authentication code request handler
+        newEmailAuthButton.addEventListener('click', requestVerificationCodeConfirmation);
+        // remove all previous event handler
+        emailAuthButton.parentElement.replaceChild(newEmailAuthButton, emailAuthButton);
+
+        // start timer when email confirmation code is successfully sent
+        const timer = emailWrapper.querySelector('span.timer');
+        startTimer(timer);
+      };
+
+      xhr.addEventListener('loadend', () => alert('이메일을 확인해주세요!'));
+
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.send('memberEmail=' + email);
     }
     function validateEmail() {
       const emailAuthButton = document.querySelector('.email-container > button');
@@ -326,13 +328,6 @@
           newEmailAuthButton.addEventListener('click', requestEmailVerificationCode);
 
           emailAuthButton.parentElement.replaceChild(newEmailAuthButton, emailAuthButton);
-
-          // start timer when email confirmation code is successfully sent
-          const timer = emailWrapper.querySelector('span.timer');
-          startTimer(timer);
-
-          // hold off alert message
-          setTimeout(() => alert('이메일을 확인해주세요!', 0));
         }
         // if email in in use
         else {
@@ -352,12 +347,12 @@
     $(document).ready(function () {
       const emailWrapper = document.querySelector('.email-container');
       const emailInput = document.getElementById('email');
-      const emailAuthButton = document.querySelector('.email-container > button');
       const warningMsg = document.querySelector('label[for="email"] ~ .warning-msg');
 
       let validationTimer = null;
       emailInput.addEventListener('input', function () {
         const email = emailInput.value.trim();
+        const emailAuthButton = document.querySelector('.email-container > button');
         // remove check mark on input
         const check = document.querySelector('.email-container .validated');
         if (check) check.parentElement.removeChild(check);
@@ -513,7 +508,7 @@
       xhr.addEventListener('loadend', () => nicknameLabel.removeChild(spinner));
 
       xhr.onreadystatechange = function () {
-        if (!(xhr.readyState === 4 && ready.status === 200)) return;
+        if (!(xhr.readyState === 4 && xhr.status === 200)) return;
         const isValid = JSON.parse(xhr.response).result;
 
         nicknameInput.setAttribute('data-is-validated', true);
