@@ -88,8 +88,7 @@
                   <span id="starScore"> 0 </span> <a>점</a> 
                 </div>
                 <div class="choiceBtnOne">
-                    <form action="/book/insertreadbook">
-                  		<input type="hidden" name="booknumber" value="${bookdetail.bookNum }">
+                    <form action="/book/insertreadbook?booknumber=${bookdetail.bookNum }">
                         <input type="submit" value="바로읽기" class="choiceBtn">
                         <button type="button" class="choiceBtn"><i class="fas fa-plus-circle"></i> 찜하기</button>
                         <input type="button" value="종이책 구매" class="choiceBtn">
@@ -292,11 +291,21 @@
                <div class="fifthBox">
                     <h2> 관련 도서 </h2>
                     <div class="similarBook">
+                      <c:set var="count" value="${1 }" />
+                    	<c:forEach var="list" items="${booklist}">
+                    		<c:if test="${count <= 5 }">
+                    			<a href="/book/bookdetail?booknumber=${list.bookNum}" style="text-align: center; vertical-align: bottom;">
+                    				<img src="${pageContext.request.contextPath}${list.bookThumbnail}">
+                    				${list.bookTitle }
+                    			</a>
+                    		</c:if>
+  						<c:set var="count" value="${count+1 }" />
+  						</c:forEach>
+   <!--                      
                         <img src="../../resources/image/similarBook.jpg" alt="error">
                         <img src="../../resources/image/similarBook.jpg" alt="error">
                         <img src="../../resources/image/similarBook.jpg" alt="error">
-                        <img src="../../resources/image/similarBook.jpg" alt="error">
-                        <img src="../../resources/image/similarBook.jpg" alt="error">
+                        <img src="../../resources/image/similarBook.jpg" alt="error"> -->
                     </div>
                 </div>
             <!-- body-container -->
@@ -363,7 +372,6 @@
     <script>
   $(document).ready(function(){ 
 	  var check = "${likecheck}";
-	  alert(check);
             $('#heartClick').change(function () {
             	var memberId = "${ryanMember.memberNickName}";
             	if(memberId==""){
