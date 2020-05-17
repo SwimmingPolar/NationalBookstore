@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ryan.mapper.EmailMapper">
-	
 	<insert id="insertEmailCode">
 		INSERT INTO email_check (member_email,email_code)
 		VALUES(#{memberEmail},#{emailCode})
@@ -9,7 +8,6 @@
 	
 	<select id="authenticationCheck" resultType="int">
 		SELECT count(*) FROM email_check 
-		WHERE email_auth = #{emailAuth} and email_code = #{emailCode}
+		WHERE member_email = #{memberEmail} and email_code = #{emailCode}
 	</select>
-	
 </mapper>

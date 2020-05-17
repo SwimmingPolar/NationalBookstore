@@ -175,16 +175,21 @@
   <!-- 이메일 인증 버튼 활성화 -->
   <script>
     function startTimer(timer) {
-      timer.style.color = 'var(--violet-color)';
-
-      // get time from timer element's data attribute
-      let countdown = 60;
       // clear previous timer if any
       const previousCountdown = timer.getAttribute('data-countdown-timer-id');
       if (previousCountdown) clearInterval(previousCountdown);
 
+      timer.style.color = 'var(--violet-color)';
+
+      // get time from timer element's data attribute
+      let countdown = 179;
+      timer.innerHTML = '03:00';
+
       // update timer element every second
       const intervalId = setInterval(() => {
+        // update timer data and save on timer element
+        timer.setAttribute('data-countdown', countdown);
+
         let minutes = String(Math.floor(countdown/60));
         minutes = (minutes.length === 1 ? '0' : '') + minutes;
 
@@ -195,8 +200,6 @@
 
         // decrease timer
         countdown -= 1;
-        // update timer data and save on timer element
-        timer.setAttribute('data-countdown', countdown);
 
         // if countdown is less then 10 seconds change font color to red on next coundown repaint
         if (countdown <= 10) timer.style.color = 'var(--red-color)';
@@ -213,9 +216,16 @@
         alert('인증 코드가 만료되었습니다.')
         return;
       }
+
+      const emailWrapper = document.querySelector('.email-container');
       const emailInput = document.getElementById('email');
       const email = emailInput.value.trim();
-      const code = document.getElementById('email-auth').value.trim();
+      const emailAuth = document.getElementById('email-auth');
+      const code = emailAuth.value.trim();
+      const warningMsg = document.querySelector('label[for="email"] ~ .warning-msg');
+
+      // if code is not input then return
+      if (code.length <= 0) return;
 
       const xhr = new XMLHttpRequest();
       xhr.open('POST', '/member/authenticationCheck');
@@ -225,13 +235,30 @@
           const isValid = JSON.parse(xhr.response).result;
 
           if (isValid) {
-            // lock email input
-            emailInput.setAttribute('data-locked', true); 
+            // lock email input on successful email verification
+            emailInput.setAttribute('data-locked', true);
             // hide authentication code input
+            const emailAuthLabel = document.querySelector('.email-container label[for="email-auth"]');
+            emailAuthLabel.style.transition = '0.125s ease-out';
+            emailAuthLabel.addEventListener('transitionend', function showEmailAuthLabel() {
+              emailAuthLabel.style.transition = '';
+              emailAuthLabel.removeEventListener('transitionend', showEmailAuthLabel);
+            });
             emailWrapper.classList.remove('getAuth');
             // mark checked
             const emailLabel = document.querySelector('.email-container label[for="email"]');
             markChecked(emailLabel);
+            // reset emailAuth input
+            emailAuth.value = '';
+            // remove all event handler
+            const emailAuthButton = document.querySelector('.email-container > button');
+            emailAuthButton.textContent = '인증 완료';
+            emailAuthButton.setAttribute('disabled', 'disabled');
+            emailAuthButton.parentElement.replaceChild(emailAuthButton.cloneNode(true), emailAuthButton);
+
+            // stop timer
+            const timerId = document.querySelector('.email-container span.timer').getAttribute('data-countdown-timer-id');
+            if (timerId) clearInterval(timerId);
 
             warningMsg.style.display = 'none';
             emailWrapper.style.marginBottom = '25px';
@@ -246,7 +273,25 @@
       const emailWrapper = document.querySelector('.email-container');
       const emailAuthButton = document.querySelector('.email-container > button');
       const warningMsg = document.querySelector('label[for="email"] ~ .warning-msg');
-      const email = document.getElementById('email').value.trim();
+      const emailInput = document.getElementById('email');
+      const email = emailInput.value.trim();
+
+      // start timer
+      const timer = emailWrapper.querySelector('span.timer');
+      startTimer(timer);
+
+      // enable authentication code input label
+      if (!emailWrapper.classList.contains('getAuth')) {
+        const emailAuthLabel = document.querySelector('.email-container label[for="email-auth"]');
+        emailAuthLabel.style.transition = '0.125s ease-out';
+        emailAuthLabel.addEventListener('transitionend', function showEmailAuthLabel() {
+          emailAuthLabel.style.transition = '';
+          emailAuthLabel.removeEventListener('transitionend', showEmailAuthLabel);
+        });
+        emailWrapper.classList.add('getAuth');
+      }
+      // change button text
+      emailAuthButton.textContent = '확인';
 
       const xhr = new XMLHttpRequest();
       xhr.open('POST', '/member/emailAuthentication');
@@ -261,24 +306,12 @@
           return;
         }
 
-        // enable authentication code input label
-        if (!emailWrapper.classList.contains('getAuth'))
-          emailWrapper.classList.add('getAuth');
-        // change button text
-        emailAuthButton.textContent = '확인';
-
         const newEmailAuthButton = emailAuthButton.cloneNode(true);
         // add authentication code request handler
         newEmailAuthButton.addEventListener('click', requestVerificationCodeConfirmation);
         // remove all previous event handler
         emailAuthButton.parentElement.replaceChild(newEmailAuthButton, emailAuthButton);
-
-        // start timer when email confirmation code is successfully sent
-        const timer = emailWrapper.querySelector('span.timer');
-        startTimer(timer);
       };
-
-      xhr.addEventListener('loadend', () => alert('이메일을 확인해주세요!'));
 
       xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
       xhr.send('memberEmail=' + email);
@@ -351,7 +384,6 @@
 
       let validationTimer = null;
       emailInput.addEventListener('input', function () {
-        const email = emailInput.value.trim();
         const emailAuthButton = document.querySelector('.email-container > button');
         // remove check mark on input
         const check = document.querySelector('.email-container .validated');
@@ -364,20 +396,21 @@
         // change button content
         emailAuthButton.textContent = '인증';
 
-        // if email is not valid format then return
-        if (!isValidEmailFormat(email)) return;
-
         // clear validation schedule
         clearTimeout(validationTimer)
         validationTimer = setTimeout(function () {
-          if (email.length <= 0) return;
+          const email = emailInput.value.trim();
+
+          // if email is not valid format then return
+          if (!isValidEmailFormat(email)) return;
+
           validateEmail(email, emailAuthButton);
         }, 850);
       });
       emailInput.addEventListener('blur', () => {
         const email = emailInput.value.trim();
         const isValidated = emailInput.getAttribute('data-is-validated');
-        
+
         // if email when through validation process then return
         if (isValidated) return;
 
@@ -401,11 +434,15 @@
         const isLocked = emailInput.getAttribute('data-locked');
         if (!isLocked) return;
 
-        const onUserConsent = confirm('이메일을 바꾸시겠습니까?');
-        if (onUserConsent)
-          emailInput.removeAttribute('data-locked');
+        const userDidConsent = confirm('이메일을 변경하시겠습니까?');
+        if (!userDidConsent) {
+          emailInput.blur();
+          return;
+        }
+
+        emailInput.removeAttribute('data-locked');
       });
-    });
+    }); 
   </script>
   <!-- 비밀번호 유효성 검사 -->
   <script>

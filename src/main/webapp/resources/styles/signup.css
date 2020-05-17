@@ -112,7 +112,6 @@
   overflow: hidden;
   max-height: 0;
   opacity: 0;
-  transition: 0.125s ease-out;
 }
 .email-container.getAuth label[for="email-auth"] {
   opacity: 1;
