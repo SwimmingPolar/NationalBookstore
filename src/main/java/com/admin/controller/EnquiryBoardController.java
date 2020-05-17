@@ -71,6 +71,7 @@ public class EnquiryBoardController {
 		MemberVO member = (MemberVO) session.getAttribute("ryanMember");	
 		if(enquiry!=null&&enquiry.getMemberEmail().equals(member.getMemberEmail())) {
 			
+			
 			if(service.eqDelete(enquiry))
 				model.addAttribute("message", "문의사항 삭제 성공");
 			else
@@ -89,11 +90,11 @@ public class EnquiryBoardController {
 	
 	//문의사항 
 	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public String enquiryUpdate(Model model,EnquiryBoardVO enquiry,HttpServletRequest request) {
+	public String enquiryUpdate(Model model,EnquiryBoardVO enquiry,ArrayList<MultipartFile> files,HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("ryanMember");	
 		if(enquiry!=null&&enquiry.getMemberEmail().equals(member.getMemberEmail())) {
-			service.eqUpdate(enquiry);
+			service.eqUpdate(enquiry,files,request);
 			return "";
 		}else {
 			model.addAttribute("message", "수정할 내용이 없습니다.");
