@@ -1,0 +1,265 @@
+
+.bigBox {
+    width: 800px;
+    margin:0 auto;
+}
+
+li {
+    list-style: none;
+    
+}
+
+a {
+    text-decoration:none;
+}
+.tabBox {
+    /* border:2px solid blue; */
+    text-align:center;
+    margin-top:10px;
+    
+}
+
+.tabBox  ul{
+
+    display:flex;
+    background-color: #bec5d0;
+    border-radius: 5px 5px 0 0; 
+
+}
+
+.tabBox ul li{
+    display:inline-block;
+    width:100%;
+    height: 45px;
+    line-height: 45px;
+}
+
+.tabBox ul li a {
+    display:block;
+    color:#fff;
+}
+
+.contentBox {
+
+    background-color: #eff1f5;
+    padding:20px;
+    display:none;
+}
+
+.goQuestion {
+    background-color:white;
+    border: 1px solid #ddd;
+}
+
+#selectTopic {
+    display:flex;
+    position:relative;
+    z-index:2;
+    margin:0;
+    padding:0;
+    /* justify-content: space-between; */
+}
+
+#selectTopic button {
+    width:100%;
+    position: relative;
+    z-index:2;
+    height:45px;
+    outline:none;
+    border:none;
+    color:#0099FF;
+    font-weight: bold;
+    font-size:14px;
+    border-bottom:1px solid #e8e8e8;
+    padding:10px 20px 10px 20px;
+    background-color: white;
+    cursor: pointer;
+}
+
+#selectTopic ul {
+    position: absolute;
+    left:0;
+    top:0;
+    padding:0;
+    padding-top: 47px;
+    width:100%;
+    box-shadow: 0 4px 10px rgba(0,0,0,.25);
+    display: none;
+}
+#selectTopic >ul li {
+    padding:0; 
+    margin:0;
+    width:100%;
+    font-size: 14px;
+}
+
+#selectTopic >ul li a {
+    display: block;
+    cursor: pointer;
+    height: 46px;
+    line-height: 46px;
+    padding: 0 15px;
+    background-color: #fff;
+    border-bottom: 1px solid #e8e8e8;
+    color: #333;
+}
+
+#selectTopic button strong {
+    float:left;
+}
+
+#selectTopic button span {
+    float:right;
+}
+
+#titleName {
+    width:100%;
+    border:none;
+    outline:none;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 15px 10px 15px 20px;
+    font-size: 14px;
+    height: 45px;
+    line-height: 45px;
+}
+
+.title textarea {
+    width:100%;
+    outline:none;
+    resize:none;
+    border:none;
+    padding: 20px;
+    height: 220px;
+    font-size:14px;
+    box-sizing: border-box;
+    /* border-top: #999; */
+}
+.addNotice ul {
+    margin-top:10px;
+    margin-bottom:13px;
+}
+
+.addNotice ul li{
+        font-size:12px;
+        color: #999;
+        /* padding: 10px; */
+        position: relative;
+        padding-left: 8px;
+        
+}
+
+.addNotice ul li:before {
+    position: absolute;
+    width:2px;
+    height:2px;
+    background-color:gray;
+    top:50%;
+    left:0;
+    content:"";
+}
+
+
+
+.addFile {
+    position: relative;
+    background-color:white;
+    margin-top:8px;
+    height: 42px;
+    border:1px solid #e8e8e8;
+}
+
+.addFile input[type="file"] {
+    width:100%;
+    text-align:right;
+}
+
+.one p {
+    font-size:12px;
+        color: #999;
+        margin:7px 0 14px 3px;
+}
+
+.email input, .tell input{
+    height: 42px;
+    background-color:white;
+    color: #333;
+    width: 100%;
+    border:1px solid #e8e8e8;
+    padding: 10px;
+    font-size: 15px;
+    margin:6px 0 14px 0;
+}
+
+label {
+
+    font-weight: bold;
+    font-size:15px;
+    color:#333;
+
+}
+
+.agreeChk {
+
+    margin:10px;
+}
+.agreeChk ul {
+    margin-top:10px;
+}
+
+.agreeChk ul li {
+    padding: 5px;
+    font-size:12px;
+    color:#999;
+    font-weight: normal;
+}
+.btn {
+    display:flex;
+   padding-top: 30px;
+}
+.btn button {
+    margin:5px;
+    width:100%;
+    height: 40px;
+    border-radius: 4px;
+    background-color:#0099FF;
+    color:white;
+    font-size: 15px;
+    border:none;
+    outline:none;
+    cursor: pointer;
+
+}
+
+#preBtn {
+    background-color:white; 
+    color:#0099FF;
+    border:1px solid #0099FF;
+}
+
+#preBtn:hover {
+    background-color:#F3F4F6; 
+    font-weight:bold;
+}
+
+#finishBtn:hover {
+    background-color:rgb(15, 136, 218); 
+    font-weight:bold;
+}
+
+.what {
+
+    text-align:center;
+    margin: 35% auto;
+}
+
+.noHave i {
+
+    font-size: 33px;
+    margin-bottom:12px;
+    color:rgba(163, 95, 194, 0.925);
+}
+
+.what span {
+    font-size:15px;
+    color:rgba(93, 47, 114, 0.925);
+}

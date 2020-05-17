@@ -79,7 +79,7 @@
              
               	<div class="mybookimage">
                    <a href="/book/bookdetail?booknumber=${readbook.bookNum }"> 
-                   <img src="${pageContext.request.contextPath }${readbook.bookThumbnail }" alt="없음">	
+                   	<img src="${pageContext.request.contextPath }${readbook.bookThumbnail }" alt="없음">	
                    </a>
               	</div>
               	<div class="names">
@@ -109,7 +109,7 @@
     
         <div class="ebooks">
             <div class="listTitle">
-              <strong> e-book 다운로드 </strong> 
+              <strong> 찜 목록 </strong> 
             </div>
             <div class="totalBtn">
               <label for="allChk">
@@ -136,33 +136,24 @@
                       <li> <a>${book.bookWriter} 지음</a>  </li>
                       <li> <span>${book.bookPublisher}</span></li>
                     </ul>
-  
                   </td>
                   <td><button type="button" id="goRead">바로보기</button>
                   <a href="/booklist/deleteLibList?booknum=${book.bookNum }" id=eachDelete>삭제</a></td>
-  
-                  
                 </tr>
                        </c:forEach>   	
                        </table>		
-                     </c:when>
-             
+                     </c:when>        
                      <c:otherwise>
                          <span> <i class="fas fa-books"></i></span>
-                              나만의 책장을 만들어보세요
-                       <button type="button" id=makeBookCart> <i class="fas fa-plus"></i> 새 책장 만들기 </button>
-  
+                              찜한 도서가 없습니다. 
+                       <!-- <button type="button" id=makeBookCart> <i class="fas fa-plus"></i> 새 책장 만들기 </button> -->
                      </c:otherwise>
-             </c:choose>
-                  
+             </c:choose>             
           </div>
-
-
     </div>
-  
-   
     </div>
      <div class="content four">
+
         <div class="mybookTitle">
         	   나의 포스트 <a>0</a> 개
         </div>
@@ -185,12 +176,9 @@
                 <tr>
                     <td colspan="3">
                         <input type="text" name="postTitleChk" id="postTitleChk" 
-                        value="${reviewTitle}" readonly>
-                        
-                        <textarea name="postText" id="postText" readonly>
-                            
+                        value="${reviewTitle}" readonly>     
+                        <textarea name="postText" id="postText" readonly>  
                             ${reviewContent}
-
                         </textarea>
                        
                     </td>
@@ -306,6 +294,7 @@ $('.bookStarScore span').click(function() {
       $('input[name="chkbox"]').prop('checked', checked);
   });
 </script> 
+
 <script>
   var modal = document.getElementById('modalGo');
   var openBtn = document.getElementById('modalOpen');
@@ -348,6 +337,13 @@ $('.bookStarScore span').click(function() {
 	 }            
  }
  </script>
-
+ <script>
+    $(document).ready(() => {
+      const li = document.querySelector('footer.fixed a[href="myLibrary.jsp"]').parentElement;
+      const ul = li.parentElement;
+      [ul, li].forEach(element => element.classList.add('active'));
+    });
+  </script>
+<%@ include file="template/footer.jsp" %>
 </body>
 </html>

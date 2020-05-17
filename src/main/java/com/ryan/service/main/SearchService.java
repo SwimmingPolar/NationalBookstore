@@ -1,6 +1,8 @@
 package com.ryan.service.main;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -31,4 +33,10 @@ public interface SearchService {
 	//count
 	public List<EBookVO> ebookCount(@Param("type") String type, @Param("keyword") String[] keyword, @Param("page") String page);
 	public List<EBookVO> paperCount(@Param("type") String type, @Param("keyword") String[] keyword, @Param("page") String page);
+	//장르별 종이책 검색
+	public List<EBookVO> getPaperByGenre(@Param("type") String type, @Param("keyword") String[] keyword, @Param("page") String page, @Param("genre") String genre);
+	//장르별 종이책 검색 count
+	public List<EBookVO> getPaperByGenreCount(@Param("type") String type, @Param("keyword") String[] keyword, @Param("page") String page, @Param("genre") String genre);
+	//asd
+	public List<HashMap<String, String>> getGenreCount(@Param("type") String type, @Param("keyword") String[] keyword, @Param("page") String page, @Param("genre") String genre);
 }

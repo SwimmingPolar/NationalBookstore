@@ -45,36 +45,15 @@ public class MainPageController {
 	
 	@GetMapping("/best-seller")
 	public @ResponseBody ArrayList<EBookVO> responseBestSeller(@RequestParam("time") String time, @RequestParam("category") String category){
-		log.info(time + " " + category);
 		return service.getBestSeller(time, category);
 	}
 	
-	@GetMapping("/autoKeyword")
+	@GetMapping("/search-preview")
 	public @ResponseBody ArrayList<KeywordAutoCompletionVO> autoKeyword(@RequestParam("type") String type , @RequestParam("keyword") String keyword) {
 		
 		return service.getAutoKeyword(type, keyword);
 		
 	}
-	
-//	@GetMapping("/search")
-//	public String search(@RequestParam("type") String type , @RequestParam("keyword") String keyword, Model model) {
-//		
-//		String[] keywordArr = keyword.split(" ");
-//		
-//		HashMap<String, ArrayList<EBookVO>> result = new HashMap<String, ArrayList<EBookVO>>();
-//		//model.addAttribute("ebook", sv.searchEbook(vo));
-//		//model.addAttribute("paper", sv.searchPaperbook(vo));
-//		model.addAttribute("result", result);
-//		return "search";
-//		
-//	}
-//	
-//	@GetMapping("/test")
-//	public String searchTest() {
-//		
-//		return "search";
-//	}
-	
 	
 	@GetMapping("/filterSearch")
 	public String filterSearch(FilterSearchVO filterSearch, Model model) {
@@ -88,20 +67,4 @@ public class MainPageController {
 	public String Paper() {
 		return "paper";
 	}
-	
-	@RequestMapping(value="/books")
-	public String Books() {
-		return "books";
-	}
-	
-	@RequestMapping(value="/books/all")
-	public String BooksAll() {
-		return "all";
-	}
-	
-	@RequestMapping(value="/bestseller")
-	public String BestSeller() {
-		return "all";
-	}
-	
 }

@@ -1,0 +1,117 @@
+li {
+    list-style:none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.biggestBox  {
+
+    width: 800px;
+    margin:0 auto;
+    
+
+}
+
+.biggerBox {
+    width:100%;
+    /* display:flex; */
+}
+
+.biggerBox ul li {
+    display:block;
+    width:100%;
+    border:1px solid #e8e8e8;
+    padding:10px 20px 10px 20px;
+    /* margin:10px; */
+    margin-top:15px;
+    margin-bottom:10px;
+
+}
+.fa-chevron-down {
+    font-size: 17px;
+
+}
+.biggerBox ul li a {
+    display:block;
+    color:#333;
+    font-size: 18px;
+    margin-top:10px;
+}
+
+.biggerBox ul li a strong span {
+    float:right;
+    
+}
+
+.biggerBox ul li a span {
+    display:block;
+    font-size: 13px;
+    color: #777;
+    padding: 10px 0 0 7px;
+}
+
+.bell {
+    color:rgb(255, 0, 0);
+    font-size: 22px;
+}
+
+.fa-leaf-heart {
+    color:rgb(51, 143, 92);
+    font-size: 22px;
+    /* font-size:30px; */
+}
+
+.fa-truck-container {
+    color: rgba(123, 23, 180, 0.486);
+    font-size: 25px;
+
+}
+
+.noticeforUsing {
+    background-color: #eff1f5;
+    padding:18px;
+    margin:10px 0 10px 0;
+    width:100%;
+    border-radius: 5px;
+    
+    /* margin:0 auto; */
+}
+
+
+.smallNotice{
+    background-color:white;
+    padding:15px;
+    height: 250px;
+    overflow:auto;
+    border-radius: 5px;
+    font-size:14px;
+}
+.smallNotice p {
+    padding: 10px;
+}
+
+.smallNotice ul li {
+    padding:5px;
+}
+
+.smaller {
+    padding:10px;
+    margin-bottom:15px;
+    border-bottom:1px solid #e8e8e8;
+    background-color:white;
+}
+
+#content {
+
+    padding:10px;
+    /* margin:10px; */
+    width:100%;
+    box-sizing: border-box;
+    display:none;
+}
+
+/* .biggerBox ul li div:nth-child(2) {
+    display:block;
+} */

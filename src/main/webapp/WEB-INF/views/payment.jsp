@@ -7,8 +7,8 @@
 <script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="resources/style/reset.css" />
-<link rel="stylesheet" type="text/css" href="resources/style/payment.css" />
+<link rel="stylesheet" type="text/css" href="../../resources/styles/reset.css" />
+<link rel="stylesheet" type="text/css" href="../../resources/styles/payment.css" />
 <script type="text/javascript" >
 	$(document).ready(function() {
 		//결제 방식 선택

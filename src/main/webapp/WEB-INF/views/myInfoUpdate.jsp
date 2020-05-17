@@ -12,7 +12,6 @@
     <script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
     <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
     <link rel="stylesheet" href="../../resources/styles/common.css" />
-
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
     <!-- slidify sliders and fadeInUp reveal -->
@@ -24,7 +23,7 @@
     </div>
     <div class="newMyInfo">
         <div class="imageBox">
-            <img id="myFaceImage" src="NationalBookstore/src/main/webapp/resources/images/myLibrary/picture1.png" >
+            <img id="myFaceImage" src="${pageContext.request.contextPath}/resources/images/myLibrary/picture1.png" >
             <!-- 사진 넣을거임 -->
             <label for="camera">
                 <i class="fas fa-camera-retro"></i>
@@ -100,7 +99,7 @@
         </div>
     <div class="finishBtn">
         <div class="btn1">
-        <button type="button" class="resetBtn" onclick="location.href='myManage.html'">취소</button>
+        <button type="button" class="resetBtn" onclick="location.href='myAccount.jsp'">취소</button>
     </div>
     <div class="btn2">
         <button type="button" class="chkBtn" onclick="updateFinish();">확인</button>
@@ -193,7 +192,6 @@
                     msg = "8자 이상, 16자 이하로 입력해주세요.";
                 }else if(pw.length <8) {
                     msg= " 보안이 취약한 비밀번호입니다.";
-                   
                 }else {
                     msg = " 보안이 강력한 비밀번호입니다.";
                 } 
@@ -221,20 +219,16 @@
             var inputChk = document.getElementsByTagName("input");
             var inputTag="";
             var cnt=0;
-            for(var i=0; i< inputChk.length; i++) {
-                var inputTag =inputChk[i];
-                if(inputTag.value==""){
-                    cnt++;
-                   alert(cnt);
-                }
-            }
+            // for(var i=0; i< inputChk.length; i++) {
+            //     var inputTag =inputChk[i];
+            //     if(inputTag.value==""){
+            //         cnt++;
+            //        alert(cnt);
+            //     }
+            // }
             if(infoChk.checked==false){
                     alert("개인정보 수집 및 이용에 동의해주세요.");
             }
-           
-            
-                
-
         }
     </script>
  <%@ include file="template/footer.jsp" %>

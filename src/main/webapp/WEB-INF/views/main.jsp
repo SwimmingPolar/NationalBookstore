@@ -125,7 +125,7 @@
               </a>
             </li>
             <li>
-              <a href="bestseller">
+              <a href="best">
                 <span>베스트 셀러</span>
               </a>
             </li>
@@ -412,19 +412,37 @@
             function updateBestSeller() {
               const timeFilter = document.querySelector('.best-seller .time-filter li').textContent.trim();
               const categoryFilter = document.querySelector('.best-seller .category-filter li.selected button').textContent.trim();
-              
-              console.log('ajax fired: time=' + timeFilter + '&category=' + categoryFilter);
+              const slider = document.querySelector('.best-seller .flexible-slider');
 
               const xhr = new XMLHttpRequest();
-              xhr.open('GET', '/best-seller');
+              xhr.open('GET', '/best-seller?time=' + timeFilter + '&category=' + categoryFilter);
               xhr.onreadystatechange = () => {
                 if (!(xhr.readyState === 4 && xhr.status === 200)) return;
+                const result = JSON.parse(xhr.response);
+                if (result.length === 0) return;
 
-                // const result = JSON.parse(xhr.response);
-                  console.table(JSON.parse(xhr.response));
+                // create new list
+                let newList = '';
+                result.forEach((book, index) => {
+                  newList += `
+                  <li class="flexible-slide">
+                    <a href="${"/book/bookdetail?booknumber=${book.bookNum}"}">
+                      <div class="thumbnail-wrapper">
+                        <img src="${"${book.bookThumbnail}"}" width="100px" alt="">
+                      </div>  
+                      <div class="text-wrapper">
+                        <div class="meta-data">
+                          <h3>${"${index + 1}"}</h3>
+                          <strong>${"${book.bookTitle}"}</strong>
+                          <span>${"${book.bookWriter}"}</span>
+                        </div>
+                      </div>
+                    </a>
+                  </li>`;
+                });
+                slider.innerHTML = newList;
               };
-              xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-              xhr.send('time=' + timeFilter + '&category=' + categoryFilter);
+              xhr.send();
             }
             // initiate best seller list fetch
             $(document).ready(function() {

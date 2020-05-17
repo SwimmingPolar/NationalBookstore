@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
@@ -61,13 +61,13 @@
                     <img src="${pageContext.request.contextPath }${bookdetail.bookThumbnail }" alt="없음">
                 </div>
                 <div class="preview">
-                    <a href="preview.html"
+                    <a href="preview.jsp"
                         onclick="window.open(this.href, '좋아요','width=1000, height=700');return false;" target="_blank"
                         style="color:black;">
-                        <i class="fas fa-search"></i> 미리보기</a>
+                        <i class="fas fa-search"></i><span>미리보기</span> 
+                    </a>
                 </div>
             </div>
-			   <!-- imageBox -->
             <div class="introWrite">
                 <h3> ${bookdetail.bookTitle} </h3>
                 <ul>
@@ -85,40 +85,55 @@
             	  <span><i class="fas fa-star"></i></span>
             	  <span><i class="fas fa-star"></i></span>
                   <span><i class="fas fa-star"></i></span>
-                  <span id="starScore"> 0 </span> 점
+                  <span id="starScore"> 0 </span> <a>점</a> 
                 </div>
                 <div class="choiceBtnOne">
                     <form action="/book/insertreadbook?booknumber=${bookdetail.bookNum }">
-                        <input type="submit" value="바로보기" class="choiceBtn">
-                        <input type="button" value="다운로드" class="choiceBtn">
+                        <input type="submit" value="바로읽기" class="choiceBtn">
+                        <button type="button" class="choiceBtn"><i class="fas fa-plus-circle"></i> 찜하기</button>
                         <input type="button" value="종이책 구매" class="choiceBtn">
                     </form>
                 </div>
                 <div class="likeChk">
                     <a href="#" id="modalOpen">
-                        <span class="likePeople">
-                            <i class="far fa-user-circle prof"></i>
-                            <i class="far fa-user-circle prof"></i>
-                            <i class="far fa-user-circle prof"></i>
-                        </span>
+                        <div class="likelists">
+                            <div class="likePeople">
+                                <c:forEach var="p" items="${likepeople}" begin="1" end="3">
+                                <img src="${pageContext.request.contextPath}">
+                                </c:forEach>
+                            </div>
+                            </div> 
+                            <span id="people"> 좋아하는 사람들</span>
                     </a>
                     <span class="likeBtn">
                         <div class="heartSoo">
-                            <input type="text" value="${booklike}" id="countNum" size='5'>
+                            <input type="text" value="${booklike}" id="countNum" size='5' readonly>
                         </div>
                         <div class="heartC">
-                            <input type="checkbox" id="heartClick">
-                            <label for="heartClick" id="heartStyle">
+                            <!-- <input type="checkbox" id="heartClick">
+                            <label for="heartClick" id="heartStyle"> -->
                             <c:choose>
-                            	<c:when test="${likecheck}">
-                                     <i class="far fa-heart"></i> 
-                            	</c:when>
-                         	   <c:otherwise>
-                         	          <i  class="fa fa-heart"></i>
-                         	   </c:otherwise> 
-                         	 </c:choose> 
-                         	 </label>               
-                        </div>
+                                <c:when test="${likecheck }">
+                                    <form action="/book/insertlike">
+                                        <input type="checkbox" id="heartClick">
+                                        <label for="heartClick">
+                                            <i class="far fa-heart"></i>
+                                            <i class="fas fa-heart"></i>
+                                        </label>
+                                    </form>
+                                </c:when>
+                                <c:otherwise>
+                                    <form action="/book/insertlike">
+                                        <input type="checkbox" id="heartClick">
+                                        <label for="heartClick">
+                                            <i class="far fa-heart"></i>
+                                            <i class="fas fa-heart"></i>
+                                        </label>
+                                    </form>
+                                </c:otherwise>
+                            </c:choose>
+                            <%--  </c:if> --%>
+                      </div>
                     </span>
 
                 </div>
@@ -254,17 +269,16 @@
                             <tbody>
                                 <c:forEach var="r" items="${bookreview}">
                                     <tr>
-                                        <td>★★★★☆</td>
                                         <td>${memberEmail}</td>
                                         <td>${r.reviewRegdate}</td>
                                     </tr>
                                     <tr>
-                                        <td colspan="3">${r.reviewTitle }</td>
+                                        <td colspan="2">${r.reviewTitle }</td>
                                     </tr>
                                     <tr>
-                                        <td colspan="3"><textarea name="reviewContent" id="reviewContent" readonly>
-                        ${r.reviewContent }
-                    </textarea></td>
+                                        <td colspan="2"><textarea name="reviewContent" id="reviewContent" readonly>
+                                           ${r.reviewContent }
+                                         </textarea></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>

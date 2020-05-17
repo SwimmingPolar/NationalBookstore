@@ -85,11 +85,6 @@
 .email-container {
   display: flex;
   flex-wrap: wrap;
-  height: 48px;
-  transition: 0.2s ease-out;
-}
-.email-container.getAuth {
-  height: 95px;
 }
 .email-container label[for="email"] {
   flex-basis: 79%;
@@ -103,27 +98,24 @@
   border-radius: 3px;
   color: #fff;
   background-color: rgba(0, 0, 0, 0.15);
-  font-size: 18px;
+  font-size: 14px;
   transition: 0.2s ease-out;
-  height: 48;
+  height: 48px;
 }
 .email-container button.auth-btn:not(:disabled) {
-  background-color: rgba(0, 0, 0, 0.15);
   background-color: var(--main-color);
   box-shadow: 0 2px 8px -1px rgba(0, 153, 255, 0.75);
   cursor: pointer;
 }
 .email-container label[for="email-auth"] {
   margin-top: -1px;
-  position: relative;
-  transform: translateY(calc(-99% + 1px));
-  z-index: 0;
-  visibility: hidden;
-  transition: 0.2s ease-out;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
 }
 .email-container.getAuth label[for="email-auth"] {
-  visibility: visible;
-  transform: translateY(0);
+  opacity: 1;
+  max-height: 48px;
 }
 .email-container label[for="email-auth"] .timer {
   display: block;
@@ -133,6 +125,7 @@
   font-weight: bold;
   font-size: 13px;
   font-family: 'Montserrat', sans-serif;
+  font-family: monospace;
   letter-spacing: 1px;
   color: var(--violet-color);
   pointer-events: none;
@@ -150,9 +143,11 @@
 .email-container .warning-msg {
   flex-basis: 100%;
 }
+.email-container .warning-msg .info-msg {
+  color: var(--main-color);
+}
 .email-container.getAuth button.auth-btn {
   height: 44px;
-  opacity: 0.8;
 }
 .email-container.getAuth label[for="email"] input {
   border-bottom-left-radius: 0;
