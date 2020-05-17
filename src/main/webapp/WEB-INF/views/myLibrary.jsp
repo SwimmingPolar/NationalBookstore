@@ -16,7 +16,14 @@
 
 </head>
 <body>
-
+    <header class="topbar">
+        <nav>
+          <div class="container">
+            <a href="javascript: history.back();"><i class="far fa-arrow-left"></i></a>
+            <h2>내 서재</h2>
+          </div>
+        </nav>
+      </header>
 <div class="wrapper">
 <div class="firstColumn">
 <!-- 배경화면 넣는곳 -->
@@ -24,28 +31,21 @@
     <button type="button" id="followBtn"> <i class="fas fa-plus-circle"></i> 팔로우 </button>
   </div>
 <div class="bigbox">
-
 <div class="myImage"> 
     <a href="#modalGo" id="modalOpen"><img id="myFaceImage" src="../../resources/images/myLibrary/picture1.png" ></a>   
 </div>
-
 <div class="myNickname">
         <a> ${ryanMember.memberNickName } </a> 님의 서재 
       <%--   <a> ${ryanMember.memberEmail } </a> --%>
 </div>
 </div>
-
-
 <div class = "manyBtn">
     <ul>
         <li><a href="#"> 읽은 책 <b>( ${readbookcount } )</b> </a></li>
         <li><a href="#"> 좋아요 <b>( ${likeBookcount } )</b> </a></li>
         <li><a href="#"> 팔로우 <b>( ${myFollower} )</b> </a></li>
     </ul>
-
-
 </div>
-
 <div class="goSubscribe">
 <a href="goSubscribe.jsp"> 
   <b> 정기구독 시작 </b><br>
@@ -96,8 +96,7 @@
         	    	서재에 등록된 도서가 없습니다
       		     </div>
            	</c:otherwise>
-          </c:choose>
-            	
+          </c:choose>  	
         </div>
         </div>
     </div> 
@@ -174,15 +173,10 @@
                         <textarea name="postText" id="postText" readonly>  
                             ${reviewContent}
                         </textarea>
-                       
                     </td>
-
                 </tr>
             </table>
-
         </div>
-
-
         <div class="postInsert" id="postInsert">
             <select name="bookSelect" id="bookSelect">
                 <option value="bookChoice"> ===== 책선택 ===== </option>
@@ -218,18 +212,7 @@
    	 </div>
     </div>
 </div>
-<!-- 
-<script> 
 
-    $('.bookStarScore span').click(function(){
-        $(this).parent().children('span').removeClass('on');
-        $(this).addClass('on').prevAll('span').addClass('on');
-        $('.starJum01').click(function(){
-            $('#starTxt').val($(this).length);       
-        })
-    }); 
-    </script> -->
-    <!-- 별점 구현 -->
     <script>
 $(function() {
 
@@ -267,16 +250,7 @@ $('.bookStarScore span').click(function() {
             }
         }
     </script>
-    <script>
-    var cnt=0;
-    var array =['.starJum01'];
-        $(function(){
-            cnt++;
-            $('.starJum01').click(function(){
-                $('#starJum').val(cnt);
-            })
-        })
-    </script>
+
  <script>
   var $allChk = $('#allChk');
   $allChk.change(function () {
