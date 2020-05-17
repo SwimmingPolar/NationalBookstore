@@ -48,6 +48,18 @@ public class EmailServiceImpl implements EmailService {
 	public boolean authenticationCheck(EmailCheckVO email) {
 		return mapper.authenticationCheck(email) == 1 ? true : false;
 	}
+
+
+	@Override
+	public boolean authCompleteCheck(EmailCheckVO email) {
+		return mapper.authCompleteCheck(email) == 1 ? true : false;
+	}
+
+
+	@Override
+	public boolean updateAuthComplete(EmailCheckVO email) {
+		return mapper.updateAuthComplete(email) == 1 ? true : false;
+	}
 	
 	
 	

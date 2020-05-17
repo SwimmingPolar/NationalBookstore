@@ -13,4 +13,9 @@ public class EmailCheckVO {
 
     // 인증번호 
     private String emailCode;
+
+    // 인증완료 
+    private int emailAuthComplete;
+    
+    
 }

@@ -65,7 +65,7 @@ public class MyBookMapperTest {
 	@Test
 	public void insertLibBook() {
 		MyLibVO vo = new MyLibVO();
-		vo.setBookNum(210);
+		vo.setBookNum(196);
 		vo.setMemberEmail("abc1234@naver.com");
 		
 		
