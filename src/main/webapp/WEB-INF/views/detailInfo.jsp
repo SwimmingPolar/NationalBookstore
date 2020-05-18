@@ -90,19 +90,26 @@
                 <div class="choiceBtnOne">
                     <form action="/book/insertreadbook?booknumber=${bookdetail.bookNum }">
                         <input type="submit" value="바로읽기" class="choiceBtn">
-                        <button type="button" class="choiceBtn"><i class="fas fa-plus-circle"></i> 찜하기</button>
-                        <input type="button" value="종이책 구매" class="choiceBtn">
                     </form>
+                    <form action="/book/insertLibList?booknumber=${bookdetail.bookNum }">
+                        <button type="submit" class="choiceBtn"><i class="fas fa-plus-circle"></i> 찜하기</button>
+                    </form>
+                        <input type="button" value="종이책 구매" class="choiceBtn">
+                 
                 </div>
                 <div class="likeChk">
                     <a href="#" id="modalOpen">
                         <div class="likelists">
                             <div class="likePeople">
-                                <c:forEach var="p" items="${likepeople}" begin="1" end="3">
-                                <img src="${pageContext.request.contextPath}">
+                                <c:forEach var="p" items="${likepeople}">
+                           	     <c:if test="${count <= 3 }">
+                                	<c:set var="count" value="${1 }"/>
+                               			 <img src="${pageContext.request.contextPath}${p.}">
+									<c:set var="count" value="${count+1 }" />
+								  </c:if>
                                 </c:forEach>
                             </div>
-                            </div> 
+                         </div> 
                             <span id="people"> 좋아하는 사람들</span>
                     </a>
                     <span class="likeBtn">
@@ -126,8 +133,8 @@
                                     <form action="/book/insertlike">
                                         <input type="checkbox" id="heartClick">
                                         <label for="heartClick">
+    	                                    <i class="fas fa-heart"></i>
                                             <i class="far fa-heart"></i>
-                                            <i class="fas fa-heart"></i>
                                         </label>
                                     </form>
                                 </c:otherwise>
@@ -146,8 +153,7 @@
                                 <c:forEach var="p" items="${likepeople}">
                                     <ul>
                                         <li> <span>
-                                                <img id="myFaceImage"
-                                                    src="${pageContext.request.contextPath}">
+                                                <img id="myFaceImage" src="${pageContext.request.contextPath}">
                                             </span>
                                             <span>
                                                 <a>${p.memberNickName } 님</a> <br>
@@ -375,7 +381,7 @@
             $('#heartClick').change(function () {
             	var memberId = "${ryanMember.memberNickName}";
             	if(memberId==""){
-            		alert("로그인을 먼저 해주세요");	
+            		alert("로그인을 먼저 해주세요");
             	}else{
                     $.ajax({
                         url: "/book/insertlike",
@@ -499,6 +505,7 @@
             });
         })
     </script>
+    
 
 
 
