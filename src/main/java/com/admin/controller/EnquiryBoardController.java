@@ -84,7 +84,11 @@ public class EnquiryBoardController {
 	}
 	
 	@RequestMapping("/updateForm")
-	public String enquiryUpdateForm() {
+	public String enquiryUpdateForm(Model model,HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
+		
 		return "입력view";
 	}
 	
