@@ -16,7 +16,14 @@
 
 </head>
 <body>
-
+    <header class="topbar">
+        <nav>
+          <div class="container">
+            <a href="javascript: history.back();"><i class="far fa-arrow-left"></i></a>
+            <h2>내 서재</h2>
+          </div>
+        </nav>
+      </header>
 <div class="wrapper">
 <div class="firstColumn">
 <!-- 배경화면 넣는곳 -->
@@ -24,28 +31,21 @@
     <button type="button" id="followBtn"> <i class="fas fa-plus-circle"></i> 팔로우 </button>
   </div>
 <div class="bigbox">
-
 <div class="myImage"> 
     <a href="#modalGo" id="modalOpen"><img id="myFaceImage" src="${pageContext.request.contextPath }/resources/images/myLibrary/picture1.png" ></a>   
 </div>
-
 <div class="myNickname">
         <a> ${ryanMember.memberNickName } </a> 님의 서재 
       <%--   <a> ${ryanMember.memberEmail } </a> --%>
 </div>
 </div>
-
-
 <div class = "manyBtn">
     <ul>
         <li><a href="#"> 읽은 책 <b>( ${readbookcount } )</b> </a></li>
         <li><a href="#"> 좋아요 <b>( ${likeBookcount } )</b> </a></li>
         <li><a href="#"> 팔로우 <b>( ${myFollower} )</b> </a></li>
     </ul>
-
-
 </div>
-
 <div class="goSubscribe">
 <a href="goSubscribe.jsp"> 
   <b> 정기구독 시작 </b><br>
@@ -99,8 +99,7 @@
         	    	서재에 등록된 도서가 없습니다
       		     </div>
            	</c:otherwise>
-          </c:choose>
-            	
+          </c:choose>  	
         </div>
            <div class="content two">
         <div class="mybookTitle">
@@ -180,15 +179,10 @@
                         <textarea name="postText" id="postText" readonly>  
                             ${reviewContent}
                         </textarea>
-                       
                     </td>
-
                 </tr>
             </table>
-
         </div>
-
-
         <div class="postInsert" id="postInsert">
             <select name="bookSelect" id="bookSelect">
                 <option value="bookChoice"> ===== 책선택 ===== </option>
@@ -227,18 +221,7 @@
  
 </div>
 </div>
-<!-- 
-<script> 
 
-    $('.bookStarScore span').click(function(){
-        $(this).parent().children('span').removeClass('on');
-        $(this).addClass('on').prevAll('span').addClass('on');
-        $('.starJum01').click(function(){
-            $('#starTxt').val($(this).length);       
-        })
-    }); 
-    </script> -->
-    <!-- 별점 구현 -->
     <script>
 $(function() {
 
@@ -276,16 +259,7 @@ $('.bookStarScore span').click(function() {
             }
         }
     </script>
-    <script>
-    var cnt=0;
-    var array =['.starJum01'];
-        $(function(){
-            cnt++;
-            $('.starJum01').click(function(){
-                $('#starJum').val(cnt);
-            })
-        })
-    </script>
+
  <script>
   var $allChk = $('#allChk');
   $allChk.change(function () {
@@ -312,37 +286,20 @@ $('.bookStarScore span').click(function() {
      }
  }
  </script>
- <script language=JavaScript>
- function allDelete(){
-	 var array = new Array();
-	 <c:forEach var="book" items="${libbooklist}">
-	 	array.push(${book.bookNum});
-	 </c:forEach>
-	 alert(array);
-	 if(array != null){
-		 $.ajax({
-			 url: "/booklist/deleteLibList",
-			 type: "post",
-			 dataType:"json",
-	         data: {
-	        	 "booknum" : array
-	         },
-	         success: function (response) {
-	        	 alert(response);
-	         },
-	         error: function(request,status, error) {
-	        	 alert("error"+request.status+"message : "+request.message);
-	         }
-		 });
-	 }            
- }
- </script>
+
  <script>
     $(document).ready(() => {
       const li = document.querySelector('footer.fixed a[href="myLibrary.jsp"]').parentElement;
       const ul = li.parentElement;
       [ul, li].forEach(element => element.classList.add('active'));
     });
+  </script>
+  <script>
+  
+  function allDelte(){
+	  location.href = "/booklist/allDelte";
+  }
+  
   </script>
 <%@ include file="template/footer.jsp" %>
 </body>

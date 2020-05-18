@@ -50,8 +50,8 @@ public class AdminBookController {
 			log.info("컨텐트타임"+file.getContentType());
 			
 			String saveName = file.getOriginalFilename();
-			String path = request.getSession().getServletContext().getRealPath("\\")+"\\NationalBookstore\\src\\main\\webapp\\resources\\data";
-			String imgpath = request.getSession().getServletContext().getRealPath("\\")+"\\NationalBookstore\\src\\main\\webapp\\resources\\thumbnail";
+			String path = request.getSession().getServletContext().getRealPath("\\")+"\\src\\main\\webapp\\resources\\data";
+			String imgpath = request.getSession().getServletContext().getRealPath("\\")+"\\src\\main\\webapp\\resources\\thumbnail";
 			
 			if(file.getContentType().equals("jpg")) {
 				//임시 디렉토리에 저장된 업로드 파일을 지정된 디렉토리로 복사

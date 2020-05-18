@@ -15,9 +15,9 @@ public interface MyBookService {
 	//찜 책장 -- 조회, 삭제 입력
 	public ArrayList<EBookVO> libBook(HttpSession session);
 	
-	public ArrayList<EBookVO> deleteLibBook(int[] booknum, HttpSession session);
+	public ArrayList<EBookVO> deleteLibBook(ArrayList<EBookVO> booknum, HttpSession session);
 	
-	public Boolean insertLibBook(MyLibVO vo);
+	public Boolean insertLibBook(int booknumber, HttpSession session);
 	
 	public int countLibBook(HttpSession session);
 	
@@ -29,7 +29,7 @@ public interface MyBookService {
 	public ArrayList<EBookVO> deleteReadBook(MyReadBookVO vo);
 	
 	//읽고있는 책
-	public Boolean insertReadBook(MyReadBookVO vo, HttpServletRequest request);
+	public Boolean insertReadBook(int booknumber, HttpServletRequest request);
 
 	public int countReadBook(HttpSession session);
 	
@@ -39,5 +39,7 @@ public interface MyBookService {
 	//평점 등록
 	public ArrayList<BookGradeVO> insertGrade(BookGradeVO vo, HttpSession session);
 	
+	//찜 책장 전체 삭제
+	public Boolean allDelete(HttpSession session);
 
 }

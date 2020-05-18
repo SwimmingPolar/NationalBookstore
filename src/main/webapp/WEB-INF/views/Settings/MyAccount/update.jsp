@@ -6,16 +6,16 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<link rel="stylesheet" href="../../resources/styles/myInfoUpdate.css">
+<link rel="stylesheet" href="../../../../resources/styles/myInfoUpdate.css">
     <link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap" rel="stylesheet">
     <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
     <script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
     <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
-    <link rel="stylesheet" href="../../resources/styles/common.css" />
+    <link rel="stylesheet" href="../../../../resources/styles/common.css" />
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
     <!-- slidify sliders and fadeInUp reveal -->
-    <script src="../../resources/js/common.js"></script>
+    <script src="../../../../resources/js/common.js"></script>
 
 <body>
     <div class="title">
@@ -231,6 +231,6 @@
             }
         }
     </script>
- <%@ include file="template/footer.jsp" %>
+ <%@ include file="../../template/footer.jsp" %>
 </body>
 </html>

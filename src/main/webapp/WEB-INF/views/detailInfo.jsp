@@ -87,22 +87,25 @@
                   <span><i class="fas fa-star"></i></span>
                   <span id="starScore"> 0 </span> <a>점</a> 
                 </div>
+
                 <div class="choiceBtnOne">
-                    <form action="/book/insertreadbook?booknumber=${bookdetail.bookNum }">
-                        <input type="submit" value="바로읽기" class="choiceBtn">
-                        <button type="button" class="choiceBtn"><i class="fas fa-plus-circle"></i> 찜하기</button>
-                        <input type="button" value="종이책 구매" class="choiceBtn">
-                    </form>
+                        <button type="button" value="바로읽기" class="choiceBtn" onclick="insertReadBook();">바로읽기</button>
+                        <button type="button" class="choiceBtn" onclick="insertLibBook();"><i class="fas fa-plus-circle"></i> 찜하기</button>
+                        <input type="button" value="종이책 구매" class="choiceBtn" onclick="">
                 </div>
                 <div class="likeChk">
                     <a href="#" id="modalOpen">
                         <div class="likelists">
                             <div class="likePeople">
-                                <c:forEach var="p" items="${likepeople}" begin="1" end="3">
-                                <img src="${pageContext.request.contextPath}">
+                                <c:forEach var="p" items="${likepeople}">
+                           	     <c:if test="${count <= 3 }">
+                                	<c:set var="count" value="${1 }"/>
+                               			 <img src="${pageContext.request.contextPath}">
+									<c:set var="count" value="${count+1 }" />
+								  </c:if>
                                 </c:forEach>
                             </div>
-                            </div> 
+                         </div> 
                             <span id="people"> 좋아하는 사람들</span>
                     </a>
                     <span class="likeBtn">
@@ -126,8 +129,8 @@
                                     <form action="/book/insertlike">
                                         <input type="checkbox" id="heartClick">
                                         <label for="heartClick">
+    	                                    <i class="fas fa-heart"></i>
                                             <i class="far fa-heart"></i>
-                                            <i class="fas fa-heart"></i>
                                         </label>
                                     </form>
                                 </c:otherwise>
@@ -146,8 +149,7 @@
                                 <c:forEach var="p" items="${likepeople}">
                                     <ul>
                                         <li> <span>
-                                                <img id="myFaceImage"
-                                                    src="${pageContext.request.contextPath}">
+                                                <img id="myFaceImage" src="${pageContext.request.contextPath}">
                                             </span>
                                             <span>
                                                 <a>${p.memberNickName } 님</a> <br>
@@ -170,8 +172,6 @@
             </div>
             <!-- introWrite -->
         </div>
-
-
     <!-- top-container -->
 
     <div class="body-container"> 
@@ -223,7 +223,6 @@
                 <div class="bookDetail">
                     <!-- 책 소개 부분 없음 -->
                     책소개하는 칸입니다.
-
                     ‘이 소설 자체가 순수한 마법’이라는 최고의 극찬을 받으며 2017년 뉴베리 수상의 영광을 차지한 작품이다. 고요하지만 위험한 숲속에 해마다 아기가 버려진다. 또한 매년 그런
                     아기를 구하러 오는 마녀가 있다. 그런데 이상하다. 마녀 잰은 유독 이번 아기에게 눈길을 빼앗긴다. 그러다가 그만 실수로 아기에게 달빛을 먹이고 만다. 사실 달빛에는 어마어마한
                     마법이 깃들어 있다.
@@ -301,12 +300,9 @@
                     		</c:if>
   						<c:set var="count" value="${count+1 }" />
   						</c:forEach>
-   <!--                      
-                        <img src="../../resources/image/similarBook.jpg" alt="error">
-                        <img src="../../resources/image/similarBook.jpg" alt="error">
-                        <img src="../../resources/image/similarBook.jpg" alt="error">
-                        <img src="../../resources/image/similarBook.jpg" alt="error"> -->
-                    </div>
+  						</div>
+  						</div>
+   <!--            </div>
                 </div>
             <!-- body-container -->
         </div>
@@ -375,7 +371,7 @@
             $('#heartClick').change(function () {
             	var memberId = "${ryanMember.memberNickName}";
             	if(memberId==""){
-            		alert("로그인을 먼저 해주세요");	
+            		alert("로그인을 먼저 해주세요");
             	}else{
                     $.ajax({
                         url: "/book/insertlike",
@@ -389,15 +385,15 @@
   //  		                $("#countNum").replaceWith("<span>"+result[0]+"</span>");
   							if(result[1]){
   								$("#countNum").replaceWith("<input type='text' value="+result[0]+" id='countNum' size='5'>");
-  								$("#fa fa-heart").attr("class","far fa-heart");
+  								$("#fas fa-heart").attr("class","far fa-heart");
   							}else if(!result[1]){
   								$("#countNum").replaceWith("<input type='text' value="+result[0]+" id='countNum' size='5'>");
-  								$("#far fa-heart").attr("class","fa fa-heart");
+  								$("#far fa-heart").attr("class","fas fa-heart");
   							}
     		                
                         },
                         error: function(request,status, error) {
-                            alert("code = "+reqeust.status+"message = "+request.responseText);
+                            alert("code = "+request.status+"message = "+request.responseText);
                         },
                     });
             	}
@@ -499,6 +495,7 @@
             });
         })
     </script>
+    
 
 
 
@@ -515,6 +512,31 @@
     });
 
  });
+    
+    </script>
+    <script>
+    function insertReadBook(){
+    	location.href="/book/insertreadbook?booknumber=${bookdetail.bookNum}";
+    }
+    function insertLibBook(){
+		$.ajax({
+			url:"/book/insertLibList",
+			type:"post",
+			data:{
+				booknumber : "${bookdetail.bookNum}"
+			},
+			success:function(data){
+				if(data){
+					if(confirm("찜 목록에 추가가 완료되었습니다. 마이페이지로 이동 하시겠습니까?")) {
+						location.href="/booklist/myLibList";
+					}
+				} else { 
+					alert("예상치 못한 오류가 발생 했습니다. 고객센터로 문의 해주세요.");					
+				}
+			}
+		});    	
+    }
+    
     
     </script>
     

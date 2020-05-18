@@ -44,4 +44,7 @@ public interface MyBookMapper {
 	
 	//평점 등록 확인
 	public ArrayList<BookGradeVO> checkEmail(String email);
+	
+	//찜 책장 전체삭제
+	public int allDelete(String email);
 }

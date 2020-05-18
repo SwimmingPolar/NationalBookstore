@@ -52,7 +52,11 @@ public class EmailServiceImpl implements EmailService {
 
 	@Override
 	public boolean authCompleteCheck(EmailCheckVO email) {
-		return mapper.authCompleteCheck(email) == 1 ? true : false;
+		try {
+			return mapper.authCompleteCheck(email) == 1 ? true : false;
+		} catch (Exception exception) {
+			return false;
+		}
 	}
 
 
