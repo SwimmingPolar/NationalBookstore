@@ -17,7 +17,7 @@ public interface MyBookService {
 	
 	public ArrayList<EBookVO> deleteLibBook(int[] booknum, HttpSession session);
 	
-	public Boolean insertLibBook(MyLibVO vo);
+	public Boolean insertLibBook(int booknumber, HttpSession session);
 	
 	public int countLibBook(HttpSession session);
 	
