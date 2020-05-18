@@ -14,15 +14,16 @@ public interface FileBoardMapper {
 	//enquiry 해당게시물 모든 파일 삭제
 	public int deleteAllFiles(int boardNum);
 	
-	//notice 파일 삭제
-	public int deleteNoticeFile(int fileNum);
-	
 	//notice 해당게시물 모든파일 삭제
 	public int deleteAllNoticeFiles(int noticeNo);
 	
+	public FileVO selectEqFile(int fileNum);
+	
 	//enquiryfile 리스트 반환
-	public ArrayList<FileVO> selectEqFileList();
+	public ArrayList<FileVO> selectEqFileList(int boardNum);
+	
+	public FileVO selectNoticeFile(int fileNum);
 	
 	//noticefile 리스트 반환
-	public ArrayList<FileVO> selectNoticeFileList();
+	public ArrayList<FileVO> selectNoticeFileList(int noticeNo);
 }
