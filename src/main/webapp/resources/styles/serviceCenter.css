@@ -160,18 +160,15 @@ a {
 
 
 
-.addFile {
+/* .addFile {
     position: relative;
-    background-color:white;
-    margin-top:8px;
-    height: 42px;
-    border:1px solid #e8e8e8;
+   
 }
 
 .addFile input[type="file"] {
     width:100%;
     text-align:right;
-}
+} */
 
 .one p {
     font-size:12px;
@@ -262,4 +259,133 @@ label {
 .what span {
     font-size:15px;
     color:rgba(93, 47, 114, 0.925);
+}
+
+.addFile {
+    position: relative;
+    background-color:white;
+    margin-top:8px;
+    height: 42px;
+    border:1px solid #e8e8e8;
+    
+}
+
+.addFile label {
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    text-indent:10px;
+    cursor: pointer;
+    line-height: 42px;
+    font-size:14px;
+    font-weight: normal;
+    color: rgb(97, 97, 97);
+}
+
+.addFile input[type="file"] {
+    visibility: hidden;
+}
+
+.addFile label i {
+    font-size: 20px;
+    margin-right:3px;
+}
+
+
+.questionTable table {
+    background-color:white;
+    width:100%;
+    font-size: 13px;
+    border:1px solid #e8e8e8;
+    border-top:2px solid #0099FF;
+}
+
+.questionTable table th {
+    padding: 8px;
+    border-bottom:1px solid #999;
+}
+
+.questionTable table td {
+    text-align:center;
+    padding: 10px 10px 0 10px;
+    
+
+}
+
+.questionTable a {
+    color:#333;
+}
+
+.questionTable a:hover {
+    font-weight: bold;
+    color:rgb(45, 45, 116);
+}
+
+.questionTable button {
+    border:none;
+    background-color:transparent;
+    cursor: pointer;
+    outline:none;
+}
+
+.questionTable tr:nth-child(2)>td:nth-child(5) {
+    color:rgb(199, 47, 47);
+}
+
+
+.detailQuestion i{
+    font-size:15px;
+    
+}
+.fa-quora {
+    color:rgb(201, 52, 52);
+}
+
+.fa-font {
+    color:rgb(30, 114, 170);
+}
+
+.detailQuestion {
+    display:inline-block;
+    display:none;
+    /* background-color:#F3F4F6;  */
+    /* display:flex;
+    flex-direction: column; */
+    z-index:0;
+}
+
+.detailQuestion strong{
+    float:left;
+    width: 13%;    
+    padding:10px;
+    /* border:2px solid blue; */
+    /* height:100%; */
+}
+.detailQuestion p {
+    float:left;
+    width: 87%;
+    /* border:2px solid red; */
+    padding:10px 30px 10px 20px;
+    margin-bottom:10px;
+    color: #999;
+}
+
+.answer p {
+    color: #333;
+}
+
+
+.answer{
+    border-top:1px solid lightgray;
+    display:inline-block;
+    background-color:#F3F4F6; 
+    padding-top:10px;
+}
+
+.question{
+    display:inline-block;
+    border-top:1px solid #e8e8e8;
+    padding-top:10px;
 }
