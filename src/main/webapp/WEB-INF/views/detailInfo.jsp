@@ -44,7 +44,6 @@
     <!-- slidify sliders and fadeInUp reveal -->
     <script src="../../resources/js/common.js"></script>
 </head>
-
 <body>
     <header class="topbar">
         <nav>
@@ -104,7 +103,7 @@
                                 <c:forEach var="p" items="${likepeople}">
                            	     <c:if test="${count <= 3 }">
                                 	<c:set var="count" value="${1 }"/>
-                               			 <img src="${pageContext.request.contextPath}${p.}">
+                               			 <img src="${pageContext.request.contextPath}">
 									<c:set var="count" value="${count+1 }" />
 								  </c:if>
                                 </c:forEach>
@@ -133,8 +132,8 @@
                                     <form action="/book/insertlike">
                                         <input type="checkbox" id="heartClick">
                                         <label for="heartClick">
-    	                                    <i class="fas fa-heart"></i>
-                                            <i class="far fa-heart"></i>
+    	                                    <i class="far fa-heart"></i>
+                                            <i class="fas fa-heart"></i>
                                         </label>
                                     </form>
                                 </c:otherwise>
@@ -346,27 +345,6 @@
             });
         });
     </script>
-
-    <!-- <script>
-    
-        var count = 0;
-        $(function () {
-            $('#heartClick').click(function () {
-            	alert('${bookdetail.bookNum }');
-                $.ajax({
-                    url: "/book/insertlike",
-                    type: "get",
-                    data: {
-                        booknumber: '${bookdetail.bookNum }'
-                    },
-                    success: function (data) {
-                    	alert(data);
-                    	 $("#countNum").html(data);
-                        //heartCount();
-                    },
-                })
-
-    </script>  -->
     <script>
   $(document).ready(function(){ 
 	  var check = "${likecheck}";
@@ -387,10 +365,10 @@
   //  		                $("#countNum").replaceWith("<span>"+result[0]+"</span>");
   							if(result[1]){
   								$("#countNum").replaceWith("<input type='text' value="+result[0]+" id='countNum' size='5'>");
-  								$("#fa fa-heart").attr("class","far fa-heart");
+  								$("#fas fa-heart").attr("class","far fa-heart");
   							}else if(!result[1]){
   								$("#countNum").replaceWith("<input type='text' value="+result[0]+" id='countNum' size='5'>");
-  								$("#far fa-heart").attr("class","fa fa-heart");
+  								$("#far fa-heart").attr("class","fas fa-heart");
   							}
     		                
                         },
