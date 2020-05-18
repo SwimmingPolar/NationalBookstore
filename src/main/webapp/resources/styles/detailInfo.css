@@ -155,7 +155,7 @@ header {
 }
 
 
-.firstBox, .secondBox, .thirdBox, .fourthBox, .fifthBox {
+.firstBox, .secondBox, .thirdBox, .fourthBox {
     background-color:#FFFFFF;
     /* border:2px solid blue; */
     margin:20px;
@@ -167,6 +167,17 @@ header {
 }
 .firstBox h2 {
 	margin-bottom: 20px;
+}
+
+.fifthBox {
+    background-color:#FFFFFF;
+    /* border:2px solid blue; */
+    margin:20px;
+    border-radius:10px;
+    padding:10px;
+    box-shadow: 0 0 10px rgba(0,0,0,.05);
+
+
 }
 
 .emoTag {
@@ -521,23 +532,28 @@ header {
 }
 
 
+.fifthBox {
+    position: relative;
+    /* border:2px solid blue; */
 
+}
 
 .similarBook {
-
-    margin:0 auto;
-
+position: relative;
+display:flex;
+flex-wrap: wrap;
+width:100%;
+padding:0 6px;
 }
 
 .fifthBox .similarBook img {
 
-width:115px;
-height:145px;
-margin-left:4px;
-margin-right:4px;
-opacity: 0.4;
-border:1px dotted #e8e8e8;
-
+width:18%;
+margin:5px;
+top:0;
+left:0;
+right:0;
+box-sizing: border-box;
 }
 
 /* 
