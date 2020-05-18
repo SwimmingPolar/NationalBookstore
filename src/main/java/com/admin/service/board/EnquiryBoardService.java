@@ -3,11 +3,8 @@ package com.admin.service.board;
 import java.io.IOException;
 import java.util.ArrayList;
 
-<<<<<<< HEAD
-=======
 import javax.servlet.http.HttpServletRequest;
 
->>>>>>> 0d7cf6607dc5a1404e6b3f0c603312aeec65d05c
 import org.springframework.web.multipart.MultipartFile;
 
 import com.admin.domain.board.EnquiryBoardVO;

@@ -37,10 +37,7 @@ public interface EnquiryBoardMapper {
 	//리플수정
 	public int updateReply(ReplyVO reply);
 	
-<<<<<<< HEAD
-=======
 	//해당 문의사항 클릭시 문의사항 객체반환
->>>>>>> 0d7cf6607dc5a1404e6b3f0c603312aeec65d05c
 	public EnquiryBoardVO selectEq(int boardNum);
 	
 	//해당게시물 리플 리스트
@@ -48,18 +45,4 @@ public interface EnquiryBoardMapper {
 	
 	
 	public ArrayList<EnquiryBoardVO> selectLastSeqNum(EnquiryBoardVO enquiry);
-<<<<<<< HEAD
-	
-	//파일 등록
-	public int insertFile(FileVO file);
-	
-	//파일 삭제
-	public int deleteFile(int fileNum);
-	
-	//해당게시물 모든 파일 삭제
-	public int deleteAllFiles(int boardNum);
-	
-	
-=======
->>>>>>> 0d7cf6607dc5a1404e6b3f0c603312aeec65d05c
 }
