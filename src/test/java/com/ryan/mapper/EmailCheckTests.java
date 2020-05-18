@@ -19,14 +19,19 @@ public class EmailCheckTests {
 	@Setter(onMethod_ = @Autowired)
 	private EmailMapper mapper;
 	
+//	@Test
+//	public void tests() {
+//		EmailCheckVO email = new EmailCheckVO();
+//		email.setMemberEmail("asd@naver.com");
+//		
+//		int result = mapper.authCompleteCheck(email);
+//		
+//		log.info("result : " + result);
+//		
+//	}
+	
 	@Test
-	public void tests() {
-		EmailCheckVO email = new EmailCheckVO();
-		email.setMemberEmail("asd@naver.com");
-		
-		int result = mapper.authCompleteCheck(email);
-		
-		log.info("result : " + result);
+	public void test1() {
 		
 	}
 	

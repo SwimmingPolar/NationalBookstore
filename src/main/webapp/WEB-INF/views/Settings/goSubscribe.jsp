@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-    <link rel="stylesheet" href="../../resources/styles/goSubscribe.css">
+    <link rel="stylesheet" href="../../../resources/styles/goSubscribe.css">
     <link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap" rel="stylesheet">
     <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
     <script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
@@ -20,7 +20,7 @@
 
     <div class="freeStory">
     <strong> 정기구독 결제 후 <br> 첫 달 무료 </strong>
-    <img src="../../resources/images/myLibrary/kids.png" alt="경로잘못됨">
+    <img src="../../../resources/images/myLibrary/kids.png" alt="경로잘못됨">
     <span> 결제일자 전까지 언제든 해지할 수 있어요. </span>
     </div>
 

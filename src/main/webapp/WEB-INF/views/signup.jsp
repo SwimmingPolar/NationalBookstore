@@ -53,9 +53,9 @@
             <input id="email" name="memberEmail" type="text" required spellcheck="false" autocomplete="off">
             <span class="placeholder">이메일</span>
           </label>
-          <button type="button" class="auth-btn" disabled>인증</button>
+          <button type="button" class="auth-btn" disabled tabindex="-1">인증</button>
           <label for="email-auth">
-            <input id="email-auth" name="email-auth" type="text" required spellcheck="false" autocomplete="off" placeholder="인증 코드를 입력해주세요.">
+            <input id="email-auth" name="email-auth" type="text" required spellcheck="false" autocomplete="off" placeholder="인증 코드를 입력해주세요." tabindex="-1">
             <span class="timer"></span>
           </label>
           <span class="warning-msg"><span class="far fa-exclamation-circle"></span></span>
@@ -80,14 +80,16 @@
         </div>
         <div class="address-container">
           <label for="zipcode" onclick="openAddressAPI()">
-            <input id="zipcode" name="memberZipcode" type="text" required spellcheck="false" autocomplete="off" tabindex="-1"
+            <input id="zipcode" type="text" required spellcheck="false" autocomplete="off" tabindex="-1"
               disabled="disabled">
+            <input id="zipcodeHidden" type="hidden" name="memberZipcode">
             <span class="placeholder">우편번호</span>
           </label>
           <button type="button" onclick="openAddressAPI()">우편번호 찾기</button>
           <label for="roadAddress" onclick="openAddressAPI()">
             <input id="roadAddress" name="memberAddress" type="text" required spellcheck="false" autocomplete="off"
               tabindex="-1" disabled="disabled">
+            <input id="roadAddressHidden" type="hidden" name="memberAddress">
             <span class="placeholder">주소</span>
           </label>
           <label for="detailAddress">
@@ -104,8 +106,8 @@
           </label>
           <span class="warning-msg"><span class="far fa-exclamation-circle"></span></span>
         </div>
-        <input type="hidden" name="memberAdmin" value="1">
-        <button id="submit" type="button" disabled>회원 가입</button>
+        <input type="hidden" name="memberAdmin" value="1" tabindex="-1">
+        <button id="submitBtn" type="button" disabled>회원 가입</button>
       </div>
     </form>
   </div>
@@ -151,10 +153,15 @@
             const roadAddressPlaceholder = document.querySelector('label[for="roadAddress"] .placeholder');
             const zipcode = document.getElementById('zipcode');
             const roadAddress = document.getElementById('roadAddress');
+            const zipcodeHidden = document.getElementById('zipcodeHidden');
+            const roadAddressHidden = document.getElementById('roadAddressHidden');
+
             zipcodePlaceholder.style.transform = 'scale(0.8) translateX(-10%) translateY(-70%)';
             roadAddressPlaceholder.style.transform = 'scale(0.8) translateX(-10%) translateY(-70%)';
             zipcode.value = data.zonecode;
             roadAddress.value = data.address;
+            zipcodeHidden.value = data.zonecode;
+            roadAddressHidden.value = data.address;
 
             const event = new Event('input');
             zipcode.dispatchEvent(event);
@@ -242,6 +249,9 @@
           if (isValid) {
             // lock email input on successful email verification
             emailInput.setAttribute('data-locked', true);
+
+            emailWrapper.classList.remove('getAuth');
+
             // hide authentication code input
             const emailAuthLabel = document.querySelector('.email-container label[for="email-auth"]');
             emailAuthLabel.style.transition = '0.125s ease-out';
@@ -249,17 +259,22 @@
               emailAuthLabel.style.transition = '';
               emailAuthLabel.removeEventListener('transitionend', showEmailAuthLabel);
             });
-            emailWrapper.classList.remove('getAuth');
+
+            const emailAuthButton = document.querySelector('.email-container > button');
+            emailAuthButton.textContent = '인증 완료';
+            emailAuthButton.setAttribute('disabled', 'disabled');
+            emailAuthButton.removeAttribute('tabindex');
+            // remove all event handler
+            emailAuthButton.parentElement.replaceChild(emailAuthButton.cloneNode(true), emailAuthButton);
+
+            const emailAuthInput = document.getElementById('email-auth');
+            emailAuthInput.removeAttribute('tabindex');
+
             // mark checked
             const emailLabel = document.querySelector('.email-container label[for="email"]');
             markChecked(emailLabel);
             // reset emailAuth input
             emailAuth.value = '';
-            // remove all event handler
-            const emailAuthButton = document.querySelector('.email-container > button');
-            emailAuthButton.textContent = '인증 완료';
-            emailAuthButton.setAttribute('disabled', 'disabled');
-            emailAuthButton.parentElement.replaceChild(emailAuthButton.cloneNode(true), emailAuthButton);
 
             // stop timer
             const timerId = document.querySelector('.email-container span.timer').getAttribute('data-countdown-timer-id');
@@ -293,6 +308,9 @@
           emailAuthLabel.style.transition = '';
           emailAuthLabel.removeEventListener('transitionend', showEmailAuthLabel);
         });
+        const emailAuthInput = document.getElementById('email-auth');
+        emailAuthInput.removeAttribute('tabindex');
+        emailAuthButton.removeAttribute('tabindex');
         emailWrapper.classList.add('getAuth');
       }
       // change button text
@@ -425,15 +443,13 @@
           emailWrapper.style.marginBottom = '25px';
           return;
         }
-        // if email is valid format, show email authentication process message
-        else if (isValidEmailFormat(email))
-          warningMsg.innerHTML = '<span class="far fa-check-circle info-msg"> 이메일 인증을 진행해주세요.</span>';
-        // if not, show warning message 
-        else
+        // if email is not valid format
+        else if (!isValidEmailFormat(email)) {
           warningMsg.innerHTML = '<span class="far fa-exclamation-circle"> 이메일 양식을 확인해주세요.</span>';
+          warningMsg.style.display = 'block';
+          emailWrapper.style.marginBottom = '0';
+        }
 
-        warningMsg.style.display = 'block';
-        emailWrapper.style.marginBottom = '0';
       });
       emailInput.addEventListener('focus', () => {
         const isLocked = emailInput.getAttribute('data-locked');
@@ -503,6 +519,7 @@
   <!-- 핸드폰번호 유효성 검사 -->
   <script>
     function isValidTelFormat(tel) {
+      tel = tel.value.trim().replace(/-/g, '').replace(/[\s]/g, '');
       const telPattern = /\d{11}/;
       return telPattern.test(tel);
     }
@@ -657,48 +674,63 @@
     warningMsg.innerHTML = '<span class="far fa-exclamation-circle">' + message + '</span>';
   }
   // requires ajax request for validation
-  const promiseEmailVerification = new Promise((resolve, reject) => {
-    const email = document.getElementById('email').value.trim();
-  
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/member/authenticationCompleteCheck');
-    xhr.onreadystatechange = () => {
-      if (!(xhr.readyState === 4 && xhr.status === 200)) return;
+  function promiseEmailVerification(inputKeyword) {
+    return new Promise((resolve, reject) => {
+      const email = document.getElementById('email').value.trim();
     
-      const isValid = JSON.parse(xhr.response).result;
-
-      if (isValid) resolve({ 'input': 'email', 'isValid': true });
-      else reject({ 'input': 'email', 'isValid': false });
-    };
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send('memberEmail=' + email);
-  });
-  const promiseNickNameVerification = new Promise((resolve, reject) => {
-    const nickname = document.getElementById('nickname').value.trim();
-    
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/member/signUpCheck');
-    xhr.onreadystatechange = () => {
-      if (!(xhr.readyState === 4 && xhr.status === 200)) return; 
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', '/member/authenticationCompleteCheck');
+      xhr.onreadystatechange = () => {
+        if (!(xhr.readyState === 4 && xhr.status === 200)) return;
       
-      const isValid = JSON.parse(xhr.response).result;
-      
-      if (isValid) resolve({ 'input': 'nickname', 'isValid': true });
-      else reject({ 'input': 'nickname', 'isValid': false });
-    };
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send('memberNickName=' + nickname);
-  });
-  const promisePasswdDoesMatch = new Promise((resolve, reject) => {
-    const passwd = document.getElementById('passwd').value.trim();
-    const passwdConfirm = document.getElementById('passwdConfirm').value.trim();
+        const isValid = JSON.parse(xhr.response).result;
 
-    if (passwd === passwdConfirm) resolve({ 'input': 'passwd', 'isValid': true });
-    else reject({ 'input': 'passwd', 'isValid': false });
-  });
-  async function validateForms() {
-    const submit = document.getElementById('submit');
-    submit.innerHTML = '<img width="7%" height="100%" src="../../resources/images/ajax-loading.svg" alt="">';
+        resolve({ 'input': 'email', 'isValid': isValid, 'inputKeyword': inputKeyword });
+      };
+      xhr.onerror = () => reject('이메일 유효성 검사를 할 수 없습니다.');
+
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.send('memberEmail=' + email);
+    });
+  }
+
+  function promiseNickNameVerification(inputKeyword) {
+    return new Promise((resolve, reject) => {
+      const nickname = document.getElementById('nickname').value.trim();
+      
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', '/member/signUpCheck');
+      xhr.onreadystatechange = () => {
+        if (!(xhr.readyState === 4 && xhr.status === 200)) return; 
+        
+        const isValid = JSON.parse(xhr.response).result;
+        
+        resolve({ 'input': 'nickname', 'isValid': isValid, 'inputKeyword': inputKeyword });
+      };
+      xhr.onerror = () => reject('닉네임 유효성 검사를 할 수 없습니다.');
+
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.send('memberNickName=' + nickname);
+    });
+  }
+  function promisePasswdDoesMatch(inputKeyword) {
+    return new Promise((resolve, reject) => {
+      const passwd = document.getElementById('passwd').value.trim();
+      const passwdConfirm = document.getElementById('passwdConfirm').value.trim();
+
+      const isValid = passwd === passwdConfirm;
+
+      resolve({ 'input': 'passwd', 'isValid': isValid, 'inputKeyword': inputKeyword });
+    });
+  }
+  async function validateForms(submitStatus) {
+    // if form is already submitted then return
+    if (submitStatus.isSubmitted) return;
+    // set submitted status to true
+    submitStatus.isSubmitted = true;
+
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.innerHTML = '<img width="7%" height="100%" src="../../resources/images/ajax-loading.svg" alt="">';
 
     const inputKeywords = {
       // inputID inputWrapperPrefix : messagePrefix
@@ -711,7 +743,6 @@
       'zipcode address': '우편번호를',
       'tel tel': '휴대폰 번호를'
     };
-    console.dir(Object.keys(inputKeywords));
     // form validation process
     // 1. check for empty form
     // 2. check if input value is legit (regular expression compatible)
@@ -748,12 +779,13 @@
           case 'tel':
             return isValidTelFormat;
         }
+        return undefined
       }(key.split(' ')[0]));
 
       // if inputValue is valid format then return
-      if (isValidFormat(inputValue)) return;
+      if (!isValidFormat || isValidFormat(inputValue)) return;
 
-      showWarningMsg(key.split(' ')[1], '유효하지 않은 ' + inputKeywords[key] + '  입력하였습니다.');
+      showWarningMsg(key.split(' ')[1], '유효한 ' + inputKeywords[key] + '  입력해주세요.');
       // remove failed form from the collection
       inputKeywords[key] = undefined;
       delete inputKeywords[key];
@@ -761,41 +793,47 @@
 
     // 3. ping server for email, nickname validity and
     //    check if passwd and passwdConfirm matches
-    const promises = Object.keys(inputKeywords).map(key => {
-      const inputName = key.split(' ')[0];
+    const promises = Object.keys(inputKeywords).map(inputKeyword => {
+      const inputName = inputKeyword.split(' ')[0];
       switch (inputName) {
         case 'email':
-          return promiseEmailVerification;
+          return promiseEmailVerification(inputKeyword);
         case 'nickname':
-          return promiseNickNameVerification;
+          return promiseNickNameVerification(inputKeyword);
         case 'passwd':
-          return promisePasswdDoesMatch;
+          return promisePasswdDoesMatch(inputKeyword);
       }
-    });
+    }).filter(promise => promise !== undefined);
+
     await Promise.all([...promises])
            .then(results => results.forEach(result => {
+              // if input is validated then do not remove from the collection
+              if (result.isValid) return;
               switch(result.input) {
                 case 'email':
-                  if (result.isValid) return;
                   showWarningMsg('email', '이메일 인증을 완료해주세요.');
                   break;
                 case 'nickname':
-                  if (result.isValid) return;
                   showWarningMsg('nickname', '사용할 수 없는 닉네임 입니다.');
                   break;
                 case 'passwd':
-                  if (result.isValid) return;
-                  showWarningMsg('passwd', '패스워드가 일치하지 않습니다.');
+                  showWarningMsg('passwd', '비밀번호가 일치하지 않습니다.');
                   break;
               }
-              inputKeywords[result.input] = undefined;
-              delete inputKeywords[result.input];
-           }));
+              inputKeywords[result.inputKeyword] = undefined;
+              delete inputKeywords[result.inputKeyword];
+           }))
+           .catch(exception => {
+             console.error(exception);
+           });
     const validInputs = Object.keys(inputKeywords).map(inputKeyword => inputKeyword.split(' ')[0]);
 
     // if all 8 inputs are not valid then return
     if (validInputs.length !== 8) {
-      submit.innerHTML = '회원 가입';
+      // remove loader svg
+      submitBtn.innerHTML = '회원 가입';
+      // reset submitted status to false
+      submitStatus.isSubmitted = false;
       return;
     }
     
@@ -808,20 +846,27 @@
   <script>
     $(document).ready(function() {
       const inputs = [...(document.querySelectorAll('label input:not(#email-auth)'))];
+      // prevent multiple submit request
+      const submitStatus = {
+        isSubmitted: false
+      };
 
       inputs.forEach(input => {
         input.addEventListener('input', () => {
-          const submit = document.getElementById('submit');
+          // if form is already submitted then return;
+          if (submitStatus.isSubmitted) return;
+
+          const submitBtn = document.getElementById('submitBtn');
           const isValid = inputs.every(otherInput => otherInput.value.trim().length > 0);
 
           if (isValid) {
-            submit.removeAttribute('disabled');
-            submit.addEventListener('click', validateForms);
+            submitBtn.removeAttribute('disabled');
+            submitBtn.addEventListener('click', validateForms.bind(this, submitStatus));
           }
           else {
-            if (!submit.hasAttribute('disabled')) {
-              submit.setAttribute('disabled', 'disabled');
-              submit.parentElement.replaceChild(submit.cloneNode(true), submit);
+            if (!submitBtn.hasAttribute('disabled')) {
+              submitBtn.setAttribute('disabled', 'disabled');
+              submitBtn.parentElement.replaceChild(submitBtn.cloneNode(true), submitBtn);
             }
           }
         });
