@@ -3,10 +3,8 @@ package com.ryan.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ryan.domain.book.BookAlarmVO;
 import com.ryan.domain.book.BookGradeVO;
-import com.ryan.domain.book.BookLikeVO;
 import com.ryan.domain.book.EBookVO;
-import com.ryan.domain.book.MyLibVO;
 import com.ryan.domain.book.MyReadBookVO;
 import com.ryan.service.book.MyBookAlarmService;
 import com.ryan.service.book.MyBookService;
@@ -55,9 +51,9 @@ public class MyBookController {
 	
 	
 	@RequestMapping("/deleteLibList")
-	public @ResponseBody List<EBookVO> deleteList(@RequestParam("booknum") int[] booknum, HttpSession session) {
-		log.info("넘어옴?");
-		return service.deleteLibBook(booknum, session);
+	public @ResponseBody List<EBookVO> deleteList(@RequestParam("booknum") int booknum, HttpSession session) {
+		//return service.deleteLibBook(booknum, session)
+		return null;
 	}
 	
 //	@RequestMapping("/readbooklist") 	//읽은 책 조회
@@ -93,5 +89,11 @@ public class MyBookController {
 		return service.insertGrade(vo, session);
 	}
 	
+	//찜 책장 전체 삭제
+	@RequestMapping("/allDelete") 
+	public String allDelete(HttpSession session) {
+		service.allDelete(session);
+		return 	"redirect : /booklist/myLibList";
+	}
 		
 }

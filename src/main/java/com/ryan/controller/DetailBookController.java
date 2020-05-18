@@ -96,11 +96,11 @@ public class DetailBookController {
 		return mservice.insertLibBook(booknumber,session);
 	}
 	
-	//읽은책 추가
+	//읽은책 추가 //바로보기 버튼 클릭
 	@RequestMapping("/insertreadbook")
-	public String insertReadBook(MyReadBookVO vo, HttpServletRequest request) {
-		mservice.insertReadBook(vo,request);
-		return "view";
+	public String insertReadBook(@RequestParam("booknumber") int booknumber, HttpServletRequest request) {
+		mservice.insertReadBook(booknumber,request);
+		return "redirect:/viewer";
 	}
 	
 }
