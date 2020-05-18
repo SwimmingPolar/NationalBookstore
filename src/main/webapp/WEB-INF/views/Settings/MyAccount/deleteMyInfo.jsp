@@ -7,13 +7,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-    <link rel="stylesheet" href="../../resources/styles/deleteMyInfo.css">
+    <link rel="stylesheet" href="../../../../resources/styles/deleteMyInfo.css">
     <link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap" rel="stylesheet">
     <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
     <script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="../../resources/styles/reset.css">
-    <link rel="stylesheet" href="../../resources/styles/common.css">
-    <script src="../../resources/js/common.js"></script>
+    <link rel="stylesheet" href="../../../../resources/styles/reset.css">
+    <link rel="stylesheet" href="../../../../resources/styles/common.css">
+    <script src="../../../../resources/js/common.js"></script>
 </head>
 <body>
  <div class="title">
