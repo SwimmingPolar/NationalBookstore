@@ -63,7 +63,7 @@
         <p> 서비스 관리 </p>
         <ul>
             <li><a href="buyPaperBook.jsp">종이책 구매 관리<i class="far fa-chevron-right"></i></a></li>
-            <li><a href="" id="modalOpen">구독 내역<i class="far fa-chevron-right"></i></a></li>
+            <li><a href="#" id="modalOpen">구독 내역<i class="far fa-chevron-right"></i></a></li>
         </ul>
     </div>
 
