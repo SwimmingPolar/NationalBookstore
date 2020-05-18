@@ -19,11 +19,11 @@ public class ViewerController {
 	ViewerService sv;
 	
 	@RequestMapping(value="/viewer")
-	public String ViewerMain(String bookNum, Model model) throws ParserConfigurationException, SAXException, IOException {
-		//String path = "../eclipse_workspace/WebLib/src/main/webapp/resources/xml/book3.xml";
-		String path = "";
+	public String ViewerMain(String booknumber, Model model) throws ParserConfigurationException, SAXException, IOException {
+		String path = null;
+		//String path = "";
 		try {
-			path = sv.getBookFilePath(bookNum).getBookPath();
+			path = "../eclipse_workspace/NationalBookstore/src/main/webapp/"+sv.getBookFilePath(booknumber).getBookPath();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -33,6 +33,15 @@ public class ViewerController {
 		}
 		model.addAttribute("chapter", sv.getBookChapters(path));
 		model.addAttribute("index", sv.getIndex(path));
+		try {
+			model.addAttribute("book", sv.getBookFilePath(booknumber));
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "viewer2";
 	}
 }

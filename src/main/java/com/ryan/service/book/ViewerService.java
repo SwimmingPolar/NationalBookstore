@@ -22,5 +22,5 @@ public abstract interface ViewerService {
 	//책 챕터별로 나누고 페이지로 나눔
 	public List<List<String>> getBookChapters(String filePath) throws ParserConfigurationException, SAXException, IOException;
 	//책 번호로 정보 가져오기
-	public EBookVO getBookFilePath(@Param("bookNum") String bookNum) throws ClassNotFoundException, SQLException;
+	public EBookVO getBookFilePath(@Param("booknumber") String bookNum) throws ClassNotFoundException, SQLException;
 }

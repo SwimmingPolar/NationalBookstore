@@ -50,40 +50,120 @@ font-family: 'Nanum Gothic', sans-serif;
 			$("div.main-container").css("width", width).css("height", height);
 			$("div.page").css("width", width/2).css("height", height);
 		});
-	 	//페이지 넘기기
-		function keyJump(e) {
-			var keyCode = e.keyCode;
-			console.dir(keyCode);
-			if(keyCode == 39 || keyCode == 40) {
-				e.preventDefault();
-				window.scrollTo(0, document.documentElement.scrollTop + height);
+	 	//책 데이터 파싱
+		var pages = [];
+	 	var index = [];
+	 	var temp = 0;
+		//List로 불러온 목차를 javascript Array로 저장
+		<c:forEach var="i" items="${index }" >
+			index.push("${i }");
+		</c:forEach>
+		//페이지 나누는 동시에 목차 할당
+		<c:forEach var="c" items="${chapter.get(0) }" varStatus="status">
+			pages.push("${c }");
+			if("${c }".indexOf("<h3>") >= 0) {
+				$(".modal.index").append("<button class='btn goindex ${status.index}' >"+(temp+1)+"."+ index[temp]+"</button>");
+				temp++;
 			}
-			else if(keyCode == 37 || keyCode == 38) {
+		</c:forEach>
+		//페이지 new
+		//로드시 첫 두 페이지 초기화
+		var startPage = 0; <%--나중에는 ${마지막읽던곳 }으로--%>
+		var currentPage = startPage;
+		console.dir("currentPage는"+currentPage+"로 세팅됐습니다.")
+		var prevPage = (currentPage-2), nextPage = (currentPage+2);
+		console.dir("prevPage는"+prevPage+",nextPage는"+nextPage+"로 세팅됐습니다.")
+		$(".page.left").empty().append(pages[startPage]);
+		$(".page.right").empty().append(pages[(startPage+1)]);
+		function jumpTo(e) { //페이지 이동 함수 e = 페이지번호
+			currentPage = e;
+			console.dir("currentPage:"+currentPage);
+			if( (e>=0) && (e<pages.length) ) {
+				if(e%2 == 1 && (e-1>=0)) {
+					e--;
+				}
+				$(".page").each(function() {
+					$(this).empty().append(pages[e]);
+					e++;
+				});
+				prevPage = (currentPage-2);
+				nextPage = (currentPage+2);
+			}
+			console.dir("prevPage:"+prevPage+",nextPage:"+nextPage);
+		}
+		$(".modal.index .btn.goindex").click(function(e) { //목차로 이동
+			var goTo = parseInt(e.target.classList[2]);
+			jumpTo(goTo);
+		});
+		function keyJump(e) { //키입력
+			var keyCode = e.keyCode;
+			if(keyCode == 39 || keyCode == 40) { //다음
 				e.preventDefault();
-				window.scrollTo(0, document.documentElement.scrollTop - height);
+				jumpTo(nextPage);
+			}
+			else if(keyCode == 37 || keyCode == 38) { //이전
+				e.preventDefault();
+				jumpTo(prevPage);
 			}
 		}
-		function scrollJump(e) {
+		document.addEventListener("keydown", keyJump, {passive:false});
+		function scrollJump(e) { //스크롤
 			e.preventDefault();
 			var d = e.wheelDelta;
-			if(d < 0) {
-				window.scrollTo(0, document.documentElement.scrollTop + height);
+			if(d < 0) { //다음
+				jumpTo(nextPage);
 			}
-			else if(d > 0) {
-				window.scrollTo(0, document.documentElement.scrollTop - height);
+			else if(d > 0) { //이전
+				jumpTo(prevPage);
 			}
 		}
-		//document.addEventListener("keydown", keyJump, {passive:false});
-		//document.addEventListener("wheel", scrollJump, {passive:false});
+		document.addEventListener("wheel", scrollJump, {passive:false});
+		//본문검색
+		$(".modal.search input.keyword").on("keydown", function(e) {
+			console.dir(e.keyCode);
+			if(e.keyCode == 13) {
+				$(".modal.search div.result").empty();
+				var counter = 0;
+				var keyword = $(".modal.search input.keyword").val();
+				var keywordLength = keyword.length;
+				if(keyword != "") {
+					for(var index in pages) {
+						var finder = pages[index].indexOf(keyword);
+						while(finder >= 0) {
+							console.dir("단어를 찾았습니다!");
+							var inPage = parseInt(index) + 1;
+							$(".modal.search div.result").append("<div class='goindex 1'>"
+									+"<div class='title' >"
+									+"<span class='chapter' >회상</span>"
+									+"<span class='index'>"+inpage+"페이지</span>"
+									+"</div>"
+									+"<div class='content' >"
+									+"최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 자네답게 살았어,"
+									+"조선의 주먹 황제답게 말이야... 늘 야인이었지만, 용감하고 멋있게 살았어."
+									+"나름대로 자네의 역사를 가지고 자네의 시대를 치열하고 열심히 살았다는 얘기야..."
+									+"뭐랄까... 야인시대 라고나 할까...?"
+									+"</div>"
+									+"</div>");
+							finder = pages[index].indexOf(keyword, (finder+1));
+						}
+					}
+				}
+			}
+		});
+		//본문검색 후 해당 페이지로 이동
+		$(document).on("click", ".modal.search li", function(e) {
+			var value = (e.target.value);
+			current = value;
+			if(value%2==1) {
+				current--;
+			}
+			$(".page.left>div").empty().append(page[current]);
+			$(".page.right>div").empty().append(page[(current+1)]);
+			$(".left span").empty().append(current+1);
+			$(".right span").empty().append(current+2);
+		})
 	});
 </script>
-</head>
-<%--
-<script type="text/javascript" >
-	$(document).ready(function() {
-	});
-</script>
---%>
 <body>
 	<%-- 상단바 나오게 함 --%>
 	<script type="text/javascript" >
@@ -131,41 +211,39 @@ font-family: 'Nanum Gothic', sans-serif;
 			</div>
 		</div>
 	</div> <%-- header-container 끝 --%>
-	
-	<div class="main-container" >
-		<script type="text/javascript" >
-			$(document).ready(function() {
-				var mouseX, mouseY, mousedX, mousedY;
-				var docWidth = window.innerWidth, docHeight = window.innerHeight;
-				var jumpLeft = docWidth / 8;
-				var jumpRight = docWidth - (docWidth/8);
-				$(".page").on("mousedown", function(e) {
-					mouseX = e.pageX;
-					mouseY = e.pageY;
-				});
-				$(".page").on("mouseup", function(e) {
-					mousedX = e.pageX;
-					mousedY = e.pageY;
-					if(mouseX == mousedX && mouseY == mousedY) { //시작,끝 위치 같을떄
-						if(mouseX < jumpLeft || mouseX > jumpRight) { //페이지 넘기기 부분 클릭
-							console.dir("페이지를 넘기려고 하시는군요")
-						} else { //페이지 넘기기 부분 클릭 X
-							if($(".modal-container").hasClass("modal-pop")) { //옵션창이 떠있을떄
-								$(".modal-container").removeClass("modal-pop");
-							} else {
-								$(".header-container").toggleClass("header-pop");
-							}
-						}
-					} else { //시작, 끝 위치 다를때
-						console.dir("드래그 해서 검색이나 그런걸 하려는군");
-					}
-				});
+	<script type="text/javascript" >
+		$(document).ready(function() {
+			var mouseX, mouseY, mousedX, mousedY;
+			var docWidth = window.innerWidth, docHeight = window.innerHeight;
+			var jumpLeft = docWidth / 8;
+			var jumpRight = docWidth - (docWidth/8);
+			$(".page").on("mousedown", function(e) {
+				mouseX = e.pageX;
+				mouseY = e.pageY;
 			});
-		</script>
+			$(".page").on("mouseup", function(e) {
+				mousedX = e.pageX;
+				mousedY = e.pageY;
+				if(mouseX == mousedX && mouseY == mousedY) { //시작,끝 위치 같을떄
+					if(mouseX < jumpLeft || mouseX > jumpRight) { //페이지 넘기기 부분 클릭
+						console.dir("페이지를 넘기려고 하시는군요")
+					} else { //페이지 넘기기 부분 클릭 X
+						if($(".modal-container").hasClass("modal-pop")) { //옵션창이 떠있을떄
+							$(".modal-container").removeClass("modal-pop");
+						} else {
+							$(".header-container").toggleClass("header-pop");
+						}
+					}
+				} else { //시작, 끝 위치 다를때
+					console.dir("드래그 해서 검색이나 그런걸 하려는군");
+				}
+			});
+		});
+	</script>
+	<div class="main-container" >
 		<%-- 책 내용 보여줌 --%>
 		<div class="page left" >
-		${chapter }
-		${index }
+			
 			<!-- 최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 자네답게 살았어, 조선의 주먹 황제답게 말이야... 
 			늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의 역사를 가지고 자네의 시대를 치열하고 열심히 살았다는
 			얘기야... 뭐랄까... 야인시대 라고나 할까...? 최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 
@@ -219,18 +297,12 @@ font-family: 'Nanum Gothic', sans-serif;
 		<div class="modal index" >
 			<span class="title">목차</span>
 			<div class="book" >
-				<img src="http://placehold.it/120X140" />
-				<span class="title" >야인시대</span>
-				<span class="author" >김두한이</span>
+				<!-- <img src="http://placehold.it/120X140" /> -->
+				<img src="${book.bookThumbnail }" />
+				<span class="title" >${book.bookTitle }</span>
+				<span class="author" >${book.bookWriter }</span>
 			</div>
-			<button class="btn goindex 1" >0. 회상</button>
-			<button class="btn goindex 1" >1. 여정의 시작</button>
-			<button class="btn goindex 2" >2. 이대로 괜찮은가</button>
-			<button class="btn goindex 3" >3. 뭐가요?</button>
-			<button class="btn goindex 4" >4. 너 왜 시비냐</button>
-			<button class="btn goindex 5" >5. 죄송합니다</button>
-			<button class="btn goindex 6" >6. 할거야 안할거야</button>
-			<button class="btn goindex 7" >7. 안하겠소 닷씬 안하겠소</button>
+			<%-- <button class="btn goindex ${페이지번호 }" >${인덱스 } ${목차 이름 }</button> 형식으로 나옴 --%>
 		</div>
 		<div class="modal search" >
 			<span class="title">본문검색</span>

@@ -68,7 +68,7 @@ public class ViewerServiceImpl implements ViewerService {
 			String title = "<h3>"+el.getElementsByTagName("title").item(0).getTextContent()+"</h3>";
 			String content = el.getElementsByTagName("content").item(0).getTextContent();
 			content = content.replace("\t",  "").replace("\n", "").replace("   ", "");
-			int counto = 700;
+			int counto = 600;
 			int a = content.length()/counto;
 			
 			int begin = 0;
@@ -94,7 +94,7 @@ public class ViewerServiceImpl implements ViewerService {
 		return chapter;
 	}
 	@Override
-	public EBookVO getBookFilePath(@Param("bookNum") String bookNum) throws ClassNotFoundException, SQLException {
+	public EBookVO getBookFilePath(@Param("booknumber") String bookNum) throws ClassNotFoundException, SQLException {
 		return mapper.getBookFilePath(bookNum);
 	}
 
