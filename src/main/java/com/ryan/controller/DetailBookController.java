@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,7 +50,6 @@ public class DetailBookController {
 		model.addAttribute("booklist", service.interestbooks(vo.getCategoryNum()));// 카테고리 추천 도서
 
 		model.addAttribute("likecheck", service.checkLike(booknumber, request)); //좋아요 클릭 했는지 확인
-		log.info("좋아요 리턴 값 : "+service.checkLike(booknumber, request));
 		
 		model.addAttribute("booklike", service.bookLike(booknumber)); //좋아요 수
 		
@@ -92,8 +92,8 @@ public class DetailBookController {
 	
 	//찜 책장에 추가
 	@RequestMapping("/insertLibList")
-	public @ResponseBody Boolean insertList(Model model, MyLibVO vo) {
-		return mservice.insertLibBook(vo);
+	public @ResponseBody Boolean insertList(@RequestParam("booknumber") int booknumber, HttpSession session) {
+		return mservice.insertLibBook(booknumber,session);
 	}
 	
 	//읽은책 추가

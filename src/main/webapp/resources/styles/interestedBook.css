@@ -1,0 +1,111 @@
+
+.bigBox {
+
+    width: 700px;
+    border:2px solid red;
+    padding: 20px;
+    margin:0 auto;
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style:none;
+}
+
+.title {
+    display:block;
+    background-color:rgb(93, 180, 238);
+}
+
+.bookListBox {
+    position: relative;
+    box-sizing: border-box;
+    
+}
+
+
+.bookListBox ul {
+    display:flex;
+    flex-wrap:wrap;
+    margin:0 -6px;
+    padding:0;
+}
+
+.bookListBox ul li {
+    width: 25%;
+    margin-bottom:14px;
+    padding:0 10px;
+    box-sizing: border-box;
+}
+
+.bookListBox ul li a {
+    display:block;
+}
+
+.booklist {
+    position: relative;
+    /* border:2px solid blue; */
+    border-radius: 0 5px 8px 8px;
+    /* border:2px solid yellow; */
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.bookImage {
+    position: relative;
+    overflow: hidden;
+    /* border:2px solid blue; */
+    border:1px solid #e8e8e8;
+    border-radius: 0 5px 0 0;
+}
+
+.bookImage img {
+  
+    top:0;
+    left:0;
+    right:0; 
+    width:100%; 
+    min-height:100%;
+    display:block;
+    
+}
+
+.followGo {
+    /* border:2px solid red; */
+}
+
+.followGo input[type="checkbox"] {
+
+    display:none;
+    
+}
+
+.followGo label {
+    display:block;
+    cursor: pointer;
+    height:40px;
+    line-height:40px;
+    text-align:center;
+    border:1px solid #e8e8e8;
+    border-radius: 0 0 8px 8px;
+    font-size: 14px;
+    color:#0099FF;
+    background-color: #fff;
+}
+
+.followGo label i {
+    margin-right:5px;
+    font-size: 19px;
+    color:#0099FF;
+}
+
+
+.followGo input[type="checkbox"]:checked + label {
+    background-color:#0099FF;
+    color:white;
+    border:1px dotted rgba(0, 101, 216, 0.904);
+    cursor: pointer;
+    font-weight:bold;
+}

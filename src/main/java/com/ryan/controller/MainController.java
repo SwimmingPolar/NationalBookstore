@@ -27,7 +27,7 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
-public class MainPageController {
+public class MainController {
 	
 	@Setter(onMethod_ = {@Autowired})
 	private MainPageService service;
@@ -55,16 +55,14 @@ public class MainPageController {
 		
 	}
 	
-	@GetMapping("/filterSearch")
-	public String filterSearch(FilterSearchVO filterSearch, Model model) {
-		
-		model.addAttribute("키", service.getFilterSearch(filterSearch));
-		
-		return "주소";
-	}
 	
-	@RequestMapping(value="/paper")
-	public String Paper() {
-		return "paper";
-	}
+	
+//	@GetMapping("/filterSearch")
+//	public String filterSearch(FilterSearchVO filterSearch, Model model) {
+//		
+//		model.addAttribute("키", service.getFilterSearch(filterSearch));
+//		
+//		return "주소";
+//	}
+
 }

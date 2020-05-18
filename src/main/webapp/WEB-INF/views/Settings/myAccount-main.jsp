@@ -9,11 +9,11 @@
     <link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap" rel="stylesheet">
     <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
     <script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="../../resources/styles/myAccount.css">
-    <link rel="stylesheet" href="../../resources/styles/reset.css">
-    <link rel="stylesheet" href="../../resources/styles/common.css">
-    <link rel="stylesheet" href="../../resources/styles/subHistory.css">
-    <script src="../../resources/js/common.js"></script>
+    <link rel="stylesheet" href="../../../../resources/styles/myAccount.css">
+    <link rel="stylesheet" href="../../../../resources/styles/reset.css">
+    <link rel="stylesheet" href="../../../../resources/styles/common.css">
+    <link rel="stylesheet" href="../../../../resources/styles/subHistory.css">
+    <script src="../../../../resources/js/common.js"></script>
 </head>
 <body>
 <header class="topbar">
@@ -63,7 +63,7 @@
         <p> 서비스 관리 </p>
         <ul>
             <li><a href="buyPaperBook.jsp">종이책 구매 관리<i class="far fa-chevron-right"></i></a></li>
-            <li><a href="" id="modalOpen">구독 내역<i class="far fa-chevron-right"></i></a></li>
+            <li><a href="#" id="modalOpen">구독 내역<i class="far fa-chevron-right"></i></a></li>
         </ul>
     </div>
 
@@ -138,6 +138,6 @@
     });
   </script>
 
-<%@ include file="template/footer.jsp" %>
+<%@ include file="../template/footer.jsp" %>
 </body>
 </html>
