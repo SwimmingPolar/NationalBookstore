@@ -21,11 +21,10 @@ public class ReviewController {
 	@Autowired
 	private ReviewServiceImpl service;
 	
-	@RequestMapping("/reviewForm")
-	public String reviewForm(){
-		
-		return "";
-	}
+	/*
+	 * @RequestMapping("/reviewWriteForm") public String
+	 * reviewForm(HttpServletRequest request,Model model){ return ""; }
+	 */
 	
 	@RequestMapping("/write")
 	public String insertEbookReview(@ModelAttribute("review") ReviewVO review,HttpServletRequest request,Model model) {

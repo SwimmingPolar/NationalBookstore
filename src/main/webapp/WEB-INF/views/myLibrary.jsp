@@ -286,37 +286,20 @@ $('.bookStarScore span').click(function() {
      }
  }
  </script>
- <script language=JavaScript>
- function allDelete(){
-	 var array = new Array();
-	 <c:forEach var="book" items="${libbooklist}">
-	 	array.push(${book.bookNum});
-	 </c:forEach>
-	 alert(array);
-	 if(array != null){
-		 $.ajax({
-			 url: "/booklist/deleteLibList",
-			 type: "post",
-			 dataType:"json",
-	         data: {
-	        	 "booknum" : array
-	         },
-	         success: function (response) {
-	        	 alert(response);
-	         },
-	         error: function(request,status, error) {
-	        	 alert("error"+request.status+"message : "+request.message);
-	         }
-		 });
-	 }            
- }
- </script>
+
  <script>
     $(document).ready(() => {
       const li = document.querySelector('footer.fixed a[href="myLibrary.jsp"]').parentElement;
       const ul = li.parentElement;
       [ul, li].forEach(element => element.classList.add('active'));
     });
+  </script>
+  <script>
+  
+  function allDelte(){
+	  location.href = "/booklist/allDelte";
+  }
+  
   </script>
 <%@ include file="template/footer.jsp" %>
 </body>

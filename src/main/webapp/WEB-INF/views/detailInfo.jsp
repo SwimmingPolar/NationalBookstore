@@ -88,13 +88,9 @@
                 </div>
 
                 <div class="choiceBtnOne">
-                    <form action="/book/insertreadbook?booknumber=${bookdetail.bookNum }">
-                        <input type="submit" value="바로읽기" class="choiceBtn">
-                    </form>
-                    <form action="/book/insertLibList?booknumber=${bookdetail.bookNum }">
-                        <button type="submit" class="choiceBtn"><i class="fas fa-plus-circle"></i> 찜하기</button>
-                    </form>
-                        <input type="button" value="종이책 구매" class="choiceBtn">
+                        <button type="button" value="바로읽기" class="choiceBtn" onclick="insertReadBook();">바로읽기</button>
+                        <button type="button" class="choiceBtn" onclick="insertLibBook();"><i class="fas fa-plus-circle"></i> 찜하기</button>
+                        <input type="button" value="종이책 구매" class="choiceBtn" onclick="">
                 </div>
                 <div class="likeChk">
                     <a href="#" id="modalOpen">
@@ -303,6 +299,8 @@
                     		</c:if>
   						<c:set var="count" value="${count+1 }" />
   						</c:forEach>
+  						</div>
+  						</div>
    <!--            </div>
                 </div>
             <!-- body-container -->
@@ -492,6 +490,31 @@
     });
 
  });
+    
+    </script>
+    <script>
+    function insertReadBook(){
+    	location.href="/book/insertreadbook?booknumber=${bookdetail.bookNum}";
+    }
+    function insertLibBook(){
+		$.ajax({
+			url:"/book/insertLibList",
+			type:"post",
+			data:{
+				booknumber : "${bookdetail.bookNum}"
+			},
+			success:function(data){
+				if(data){
+					if(confirm("찜 목록에 추가가 완료되었습니다. 마이페이지로 이동 하시겠습니까?")) {
+						location.href="/booklist/myLibList";
+					}
+				} else { 
+					alert("예상치 못한 오류가 발생 했습니다. 고객센터로 문의 해주세요.");					
+				}
+			}
+		});    	
+    }
+    
     
     </script>
     

@@ -6,7 +6,7 @@
  
 body {
 	margin-bottom: 0;
-	overflow-X: hidden;
+	overflow: hidden;
 }
 
 body {
@@ -104,8 +104,8 @@ div.page {
 	position: absolute;
 	top: 0;
 	/* width: 50%; height: 200%; */
-	padding: 70px 90px;
-	line-height: 200%;
+	padding: 70px 110px;
+	line-height: 230%;
 	font-family : 'Nanum Gothic', 'Roboto', sans-serif;
 	font-size: 1.35em;
 }

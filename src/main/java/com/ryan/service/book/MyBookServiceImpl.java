@@ -46,13 +46,13 @@ public class MyBookServiceImpl implements MyBookService{
 	}
 
 	@Override	//찜 책장 삭제
-	public ArrayList<EBookVO> deleteLibBook(int[] booknum, HttpSession session) {
+	public ArrayList<EBookVO> deleteLibBook(ArrayList<EBookVO> booknum, HttpSession session) {
 		// TODO Auto-generated method stub
 		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
 		ArrayList<MyLibVO> number = new ArrayList<MyLibVO>();
-		for(int i : booknum) {
+		for(EBookVO i : booknum) {
 			MyLibVO mylib = new MyLibVO();
-			mylib.setBookNum(i);
+			mylib.setBookNum(i.getBookNum());
 			mylib.setMemberEmail(member.getMemberEmail());
 			number.add(mylib);
 		}
@@ -93,18 +93,20 @@ public class MyBookServiceImpl implements MyBookService{
 	}
 
 	@Override		//읽은책 추가
-	public Boolean insertReadBook(MyReadBookVO vo, HttpServletRequest request) {
+	public Boolean insertReadBook(int booknumber, HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());		
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
 		HttpSession session = request.getSession();
-		
-		//vo.setBookNum(booknumber);
+		MyReadBookVO vo = new MyReadBookVO();
+		vo.setBookNum(booknumber);
 		vo.setReadDate(df.format(cal.getTime()));
 	//	vo.setMemberEmail("abc1234@naver.com"); 
-		ArrayList<EBookVO> list = mapper.readBook(request.getAttribute("ryanMember").toString());
+		MemberVO member = (MemberVO) request.getSession().getAttribute("ryanMember");
+		ArrayList<EBookVO> list = mapper.readBook(member.getMemberEmail());
+		vo.setMemberEmail(member.getMemberEmail());
 		boolean flag= false;
 		for(int i=0; i<list.size();i++) {
 			if(list.get(i).getBookNum()==vo.getBookNum()) {
@@ -158,6 +160,15 @@ public class MyBookServiceImpl implements MyBookService{
 			mapper.insertGrade(vo);
 		}
 		return mapper.checkEmail(member.getMemberEmail());
+	}
+
+	@Override
+	public Boolean allDelete(HttpSession session) {
+		
+		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
+		int i = mapper.allDelete(member.getMemberEmail());
+		if(i==1) return true;
+		return false;
 	}
 	
 	
