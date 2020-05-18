@@ -38,13 +38,43 @@ font-family: 'Nanum Gothic', sans-serif;
 <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 <!-- slidify sliders and fadeInUp reveal -->
 <!-- <script src="../../resources/js/common.js"></script> -->
+<!-- <script src="../../resources/js/viewer2.js"></script> -->
 <script type="text/javascript" >
 	$(document).ready(function() {
-		$(window).resize(function() { //화면 사이즈가 변할때마다 main-container의 크기 변환
-			//var widthS = window.innerWidth, heightS = window.innerHeight;
-			//$("div.main-container").css("width", widthS).css("height", heightS);
-			//$(".page").css("width", widthS/2).css("height", heightS);
+		var width = window.innerWidth, height = window.innerHeight;
+		$("div.main-container").css("width", width).css("height", height);
+		$("div.page").css("width", width/2).css("height", height);
+	 	//화면 사이즈가 변할때마다 main-container의 크기 변환
+		$(window).resize(function() {
+			var width = window.innerWidth, height = window.innerHeight;
+			$("div.main-container").css("width", width).css("height", height);
+			$("div.page").css("width", width/2).css("height", height);
 		});
+	 	//페이지 넘기기
+		function keyJump(e) {
+			var keyCode = e.keyCode;
+			console.dir(keyCode);
+			if(keyCode == 39 || keyCode == 40) {
+				e.preventDefault();
+				window.scrollTo(0, document.documentElement.scrollTop + height);
+			}
+			else if(keyCode == 37 || keyCode == 38) {
+				e.preventDefault();
+				window.scrollTo(0, document.documentElement.scrollTop - height);
+			}
+		}
+		function scrollJump(e) {
+			e.preventDefault();
+			var d = e.wheelDelta;
+			if(d < 0) {
+				window.scrollTo(0, document.documentElement.scrollTop + height);
+			}
+			else if(d > 0) {
+				window.scrollTo(0, document.documentElement.scrollTop - height);
+			}
+		}
+		//document.addEventListener("keydown", keyJump, {passive:false});
+		//document.addEventListener("wheel", scrollJump, {passive:false});
 	});
 </script>
 </head>
@@ -149,20 +179,10 @@ font-family: 'Nanum Gothic', sans-serif;
 			얘기야... 뭐랄까... 야인시대 라고나 할까...? 최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 
 			자네답게 살았어, 조선의 주먹 황제답게 말이야... 늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의
 			역사를 가지고 자네의 시대를 치열하고 열심히 살았다는 얘기야... 뭐랄까... 야인시대 라고나 할까...?
-			최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 자네답게 살았어, 조선의 주먹 황제답게 말이야... 
-			늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의 역사를 가지고 자네의 시대를 치열하고 열심히 살았다는
-			얘기야... 뭐랄까... 야인시대 라고나 할까...? 최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 
-			자네답게 살았어, 조선의 주먹 황제답게 말이야... 늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의
-			역사를 가지고 자네의 시대를 치열하고 열심히 살았다는 얘기야... 뭐랄까... 야인시대 라고나 할까...?
 		</div>
 		<%--<div class="depth left" ></div>
 		<div class="depth right" ></div>--%>
 		<div class="page right" >
-			최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 자네답게 살았어, 조선의 주먹 황제답게 말이야... 
-			늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의 역사를 가지고 자네의 시대를 치열하고 열심히 살았다는
-			얘기야... 뭐랄까... 야인시대 라고나 할까...? 최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 
-			자네답게 살았어, 조선의 주먹 황제답게 말이야... 늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의
-			역사를 가지고 자네의 시대를 치열하고 열심히 살았다는 얘기야... 뭐랄까... 야인시대 라고나 할까...?
 			최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 자네답게 살았어, 조선의 주먹 황제답게 말이야... 
 			늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의 역사를 가지고 자네의 시대를 치열하고 열심히 살았다는
 			얘기야... 뭐랄까... 야인시대 라고나 할까...? 최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 
@@ -266,6 +286,18 @@ font-family: 'Nanum Gothic', sans-serif;
 		<div class="modal setting" >
 			<span class="title">보기설정</span>
 			<span class="title sub" >페이지 색상</span>
+			<script type="text/javascript">
+				document.addEventListener("DOMContentLoaded", function() {
+					$(".btn.color").on("click", function(e) {
+						var color = e.target.classList[2];
+						var background = $(".btn.color."+color).css("background-color");
+						var fontColor = $(".btn.color."+color).css("color");
+						console.dir(fontColor);
+						$(".main-container").css("background", background);
+						$(".page").css("color", fontColor);
+					});
+				});
+			</script>
 			<div class="page-color" >
 				<button class="btn color white" >흰</button>
 				<button class="btn color black" >검</button>

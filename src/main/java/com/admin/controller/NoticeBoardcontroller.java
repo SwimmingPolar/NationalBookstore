@@ -33,14 +33,13 @@ public class NoticeBoardcontroller {
 	}
 	
 	@RequestMapping(value="/write", method=RequestMethod.POST)
-	public String noticeWrite(Model model,NoticeBoardVO notice,MultipartFile uploadFile,HttpServletRequest request,ArrayList<MultipartFile> files) {
+	public String noticeWrite(Model model,NoticeBoardVO notice,HttpServletRequest request,ArrayList<MultipartFile> files) {
 		boolean flag=false;
 		if(notice!=null) {
 			flag = service.noticeWrite(notice);
-			if(flag&&files.isEmpty()&&files.size()>0) {
-				String path = request.getSession().getServletContext().getRealPath("\\")+"\\NationalBookstore\\src\\main\\webapp\\resources\\noticeFile";
+			if(flag&&!files.isEmpty()&&files.size()>0) {
 				try {
-					service.insertFiles(notice, files, path);
+					service.insertFiles(notice, files, request);
 					model.addAttribute("message2", "파일입력성공");
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -58,18 +57,45 @@ public class NoticeBoardcontroller {
 	}
 	
 	@RequestMapping("/delete")
-	public String noticeDelete(NoticeBoardVO notice) {
-		return service.noticeDelete(notice)?"삭제 실패시":"실패시 이동";
+	public String noticeDelete(Model model,NoticeBoardVO notice,HttpServletRequest request) {
+		if(notice!=null) {
+			if(service.noticeDelete(notice,request))
+				model.addAttribute("message", "문의사항 삭제 성공");
+			else
+				model.addAttribute("message", "문의사항 삭제 실패");
+			return "redirect:/board/notice/page";
+		}else {
+			model.addAttribute("message", "선택된 내용이 없습니다.");
+			return "redirect:/board/notice/page";
+		}
 	}
 	
 	@RequestMapping("/updateForm")
-	public String noticeUpdateForm() {
-		return "수정jsp";
+	public String noticeUpdateForm(Model model,@RequestParam(value="noticeNo", defaultValue="1")int noticeNo) {
+		NoticeBoardVO notice=service.selectNotice(noticeNo);
+		if(notice!=null) {
+			//선택한 문의사항 객체 
+			model.addAttribute("noticeVO", notice);
+			//선택한 문의사항 replyList
+			model.addAttribute("fileList", service.selectNoticeFileList(noticeNo));
+			return "수정jsp";
+		}else
+			return "redirect:/board/notice/page";
 	}
 	
 	@RequestMapping(value="/update",method=RequestMethod.POST)
-	public String noticeUpdate(NoticeBoardVO notice,MultipartFile uploadFile) {
-		return service.noticeDelete(notice)?"업로드 성공시 이동":"실패시 이동";
+	public String noticeUpdate(Model model,NoticeBoardVO notice,ArrayList<MultipartFile> files,HttpServletRequest request) {
+		if(notice!=null) {
+			service.noticeUpdate(notice);
+			service.updateFileList(notice, files,request);
+		}
+		
+		if(service.noticeUpdate(notice))
+			model.addAttribute("message", "문의사항 업데이트 성공");
+		else
+			model.addAttribute("message", "문의사항 업데이트 실패");
+		return "redirect:/board/notice/page";
+
 	}
 	
 	//공지사항 페이지로 들어감
@@ -94,7 +120,7 @@ public class NoticeBoardcontroller {
 			//선택한 문의사항 객체 
 			model.addAttribute("noticeVO", notice);
 			//선택한 문의사항 replyList
-			model.addAttribute("fileList", "");
+			model.addAttribute("fileList", service.selectNoticeFileList(noticeNo));
 			return "선택한 문의사항 view";
 		}else
 			return "redirect:/board/notice/page";

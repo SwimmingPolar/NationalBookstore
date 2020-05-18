@@ -7,14 +7,16 @@ INSERT file_Board
 			file_num,
 			board_num,
 			origin_file_name,
-			stored_file_name
+			stored_file_name,
+			notice_no
 		)
 		VALUES
 		(
 			fileNum.NEXTVAL,
 			#{boardNum},
 			#{originFileName},
-			#{storedFileName}
+			#{storedFileName},
+			#{noticeNo}
 		)
 </insert>
 
@@ -28,14 +30,18 @@ INSERT file_Board
 		WHERE board_num = #{boardNum}
 </delete>
 
-
-<delete id="deleteNoticeFile" parameterType="int">
-		DELETE FROM file_Board
-		WHERE notice_num = #{noticeNum}
-</delete>
-
 <delete id="deleteAllNoticeFiles" parameterType="int">
 		DELETE FROM file_Board
-		WHERE notice_no = #noticeNo}
+		WHERE notice_no = #{noticeNo}
 </delete>
+
+<select id="selectNoticeFileList">
+		SELECT * From file_Board
+		WHERE notice_no = #{noticeNo}
+</select>
+
+<select id="selectEqFileList">
+		SELECT * From file_Board
+		WHERE board_num = #{boardNum}
+</select>
 </mapper>
