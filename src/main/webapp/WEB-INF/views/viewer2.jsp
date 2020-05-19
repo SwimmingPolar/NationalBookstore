@@ -5,7 +5,7 @@
 <html lang="ko">    
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.5, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>${book.bookTitle }</title>
  <!-- Google Fonts -->
 <link
@@ -80,8 +80,15 @@ font-family: 'Nanum Gothic', sans-serif;
 		console.dir("currentPage는"+currentPage+"로 세팅됐습니다.")
 		var prevPage = (currentPage-2), nextPage = (currentPage+2);
 		console.dir("prevPage는"+prevPage+",nextPage는"+nextPage+"로 세팅됐습니다.")
-		$(".page.left").empty().append(pages[startPage]);
-		$(".page.right").empty().append(pages[(startPage+1)]);
+		jumpTo(startPage);
+		/* $(".page").each(function() {
+			$(this).empty().append(pages[startPage]);
+			$(this).attr("value", startPage);
+			startPage++;
+		}); */
+		startPage = 0; <%--나중에는 ${마지막읽던곳 }으로--%>
+		//$(".page.left").empty().append(pages[startPage]);
+		//$(".page.right").empty().append(pages[(startPage+1)]);
 		function jumpTo(e) { //페이지 이동 함수 e = 페이지번호. 두 페이지용
 			currentPage = e;
 			if(currentPage == -2)
@@ -89,11 +96,19 @@ font-family: 'Nanum Gothic', sans-serif;
 			console.dir("currentPage:"+currentPage);
 			if( (e>=0) && (e<pages.length) ) {
 				if(e%2 == 1 && (e-1>=0)) {
+					console.dir("index가 짝수입니다! -1 합니다.")
+					currentPage--;
 					e--;
 				}
 				$(".page").each(function() {
 					$(this).empty().append(pages[e]);
+					$(this).attr("value", e);
 					e++;
+				});
+				var tempCurrent = currentPage;
+				$(".btn.bookmark").each(function() {
+					$(this).attr("value", tempCurrent);
+					tempCurrent++;
 				});
 				prevPage = (currentPage-2);
 				nextPage = (currentPage+2);
@@ -102,6 +117,8 @@ font-family: 'Nanum Gothic', sans-serif;
 				prevPage = 0;
 			console.dir("prevPage:"+prevPage+",nextPage:"+nextPage);
 		}
+		
+		
 		function jumpToSingle(e) { //페이지 이동 함수 e = 페이지번호. 단일 페이지용
 			currentPage = e;
 			console.dir("currentPage:"+currentPage);
@@ -142,6 +159,7 @@ font-family: 'Nanum Gothic', sans-serif;
 		}
 		document.addEventListener("keydown", keyJump, {passive:false});
 		function scrollJump(e) { //스크롤
+			$(".btn.bookmark").css("display", "none");
 			$(".result").unbind();
 			console.dir(e.path[0].classList[0]);
 			var d = e.wheelDelta;
@@ -192,18 +210,25 @@ font-family: 'Nanum Gothic', sans-serif;
 		});
 		
 		//본문검색
+		var keyword;
 		$(".modal.search input.keyword").on("keydown", function(e) {
 			console.dir(e.keyCode);
 			if(e.keyCode == 13) {
 				$(".modal.search div.result").empty();
 				var counter = 0;
-				var keyword = $(".modal.search input.keyword").val();
+				keyword = $(".modal.search input.keyword").val().toLowerCase();
+				var keywordo = ""; //검색 결과에 노출될 검색어
 				var keywordLength = keyword.length;
 				if(keyword != "") {
 					for(var index in pages) {
-						var finder = pages[index].indexOf(keyword);
+						var contento = pages[index].toLowerCase(); //검색중인 페이지의 내용
+						//var contentForLighting = contento.replace("<h3>", "").replace("</h3>", "");
+						var finder = contento.indexOf(keyword);
+						//var finderForLighting = contentForLighting.indexOf(keyword);
+						keywordo = pages[index].substring(finder, (finder+keywordLength));
 						while(finder >= 0) {
-							console.dir(index+"번째 index,"+finder+"번째 글자에서 키워드를 발견!");
+							//console.dir(index+"번째 index(페이지),"+finder+"번째 글자에서 키워드를 발견!");
+							//console.dir("finderForLighting:"+finderForLighting);
 							//112자 출력할 예정
 							var contentPrev = "";//pages[index].substring(0, finder);
 							var contentNext = "";//pages[index].substring((finder+keywordLength), pages[index].length);
@@ -228,14 +253,15 @@ font-family: 'Nanum Gothic', sans-serif;
 									+"</div>"
 									+"<div class='content' >"
 									+contentPrev
-									+"<span class='result-keyword' >"+keyword+"</span>"
+									+"<span class='result-keyword' >"+keywordo+"</span>"
 									+contentNext
 									//+"최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 자네답게 살았어,"
 									//+"조선의 주먹 황제답게 말이야... 늘 야인이었지만, 용감하고 멋있게 살았어."
 									//+"얘기야... 뭐랄까... 야인시대 라고나 할까...?"
 									+"</div>"
 									+"</div>");
-							finder = pages[index].indexOf(keyword, (finder+1));
+							finder = contento.indexOf(keyword, (finder+1));
+							//finderForLighting = contentForLighting.indexOf(keyword, (finderForLighting+1));
 						}
 					}
 				}
@@ -245,15 +271,32 @@ font-family: 'Nanum Gothic', sans-serif;
 		$(document).on("click", "div.goindex", function(e) {
 			var goTo = parseInt($(this).parents("div.goindex").prevObject[0].classList[1]);
 			jumpTo(goTo);
+			console.dir(goTo);
+			console.dir($("div.page[value="+goTo+"]").text().toLowerCase());
 		});
 		//책갈피
-		$(document).on("click", ".btn.bookmark", function() {
-			console.dir(currentPage);
+		$(document).on("mouseover", "div.page", function(e) {
+			var side = e.target.classList[1];
+			var pageNum = $(this).attr("value");
+			//console.dir(pageNum);
+			if(pageNum >= 0 && pageNum < pages.length){
+				if(side == "left") {
+					$(".btn.bookmark").css("display", "none");
+					$(".btn.bookmark."+side).css("display", "inline");
+				} else if(side == "right") {
+					$(".btn.bookmark").css("display", "none");
+					$(".btn.bookmark."+side).css("display", "inline");
+				}
+			}
+		});
+		$(document).on("click", ".btn.bookmark", function(e) {
+			var thisPage = e.target.value;
+			//console.dir(thisPage);
 			$.ajax ({
 				url : "/addBookmark",
 				data : {
 					"bookNum" : ${book.bookNum},
-					"page" : currentPage,
+					"page" : thisPage,
 					"pageStatus" : "2"
 				}
 			})
@@ -319,17 +362,10 @@ font-family: 'Nanum Gothic', sans-serif;
 			</div>
 		</div>
 	</div> <%-- header-container 끝 --%>
-	<script type="text/javascript" >
-		$(document).ready(function() {
-			
-		});
-	</script>
 	<div class="main-container" >
 		<%-- 책 내용 보여줌 --%>
 		<div class="page left" >
 		</div>
-		<%--<div class="depth left" ></div>
-		<div class="depth right" ></div>--%>
 		<div class="page right" >
 		</div>
 	</div> <%-- main-container 끝 --%>
@@ -340,9 +376,15 @@ font-family: 'Nanum Gothic', sans-serif;
 			});
 		});
 	</script>
-	<div class="bookmark-container" >
+	<div class="bookmark-container left" >
 		<%-- 북마크 추가 버튼 --%>
-		<button class="btn bookmark fas fa-bookmark"></button>
+		<button class="btn bookmark left fal fa-bookmark"></button>
+		<%-- 색칠된 북마크 fas fa-bookmark --%>
+		<%-- 안된거 fal fa-bookmark --%>
+	</div>
+	<div class="bookmark-container right" >
+		<%-- 북마크 추가 버튼 --%>
+		<button class="btn bookmark right fal fa-bookmark"></button>
 		<%-- 색칠된 북마크 fas fa-bookmark --%>
 		<%-- 안된거 fal fa-bookmark --%>
 	</div> <%-- bookmark-container 끝 --%>
@@ -421,6 +463,14 @@ font-family: 'Nanum Gothic', sans-serif;
 				document.addEventListener("DOMContentLoaded", function() {
 					$(".btn.color").on("click", function(e) {
 						var color = e.target.classList[2];
+						if(color == "black") {
+							console.dir("black!!");
+							$("div.page.left").css("box-shadow", "3px 0 15px -3px rgba(255, 255, 255, 0.5)");
+							$("div.page.right").css("box-shadow", "-3px 0 15px -3px rgba(255, 255, 255, 0.5)");
+						} else {
+							$("div.page.left").css("box-shadow", "3px 0 15px -3px rgba(0, 0, 0, 0.5)");
+							$("div.page.right").css("box-shadow", "-3px 0 15px -3px rgba(0, 0, 0, 0.5)");
+						}
 						var background = $(".btn.color."+color).css("background-color");
 						var fontColor = $(".btn.color."+color).css("color");
 						console.dir(fontColor);

@@ -69,7 +69,7 @@ public class ViewerServiceImpl implements ViewerService {
 			String title = "<h3>"+el.getElementsByTagName("title").item(0).getTextContent()+"</h3>";
 			String content = el.getElementsByTagName("content").item(0).getTextContent();
 			content = content.replace("\t",  "").replace("\n", "").replace("   ", "");
-			int counto = 600;
+			int counto = 500;
 			int a = content.length()/counto;
 			
 			int begin = 0;
