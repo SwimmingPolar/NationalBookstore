@@ -61,8 +61,8 @@
 
     </div>
     <div class="finishBtn">
-        <button type="button" id="doLater" onclick="location.href='myAccount.jsp'">나중에 하기</button>
-        <button type="button" id="goRightNow" onclick="goDeleteNext()">계속 진행하기</button>
+        <button type="button" id="doLater" onclick="history.back()">나중에 하기</button>
+        <button type="button" id="goRightNow" onclick="location.href='/member/deleteNext'">계속 진행하기</button>
 
     </div>
 

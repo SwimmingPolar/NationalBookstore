@@ -235,7 +235,17 @@ public class MemberController {
 		return "test";
 	}
 	
+	@GetMapping("/delete")
+	public String memberDelete() {
+		
+		return "Settings/MyAccount/delete";
+	}
 	
+	@GetMapping("/deleteNext")
+	public String deleteNext() {
+		
+		return "Settings/MyAccount/delete-next";
+	}
 //	@PutMapping
 //	@DeleteMapping
 //	@PatchMapping

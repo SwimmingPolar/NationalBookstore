@@ -31,7 +31,7 @@
     <div class="summary">
         <div class="goSub">
             
-            <button type="button" id="gogoSub" onclick="location.href='goSubscribe.jsp'">
+            <button type="button" id="gogoSub" onclick="location.href='/goSubscribe'">
                 <p>
                     정기구독 신청하기
                 </p>
@@ -54,8 +54,8 @@
     <div class="listChoice">
         <p> 정보 관리 </p>
         <ul>
-            <li><a href="myInfoUpdate.jsp">회원정보수정 <i class="far fa-chevron-right"></i></a></li>
-            <li><a href="deleteMyInfo.jsp">회원탈퇴<i class="far fa-chevron-right"></i></a> </li>
+            <li><a href="/updateMyInfo">회원정보수정 <i class="far fa-chevron-right"></i></a></li>
+            <li><a href="/member/delete">회원탈퇴<i class="far fa-chevron-right"></i></a> </li>
         </ul>
     </div>
 
@@ -138,6 +138,6 @@
     });
   </script>
 
-<%@ include file="../template/footer.jsp" %>
+<%@ include file="../../template/footer.jsp" %>
 </body>
 </html>

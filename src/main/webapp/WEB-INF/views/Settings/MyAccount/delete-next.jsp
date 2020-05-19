@@ -43,9 +43,13 @@ $.ajax({
     url : "passwordRecheck.do",
     dataType: "text",
     success : function(result) {
-        if(result==0) {
+        if(result) {
             alert("비밀번호가 틀렸습니다. 다시 입력해주세요.");
-        }else if(result==1) {}
+        }else if(result) {
+        	if(confirm("정말로 회원탈퇴를 진행 하시겠습니까?")) {
+        		
+        	}
+        }
     }
 
 });
