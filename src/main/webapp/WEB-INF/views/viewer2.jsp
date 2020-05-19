@@ -84,6 +84,8 @@ font-family: 'Nanum Gothic', sans-serif;
 		$(".page.right").empty().append(pages[(startPage+1)]);
 		function jumpTo(e) { //페이지 이동 함수 e = 페이지번호. 두 페이지용
 			currentPage = e;
+			if(currentPage == -2)
+				currentPage = 0;
 			console.dir("currentPage:"+currentPage);
 			if( (e>=0) && (e<pages.length) ) {
 				if(e%2 == 1 && (e-1>=0)) {
@@ -96,6 +98,8 @@ font-family: 'Nanum Gothic', sans-serif;
 				prevPage = (currentPage-2);
 				nextPage = (currentPage+2);
 			}
+			if(currentPage == 0)
+				prevPage = 0;
 			console.dir("prevPage:"+prevPage+",nextPage:"+nextPage);
 		}
 		function jumpToSingle(e) { //페이지 이동 함수 e = 페이지번호. 단일 페이지용
@@ -242,6 +246,24 @@ font-family: 'Nanum Gothic', sans-serif;
 			var goTo = parseInt($(this).parents("div.goindex").prevObject[0].classList[1]);
 			jumpTo(goTo);
 		});
+		//책갈피
+		$(document).on("click", ".btn.bookmark", function() {
+			console.dir(currentPage);
+			$.ajax ({
+				url : "/addBookmark",
+				data : {
+					"bookNum" : ${book.bookNum},
+					"page" : currentPage,
+					"pageStatus" : "2"
+				}
+			})
+			.done(function() {
+				console.dir("북마크 추가 성공")
+			})
+			.fail(function() {
+				console.dir("북마크 추가 실패")
+			});
+		})
 	});
 </script>
 <body>
@@ -386,7 +408,11 @@ font-family: 'Nanum Gothic', sans-serif;
 			</div>
 		</div>
 		<div class="modal note" >
-			<span class="title">독서노트</span>
+			<span class="title">독서노트
+			</span>
+			<c:forEach var="bm" items="${bookmark }" >
+				<h4 style="color: white;">${bm.memberEmail }</h4>
+			</c:forEach> 
 		</div>
 		<div class="modal setting" >
 			<span class="title">보기설정</span>

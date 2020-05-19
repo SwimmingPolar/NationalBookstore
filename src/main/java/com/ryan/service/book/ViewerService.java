@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.ryan.domain.book.BookMarkVO;
 import com.ryan.domain.book.EBookVO;
 
 @Repository
@@ -23,4 +24,8 @@ public abstract interface ViewerService {
 	public List<List<String>> getBookChapters(String filePath) throws ParserConfigurationException, SAXException, IOException;
 	//책 번호로 정보 가져오기
 	public EBookVO getBookFilePath(@Param("booknumber") String bookNum) throws ClassNotFoundException, SQLException;
+	//책갈피 추가
+	public Boolean addBookMark(@Param("booknumber") String bookNum, @Param("page") String page, @Param("pageStatus") String pageStatus);
+	//책갈피 불러오기. 임시
+	public List<BookMarkVO> getBookMark();
 }
