@@ -164,7 +164,7 @@ function infiniteSlidify(sliderWindow) {
   const duplicatedSlidesLength = [...(sliderWindow.querySelectorAll('.duplicated-infinite-slide'))].length;
   // get current slider's position
   const getCurrentX = () => Number(window.getComputedStyle(slider).transform.split(',')[4]);
-  // get closest slide starting position
+  // get closest slide's starting position
   const getClosest = futureX => Math.round(futureX / slideWidth) * slideWidth;
   const getValidSliderPosition = function(evaluatingX) {
     const index = (-1 * evaluatingX) / slideWidth;
