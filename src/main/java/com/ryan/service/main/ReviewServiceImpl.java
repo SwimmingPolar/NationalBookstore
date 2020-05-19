@@ -24,7 +24,7 @@ public class ReviewServiceImpl implements ReviewService{
 		else {
 			flag=(int)mapper.searchOrder(review)+(int)mapper.searchRead(review);
 			if(flag>0) {
-				return mapper.insertReview(review)==1?true : false;
+				return mapper.insertReview(review)>1?true : false;
 			}else
 				return false;
 		}

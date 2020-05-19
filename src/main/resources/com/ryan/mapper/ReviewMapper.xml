@@ -3,6 +3,25 @@
 <mapper namespace="com.ryan.mapper.ReviewMapper">
 <insert id="insertReview" parameterType="com.ryan.domain.book.ReviewVO">
 <selectKey keyProperty="reviewNum" resultType="int" order="BEFORE">
+SELECT review_num.NEXTVAL FROM book_Review
+</selectKey>
+		INSERT INTO book_Review
+		VALUES
+		(
+			#{reviewNum},
+			#{bookNum},
+			#{memberEmail},
+			#{reviewTitle},
+			#{reviewContent},
+			SYSDATE
+		)
+	</insert>
+	<select id="test">
+	SELECT review_num.NEXTVAL FROM book_Review
+	</select>
+	
+<!-- 	<insert id="insertReview" parameterType="com.ryan.domain.book.ReviewVO">
+<selectKey keyProperty="reviewNum" resultType="int" order="BEFORE">
 SELECT review_num.nextval FROM book_Review
 </selectKey>
 		INSERT INTO book_Review
@@ -23,7 +42,7 @@ SELECT review_num.nextval FROM book_Review
 			#{reviewContent},
 			#{reviewRegdate}
 		)
-	</insert>
+	</insert> -->
 	
 	<delete id="deleteReview">
 		DELETE FROM book_Review

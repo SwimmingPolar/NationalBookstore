@@ -161,7 +161,30 @@
         </div>
             
         <div class="myPostCheck" id="myPostCheck">
-            <table>
+        <c:choose>
+          <c:when test="${myreviewlist.size() >0 }">
+          <table>
+          <c:forEach var="review" items="${myreviewlist}">
+                <tr>
+                    <th> 도서명 </th>
+                    <th> 내용 </th>
+                    <th> 등록날짜 </th>
+                </tr>
+                <tr>
+                	<td><b>${reviewTitle}</b><td>
+                    </td>
+                    <td>
+                    	<textarea name="postText" id="postText" readonly>  
+                            ${reviewContent}
+                        </textarea>
+                    </td>
+                    <td>${reviewRegdate}<td>
+                </tr>
+               </c:forEach>
+            </table>
+            </c:when>
+		</c:choose>
+            <%-- <table>
                 <tr>
                     <th> 도서명 </th>
                     <th> 별점 </th>
@@ -181,7 +204,7 @@
                         </textarea>
                     </td>
                 </tr>
-            </table>
+            </table> --%>
         </div>
         <div class="postInsert" id="postInsert">
             <select name="bookSelect" id="bookSelect">
