@@ -39,14 +39,23 @@ public class MyBookController {
 	private FollowService fservice;
 	
 	@RequestMapping("/myLibList")	//찜 책장
-	public String myBookList(Model model, HttpSession session) {
-		ArrayList<EBookVO> list = service.libBook(session);
+	public String myBookList(@RequestParam(name="clickId", required = false) String clickId,Model model, HttpSession session) {
+		Boolean flag = false;
+		if(clickId != null && clickId != "") {
+			flag = true;
+			model.addAttribute("checkId",flag);
+			log.info(flag);
+		}else {
+			model.addAttribute("checkId",flag);
+			log.info(flag);
+		}
+		ArrayList<EBookVO> list = service.libBook(clickId,session);
 		model.addAttribute("libbooklist", list);
-		model.addAttribute("libcount",service.countLibBook(session));		//찜 책장 수량
-		model.addAttribute("readbooklist", service.readBook(session));	//읽은책 리스트
-		model.addAttribute("readbookcount", service.countReadBook(session)); 		//읽은책 수량
-		model.addAttribute("likeBookcount", service.countLikeBook(session));
-		model.addAttribute("myFollower",fservice.countFollow(session)); //나를 팔로우 한 사람
+		model.addAttribute("libcount",service.countLibBook(clickId,session));		//찜 책장 수량
+		model.addAttribute("readbooklist", service.readBook(clickId,session));	//읽은책 리스트
+		model.addAttribute("readbookcount", service.countReadBook(clickId,session)); 		//읽은책 수량
+		model.addAttribute("likeBookcount", service.countLikeBook(clickId,session));
+		model.addAttribute("myFollower",fservice.countFollow(clickId,session)); //나를 팔로우 한 사람
 		return "myLibrary";
 	}
 	
@@ -96,11 +105,6 @@ public class MyBookController {
 		return service.insertGrade(vo, session);
 	}
 	
-	//찜 책장 전체 삭제
-	@RequestMapping("/allDelete") 
-	public String allDelete(HttpSession session) {
-		service.allDelete(session);
-		return 	"redirect : /booklist/myLibList";
-	}
+
 		
 }

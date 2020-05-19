@@ -28,15 +28,19 @@
 <div class="firstColumn">
 <!-- 배경화면 넣는곳 -->
 <div class="follow">
-    <button type="button" id="followBtn"> <i class="fas fa-plus-circle"></i> 팔로우 </button>
+   	<c:if test="${checkId}">
+   		<button type="button" id="followBtn"> <i class="fas fa-plus-circle"></i> 팔로우 </button>
+   	</c:if>    
   </div>
 <div class="bigbox">
 <div class="myImage"> 
     <a href="#modalGo" id="modalOpen"><img id="myFaceImage" src="${pageContext.request.contextPath }/resources/images/myLibrary/picture1.png" ></a>   
 </div>
 <div class="myNickname">
-        <a> ${ryanMember.memberNickName } </a> 님의 서재 
-      <%--   <a> ${ryanMember.memberEmail } </a> --%>
+		<c:choose>
+			<c:when test="${checkId}"> <a> 다른사람<%-- ${ryanMember.memberNickName } --%> </a> 님의 서재  </c:when>
+			<c:otherwise><a>  ${ryanMember.memberNickName }  </a> 님의 서재 </c:otherwise>
+		</c:choose>
 </div>
 </div>
 <div class = "manyBtn">
@@ -47,12 +51,13 @@
     </ul>
 </div>
 <div class="goSubscribe">
+<c:if test="${checkId}">
 <a href="goSubscribe.jsp"> 
   <b> 정기구독 시작 </b><br>
   <em> 바로가기 </em> 
   <i class="fas fa-arrow-circle-right"></i>
 </a>
-
+</c:if>
     
 </div>
 
@@ -111,10 +116,12 @@
               <strong> 찜 목록 </strong> 
             </div>
             <div class="totalBtn">
+           	  <c:if test="${checkId}">
               <label for="allChk">
               <input type="checkbox" name="allChk" id="allChk"> 전체선택
               </label>    
-              <button type="button" id="allDelete"> 삭제 </button>      
+              <button type="button" id="allDelete"> 삭제 </button>   
+              </c:if>   
             </div>
             <div class="ebookList"> 
                  <c:choose>
@@ -136,8 +143,10 @@
                       <li> <span>${book.bookPublisher}</span></li>
                     </ul>
                   </td>
+                <c:if test="${checkId}">
                   <td><button type="button" id="goRead">바로보기</button>
                   <a href="/booklist/deleteLibList?booknum=${book.bookNum }" id=eachDelete>삭제</a></td>
+                  </c:if>
                 </tr>
                        </c:forEach>   	
                        </table>		

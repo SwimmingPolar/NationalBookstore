@@ -148,11 +148,14 @@
                                 <c:forEach var="p" items="${likepeople}">
                                     <ul>
                                         <li> <span>
-                                                <img id="myFaceImage" src="${pageContext.request.contextPath}">
+                                                <img id="myFaceImage" src="${pageContext.request.contextPath}/resources/images/myLibrary/photoImg.png">
                                             </span>
                                             <span>
                                                 <a>${p.memberNickName } 님</a> <br>
                                                 <a>by ${p.memberEmail }</a>
+                                            </span>
+                                            <span>
+                                            	<button value="${p.memberEmail }" id="follow">팔로우</button>
                                             </span>
                                         </li>
                                     </ul>
@@ -308,6 +311,13 @@
         <!-- wrapper end -->
     </div>
     </div>
+    <script>
+    $("#follow").click(function(){
+    	var followId = $(this).val();
+    	location.href = "/booklist/myLibList?clickId="+followId;
+    });
+    
+    </script>
     <script>
         $(function () {
             var cnt = 0;
