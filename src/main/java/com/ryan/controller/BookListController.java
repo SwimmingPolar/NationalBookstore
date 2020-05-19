@@ -127,6 +127,11 @@ public class BookListController {
 		return "paper";
 	}
 	
+	@RequestMapping(value="/paper")
+	public String Paper() {
+		return "paper";
+	}
+	
 	//베스트셀러
 	@RequestMapping(value="/best")
 	public String BestSeller(@RequestParam(value="time", defaultValue="주간") String time, @RequestParam(value="category", defaultValue="소설") String category, Model model) {
