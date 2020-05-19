@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>책 제목 예정 책번호${param.booknumber }</title>
+<title>${book.bookTitle }</title>
  <!-- Google Fonts -->
 <link
 href="https://fonts.googleapis.com/css?family=Black+Han+Sans|Nanum+Gothic|Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap"
@@ -44,27 +44,34 @@ font-family: 'Nanum Gothic', sans-serif;
 		var width = window.innerWidth, height = window.innerHeight;
 		$("div.main-container").css("width", width).css("height", height);
 		$("div.page").css("width", width/2).css("height", height);
+		$("div.result").css("height", (height - 100));
 	 	//화면 사이즈가 변할때마다 main-container의 크기 변환
 		$(window).resize(function() {
 			var width = window.innerWidth, height = window.innerHeight;
 			$("div.main-container").css("width", width).css("height", height);
 			$("div.page").css("width", width/2).css("height", height);
+			$("div.result").css("height", (height - 100));
 		});
 	 	//책 데이터 파싱
 		var pages = [];
 	 	var index = [];
-	 	var temp = 0;
+	 	var indexMap = new Map();
+	 	var temp = 0; //목차 할당 용도.
 		//List로 불러온 목차를 javascript Array로 저장
 		<c:forEach var="i" items="${index }" >
 			index.push("${i }");
 		</c:forEach>
 		//페이지 나누는 동시에 목차 할당
+		var indexFinder = -1; //페이지마다 목차 이름을 Map으로 할당. 검색결과 위해
 		<c:forEach var="c" items="${chapter.get(0) }" varStatus="status">
 			pages.push("${c }");
 			if("${c }".indexOf("<h3>") >= 0) {
 				$(".modal.index").append("<button class='btn goindex ${status.index}' >"+(temp+1)+"."+ index[temp]+"</button>");
 				temp++;
+				indexFinder++;
 			}
+			indexMap.set("${status.index }", index[indexFinder]);
+			
 		</c:forEach>
 		//페이지 new
 		//로드시 첫 두 페이지 초기화
@@ -75,7 +82,7 @@ font-family: 'Nanum Gothic', sans-serif;
 		console.dir("prevPage는"+prevPage+",nextPage는"+nextPage+"로 세팅됐습니다.")
 		$(".page.left").empty().append(pages[startPage]);
 		$(".page.right").empty().append(pages[(startPage+1)]);
-		function jumpTo(e) { //페이지 이동 함수 e = 페이지번호
+		function jumpTo(e) { //페이지 이동 함수 e = 페이지번호. 두 페이지용
 			currentPage = e;
 			console.dir("currentPage:"+currentPage);
 			if( (e>=0) && (e<pages.length) ) {
@@ -91,33 +98,95 @@ font-family: 'Nanum Gothic', sans-serif;
 			}
 			console.dir("prevPage:"+prevPage+",nextPage:"+nextPage);
 		}
+		function jumpToSingle(e) { //페이지 이동 함수 e = 페이지번호. 단일 페이지용
+			currentPage = e;
+			console.dir("currentPage:"+currentPage);
+			if( (e>=0) && (e<pages.length) ) {
+				$(".page").each(function() {
+					$(this).empty().append(pages[e]);
+					e++;
+				});
+				prevPage = (currentPage-1);
+				nextPage = (currentPage+1);
+			}
+			console.dir("prevPage:"+prevPage+",nextPage:"+nextPage);
+		}
 		$(".modal.index .btn.goindex").click(function(e) { //목차로 이동
 			var goTo = parseInt(e.target.classList[2]);
 			jumpTo(goTo);
 		});
 		function keyJump(e) { //키입력
 			var keyCode = e.keyCode;
-			if(keyCode == 39 || keyCode == 40) { //다음
+			// 107 Num Key  +
+		    // 109 Num Key  -
+		    // 173 Min Key  hyphen/underscor Hey
+		    // 61 Plus key  +/= key
+		    // 37 left
+		    // 38 up
+		    // 39 right
+		    // 40 down
+			if (e.ctrlKey==true&&(e.which == '61' || e.which == '107' || e.which == '173' || e.which == '109'  || e.which == '187'  || e.which == '189' )) {
+				e.preventDefault(); //브라우저 줌인 줌아웃 불가
+			} else if(keyCode == 39 || keyCode == 40) { //다음
 				e.preventDefault();
+				console.dir("다음");
 				jumpTo(nextPage);
-			}
-			else if(keyCode == 37 || keyCode == 38) { //이전
+			} else if(keyCode == 37 || keyCode == 38) { //이전
 				e.preventDefault();
 				jumpTo(prevPage);
 			}
 		}
 		document.addEventListener("keydown", keyJump, {passive:false});
 		function scrollJump(e) { //스크롤
-			e.preventDefault();
+			$(".result").unbind();
+			console.dir(e.path[0].classList[0]);
 			var d = e.wheelDelta;
-			if(d < 0) { //다음
-				jumpTo(nextPage);
-			}
-			else if(d > 0) { //이전
-				jumpTo(prevPage);
+			var currentOn = e.path[0].classList[0];
+			if(currentOn == "page") {
+				e.preventDefault();
+				if(d < 0) { //다음
+					jumpTo(nextPage);
+				}
+				else if(d > 0) { //이전
+					jumpTo(prevPage);
+				}
 			}
 		}
 		document.addEventListener("wheel", scrollJump, {passive:false});
+		//var a = document.querySelectorAll(".page");
+		//a.forEach.call(a ,function(a){ a.addEventListener("wheel", keyJump, {passive:false} ); });
+		
+		//마우스 이벤트
+		var mouseX, mouseY, mousedX, mousedY;
+		var docWidth = window.innerWidth, docHeight = window.innerHeight;
+		var jumpLeft = docWidth / 8;
+		var jumpRight = docWidth - (docWidth/8);
+		$(".page").on("mousedown", function(e) {
+			mouseX = e.pageX;
+			mouseY = e.pageY;
+		});
+		$(".page").on("mouseup", function(e) {
+			mousedX = e.pageX;
+			mousedY = e.pageY;
+			if(mouseX == mousedX && mouseY == mousedY) { //시작,끝 위치 같을떄
+				if(mouseX < jumpLeft) { //페이지 넘기기 부분 클릭. 왼쪽. 이전페이지
+					console.dir("페이지를 넘기려고 하시는군요")
+					jumpTo(prevPage);
+				} else if(mouseX > jumpRight) { //페이지 넘기기 부분 클릭. 오른쪽. 다음페이지
+					console.dir("페이지를 넘기려고 하시는군요")
+					jumpTo(nextPage);
+				} else { //페이지 넘기기 부분 클릭 X
+					if($(".modal-container").hasClass("modal-pop")) { //옵션창이 떠있을떄
+						$(".modal-container").removeClass("modal-pop");
+					} else {
+						$(".header-container").toggleClass("header-pop");
+					}
+				}
+			} else { //시작, 끝 위치 다를때
+				console.dir("드래그 해서 검색이나 그런걸 하려는군");
+			}
+		});
+		
 		//본문검색
 		$(".modal.search input.keyword").on("keydown", function(e) {
 			console.dir(e.keyCode);
@@ -130,18 +199,36 @@ font-family: 'Nanum Gothic', sans-serif;
 					for(var index in pages) {
 						var finder = pages[index].indexOf(keyword);
 						while(finder >= 0) {
-							console.dir("단어를 찾았습니다!");
+							console.dir(index+"번째 index,"+finder+"번째 글자에서 키워드를 발견!");
+							//112자 출력할 예정
+							var contentPrev = "";//pages[index].substring(0, finder);
+							var contentNext = "";//pages[index].substring((finder+keywordLength), pages[index].length);
+							if(finder < 32) {
+								contentPrev = pages[index].substring(0, finder);
+							} else {
+								contentPrev = pages[index].substring((finder-32), finder);
+							}
+							if(finder + 32 > 600) {
+								contentNext = pages[index].substring((finder+keywordLength), pages[index].length);
+							} else {
+								contentNext = pages[index].substring((finder+keywordLength), (finder+32));
+							}
+							contentPrev = contentPrev.replace("<h3>", "").replace("</h3>","");
+							contentNext = contentNext.replace("<h3>", "").replace("</h3>","");
+							/////////////////////////////////////////
 							var inPage = parseInt(index) + 1;
-							$(".modal.search div.result").append("<div class='goindex 1'>"
+							$(".modal.search div.result").append("<div class='goindex "+index+"'>"
 									+"<div class='title' >"
-									+"<span class='chapter' >회상</span>"
-									+"<span class='index'>"+inpage+"페이지</span>"
+									+"<span class='chapter' >"+indexMap.get(index+"")+"</span>"
+									+"<span class='index'>"+inPage+"페이지</span>"
 									+"</div>"
 									+"<div class='content' >"
-									+"최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 자네답게 살았어,"
-									+"조선의 주먹 황제답게 말이야... 늘 야인이었지만, 용감하고 멋있게 살았어."
-									+"나름대로 자네의 역사를 가지고 자네의 시대를 치열하고 열심히 살았다는 얘기야..."
-									+"뭐랄까... 야인시대 라고나 할까...?"
+									+contentPrev
+									+"<span class='result-keyword' >"+keyword+"</span>"
+									+contentNext
+									//+"최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 자네답게 살았어,"
+									//+"조선의 주먹 황제답게 말이야... 늘 야인이었지만, 용감하고 멋있게 살았어."
+									//+"얘기야... 뭐랄까... 야인시대 라고나 할까...?"
 									+"</div>"
 									+"</div>");
 							finder = pages[index].indexOf(keyword, (finder+1));
@@ -150,18 +237,11 @@ font-family: 'Nanum Gothic', sans-serif;
 				}
 			}
 		});
-		//본문검색 후 해당 페이지로 이동
-		$(document).on("click", ".modal.search li", function(e) {
-			var value = (e.target.value);
-			current = value;
-			if(value%2==1) {
-				current--;
-			}
-			$(".page.left>div").empty().append(page[current]);
-			$(".page.right>div").empty().append(page[(current+1)]);
-			$(".left span").empty().append(current+1);
-			$(".right span").empty().append(current+2);
-		})
+		//검색결과로 이동
+		$(document).on("click", "div.goindex", function(e) {
+			var goTo = parseInt($(this).parents("div.goindex").prevObject[0].classList[1]);
+			jumpTo(goTo);
+		});
 	});
 </script>
 <body>
@@ -169,6 +249,7 @@ font-family: 'Nanum Gothic', sans-serif;
 	<script type="text/javascript" >
 		$(document).ready(function() {
 			var headerTimerId;
+			var modalTimerId;
 			$(".header-caller").on("mouseover", function() {
 				$(".header-container").addClass("header-pop");
 			});
@@ -180,17 +261,22 @@ font-family: 'Nanum Gothic', sans-serif;
 			$(".header-container").on("mouseover", function() {
 				clearTimeout(headerTimerId);
 			});
+			//모달
 			$(".modal-container").on("mouseover", function() {
 				clearTimeout(headerTimerId);
+			});
+			$(".modal-caller").on("mouseover", function() {
+				$(".modal-container").addClass("modal-pop");
 			});
 		});
 	</script>
 	<div class="header-caller"></div>
+	<div class="modal-caller"></div>
 	<%-- 상단바 --%>
 	<div class="header-container" >
 		<div class="header" >
 			<button class="btn tomain far fa-arrow-left" ></button>
-			<span class="title">책 제목</span>
+			<span class="title">${book.bookTitle }</span>
 			<script type="text/javascript" >
 				$(document).ready(function() {
 					$(".configuration > .btn").on("click", function(e) {
@@ -213,71 +299,16 @@ font-family: 'Nanum Gothic', sans-serif;
 	</div> <%-- header-container 끝 --%>
 	<script type="text/javascript" >
 		$(document).ready(function() {
-			var mouseX, mouseY, mousedX, mousedY;
-			var docWidth = window.innerWidth, docHeight = window.innerHeight;
-			var jumpLeft = docWidth / 8;
-			var jumpRight = docWidth - (docWidth/8);
-			$(".page").on("mousedown", function(e) {
-				mouseX = e.pageX;
-				mouseY = e.pageY;
-			});
-			$(".page").on("mouseup", function(e) {
-				mousedX = e.pageX;
-				mousedY = e.pageY;
-				if(mouseX == mousedX && mouseY == mousedY) { //시작,끝 위치 같을떄
-					if(mouseX < jumpLeft || mouseX > jumpRight) { //페이지 넘기기 부분 클릭
-						console.dir("페이지를 넘기려고 하시는군요")
-					} else { //페이지 넘기기 부분 클릭 X
-						if($(".modal-container").hasClass("modal-pop")) { //옵션창이 떠있을떄
-							$(".modal-container").removeClass("modal-pop");
-						} else {
-							$(".header-container").toggleClass("header-pop");
-						}
-					}
-				} else { //시작, 끝 위치 다를때
-					console.dir("드래그 해서 검색이나 그런걸 하려는군");
-				}
-			});
+			
 		});
 	</script>
 	<div class="main-container" >
 		<%-- 책 내용 보여줌 --%>
 		<div class="page left" >
-			
-			<!-- 최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 자네답게 살았어, 조선의 주먹 황제답게 말이야... 
-			늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의 역사를 가지고 자네의 시대를 치열하고 열심히 살았다는
-			얘기야... 뭐랄까... 야인시대 라고나 할까...? 최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 
-			자네답게 살았어, 조선의 주먹 황제답게 말이야... 늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의
-			역사를 가지고 자네의 시대를 치열하고 열심히 살았다는 얘기야... 뭐랄까... 야인시대 라고나 할까...?
-			최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 자네답게 살았어, 조선의 주먹 황제답게 말이야... 
-			늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의 역사를 가지고 자네의 시대를 치열하고 열심히 살았다는
-			얘기야... 뭐랄까... 야인시대 라고나 할까...? 최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 
-			자네답게 살았어, 조선의 주먹 황제답게 말이야... 늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의
-			역사를 가지고 자네의 시대를 치열하고 열심히 살았다는 얘기야... 뭐랄까... 야인시대 라고나 할까...?
-			최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 자네답게 살았어, 조선의 주먹 황제답게 말이야... 
-			늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의 역사를 가지고 자네의 시대를 치열하고 열심히 살았다는
-			얘기야... 뭐랄까... 야인시대 라고나 할까...? 최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 
-			자네답게 살았어, 조선의 주먹 황제답게 말이야... 늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의
-			역사를 가지고 자네의 시대를 치열하고 열심히 살았다는 얘기야... 뭐랄까... 야인시대 라고나 할까...? -->
 		</div>
 		<%--<div class="depth left" ></div>
 		<div class="depth right" ></div>--%>
 		<div class="page right" >
-			<!-- 최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 자네답게 살았어, 조선의 주먹 황제답게 말이야... 
-			늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의 역사를 가지고 자네의 시대를 치열하고 열심히 살았다는
-			얘기야... 뭐랄까... 야인시대 라고나 할까...? 최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 
-			자네답게 살았어, 조선의 주먹 황제답게 말이야... 늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의
-			역사를 가지고 자네의 시대를 치열하고 열심히 살았다는 얘기야... 뭐랄까... 야인시대 라고나 할까...?
-			최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 자네답게 살았어, 조선의 주먹 황제답게 말이야... 
-			늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의 역사를 가지고 자네의 시대를 치열하고 열심히 살았다는
-			얘기야... 뭐랄까... 야인시대 라고나 할까...? 최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 
-			자네답게 살았어, 조선의 주먹 황제답게 말이야... 늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의
-			역사를 가지고 자네의 시대를 치열하고 열심히 살았다는 얘기야... 뭐랄까... 야인시대 라고나 할까...?
-			최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 자네답게 살았어, 조선의 주먹 황제답게 말이야... 
-			늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의 역사를 가지고 자네의 시대를 치열하고 열심히 살았다는
-			얘기야... 뭐랄까... 야인시대 라고나 할까...? 최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 
-			자네답게 살았어, 조선의 주먹 황제답게 말이야... 늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의
-			역사를 가지고 자네의 시대를 치열하고 열심히 살았다는 얘기야... 뭐랄까... 야인시대 라고나 할까...? -->
 		</div>
 	</div> <%-- main-container 끝 --%>
 	<script type="text/javascript">
@@ -308,7 +339,7 @@ font-family: 'Nanum Gothic', sans-serif;
 			<span class="title">본문검색</span>
 			<input class="keyword" type="text" placeholder="단어.." />
 			<div class="result" >
-				<div class="goindex 1">
+				<!-- <div class="goindex 1">
 					<div class="title" >
 						<span class="chapter" >회상</span>
 						<span class="index">10 페이지</span>
@@ -351,7 +382,7 @@ font-family: 'Nanum Gothic', sans-serif;
 						있는데. 마구니가 가득하단 말이야. 저놈의 머리를 철퇴로 으깨어주어라.
 						사 살려주시옵소서. 신이옵니다.
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</div>
 		<div class="modal note" >
