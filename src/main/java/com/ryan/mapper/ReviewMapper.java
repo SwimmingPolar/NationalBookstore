@@ -18,4 +18,6 @@ public interface ReviewMapper {
 	public int duplication(ReviewVO review);
 	
 	public ArrayList<ReviewVO> myReviewList(String memberEmail);
+	
+	public int insertGrade(int bookNum);
 }

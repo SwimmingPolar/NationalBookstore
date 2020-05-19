@@ -67,4 +67,21 @@ SELECT review_num.nextval FROM book_Review
 	<select id="myreviewList" resultType="com.ryan.domain.book.ReviewVO">
 	SELECT * FROM book_Review WHERE member_email=#{memberEmail}
 	</select>
+	
+	<insert id="insertGrade">
+	INSERT INTO book_Review
+		(
+			grade_num,
+			member_email,
+			book_num,
+			grade_score
+		)
+		VALUES
+		(
+			#{reviewNum}
+			#{memberEmail},
+			#{bookNum},
+			#{gradeScore}
+		)
+	</insert>
 </mapper>

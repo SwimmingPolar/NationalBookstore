@@ -18,6 +18,7 @@ import com.ryan.domain.book.EBookVO;
 import com.ryan.domain.book.MyReadBookVO;
 import com.ryan.service.book.MyBookAlarmService;
 import com.ryan.service.book.MyBookService;
+import com.ryan.service.main.ReviewService;
 import com.ryan.service.member.FollowService;
 
 import lombok.Setter;
@@ -37,6 +38,9 @@ public class MyBookController {
 	@Setter(onMethod_ = {@Autowired})
 	private FollowService fservice;
 	
+	@Setter(onMethod_ = {@Autowired})
+	private ReviewService rservice;
+	
 	@RequestMapping("/myLibList")	//찜 책장
 	public String myBookList(Model model, HttpSession session) {
 		ArrayList<EBookVO> list = service.libBook(session);
@@ -46,6 +50,7 @@ public class MyBookController {
 		model.addAttribute("readbookcount", service.countReadBook(session)); 		//읽은책 수량
 		model.addAttribute("likeBookcount", service.countLikeBook(session));
 		model.addAttribute("myFollower",fservice.countFollow(session)); //나를 팔로우 한 사람
+		model.addAttribute("myreviewlist", rservice.myReviewList(session));//내 reviewlist
 		return "myLibrary";
 	}
 	
