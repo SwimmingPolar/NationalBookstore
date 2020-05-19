@@ -46,13 +46,14 @@ public class MyBookServiceImpl implements MyBookService{
 	}
 
 	@Override	//찜 책장 삭제
-	public ArrayList<EBookVO> deleteLibBook(ArrayList<EBookVO> booknum, HttpSession session) {
+	public ArrayList<EBookVO> deleteLibBook(int[] booknum, HttpServletRequest request) {
 		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
 		ArrayList<MyLibVO> number = new ArrayList<MyLibVO>();
-		for(EBookVO i : booknum) {
+		for(int i : booknum) {
 			MyLibVO mylib = new MyLibVO();
-			mylib.setBookNum(i.getBookNum());
+			mylib.setBookNum(i);
 			mylib.setMemberEmail(member.getMemberEmail());
 			number.add(mylib);
 		}

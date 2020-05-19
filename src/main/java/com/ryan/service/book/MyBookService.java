@@ -15,7 +15,7 @@ public interface MyBookService {
 	//찜 책장 -- 조회, 삭제 입력
 	public ArrayList<EBookVO> libBook(HttpSession session);
 	
-	public ArrayList<EBookVO> deleteLibBook(ArrayList<EBookVO> booknum, HttpSession session);
+	public ArrayList<EBookVO> deleteLibBook(int[] booknum, HttpServletRequest request);
 	
 	public Boolean insertLibBook(int booknumber, HttpSession session);
 	

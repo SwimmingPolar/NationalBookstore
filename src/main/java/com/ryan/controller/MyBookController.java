@@ -3,6 +3,7 @@ package com.ryan.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +52,15 @@ public class MyBookController {
 	
 	
 	@RequestMapping("/deleteLibList")
-	public @ResponseBody List<EBookVO> deleteList(@RequestParam("booknum") int booknum, HttpSession session) {
+	@ResponseBody
+	public ArrayList<EBookVO> deleteList(HttpServletRequest request) {
+		String[] ajaxResult = request.getParameterValues("booknum");
+		int[] booknum = new int[ajaxResult.length];
+		for(int i=0; i<ajaxResult.length;i++) {
+			booknum[i] = Integer.parseInt(ajaxResult[i]);
+		}
 		//return service.deleteLibBook(booknum, session)
-		return null;
+		return service.deleteLibBook(booknum, request);
 	}
 	
 //	@RequestMapping("/readbooklist") 	//읽은 책 조회

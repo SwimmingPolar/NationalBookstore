@@ -114,7 +114,7 @@
               <label for="allChk">
               <input type="checkbox" name="allChk" id="allChk"> 전체선택
               </label>    
-              <button type="button" id="allDelete" onclick="allDelete();"> 전체삭제 </button>      
+              <button type="button" id="allDelete"> 삭제 </button>      
             </div>
             <div class="ebookList"> 
                  <c:choose>
@@ -123,7 +123,7 @@
                          <c:forEach var="book" items="${libbooklist}">
                           
                           <tr>
-                  <td><input type="checkbox" name="chkbox" id="chkbox"></td>
+                  <td><input type="checkbox" name="chkbox" id="chkbox" value="${book.bookNum }"></td>
                   <td>
                      <a href="/book/bookdetail?booknumber=${book.bookNum }"> 
                   		<img src="${pageContext.request.contextPath }${book.bookThumbnail }" alt="없음">
@@ -220,8 +220,40 @@
    
  
 </div>
-</div>
 
+<script>
+$(document).ready(function(){
+	
+	$("#allDelete").on('click',function(){
+		var array = [];
+		$("input[name=chkbox]:checked").each(function(){
+			array.push($(this).val());
+		});
+		alert(array);
+		$.ajax({
+			url:"/booklist/deleteLibList",
+			type:"post",
+			traditional:true,
+			data:{
+				booknum:array
+			},
+			success:function(data){
+				if(data==null || data == ""){
+					console.log("컨트롤러에서 받은 배열 : "+data);
+					
+				}else{
+					console.log("컨 : "+data);
+				}
+			},
+			error:function(){
+				alert("에러");
+			}
+		});
+	});	
+});
+
+
+</script>
     <script>
 $(function() {
 
