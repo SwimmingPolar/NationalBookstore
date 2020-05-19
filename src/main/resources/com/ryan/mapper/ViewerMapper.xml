@@ -5,4 +5,12 @@
 		SELECT * FROM EBOOK
 		WHERE BOOK_NUM LIKE #{booknumber}
 	</select>
+	<!-- 책갈피 추가 -->
+	<insert id="addBookMark" >
+		INSERT INTO BOOK_MARK (MEMBER_EMAIL, BOOK_NUM, PAGE_NUM, PAGE_STATUS)
+		VALUES ('temp', #{booknumber}, #{page}, #{pageStatus})
+	</insert>
+	<select id="getBookMark" resultType="com.ryan.domain.book.BookMarkVO" >
+		SELECT * FROM BOOK_MARK
+	</select>
 </mapper>

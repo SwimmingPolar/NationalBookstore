@@ -3,17 +3,17 @@
 	overflow: hidden;
 }
  */
- 
+
 body {
 	margin-bottom: 0;
 	overflow: hidden;
 }
 
-body {
+body, div.result {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
 }
-body::-webkit-scrollbar {
+body::-webkit-scrollbar, div.result::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
 }
 
@@ -28,6 +28,13 @@ div.header-caller {
 	position: fixed;
 	top: 0; left: 0;
 	width: 100%; height: 30px;
+	z-index: 11;
+}
+
+div.modal-caller {
+	position: fixed;
+	top: 0; right: 0;
+	width: 10px; height: 100%;
 	z-index: 11;
 }
 
@@ -105,9 +112,14 @@ div.page {
 	top: 0;
 	/* width: 50%; height: 200%; */
 	padding: 70px 110px;
-	line-height: 230%;
+	line-height: 3.0;
 	font-family : 'Nanum Gothic', 'Roboto', sans-serif;
 	font-size: 1.35em;
+}
+
+div.page > h3 {
+	font-family : 'Noto Sans KR', 'Roboto', sans-serif;
+	text-decoration: underline;
 }
 
 div.page.left {
@@ -122,14 +134,37 @@ div.page.right {
 	box-shadow: -3px 0 15px -3px rgba(0, 0, 0, 0.5);
 }
 
-div.bookmark-container {
+div.bookmark-container.left {
+	position: absolute;
+	top: 0; left: 0;
+	width: 200px; height: 90px;
+	z-index: 12;
+	/* background: #9797FF; */
+}
+
+.btn.bookmark {
+	display: none;
+}
+
+.btn.bookmark.left {
+	position: relative;
+	top: 50%; left: 50%;
+	transform: translate(-140%, -50%);
+	font-size: 3em;
+	opacity: 0.3;
+	padding: 10px;
+	/* background: #FF9797; */
+}
+
+div.bookmark-container.right {
 	position: absolute;
 	top: 0; right: 0;
 	width: 200px; height: 90px;
 	z-index: 12;
 	/* background: #9797FF; */
 }
-.btn.bookmark {
+
+.btn.bookmark.right {
 	position: relative;
 	top: 50%; left: 50%;
 	transform: translate(30%, -50%);
@@ -169,10 +204,9 @@ div.modal-container > div.modal {
 	display: none;
 }
 
-/* div.modal-container > div.modal.search { 임시
+div.modal-container > div.modal.index { 
 	display: flex;
-	flex-direction: column;
-} */
+}
 
 /*----모달 내부구성----*/
 div.modal > span.title {
@@ -246,6 +280,8 @@ div.modal.search > div.result {
 	display: flex;
 	flex-direction: column;
 	padding: 5px;
+	overflow: auto;
+	height: 700px;
 }
 
 div.modal.search > div.result > div.goindex {
@@ -255,7 +291,7 @@ div.modal.search > div.result > div.goindex {
 	color: #FFFFFF;
 	font-family : 'Nanum Gothic', sans-serif;
 	font-size: 1em;
-	padding: 5px;
+	padding: 12px 5px;
 	border-bottom: 1px solid #888888;
 	transition: 0.1s;
 }
@@ -288,6 +324,10 @@ div.modal.search > div.result > div.goindex > div.title > span.index {
 div.modal.search > div.result > div.goindex > div.content {
 	font-size: 0.9em;
 	padding: 5px 0;
+}
+
+div.modal.search > div.result .result-keyword {
+	background: rgba(255, 255, 0, 0.8);
 }
 /*독서노트 구현 던질까 말까*/
 div.modal.note {

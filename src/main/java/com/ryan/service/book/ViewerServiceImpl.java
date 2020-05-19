@@ -17,6 +17,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.ryan.domain.book.BookMarkVO;
 import com.ryan.domain.book.EBookVO;
 import com.ryan.mapper.ViewerMapper;
 
@@ -68,7 +69,7 @@ public class ViewerServiceImpl implements ViewerService {
 			String title = "<h3>"+el.getElementsByTagName("title").item(0).getTextContent()+"</h3>";
 			String content = el.getElementsByTagName("content").item(0).getTextContent();
 			content = content.replace("\t",  "").replace("\n", "").replace("   ", "");
-			int counto = 600;
+			int counto = 500;
 			int a = content.length()/counto;
 			
 			int begin = 0;
@@ -96,6 +97,14 @@ public class ViewerServiceImpl implements ViewerService {
 	@Override
 	public EBookVO getBookFilePath(@Param("booknumber") String bookNum) throws ClassNotFoundException, SQLException {
 		return mapper.getBookFilePath(bookNum);
+	}
+	@Override
+	public Boolean addBookMark(@Param("booknumber") String bookNum, @Param("page") String page, @Param("pageStatus") String pageStatus) {
+		return mapper.addBookMark(bookNum, page, pageStatus);
+	}
+	@Override
+	public List<BookMarkVO> getBookMark() {
+		return mapper.getBookMark();
 	}
 
 }

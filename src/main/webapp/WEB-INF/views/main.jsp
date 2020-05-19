@@ -50,7 +50,7 @@
             <h2>NATIONAL BOOKSTORE</h2>
           </a>
         </div>
-        <div class="search-wrapper">
+        <div class="search-wrapper hasResult">
           <div class="filter">
             <ul>
               <li class="selected">제목</li>
@@ -58,9 +58,9 @@
           </div>
           <form action="search" method="get">
             <button><span class="far fa-search"></span></button>
-            <input class="hasResult" name="keyword" type="text" placeholder="제목, 저자, 해쉬태그 검색" autocomplete="off" spellcheck="false">
+            <input class="search-input" name="keyword" type="text" placeholder="제목, 저자, 해쉬태그 검색" autocomplete="off" spellcheck="false">
             <input type="hidden" name="type" value="title">
-            <div class="search-result hasResult">
+            <div class="search-result">
               <ul>
                 <li>아이언</li>
                 <li>브론즈</li>

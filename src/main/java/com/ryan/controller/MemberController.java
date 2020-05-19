@@ -179,6 +179,10 @@ public class MemberController {
 	public String getMemberSignUp() {
 		return "signup";
 	}
+	@GetMapping("/findPasswd")
+	public String getFindPasswd() {
+		return "findPasswd";
+	}
 	
 	
 	

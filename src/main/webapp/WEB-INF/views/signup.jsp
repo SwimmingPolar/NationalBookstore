@@ -521,7 +521,7 @@
   <!-- 핸드폰번호 유효성 검사 -->
   <script>
     function isValidTelFormat(tel) {
-      tel = tel.value.trim().replace(/-/g, '').replace(/[\s]/g, '');
+      tel = tel.trim().replace(/-/g, '').replace(/[\s]/g, '');
       const telPattern = /\d{11}/;
       return telPattern.test(tel);
     }
