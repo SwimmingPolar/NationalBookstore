@@ -99,7 +99,7 @@
         </div>
     <div class="finishBtn">
         <div class="btn1">
-        <button type="button" class="resetBtn" onclick="location.href='myAccount.jsp'">취소</button>
+        <button type="button" class="resetBtn" onclick="history.back()">취소</button>
     </div>
     <div class="btn2">
         <button type="button" class="chkBtn" onclick="updateFinish();">확인</button>
@@ -231,6 +231,5 @@
             }
         }
     </script>
- <%@ include file="../../template/footer.jsp" %>
 </body>
 </html>
