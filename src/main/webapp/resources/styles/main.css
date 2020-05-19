@@ -135,7 +135,8 @@
 .search-result {
   display: none;
   background-color: #fff;
-  height: 287px;
+  height: auto;
+  max-height: 287px;
   width: 100%;
   position: absolute;
   z-index: 999;
@@ -144,7 +145,7 @@
   border-radius: 3px;
   overflow-y: auto;
 }
-.search-wrapper input[name="query"]:focus.hasResult ~ .search-result.hasResult {
+.search-wrapper.hasResult input.search-input:focus ~ .search-result {
   display: block;
 }
 .search-result ul {

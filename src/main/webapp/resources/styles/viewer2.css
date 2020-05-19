@@ -112,9 +112,16 @@ div.page {
 	top: 0;
 	/* width: 50%; height: 200%; */
 	padding: 70px 110px;
-	line-height: 250%;
+	line-height: 3.0;
+	/* line-height: 2.7; */
 	font-family : 'Nanum Gothic', 'Roboto', sans-serif;
-	font-size: 1.35em;
+	font-size: 21.6px;
+	/* font-size: 0.9em; */
+}
+
+div.page > h3 {
+	font-family : 'Noto Sans KR', 'Roboto', sans-serif;
+	text-decoration: underline;
 }
 
 div.page.left {
@@ -129,14 +136,53 @@ div.page.right {
 	box-shadow: -3px 0 15px -3px rgba(0, 0, 0, 0.5);
 }
 
-div.bookmark-container {
+div.pageNum {
+	position: fixed;
+	font-family : 'Montserrat', sans-serif;
+	font-size: 1em;
+	width: 20px; height: 20px;
+	color: rgba(0, 0, 0, 0.5);
+}
+
+div.pageNum.left {
+	bottom: 3%; left: 25%;
+}
+
+div.pageNum.right {
+	bottom: 3%; right: 25%;
+}
+
+div.bookmark-container.left {
+	position: absolute;
+	top: 0; left: 0;
+	width: 200px; height: 90px;
+	z-index: 12;
+	/* background: #9797FF; */
+}
+
+.btn.bookmark {
+	display: none;
+}
+
+.btn.bookmark.left {
+	position: relative;
+	top: 50%; left: 50%;
+	transform: translate(-140%, -50%);
+	font-size: 3em;
+	opacity: 0.3;
+	padding: 10px;
+	/* background: #FF9797; */
+}
+
+div.bookmark-container.right {
 	position: absolute;
 	top: 0; right: 0;
 	width: 200px; height: 90px;
 	z-index: 12;
 	/* background: #9797FF; */
 }
-.btn.bookmark {
+
+.btn.bookmark.right {
 	position: relative;
 	top: 50%; left: 50%;
 	transform: translate(30%, -50%);
@@ -263,7 +309,7 @@ div.modal.search > div.result > div.goindex {
 	color: #FFFFFF;
 	font-family : 'Nanum Gothic', sans-serif;
 	font-size: 1em;
-	padding: 5px;
+	padding: 12px 5px;
 	border-bottom: 1px solid #888888;
 	transition: 0.1s;
 }
