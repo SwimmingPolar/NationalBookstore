@@ -38,7 +38,7 @@ public class CartController {
 	
 	@PostMapping("/insert")
 	public @ResponseBody Boolean insertCart(CartVO[] cart, @ModelAttribute("ryanMember") MemberVO member) {
-		
+		log.info(cart);
 		if(cartService.insertCart(cart,member)) { // 장바구니 입력 성공시 true 리턴해줍니다 필요하시면 쓰면됩니다.
 			return true; 
 		} 

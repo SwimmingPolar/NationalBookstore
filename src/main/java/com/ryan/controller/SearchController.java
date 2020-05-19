@@ -30,7 +30,7 @@ public class SearchController {
 	//검색결과 없는것 추가하기
 	//검색후 e북과 현물북 리스트를 세션에 저장한다
 	@RequestMapping("/search")
-	public String searchBook(Model model,String type,@RequestParam(value = "keyword", required = false, defaultValue=" ") String keyword) {
+	public String searchBook(Model model,@RequestParam(value = "type", required = false, defaultValue="BOOK_TITLE")String type,@RequestParam(value = "keyword", required = false, defaultValue=" ") String keyword) {
 		System.out.println("검색 실행(param1:"+type+",param2:"+keyword+")");
 		HashMap<String, List<EBookVO>> result = new HashMap<String, List<EBookVO>>();
 		

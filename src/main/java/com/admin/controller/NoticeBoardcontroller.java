@@ -109,7 +109,7 @@ public class NoticeBoardcontroller {
 		//페이지객체 저장해서 넘김
 		model.addAttribute("pagevo", pagevo);
 		
-		return "notice page view";
+		return "공지사항 view";
 	}
 	
 	@RequestMapping("/detail")

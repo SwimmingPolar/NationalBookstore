@@ -44,7 +44,6 @@
     <!-- slidify sliders and fadeInUp reveal -->
     <script src="../../resources/js/common.js"></script>
 </head>
-
 <body>
     <header class="topbar">
         <nav>
@@ -89,13 +88,9 @@
                 </div>
 
                 <div class="choiceBtnOne">
-                    <form action="/book/insertreadbook?booknumber=${bookdetail.bookNum }">
-                        <input type="submit" value="바로읽기" class="choiceBtn">
-                    </form>
-                    <form action="/book/insertLibList?booknumber=${bookdetail.bookNum }">
-                        <button type="submit" class="choiceBtn"><i class="fas fa-plus-circle"></i> 찜하기</button>
-                    </form>
-                        <input type="button" value="종이책 구매" class="choiceBtn">
+                        <button type="button" value="바로읽기" class="choiceBtn" onclick="insertReadBook();">바로읽기</button>
+                        <button type="button" class="choiceBtn" onclick="insertLibBook();"><i class="fas fa-plus-circle"></i> 찜하기</button>
+                        <input type="button" value="종이책 구매" class="choiceBtn" onclick="">
                 </div>
                 <div class="likeChk">
                     <a href="#" id="modalOpen">
@@ -104,7 +99,7 @@
                                 <c:forEach var="p" items="${likepeople}">
                            	     <c:if test="${count <= 3 }">
                                 	<c:set var="count" value="${1 }"/>
-                               			 <img src="${pageContext.request.contextPath}${p.}">
+                               			 <img src="${pageContext.request.contextPath}">
 									<c:set var="count" value="${count+1 }" />
 								  </c:if>
                                 </c:forEach>
@@ -133,8 +128,8 @@
                                     <form action="/book/insertlike">
                                         <input type="checkbox" id="heartClick">
                                         <label for="heartClick">
-    	                                    <i class="fas fa-heart"></i>
-                                            <i class="far fa-heart"></i>
+    	                                    <i class="far fa-heart"></i>
+                                            <i class="fas fa-heart"></i>
                                         </label>
                                     </form>
                                 </c:otherwise>
@@ -304,6 +299,8 @@
                     		</c:if>
   						<c:set var="count" value="${count+1 }" />
   						</c:forEach>
+  						</div>
+  						</div>
    <!--            </div>
                 </div>
             <!-- body-container -->
@@ -346,27 +343,6 @@
             });
         });
     </script>
-
-    <!-- <script>
-    
-        var count = 0;
-        $(function () {
-            $('#heartClick').click(function () {
-            	alert('${bookdetail.bookNum }');
-                $.ajax({
-                    url: "/book/insertlike",
-                    type: "get",
-                    data: {
-                        booknumber: '${bookdetail.bookNum }'
-                    },
-                    success: function (data) {
-                    	alert(data);
-                    	 $("#countNum").html(data);
-                        //heartCount();
-                    },
-                })
-
-    </script>  -->
     <script>
   $(document).ready(function(){ 
 	  var check = "${likecheck}";
@@ -387,10 +363,10 @@
   //  		                $("#countNum").replaceWith("<span>"+result[0]+"</span>");
   							if(result[1]){
   								$("#countNum").replaceWith("<input type='text' value="+result[0]+" id='countNum' size='5'>");
-  								$("#fa fa-heart").attr("class","far fa-heart");
+  								$("#fas fa-heart").attr("class","far fa-heart");
   							}else if(!result[1]){
   								$("#countNum").replaceWith("<input type='text' value="+result[0]+" id='countNum' size='5'>");
-  								$("#far fa-heart").attr("class","fa fa-heart");
+  								$("#far fa-heart").attr("class","fas fa-heart");
   							}
     		                
                         },
@@ -514,6 +490,31 @@
     });
 
  });
+    
+    </script>
+    <script>
+    function insertReadBook(){
+    	location.href="/book/insertreadbook?booknumber=${bookdetail.bookNum}";
+    }
+    function insertLibBook(){
+		$.ajax({
+			url:"/book/insertLibList",
+			type:"post",
+			data:{
+				booknumber : "${bookdetail.bookNum}"
+			},
+			success:function(data){
+				if(data){
+					if(confirm("찜 목록에 추가가 완료되었습니다. 마이페이지로 이동 하시겠습니까?")) {
+						location.href="/booklist/myLibList";
+					}
+				} else { 
+					alert("예상치 못한 오류가 발생 했습니다. 고객센터로 문의 해주세요.");					
+				}
+			}
+		});    	
+    }
+    
     
     </script>
     

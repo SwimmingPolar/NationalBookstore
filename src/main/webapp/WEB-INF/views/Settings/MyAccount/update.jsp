@@ -18,9 +18,14 @@
     <script src="../../../../resources/js/common.js"></script>
 
 <body>
-    <div class="title">
-        <h3> 개인정보수정 </h3>
-    </div>
+    <header class="topbar">
+        <nav>
+          <div class="container">
+            <a href="javascript: history.back();"><i class="far fa-arrow-left"></i></a>
+            <h2> 개인정보수정 </h2>
+          </div>
+        </nav>
+      </header>
     <div class="newMyInfo">
         <div class="imageBox">
             <img id="myFaceImage" src="${pageContext.request.contextPath}/resources/images/myLibrary/picture1.png" >

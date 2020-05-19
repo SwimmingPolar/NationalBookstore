@@ -113,21 +113,18 @@
 				if($(this).prop("checked") == true)
 					cartList.push({ bookNum : $(this).val(), bookCount : "1" });
 			})
-			var cartArray = JSON.stringify(cartList);
 			if(cartList.length == 0)
 				alert("추가할 도서를 선택해주세요.");
 			else {
 				$.ajax({
-					url : "/search/cart",
+					url : "/cart/insert",
 					dataType : "json",
-					contentType : "application/json",
-					data : {
-						"cartList" : cartArray,
-					},
+					contentType : "string",
+					data : cartList,
 					type : "POST"
 				})
 				.done(function(response) {
-					console.dir(response.doneM);
+					//console.dir(response.doneM);
 					/* var moveToCart = confirm("장바구니로 이동 하시겠습니까?");
 					if(moveToCart == true)
 						location.href="/cartPage"; */
