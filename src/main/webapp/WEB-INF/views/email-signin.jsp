@@ -61,6 +61,7 @@
             <button type="submit" disabled="disabled">로그인</button>
             <a href="/member/signup">회원가입</a>
           </div>
+          <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
         </form>
       </div>
     </div>

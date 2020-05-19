@@ -7,20 +7,29 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ryan.domain.member.MemberVO;
 import com.ryan.mapper.MemberMapper;
 
 import lombok.AllArgsConstructor;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Service
-@AllArgsConstructor
 @Log4j
 public class MemberServiceImpl implements MemberService {
 	
+	
+
+
+	@Setter(onMethod_ = {@Autowired})
 	private MemberMapper mapper;
+	
+	@Setter(onMethod_ = {@Autowired})
+	private PasswordEncoder pwencoder;
 	
 	@Override
 	public boolean memberSignUp(MemberVO member) {
@@ -37,8 +46,11 @@ public class MemberServiceImpl implements MemberService {
 		if(!pwMatcher.find()) return false;
 		if(!nickMatcher.find()) return false;
 		
+		//유효성 검증 통과하면 비밀번호 암호화
+		member.setMemberPw(pwencoder.encode(member.getMemberPw()));
+		
 		try {
-			return mapper.memberSignUp(member) == 1 ? true : false;
+			return mapper.memberSignUp(member) == 2 ? true : false;
 		} catch (Exception e) {
 			return false;
 		}
@@ -96,7 +108,7 @@ public class MemberServiceImpl implements MemberService {
 		response.addCookie(nickNameCookie);
 	}
 	
-
+	
 	@Override
 	public boolean autoLogin(MemberVO member) {
 		return mapper.autoLogin(member) == 1 ? true : false;

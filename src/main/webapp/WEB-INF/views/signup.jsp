@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -108,6 +109,7 @@
         </div>
         <input type="hidden" name="memberAdmin" value="1" tabindex="-1">
         <button id="submitBtn" type="button" disabled>회원 가입</button>
+        <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
       </div>
     </form>
   </div>

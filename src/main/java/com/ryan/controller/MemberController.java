@@ -22,6 +22,8 @@ import com.admin.service.revenue.RevenueService;
 import com.ryan.domain.member.EmailCheckVO;
 import com.ryan.domain.member.MemberVO;
 import com.ryan.domain.payment.KakaoPayApprovalVO;
+import com.ryan.function.EmailThread;
+import com.ryan.mapper.EmailMapper;
 import com.ryan.service.book.BookCategoryService;
 import com.ryan.service.member.EmailService;
 import com.ryan.service.member.InterestsService;
@@ -55,8 +57,11 @@ public class MemberController {
 	@Setter(onMethod_ = {@Autowired})
 	private RevenueService revenueService;
 	
+
+	
 	@PostMapping("/signUp")
 	public String memberSignUp(MemberVO member) {
+		log.info("회원가입 요청");
 		if (memberService.memberSignUp(member)) return "redirect:/";
 		else return "회원가입 실패 페이지";		
 	}
@@ -83,6 +88,7 @@ public class MemberController {
 		
 		if(emailService.authenticationReady(email)) { // DB에 인증정보 입력성공시 PK키 리턴.. 
 			if(emailService.authenticationCodeSend(email)) { //메일보내기 성공하면
+				emailService.emailCodeDelete(email);
 				resultMap.put("result", true);
 				return resultMap;
 			}
@@ -131,25 +137,26 @@ public class MemberController {
 		return "업데이트 완료후 보여줄 페이지 경로";
 	}
 	
-	@PostMapping("/signin")
-	public String memberLogin(@RequestParam(required = false, name = "rememberMe") String remeberMe , MemberVO member ,HttpServletRequest request, HttpServletResponse response , Model model) {
-		//정지중인 유저인지 체크하는 서비스 호출에서 검사할것 아직안함.
-		
-		if(memberService.memberSignIn(member)) {
-			if(remeberMe != null) {
-				member.setMemberNickName(memberService.getMemberNickName(member));
-				memberService.removeCookie(response);
-				memberService.addCookie(member, response);
-			}
-			HttpSession session = request.getSession();
-			session.setAttribute("ryanMember", memberService.getLoginMemberInfo(member));
-			log.info(request.getRemoteAddr());
-			return "redirect:/"; 
-		} else {
-			return "redirect:/email-signin";
-		}
-
-	}
+//	@PostMapping("/signin")
+//	public String memberLogin(@RequestParam(required = false, name = "rememberMe") String remeberMe , MemberVO member ,HttpServletRequest request, HttpServletResponse response , Model model) {
+//		//정지중인 유저인지 체크하는 서비스 호출에서 검사할것 아직안함.
+//		
+//		if(memberService.memberSignIn(member)) {
+//			if(remeberMe != null) {
+//				member.setMemberNickName(memberService.getMemberNickName(member));
+//				memberService.removeCookie(response);
+//				memberService.addCookie(member, response);
+//			}
+//			HttpSession session = request.getSession();
+//			session.setAttribute("ryanMember", memberService.getLoginMemberInfo(member));
+//			log.info(request.getRemoteAddr());
+//			return "redirect:/"; 
+//		} else {
+//			return "redirect:/email-signin";
+//		}
+//
+//	}
+	
 	
 	@GetMapping("/logout")
 	public String memberLogout(HttpServletRequest request, HttpServletResponse response) {

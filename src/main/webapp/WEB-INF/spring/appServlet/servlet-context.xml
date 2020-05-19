@@ -34,32 +34,7 @@
  	<task:executor id="gsTaskExecutor" pool-size="10" />
  	<task:annotation-driven executor="gsTaskExecutor" scheduler="gsScheduler" />  -->
 	
-	<!-- interceptor 설정 -->
-	<beans:bean id="cookieInterceptor" class="com.ryan.interceptor.CookieInterceptor"/>
-	<beans:bean id="loginSessionChkInterceptor" class="com.ryan.interceptor.LoginSessionChkInterceptor"/>
 	
-	<!-- 자동로그인 쿠키 확인 -->
-	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/**/*"/>
-			<mvc:mapping path="/**"/>
-			<mvc:exclude-mapping path="/member/signin"/>
-			<mvc:exclude-mapping path="/member/logout"/>
-			<mvc:exclude-mapping path="/member/signUp"/>
-			<beans:ref bean="cookieInterceptor"/>
-		</mvc:interceptor>
-	</mvc:interceptors>
-	
-	<mvc:interceptors>
-		<mvc:interceptor>
-
-			<mvc:mapping path="/cart/*"/> <!-- 로그인 유효성 검사할 페이지들 입력. -->
-			<mvc:mapping path="/book/insertlike"/>
-			<mvc:mapping path="/review/*"/>
-			<mvc:mapping path="/booklist/*"/>
-			<beans:ref bean="loginSessionChkInterceptor"/>
-		</mvc:interceptor>
-	</mvc:interceptors>
 	
 	<!-- 파일 업로드에 필요한 bean -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

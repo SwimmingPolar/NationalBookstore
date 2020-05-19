@@ -1,13 +1,14 @@
 package com.ryan.domain.member;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
 @Data
 public class MemberVO {
 	
-	 // 아이디 
+    // 아이디 
     private String memberEmail;
 
     // 비밀번호 
@@ -25,12 +26,14 @@ public class MemberVO {
     // 상세주소 
     private String memberDaddress;
 
-	// 전화번호 
+    // 전화번호 
     private String memberTel;
 
-    // 권한 
-    private int memberAdmin;
-    
+    // 가입날짜 
     private Date memberSignupDate;
+
+    // 사용 
+    private boolean memberEnabled;
     
+    private List<MemberAuthVO> memberAuthList;
 }
