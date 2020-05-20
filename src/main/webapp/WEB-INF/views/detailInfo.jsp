@@ -151,11 +151,8 @@
                                                 <img id="myFaceImage" src="${pageContext.request.contextPath}/resources/images/myLibrary/photoImg.png">
                                             </span>
                                             <span>
-                                                <a>${p.memberNickName } 님</a> <br>
+                                                <a>${p.memberNickName } 님</a>  <button value="${p.memberEmail }" id="follow">방문하기</button><br>
                                                 <a>by ${p.memberEmail }</a>
-                                            </span>
-                                            <span>
-                                            	<button value="${p.memberEmail }" id="follow">팔로우</button>
                                             </span>
                                         </li>
                                     </ul>
@@ -188,7 +185,6 @@
                         <c:forEach var="h" items="${hashtag}">
                             <c:if test="${count <= 5 }">
                                 <%-- <input type="checkbox" name="chkbox" id="chk1" value=${h.hashTag }>${h.hashTag }	 --%>
-                                <form action="" method="post" name="hashtagChk">
                                     <%--  <input type="checkbox" name="chkbox" class="tagChkbox" id="chk1" onclick="chkboxCnt(this)" value=${h.hashTag }>
                     <label for="chk1"> # ${h.hashTag }>${h.hashTag } --%>
                                     <%-- 	<input type="checkbox" name="chkbox" id="chk1" value=${h.hashTag }>${h.hashTag }				
@@ -197,7 +193,7 @@
                                         onclick="chkboxCnt(this)" value=${h.hashTag }>
                                     <label for="chk${h.hashNum }"> # ${h.hashTag }<%-- >${h.hashTag } --%>
                                     </label>
-                                </form>
+                               
                                 <!-- 	</form> -->
                             </c:if>
                             <c:set var="count" value="${count+1 }" />
@@ -359,7 +355,10 @@
             $('#heartClick').change(function () {
             	var memberId = "${ryanMember.memberNickName}";
             	if(memberId==""){
-            		alert("로그인을 먼저 해주세요");
+            		if(confirm("로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?")) {
+            			location.href = "/member/signin";
+            		}else{           			
+            		}
             	}else{
                     $.ajax({
                         url: "/book/insertlike",
@@ -460,26 +459,33 @@
         var count = 0;
         $(function () {
             $('.inputBtn').click(function () {
-                $.ajax({
-                    url: "/book/inserthashtag",
-                    type: 'post',
-                    data: {
-                        bookNum: '${bookdetail.bookNum}',
-                        hashTag: $('#hashTag').val()
-                    },
-                    success: function (data) {
-                        /* var result = data.json;
-                        alert(data); */
-                        $('.hashTag').html('');
-                        $.each(data, function (idx, val) {
-                            $(".hashTag").append("<label>" + val.hashTag + "</label>");
-                            count++;
-                            if (count == 5) {
-                                return false;
-                            }
-                        });
-                    },
-                });
+            	var memberId = "${ryanMember.memberNickName}";
+            	if(memberId==""){
+            		if(confirm("로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?")) {
+            			location.href = "/member/signin";
+            		}else{         }  			
+            	}else{
+            		 $.ajax({
+                         url: "/book/inserthashtag",
+                         type: 'post',
+                         data: {
+                             bookNum: '${bookdetail.bookNum}',
+                             hashTag: $('#hashTag').val()
+                         },
+                         success: function (data) {
+                             /* var result = data.json;
+                             alert(data); */
+                             $('.hashTag').html('');
+                             $.each(data, function (idx, val) {
+                                 $(".hashTag").append("<label>" + val.hashTag + "</label>");
+                                 count++;
+                                 if (count == 5) {
+                                     return false;
+                                 }
+                             });
+                         },
+                     });
+            	}
             });
         })
     </script>
@@ -504,25 +510,39 @@
     </script>
     <script>
     function insertReadBook(){
-    	location.href="/book/insertreadbook?booknumber=${bookdetail.bookNum}";
+    	var memberId = "${ryanMember.memberNickName}";
+    	if(memberId==""){
+    		if(confirm("로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?")) {
+    			location.href = "/member/signin";
+    		}else{         }  			
+    	}else{
+    		location.href="/book/insertreadbook?booknumber=${bookdetail.bookNum}";
+    	}
     }
     function insertLibBook(){
-		$.ajax({
-			url:"/book/insertLibList",
-			type:"post",
-			data:{
-				booknumber : "${bookdetail.bookNum}"
-			},
-			success:function(data){
-				if(data){
-					if(confirm("찜 목록에 추가가 완료되었습니다. 마이페이지로 이동 하시겠습니까?")) {
-						location.href="/booklist/myLibList";
-					}
-				} else { 
-					alert("예상치 못한 오류가 발생 했습니다. 고객센터로 문의 해주세요.");					
-				}
-			}
-		});    	
+    	var memberId = "${ryanMember.memberNickName}";
+    	if(memberId==""){
+    		if(confirm("로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?")) {
+    			location.href = "/member/signin";
+    		}else{         }  			
+    	}else{
+    		$.ajax({
+    			url:"/book/insertLibList",
+    			type:"post",
+    			data:{
+    				booknumber : "${bookdetail.bookNum}"
+    			},
+    			success:function(data){
+    				if(data){
+    					if(confirm("찜 목록에 추가가 완료되었습니다. 마이페이지로 이동 하시겠습니까?")) {
+    						location.href="/booklist/myLibList";
+    					}
+    				} else { 
+    					alert("예상치 못한 오류가 발생 했습니다. 고객센터로 문의 해주세요.");					
+    				}
+    			}
+    		});   
+    	}
     }
     
     

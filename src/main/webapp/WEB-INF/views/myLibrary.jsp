@@ -20,7 +20,11 @@
         <nav>
           <div class="container">
             <a href="javascript: history.back();"><i class="far fa-arrow-left"></i></a>
-            <h2>내 서재</h2>
+            <c:choose>
+            	<c:when test="${checkId}">  <h2>${followId.memberNickName } 님의 서재</h2></c:when>
+            	<c:otherwise> <h2>내 서재</h2></c:otherwise>
+            </c:choose>
+          
           </div>
         </nav>
       </header>
@@ -38,7 +42,7 @@
 </div>
 <div class="myNickname">
 		<c:choose>
-			<c:when test="${checkId}"> <a> 다른사람<%-- ${ryanMember.memberNickName } --%> </a> 님의 서재  </c:when>
+			<c:when test="${checkId}"> <a> ${followId.memberNickName }<%-- ${ryanMember.memberNickName } --%> </a> 님의 서재  </c:when>
 			<c:otherwise><a>  ${ryanMember.memberNickName }  </a> 님의 서재 </c:otherwise>
 		</c:choose>
 </div>
@@ -51,7 +55,7 @@
     </ul>
 </div>
 <div class="goSubscribe">
-<c:if test="${checkId}">
+<c:if test="${checkId eq false}">
 <a href="goSubscribe.jsp"> 
   <b> 정기구독 시작 </b><br>
   <em> 바로가기 </em> 
@@ -116,11 +120,11 @@
               <strong> 찜 목록 </strong> 
             </div>
             <div class="totalBtn">
-           	  <c:if test="${checkId}">
+           	  <c:if test="${checkId eq false}">
               <label for="allChk">
               <input type="checkbox" name="allChk" id="allChk"> 전체선택
               </label>    
-              <button type="button" id="allDelete"> 삭제 </button>   
+              <button type="button" id="allDelete"> 선택삭제 </button>   
               </c:if>   
             </div>
             <div class="ebookList"> 
@@ -143,7 +147,7 @@
                       <li> <span>${book.bookPublisher}</span></li>
                     </ul>
                   </td>
-                <c:if test="${checkId}">
+                <c:if test="${checkId eq false}">
                   <td><button type="button" id="goRead">바로보기</button>
                   <a href="/booklist/deleteLibList?booknum=${book.bookNum }" id=eachDelete>삭제</a></td>
                   </c:if>
@@ -170,7 +174,7 @@
         </div>
             
         <div class="myPostCheck" id="myPostCheck">
-        <c:choose>
+         <c:choose>
           <c:when test="${myreviewlist.size() >0 }">
           <table>
           <c:forEach var="review" items="${myreviewlist}">
@@ -192,7 +196,7 @@
                </c:forEach>
             </table>
             </c:when>
-		</c:choose>
+		</c:choose> 
             <%-- <table>
                 <tr>
                     <th> 도서명 </th>
@@ -255,13 +259,38 @@
 
 <script>
 $(document).ready(function(){
+	$("#followBtn").on('click',function(){
+		var followId = "${followId}";
+		$.ajax({
+			url:"/follow/requestFollow",
+			type:"get",
+			data:{
+				following:followId
+			},
+			success:function(data){
+				if(data){
+					alert("팔로우 되었습니다.");
+					
+				}else{
+					alert("오류가 발생하였습니다. 고객센터로 문의해주세요");
+				}
+			},
+			error:function(){
+				alert("에러");
+			}
+		})
+	});
+});
+</script>
+
+<script>
+$(document).ready(function(){
 	
 	$("#allDelete").on('click',function(){
 		var array = [];
 		$("input[name=chkbox]:checked").each(function(){
 			array.push($(this).val());
 		});
-		alert(array);
 		$.ajax({
 			url:"/booklist/deleteLibList",
 			type:"post",
@@ -358,13 +387,7 @@ $('.bookStarScore span').click(function() {
       [ul, li].forEach(element => element.classList.add('active'));
     });
   </script>
-  <script>
-  
-  function allDelte(){
-	  location.href = "/booklist/allDelte";
-  }
-  
-  </script>
+
 <%@ include file="template/footer.jsp" %>
 </body>
 </html>

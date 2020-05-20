@@ -34,4 +34,7 @@ public interface MemberMapper {
 	//회원탈퇴
 	public int memberSignDelete(@Param("tableList") String[] tableList, @Param("memberEmail") String memberEmail);
 	
+	//다른사람의 서재 닉네임 가져오기
+	public MemberVO readClickId(String clickId);
+	
 }
