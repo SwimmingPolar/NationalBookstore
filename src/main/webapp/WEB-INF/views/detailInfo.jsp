@@ -396,24 +396,48 @@
     </script>
 
     <script>
-        var modal = document.getElementById('modalGo');
-        var openBtn = document.getElementById('modalOpen');
-        var closeBtn = document.getElementById('modalCloseBtn');
+        $(document).ready(function() {
+            var modal = document.getElementById('modalGo');
+            var openBtn = document.getElementById('modalOpen');
+            var closeBtn = document.getElementById('modalCloseBtn');
 
-        openBtn.onclick = function () {
-            modal.style.display = "block";
-        }
-
-        closeBtn.onclick = function () {
-            modal.style.display = "none";
-        }
-
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
+            var body = document.body;
+            var topbar = document.querySelector('header.topbar');
+            var bodyWrapper = document.querySelector('body > .wrapper');
+            var footer = document.querySelector('footer.fixed');
+            var elements = [topbar, bodyWrapper, footer];
+            
+            function hideScrollbar() {
+                var scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+                elements.forEach(element => element.style.paddingRight = scrollbarWidth + 'px');
+                body.style.overflowY = 'hidden';
             }
-        }
-    </script>
+            
+            function showScrollbar() {
+                elements.forEach(element => element.style.paddingRight = '');
+                body.style.overflowY = 'initial';
+            }
+            
+            openBtn.onclick = function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                modal.style.display = "block";
+                hideScrollbar();
+            };
+            
+            closeBtn.onclick = function () {
+                modal.style.display = "none";
+                showScrollbar();
+            };
+            
+            modal.onclick = function (event) {
+                if (event.currentTarget !== event.target) return;
+                modal.style.display = "none";
+                showScrollbar();
+            };
+        });
+        </script>
     
     
 

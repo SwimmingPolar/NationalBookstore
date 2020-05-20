@@ -43,7 +43,7 @@
 </head>
 <body>
   <div class="container">
-    <div class="head fadeInUp">
+    <div class="head">
       <div class="head-upper">
         <div class="logo">
           <a href="#">
@@ -226,7 +226,7 @@
       </script>
     </div>
     <div class="body-wrapper">
-      <section class="recommendation fadeInUp">
+      <section class="recommendation">
         <div class="left-section">
           <h2>오늘의 추천도서</h2>
           <div class="slider-wrapper slider-window infinite-slider-window">
@@ -380,7 +380,7 @@
           </script> -->
         </div>
       </section>
-      <section class="trending fadeInUp">
+      <section class="trending">
         <h2 class="section-heading">
           <div class="clock">
             <i class="fas fa-clock"></i>
