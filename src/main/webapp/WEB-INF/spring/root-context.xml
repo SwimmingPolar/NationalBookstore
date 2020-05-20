@@ -55,6 +55,9 @@
    <mybatis-spring:scan base-package="com.admin.mapper"/>
    <context:component-scan base-package="com.admin.service"/>
    
-   
+   <bean id="exceptionHandlerExceptionResolver" 
+    class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver" />
+
+
 	   
 </beans>

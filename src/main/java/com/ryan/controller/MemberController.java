@@ -68,6 +68,7 @@ public class MemberController {
 	
 	@PostMapping("/signUp")
 	public String memberSignUp(MemberVO member) {
+		log.info(member);
 		if (memberService.memberSignUp(member)) return "redirect:/";
 		else return "회원가입 실패 페이지";		
 	}
