@@ -12,6 +12,7 @@ li {
 a {
     text-decoration:none;
 }
+
 .tabBox {
     /* border:2px solid blue; */
     text-align:center;
@@ -48,7 +49,7 @@ a {
 
 .goQuestion {
     background-color:white;
-    border: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
 }
 
 #selectTopic {
@@ -60,7 +61,7 @@ a {
     /* justify-content: space-between; */
 }
 
-#selectTopic button {
+#selectTopic select {
     width:100%;
     position: relative;
     z-index:2;
@@ -70,13 +71,18 @@ a {
     color:#0099FF;
     font-weight: bold;
     font-size:14px;
-    border-bottom:1px solid #e8e8e8;
+    border:1px solid #e8e8e8;
     padding:10px 20px 10px 20px;
     background-color: white;
     cursor: pointer;
 }
 
-#selectTopic ul {
+#selectTopic select>option{ 
+    font-size: 15px; 
+    color:#333;
+}
+
+/* #selectTopic select>option {
     position: absolute;
     left:0;
     top:0;
@@ -110,7 +116,7 @@ a {
 
 #selectTopic button span {
     float:right;
-}
+} */
 
 #titleName {
     width:100%;
