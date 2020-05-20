@@ -16,7 +16,6 @@ public class RyanAcessDeniedHandler implements AccessDeniedHandler {
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response,
 			AccessDeniedException accessDeniedException) throws IOException, ServletException {
-		
 		response.sendRedirect("/member/email-signin");
 		
 	}

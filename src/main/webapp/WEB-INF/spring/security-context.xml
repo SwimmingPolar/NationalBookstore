@@ -24,18 +24,14 @@
 	<security:http pattern="/member/authenticationCheck" security="none"/>
 	<security:http pattern="/member/authenticationCompleteCheck" security="none"/>
 	
+		
 	<security:http>
 		
-		<security:intercept-url pattern="/member/signUpCheck" />
-		<security:intercept-url pattern="/member/emailAuthentication"/>
-		<security:intercept-url pattern="/member/authenticationCheck"/>
-		<security:intercept-url pattern="/member/authenticationCompleteCheck"/>
-		
-		<!-- 제한 매핑주소 -->
+				
+		<!-- 제한 매핑주소 post는 다 걸어줘야함..4-->
 		<security:intercept-url pattern="/myAccount-main" access="hasRole('ROLE_MEMBER')"/>
 		
 		<!-- 접근권한이 없을경우 -->
-		
 		<security:access-denied-handler ref="ryanAccessDenied" />
 		
 		<!-- 로그인 -->
@@ -47,7 +43,7 @@
 		/>
 		
 		<!-- 로그아웃 -->
-		<security:logout logout-url="/member/logout" invalidate-session="true" delete-cookies="remeber-me"/>
+		<security:logout logout-url="/member/logout" invalidate-session="true" delete-cookies="remeber-me" logout-success-url="/"/>
 		
 		<!-- 자동로그인 -->
 		<security:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/>

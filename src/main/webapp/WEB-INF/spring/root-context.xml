@@ -20,6 +20,7 @@
       <property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@nationalbookstore.cl0h4wfzfqxz.ap-northeast-2.rds.amazonaws.com:1521:ORCL"></property>
       <property name="username" value="admin"/>
       <property name="password" value="rkskekfk1"/>
+      <property name="maximumPoolSize" value="10"></property>
    </bean>
    
    <!-- dataSource -->

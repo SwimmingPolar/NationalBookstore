@@ -20,8 +20,7 @@ public interface EmailMapper {
 	
 	//인증완료된 유저인지 확인. // 마지막에 한번더 검사 // 3분뒤하는것도 이거 재활용
 	public boolean authCompleteCheck(EmailCheckVO email);
-	
-	//
+
 	//1이 아니고 0이면 코드 제거 일단은
 	public int emailCodeDelete(EmailCheckVO email);
 	

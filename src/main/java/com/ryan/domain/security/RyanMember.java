@@ -9,6 +9,9 @@ import org.springframework.security.core.userdetails.User;
 
 import com.ryan.domain.member.MemberVO;
 
+import lombok.Getter;
+
+@Getter
 public class RyanMember extends User {
 	
 	private static final long serialVersionUID = 1L;

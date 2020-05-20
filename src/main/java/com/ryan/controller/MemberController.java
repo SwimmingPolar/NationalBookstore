@@ -1,5 +1,8 @@
 package com.ryan.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,11 +22,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.admin.service.revenue.RevenueService;
 import com.ryan.domain.member.EmailCheckVO;
 import com.ryan.domain.member.MemberVO;
 import com.ryan.domain.payment.KakaoPayApprovalVO;
+import com.ryan.domain.security.RyanMember;
 import com.ryan.function.EmailThread;
 import com.ryan.mapper.EmailMapper;
 import com.ryan.service.book.BookCategoryService;
@@ -61,7 +68,6 @@ public class MemberController {
 	
 	@PostMapping("/signUp")
 	public String memberSignUp(MemberVO member) {
-		log.info("회원가입 요청");
 		if (memberService.memberSignUp(member)) return "redirect:/";
 		else return "회원가입 실패 페이지";		
 	}
@@ -88,7 +94,7 @@ public class MemberController {
 		
 		if(emailService.authenticationReady(email)) { // DB에 인증정보 입력성공시 PK키 리턴.. 
 			if(emailService.authenticationCodeSend(email)) { //메일보내기 성공하면
-				emailService.emailCodeDelete(email);
+				emailService.emailCodeDelete(email); // 5분뒤 삭제~
 				resultMap.put("result", true);
 				return resultMap;
 			}
@@ -96,8 +102,6 @@ public class MemberController {
 		
 		return resultMap;
 	}
-	//pk키 추가해주기 or 5분뒤 삭제
-	
 	//인증완료
 	@PostMapping("/authenticationCheck")
 	public @ResponseBody Map<String, Boolean> authenticationCheck(EmailCheckVO email) {
@@ -137,6 +141,8 @@ public class MemberController {
 		return "업데이트 완료후 보여줄 페이지 경로";
 	}
 	
+	//아래주석은 security 로  대체 되었습니다.
+	
 //	@PostMapping("/signin")
 //	public String memberLogin(@RequestParam(required = false, name = "rememberMe") String remeberMe , MemberVO member ,HttpServletRequest request, HttpServletResponse response , Model model) {
 //		//정지중인 유저인지 체크하는 서비스 호출에서 검사할것 아직안함.
@@ -158,15 +164,26 @@ public class MemberController {
 //	}
 	
 	
-	@GetMapping("/logout")
-	public String memberLogout(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		
-		session.invalidate();
-		memberService.removeCookie(response);
-		return "redirect:/member/test";
+//	@GetMapping("/logout")
+//	public String memberLogout(HttpServletRequest request, HttpServletResponse response) {
+//		HttpSession session = request.getSession();
+//		
+//		session.invalidate();
+//		memberService.removeCookie(response);
+//		return "redirect:/member/test";
+//	}
+	
+	//이메일찾기
+	@PostMapping("/forgotpassword")
+	public String forgotPassword(MemberVO member) {
+		if(memberService.forgotPassword(member)) {
+			return "성공";
+		}
+		return null;
 	}
 	
+	
+	//이동용
 	@GetMapping("/email-signin")
 	public String getEmailLogin() {
 		return "email-signin";
@@ -241,11 +258,7 @@ public class MemberController {
 		return null;
 	}
 	
-	@GetMapping("/test")
-	public String test() {
-		return "test";
-	}
-	
+	//회원탈퇴 페이지이동
 	@GetMapping("/delete")
 	public String memberDelete() {
 		
@@ -261,6 +274,40 @@ public class MemberController {
 //	@DeleteMapping
 //	@PatchMapping
 	
+	@GetMapping("fileTest")
+	public String teststst() {
+		return "fileTest";
+	}
 	
+	@PostMapping("/fileTest")
+	public String fileTest(ArrayList<MultipartFile> files, HttpServletRequest request) {
+		
+		String path = request.getSession().getServletContext().getRealPath("//") + "\\resources\\member\\profile\\";
+		log.info(path);
+		for(MultipartFile file : files) {
+			
+			log.info(file.getOriginalFilename());
+			File save = new File(path,"abc1234.jpg");
+			
+			try {
+				file.transferTo(save);
+				log.info("저장완료");
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		return "redirect:/";
+	}
+	
+	@GetMapping("loginTest")
+	public void loginTest(Authentication auth) {
+		
+		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
+		MemberVO member = ryanMember.getMember();
+		
+		log.info(member);
+		
+	}
 	
 }

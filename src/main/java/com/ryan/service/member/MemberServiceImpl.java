@@ -3,33 +3,34 @@ package com.ryan.service.member;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.ryan.domain.member.EmailCheckVO;
 import com.ryan.domain.member.MemberVO;
+import com.ryan.function.EmailFunction;
+import com.ryan.mapper.EmailMapper;
 import com.ryan.mapper.MemberMapper;
 
-import lombok.AllArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Service
 @Log4j
 public class MemberServiceImpl implements MemberService {
-	
-	
-
 
 	@Setter(onMethod_ = {@Autowired})
 	private MemberMapper mapper;
 	
 	@Setter(onMethod_ = {@Autowired})
 	private PasswordEncoder pwencoder;
+	
+	@Setter(onMethod_ = {@Autowired})
+	private EmailMapper emailMapper;
+	
+	@Setter(onMethod_ = {@Autowired})
+	private EmailFunction mail;
 	
 	@Override
 	public boolean memberSignUp(MemberVO member) {
@@ -50,7 +51,15 @@ public class MemberServiceImpl implements MemberService {
 		member.setMemberPw(pwencoder.encode(member.getMemberPw()));
 		
 		try {
-			return mapper.memberSignUp(member) == 2 ? true : false;
+			//객체를 만들면안되는데 다른거 수정하기가 너무힘들어서 객체생성합니다.
+			EmailCheckVO email = new EmailCheckVO();
+			email.setMemberEmail(member.getMemberEmail());
+			if(emailMapper.authCompleteCheck(email)) {
+				return mapper.memberSignUp(member) == 2 ? true : false;
+			} else { 
+				return false;
+			}
+			
 		} catch (Exception e) {
 			return false;
 		}
@@ -75,56 +84,11 @@ public class MemberServiceImpl implements MemberService {
 		return mapper.memberUpdate(member) == 0 ? true : false;
 	}
 
-	
-	@Override
-	public void addCookie(MemberVO member, HttpServletResponse response) {
-		
-		
-		Cookie idCookie = new Cookie("ryanMemberId", member.getMemberEmail());
-		log.info("쿠키에 저장될 회원아이디값: " + member.getMemberEmail());
-		idCookie.setMaxAge(60*60*24*7);
-		idCookie.setPath("/");
-		
-		Cookie nickNameCookie = new Cookie("ryanMemberNickName", member.getMemberNickName());
-		nickNameCookie.setMaxAge(60*60*24*7);
-		nickNameCookie.setPath("/");
-		response.addCookie(idCookie);
-		response.addCookie(nickNameCookie);
-		log.info("쿠키생성완료");
-		log.info(idCookie);
-	}
-	
-	@Override
-	public void removeCookie(HttpServletResponse response) {
-		Cookie idCookie = new Cookie("ryanMemberId", null);
-		idCookie.setMaxAge(0);
-		idCookie.setPath("/");
-		
-		Cookie nickNameCookie = new Cookie("ryanMemberNickName", null);
-		nickNameCookie.setMaxAge(0);
-		nickNameCookie.setPath("/");
-		
-		response.addCookie(idCookie);
-		response.addCookie(nickNameCookie);
-	}
-	
-	
-	@Override
-	public boolean autoLogin(MemberVO member) {
-		return mapper.autoLogin(member) == 1 ? true : false;
-	}
-
-
 	@Override
 	public boolean memberSignIn(MemberVO member) {
 		return mapper.memberSignIn(member) == 1 ? true : false;
 	}
 
-
-	@Override
-	public String getMemberNickName(MemberVO member) {
-		return mapper.getMemberNickName(member);
-	}
 
 
 	@Override
@@ -137,6 +101,24 @@ public class MemberServiceImpl implements MemberService {
 	public MemberVO getLoginMemberInfo(MemberVO member) {
 		return mapper.getLoginMemberInfo(member);
 	}
+
+
+	@Override
+	public boolean forgotPassword(MemberVO member) {
+		
+		String randomPw = mail.getRandomCode();
+		member.setMemberPw(pwencoder.encode(randomPw));
+		
+		if(mapper.forgotPassword(member) == 1) { //비밀번호 변경성공
+			if(mail.forgotPassword(member.getMemberEmail(), randomPw)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
+
 
 
 	

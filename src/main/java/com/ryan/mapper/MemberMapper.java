@@ -23,15 +23,11 @@ public interface MemberMapper {
 	//정지중인 회원인지 확인.
 	public int memberBanCheck(MemberVO member);
 	
-	//쿠키용
-	
-	//로그인한 회원의 닉네임 획득
-	public String getMemberNickName(MemberVO member);
-	
-	//자동 로그인 확인용
-	public int autoLogin(MemberVO member);
 	
 	//회원탈퇴
 	public int memberSignDelete(@Param("tableList") String[] tableList, @Param("memberEmail") String memberEmail);
+	
+	//비밀번호 찾기 할시 비밀번호 변경
+	public int forgotPassword(MemberVO member);
 	
 }
