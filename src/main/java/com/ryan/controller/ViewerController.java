@@ -26,12 +26,13 @@ public class ViewerController {
 	ViewerService sv;
 	
 	@RequestMapping(value="/viewer")
-	public String ViewerMain(@ModelAttribute("booknumber") String booknumber, Model model, HttpServletRequest request) throws ParserConfigurationException, SAXException, IOException {
+	public String ViewerMain(@ModelAttribute("booknumber") String booknumber, @ModelAttribute("memberEmail") String memberEmail, Model model, HttpServletRequest request) throws ParserConfigurationException, SAXException, IOException {
 		String path = null;
+		System.out.println(memberEmail);
 		//MemberVO memberInfo = (MemberVO)session.getAttribute("ryanMember");
-		MemberVO memberInfo = new MemberVO();
-		memberInfo.setMemberEmail("abc1234@naver.com");
-		System.out.println(memberInfo);
+		//MemberVO memberInfo = new MemberVO();
+		//memberInfo.setMemberEmail("abc1234@naver.com");
+		//System.out.println(memberInfo);
 		try {
 			path = request.getSession().getServletContext().getRealPath(sv.getBookFilePath(booknumber).getBookPath());
 			//path = "../eclipse_workspace/NationalBookstore/src/main/webapp/"+sv.getBookFilePath(booknumber).getBookPath();
@@ -44,8 +45,8 @@ public class ViewerController {
 		}
 		model.addAttribute("chapter", sv.getBookChapters(path));
 		model.addAttribute("index", sv.getIndex(path));
-		if(memberInfo != null)
-			model.addAttribute("bookmark", sv.getBookMark(memberInfo.getMemberEmail(), Integer.parseInt(booknumber))); //북마크
+		if(memberEmail != null) //북마크
+			model.addAttribute("bookmark", sv.getBookMark(memberEmail, Integer.parseInt(booknumber)));
 		try {
 			model.addAttribute("book", sv.getBookFilePath(booknumber));
 		} catch (ClassNotFoundException e) {

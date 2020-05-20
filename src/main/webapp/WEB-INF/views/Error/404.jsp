@@ -8,6 +8,8 @@
   <title>Error 404</title>
 </head>
 <body>
-
+	
+	<h1>404에러</h1>
+	
 </body>
 </html>

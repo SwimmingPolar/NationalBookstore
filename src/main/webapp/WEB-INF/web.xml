@@ -18,22 +18,6 @@
 		</listener-class>
 	</listener>
 
-	<!-- 한글처리 -->
-
-	<filter>
-		<filter-name>encoding</filter-name>
-		<filter-class>org.springframework.web.filter.CharacterEncodingFilter
-		</filter-class>
-		<init-param>
-			<param-name>encoding</param-name>
-			<param-value>UTF-8</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>encoding</filter-name>
-		<servlet-name>appServlet</servlet-name>
-	</filter-mapping>
-
 	<!-- Processes application requests -->
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
@@ -64,7 +48,43 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-	<!-- 스프링 -->
+    <!-- 한글인코딩 설정 --> 
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>  
+           <param-name>forceEncoding</param-name>  
+           <param-value>true</param-value>  
+        </init-param> 
+    </filter>
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+	
+	<!-- 에러 -->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error/404</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error/500</location>
+	</error-page>
+	<error-page>
+		<error-code>400</error-code>
+		<location>/error/400</location>
+	</error-page>
+	<error-page>
+		<error-code>401</error-code>
+		<location>/error/401</location>
+	</error-page>
+	
+	<!-- 스프링 시큐리티 -->
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy

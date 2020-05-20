@@ -18,8 +18,10 @@
 </head>
 <body>
 
+	<sec:authorize access="isAuthenticated()">
 	<sec:authentication property="principal" var="member"/>
-    <!-- <header class="topbar">
+</sec:authorize>
+     <header class="topbar">
         <nav>
           <div class="container">
             <a href="javascript: history.back();"><i class="far fa-arrow-left"></i></a>
@@ -29,7 +31,7 @@
             </c:choose>
           </div>
         </nav>
-      </header> -->
+      </header> 
 <div class="wrapper">
 <div class="firstColumn">
 <!-- 배경화면 넣는곳 -->
