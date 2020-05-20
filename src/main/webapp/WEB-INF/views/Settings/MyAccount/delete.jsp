@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +16,7 @@
     <script src="../../../../resources/js/common.js"></script>
 </head>
 <body>
+<sec:authentication property="principal" var="member"/>
 <header class="topbar">
 	<nav>
 		<div class="container">
@@ -27,12 +28,12 @@
     <div class="wrapper">
         <h3> 서재 이용 현황 </h3>
         <div class="useInfo">
-            <p>${ryanMember.memberNickName } 님의 서재</p>
+            <p>${member.member.memberNickName } 님의 서재</p>
             <ul>
-                <li><strong>서재에 기록된 도서</strong> <span>${readbookcount } 권</span></li>
-                <li><strong>서재에 기록된 포스트</strong><span>0 개</span></li>
-                <li><strong>팔로우 수 </strong><span>${myFollower} 명</span></li>
-                <li><strong>종이책 결제 건수</strong><span>0 권</span></li>
+                <li><strong>서재에 기록된 도서</strong> <span>${memberAllData.libBookCount } 권</span></li>
+                <li><strong>서재에 기록된 포스트</strong><span>${memberAllData.postCount} 개</span></li>
+                <li><strong>팔로우 수 </strong><span>${memberAllData.followCount} 명</span></li>
+                <li><strong>종이책 결제 건수</strong><span>${memberAllData.realBookCount } 권</span></li>
             </ul>
             
 
@@ -66,7 +67,7 @@
     </div>
     <div class="finishBtn">
         <button type="button" id="doLater" onclick="history.back()">나중에 하기</button>
-        <button type="button" id="goRightNow" onclick="location.href='/member/deleteNext'">계속 진행하기</button>
+        <button type="button" id="goRightNow" onclick="goDeleteNext()">계속 진행하기</button>
 
     </div>
 
@@ -80,7 +81,7 @@
             if(agreeBtn.checked==false) {
                 alert("체크박스에 동의해주세요.");
             }else {
-                location.href='deleteNext.jsp';
+            	location.href='/member/deleteNext';
             }
 
         }

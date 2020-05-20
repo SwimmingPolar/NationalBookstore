@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -174,6 +175,20 @@ public class MemberController {
 //		return "redirect:/member/test";
 //	}
 	
+	//회원탈퇴전 비밀번호 체크
+	@PostMapping("/deletePasswordCheck")
+	public @ResponseBody Boolean deletePasswordCheck(@RequestBody MemberVO[] members){
+		
+		MemberVO member = members[0];
+		
+		if(memberService.memberPasswordCheck(member)) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+	
 	//이메일찾기
 	@PostMapping("/forgotpassword")
 	public String forgotPassword(MemberVO member) {
@@ -262,9 +277,25 @@ public class MemberController {
 		return null;
 	}
 	
+	//회원탈퇴 진행
+	@PostMapping("/delete")
+	public String memberAllDelete(Authentication auth, HttpSession session) {
+		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
+		MemberVO member = ryanMember.getMember();
+		if(memberService.memberDelete(member)) {
+			session.invalidate();
+			return "redirect:/";
+		}
+		return null;
+	}
+	
 	//회원탈퇴 페이지이동
 	@GetMapping("/delete")
-	public String memberDelete() {
+	public String memberDelete(Model model, Authentication auth) {
+		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
+		MemberVO member = ryanMember.getMember();
+		
+		model.addAttribute("memberAllData", memberService.getMemberAllData(member));
 		
 		return "Settings/MyAccount/delete";
 	}
@@ -277,6 +308,12 @@ public class MemberController {
 //	@PutMapping
 //	@DeleteMapping
 //	@PatchMapping
+	
+	
+	
+	
+	
+	
 	
 	@GetMapping("fileTest")
 	public String teststst() {

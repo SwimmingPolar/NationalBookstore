@@ -134,11 +134,168 @@
 		</where>
 	</update>
 	
-	
-	
+
 	<select id="readClickId" resultType="com.ryan.domain.member.MemberVO">
 		SELECT * FROM member WHERE member_email = #{clickId}
 	</select>
 	
+	<select id="myLibCount" resultType="int">
+		SELECT count(*) libBookCount FROM my_lib
+		<where>
+			member_email = #{memberEmail}
+		</where>
+	</select>
 	
+	<select id="myPostCount" resultType="int">
+		SELECT count(*) postCount FROM book_review
+		<where>
+			member_email = #{memberEmail}
+		</where>
+	</select>
+	
+	<select id="myfollowCount" resultType="int">
+		SELECT count(*) followCount FROM member_follow
+		<where>
+			fk_member_follow_2 = #{memberEmail}
+		</where>
+	</select>
+	
+	<select id="getMemberOrderNumber" resultType="int">
+		SELECT order_number FROM order_number
+		<where>
+			member_email = #{memberEmail}
+		</where>
+	</select>
+	
+	<select id="myRealBookBuyCount" resultType="int">
+		SELECT sum(o.book_count) realBookCount FROM order_object o
+		<where>
+			<foreach collection="array" item="order" open="order_number in(" separator="," close=")">
+				#{order}
+			</foreach>
+		</where>
+	</select>
+	
+	<select id="getMemberPassword" resultType="String">
+		SELECT member_pw FROM member
+		<where>
+			member_email = #{memberEmail}
+		</where>
+	</select>
+	
+	<delete id="deleteMemberData" >
+		{call
+			declare
+				begin
+					DELETE FROM persistent_logins
+						<where>
+							username = #{memberEmail};
+						</where>
+						
+					DELETE FROM tbl_member_auth
+						<where>
+							member_email = #{memberEmail};
+						</where>
+					
+					DELETE FROM member_payment
+						<where>
+							member_email = #{memberEmail};
+						</where>
+					
+					DELETE FROM member_follow
+						<where>
+							fk_member_follow_1 = #{memberEmail}
+							or
+							fk_member_follow_2 = #{memberEmail};
+						</where>
+					
+					DELETE FROM member_ban
+						<where>
+							member_email = #{memberEmail};
+						</where>
+						
+					DELETE FROM book_like
+						<where>
+							member_email = #{memberEmail};
+						</where>
+						
+					DELETE FROM member_interests
+						<where>
+							member_email = #{memberEmail};
+						</where>
+						
+					DELETE FROM my_lib
+						<where>
+							member_email = #{memberEmail};
+						</where>		
+						
+					DELETE book_alarm
+						<where>
+							fk_member_alarm = #{memberEmail};
+						</where>
+					
+					DELETE book_Grade
+					<where>
+						member_email = #{memberEmail};
+					</where>
+					
+					DELETE book_review
+					<where>
+						member_email = #{memberEmail};
+					</where>	
+					commit;	
+		END
+	}	
+	</delete>
+	
+	<select id="getMemberReadBookNO" resultType="int">
+		SELECT read_num FROM my_read_book WHERE member_email = #{memberEmail}
+	</select>
+	
+	<delete id="deleteMemberBookMark">
+		DELETE FROM read_book_mark
+		<where>
+			<foreach collection="array" item="no" separator="," open="read_num in(" close=")" >
+				#{no}
+			</foreach>
+		</where>
+	</delete>
+	
+	<delete id="deleteMemberReadBook">
+		DELETE FROM my_Read_book
+		<where>
+			member_email = #{memberEmail}
+		</where>
+	</delete>
+	
+	<delete id="deleteMemberOrderObject">
+		DELETE FROM order_object
+		<where>
+			<foreach collection="array" item="no" open="order_number in(" separator="," close=")">
+				#{no}
+			</foreach>
+		</where>
+	</delete>
+	
+	<delete id="deleteMemberOrderNumber">
+		DELETE FROM order_number
+		<where>
+			member_email = #{memberEmail}
+		</where>
+	</delete>
+	
+	<delete id="deleteMemberCart">
+		DELETE FROM cart
+		<where>
+			member_email = #{memberEmail}
+		</where>
+	</delete>
+	
+	<delete id="deleteMember">
+		DELETE FROM member
+		<where>
+			member_email = #{memberEmail}
+		</where>
+	</delete>
+		
 </mapper>

@@ -27,6 +27,7 @@
 	<security:http pattern="/book/inserthashtag" security="none"/>
 	<security:http pattern="/booklist/deleteLibList" security="none"/>
 	<security:http pattern="/cart/insert" security="none"/>
+	<security:http pattern="/member/deletePasswordCheck" security="none"/>
 		
 	<security:http>
 		
@@ -107,7 +108,7 @@
 		/>
 		
 		<!-- 로그아웃 -->
-		<security:logout logout-url="/member/logout" invalidate-session="true" delete-cookies="remeber-me" logout-success-url="/"/>
+		<security:logout logout-url="/member/logout" invalidate-session="true" delete-cookies="remeber-me" logout-success-url="/" />
 		
 		<!-- 자동로그인 -->
 		<security:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/>
