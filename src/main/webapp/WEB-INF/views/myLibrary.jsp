@@ -178,12 +178,12 @@
           <table>
           <c:forEach var="review" items="${myreviewlist}">
                 <tr>
-                    <th> 도서명 </th>
+                    <th> 도서명 </th>	
                     <th> 내용 </th>
                     <th> 등록날짜 </th>
                 </tr>
                 <tr>
-                	<td><b>${review.reviewTitle}</b><td>
+                	<td>${review.reviewTitle}<td>
                     </td>
                     <td>
                     	<textarea name="postText" id="postText" readonly>  
@@ -233,13 +233,13 @@
                 <span><i class="fas fa-star"></i></span>
                 <span id=starScore> 0 </span> 점
             </div>
-            <div class="postImgFile">  
+            <!-- <div class="postImgFile">  
                 <input type="file" name="postImageFile" id="postImageFile" onchange="uploadImg(this);">
                     <div class="postImage" id="postImage">
                         <img id ="imgimg" width=200>
                     </div>
                     
-            </div>
+            </div> -->
 
             <input type="text" name="postTitle" id="postTitle" placeholder="제목을 입력하세요">
             <textarea name="post_Content" id="post_Content" placeholder="솔직한 생각을 입력해주세요."></textarea>

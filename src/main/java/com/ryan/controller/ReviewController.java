@@ -1,17 +1,18 @@
 package com.ryan.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 //import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ryan.domain.book.BookGradeVO;
 import com.ryan.domain.book.ReviewVO;
 import com.ryan.domain.member.MemberVO;
+import com.ryan.domain.security.RyanMember;
 import com.ryan.service.main.ReviewServiceImpl;
 
 @Controller
@@ -28,14 +29,19 @@ public class ReviewController {
 	
 	//리뷰를 작성하고 입력 요청하면 처리
 	@RequestMapping("/write")
-	public String insertEbookReview(@ModelAttribute("review") ReviewVO review,HttpServletRequest request,Model model) {
-		HttpSession session = request.getSession();
-		MemberVO member = (MemberVO) session.getAttribute("ryanMember");	
+	public String insertEbookReview(@ModelAttribute("review") ReviewVO review,@ModelAttribute("grade") BookGradeVO grade,Authentication auth,Model model) {
+		//HttpServletRequest request
+		/*
+		 * HttpSession session = request.getSession(); MemberVO member = (MemberVO)
+		 * session.getAttribute("ryanMember");
+		 */
+		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
+		MemberVO member = ryanMember.getMember();
 		String memberEmail=member.getMemberEmail();
 		
-		if(memberEmail.equals((String)review.getMemberEmail())) {
+		if(memberEmail.equals((String)review.getMemberEmail())&&grade!=null) {
 			service.insertReview(review);
-			service.insertGrade(review.getBookNum());
+			service.insertGrade(grade);
 			model.addAttribute("message", "입력 성공");
 		}else {
 			model.addAttribute("message", "본인이 작성한 리뷰가 아닙니다");
@@ -46,9 +52,9 @@ public class ReviewController {
 	}
 	
 	@RequestMapping("/delete")
-	public String deleteReview(HttpServletRequest request,@ModelAttribute("review")  ReviewVO review,Model model) {
-		HttpSession session = request.getSession();
-		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
+	public String deleteReview(Authentication auth,@ModelAttribute("review")  ReviewVO review,Model model) {
+		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
+		MemberVO member = ryanMember.getMember();
 		String memberEmail=member.getMemberEmail();
 		
 		if(memberEmail.equals((String)review.getMemberEmail())) {
@@ -60,9 +66,9 @@ public class ReviewController {
 	}
 	
 	@RequestMapping("/update")
-	public String updateReview(@ModelAttribute("review") ReviewVO review,HttpServletRequest request,Model model) {
-		HttpSession session = request.getSession();
-		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
+	public String updateReview(@ModelAttribute("review") ReviewVO review,Authentication auth,Model model) {
+		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
+		MemberVO member = ryanMember.getMember();
 		String memberEmail=member.getMemberEmail();
 		
 		if(memberEmail.equals(review.getMemberEmail())) {
