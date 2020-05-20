@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.ryan.domain.book.BookGradeVO;
@@ -75,16 +76,19 @@ public class MyBookServiceImpl implements MyBookService{
 	}
 
 	@Override 	//찜 책장 추가
-	public Boolean insertLibBook(int booknumber, Authentication auth) {
+	public Boolean insertLibBook(int booknumber, String memberEmail) {
 		// TODO Auto-generated method stub
-		RyanMember ryanmember = (RyanMember) auth.getPrincipal();
-		MemberVO member = (MemberVO) ryanmember.getMember();
-		MyLibVO vo = new MyLibVO();
-		vo.setBookNum(booknumber);
-		vo.setMemberEmail(member.getMemberEmail());
-		int num = mapper.insertLibBook(vo);
-		if(num==1) return true;
-		return false;		
+		try {
+			MyLibVO vo = new MyLibVO();
+			vo.setBookNum(booknumber);
+			vo.setMemberEmail(memberEmail);
+			mapper.insertLibBook(vo);
+			return true;
+		}catch (Exception e) {
+			// TODO: handle exception
+			log.info(e.getMessage());
+			return false;
+		}		
 	}
 
 	@Override		//읽은책 조회

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.Authentication;
 
+import com.ryan.domain.book.BookGradeVO;
 import com.ryan.domain.book.ReviewVO;
 
 public interface ReviewService {
@@ -19,5 +20,5 @@ public interface ReviewService {
 	
 	public ArrayList<ReviewVO> myReviewList(Authentication auth);
 	
-	public Boolean insertGrade(int bookNum);
+	public Boolean insertGrade(BookGradeVO grade);
 }

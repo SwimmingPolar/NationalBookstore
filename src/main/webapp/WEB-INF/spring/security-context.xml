@@ -23,13 +23,76 @@
 	<security:http pattern="/member/emailAuthentication" security="none"/>
 	<security:http pattern="/member/authenticationCheck" security="none"/>
 	<security:http pattern="/member/authenticationCompleteCheck" security="none"/>
-	
+	<security:http pattern="/book/insertLibList" security="none"/>
+	<security:http pattern="/book/inserthashtag" security="none"/>
+	<security:http pattern="/booklist/deleteLibList" security="none"/>
+	<security:http pattern="/cart/insert" security="none"/>
 		
 	<security:http>
 		
 				
 		<!-- 제한 매핑주소 post는 다 걸어줘야함..4-->
 		<security:intercept-url pattern="/myaccount" access="hasRole('ROLE_MEMBER')" />
+		
+		
+		
+		<security:intercept-url pattern="/member/delete" access="hasRole('ROLE_MEMBER')"/>
+		
+		
+		<!-- 이기석 -->
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<!-- 김송이 -->
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<!--  이건희 -->
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<!-- 조재현 -->
+		
+		
+		
+		
 		
 		
 		<!-- 접근권한이 없을경우 -->

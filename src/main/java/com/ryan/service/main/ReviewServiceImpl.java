@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import com.ryan.domain.book.BookGradeVO;
 import com.ryan.domain.book.ReviewVO;
 import com.ryan.domain.member.MemberVO;
 import com.ryan.domain.security.RyanMember;
@@ -56,7 +57,7 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
-	public Boolean insertGrade(int bookNum) {
-		return mapper.insertGrade(bookNum)>0?true:false;
+	public Boolean insertGrade(BookGradeVO grade) {
+		return mapper.insertGrade(grade)>0?true:false;
 	}
 }

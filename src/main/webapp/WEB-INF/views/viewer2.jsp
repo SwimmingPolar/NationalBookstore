@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.5, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="shorcut icon" href="../../resources/images/favicon.ico" />
+<link rel="icon" href="../../resources/images/favicon.ico" />
 <title>${book.bookTitle }</title>
  <!-- Google Fonts -->
 <link
@@ -41,14 +43,14 @@ font-family: 'Nanum Gothic', sans-serif;
 <!-- <script src="../../resources/js/viewer2.js"></script> -->
 <script type="text/javascript" >
 	<%-- 로그인 검증 --%> 
-	<%-- var memberEmail = "${ryanMember.memberEmail }";
-	function chkEmail() {
+	var memberEmail = "${memberEmail }";
+	<%--function chkEmail() {
 		if(memberEmail == null || memberEmail == "") {
 			alert("로그인이 필요합니다.");
 			location.href = "/member/signin";
 		}
 	};
-	chkEmail(); --%>
+	chkEmail();--%>
 	$(document).ready(function() {
 		var width = window.innerWidth, height = window.innerHeight;
 		//console.dir(width+","+height);
@@ -364,13 +366,12 @@ font-family: 'Nanum Gothic', sans-serif;
 				}
 			}
 		});
-		var memberEmail = "abc1234@naver.com";
 		$(document).on("click", ".btn.bookmark.fal", function(e) {
 			var thisPage = e.target.value;
 			<%-- 색칠된 북마크 fas fa-bookmark --%>
 			<%-- 안된거 fal fa-bookmark --%>
 			$(this).addClass("fas added").removeClass("fal");
-			console.dir("북마크 추가!");
+			//console.dir("북마크 추가!");
 			$.ajax ({
 				url : "/addBookmark",
 				data : {
@@ -406,9 +407,8 @@ font-family: 'Nanum Gothic', sans-serif;
 			<%-- 색칠된 북마크 fas fa-bookmark --%>
 			<%-- 안된거 fal fa-bookmark --%>
 			$(this).removeClass("fas added").addClass("fal");
-			console.dir("북마크 추가!");
 			$.ajax ({
-				url : "/addBookmark",
+				url : "/removeBookmark",
 				data : {
 					"bookNum" : ${book.bookNum},
 					"pageNum" : thisPage,
@@ -467,6 +467,13 @@ font-family: 'Nanum Gothic', sans-serif;
 	<%-- 상단바 --%>
 	<div class="header-container" >
 		<div class="header" >
+			<script type="text/javascript" >
+				document.addEventListener("DOMContentLoaded", function() {
+					$(".btn.tomain").on("click", function() {
+						location.href= "/booklist/myLibList";
+					})
+				});
+			</script>
 			<button class="btn tomain far fa-arrow-left" ></button>
 			<span class="title">${book.bookTitle }</span>
 			<script type="text/javascript" >

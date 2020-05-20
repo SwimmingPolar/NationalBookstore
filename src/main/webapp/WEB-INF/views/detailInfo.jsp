@@ -46,7 +46,9 @@
     <script src="../../resources/js/common.js"></script>
 </head>
 <body>
-<sec:authentication property="principal" var="member"/>
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication property="principal" var="member"/>
+</sec:authorize>
     <header class="topbar">
         <nav>
             <div class="container">
@@ -524,6 +526,7 @@
     }
     function insertLibBook(){
     	var memberId = "${member.member.memberNickName}";
+    	var memberEmail = "${member.member.memberEmail}";
     	if(memberId==""){
     		if(confirm("로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?")) {
     			location.href = "/member/signin";
@@ -533,7 +536,8 @@
     			url:"/book/insertLibList",
     			type:"post",
     			data:{
-    				booknumber : "${bookdetail.bookNum}"
+    				booknumber : "${bookdetail.bookNum}",
+    				memberEmail : memberEmail
     			},
     			success:function(data){
     				if(data){

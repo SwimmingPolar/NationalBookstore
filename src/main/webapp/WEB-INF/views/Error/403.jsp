@@ -27,7 +27,7 @@
 </head>
 <body>
   <div class="container">
-    <div class="error fadeInUp">
+    <div class="sssssrror fadeInUp">
       <p class="message">Error: 403 Forbidden</p>
       <h1 class="code">4<span class="icon fa fa-ban"></span>3</h1>
       <h4 class="description">

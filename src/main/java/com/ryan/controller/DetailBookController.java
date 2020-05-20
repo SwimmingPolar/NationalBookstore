@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -96,23 +97,18 @@ public class DetailBookController {
 	
 	//찜 책장에 추가
 	@RequestMapping("/insertLibList")
-	public @ResponseBody Boolean insertList(@RequestParam("booknumber") int booknumber, Authentication auth) {
-		return mservice.insertLibBook(booknumber,auth);
+	public @ResponseBody Boolean insertList(@RequestParam("booknumber") int booknumber, @RequestParam("memberEmail") String memberEmail) {
+		log.info(memberEmail);
+		
+		
+		return mservice.insertLibBook(booknumber,memberEmail);
 	}
 	
 	//읽은책 추가 //바로보기 버튼 클릭
 	@RequestMapping("/insertreadbook")
 	public String insertReadBook(@RequestParam("booknumber") int booknumber, Authentication auth , RedirectAttributes rttr) {
 		mservice.insertReadBook(booknumber,auth);
-		
-		rttr.addAttribute("booknumber", booknumber);
-		
-		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
-		MemberVO member = ryanMember.getMember();
-		
-		rttr.addAttribute("memberEmail", member.getMemberEmail());
-		
-		return "redirect:/viewer";
+		return "redirect:/viewer?booknumber="+booknumber;
 	}
 	
 }

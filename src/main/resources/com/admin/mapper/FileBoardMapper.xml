@@ -2,9 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.mapper.FileBoardMapper">
 <insert id="insertFile" parameterType="com.admin.domain.board.FileVO">
-INSERT file_Board
+INSERT INTO file_Board
 		(
-			file_num,
 			board_num,
 			origin_file_name,
 			stored_file_name,
@@ -12,11 +11,10 @@ INSERT file_Board
 		)
 		VALUES
 		(
-			fileNum.NEXTVAL,
-			#{boardNum},
+			#{boardNum , jdbcType=INTEGER},
 			#{originFileName},
 			#{storedFileName},
-			#{noticeNo}
+			#{noticeNo , jdbcType=INTEGER}
 		)
 </insert>
 

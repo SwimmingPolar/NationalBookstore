@@ -18,8 +18,10 @@
 </head>
 <body>
 
+	<sec:authorize access="isAuthenticated()">
 	<sec:authentication property="principal" var="member"/>
-    <!-- <header class="topbar">
+</sec:authorize>
+     <header class="topbar">
         <nav>
           <div class="container">
             <a href="javascript: history.back();"><i class="far fa-arrow-left"></i></a>
@@ -29,7 +31,7 @@
             </c:choose>
           </div>
         </nav>
-      </header> -->
+      </header> 
 <div class="wrapper">
 <div class="firstColumn">
 <!-- 배경화면 넣는곳 -->
@@ -182,18 +184,18 @@
           <table>
           <c:forEach var="review" items="${myreviewlist}">
                 <tr>
-                    <th> 도서명 </th>
+                    <th> 도서명 </th>	
                     <th> 내용 </th>
                     <th> 등록날짜 </th>
                 </tr>
                 <tr>
-                	<td><b>${review.reviewTitle}</b><td>
-                    <td >
+                	<td>${review.reviewTitle}<td>
+                    <td>
                     	<textarea name="postText" id="postText" readonly>  
-                            ${reviewContent}
+                            ${review.reviewContent}
                         </textarea>
                     </td>
-                    <td>${reviewRegdate}<td>
+                    <td>${review.reviewRegdate}<td>
                 </tr>
              		  </c:forEach>
            	 		</table>
@@ -221,8 +223,16 @@
                 <input type="file" name="postImageFile" id="postImageFile" onchange="uploadImg(this);">
                     <div class="postImage" id="postImage">
                         <img id ="imgimg" width=200>
-                    </div>   
+<<<<<<< HEAD
+                    </div>
+                    
             </div> -->
+
+            <input type="text" name="postTitle" id="postTitle" placeholder="제목을 입력하세요">
+            <textarea name="post_Content" id="post_Content" placeholder="솔직한 생각을 입력해주세요."></textarea>
+            
+            </div>   
+            </div> 
 	 
             <input type="text" name="reviewTitle" id="postTitle" placeholder="제목을 입력하세요">
             <textarea name="reviewContent" id="post_Content" placeholder="솔직한 생각을 입력해주세요."></textarea>

@@ -79,7 +79,6 @@ public class MyBookController {
 				}
 			}
 		}	
-
 		ArrayList<EBookVO> list = service.libBook(clickId,auth2);
 		model.addAttribute("libbooklist", list);
 		model.addAttribute("libcount",service.countLibBook(clickId,auth2));		//찜 책장 수량

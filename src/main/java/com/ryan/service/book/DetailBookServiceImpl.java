@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 
@@ -183,21 +184,27 @@ public class DetailBookServiceImpl implements DetailBookService{
 	@Override
 	public boolean checkLike(int booknumber, Authentication auth) {
 		// TODO Auto-generated method stub
-		RyanMember ryanmember = (RyanMember) auth.getPrincipal();
+		auth = SecurityContextHolder.getContext().getAuthentication();
 		boolean flag = false;
-		
-		if(ryanmember != null) {
-			MemberVO member = (MemberVO) ryanmember.getMember();
-			ArrayList<BookLikeVO> list = mapper.bookLikeList(booknumber);		
-			for(int i=0; i<list.size();i++) {
-				if(list.get(i).getMemberEmail().equals(member.getMemberEmail())) {
-					flag = true;
-					break;
+		if(auth != null) {
+			try{
+				RyanMember ryanmember = (RyanMember) auth.getPrincipal();
+				if(ryanmember != null) {
+					MemberVO member = (MemberVO) ryanmember.getMember();
+					ArrayList<BookLikeVO> list = mapper.bookLikeList(booknumber);		
+					for(int i=0; i<list.size();i++) {
+						if(list.get(i).getMemberEmail().equals(member.getMemberEmail())) {
+							flag = true;
+							break;
+						}
+					}	
+					return flag;
 				}
-			}	
-			return flag;
+			}catch (Exception e) {
+				// TODO: handle exception
+				return flag;
+			}
 		}
-		
 		return flag;
 	}
 
