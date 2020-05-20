@@ -2,9 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.mapper.NoticeBoardMapper">
 <insert id="insertNotice" parameterType="com.admin.domain.board.NoticeBoardVO">
-		INSERT admin_Notice
+		INSERT INTO admin_Notice
 		(
-			notice_no,
 			notice_category,
 			notice_title,
 			notice_content,
@@ -13,7 +12,6 @@
 		)
 		VALUES
 		(
-			noticeNo.NEXTVAL,
 			#{noticeCategory},
 			#{noticeTitle},
 			#{noticeContent},
@@ -24,16 +22,16 @@
 
 <delete id="deleteNotice" parameterType="com.admin.domain.board.NoticeBoardVO">
 		DELETE admin_Notice
-		WHERE notice_no = #{noticeNo},
+		WHERE notice_no = #{noticeNo} and
 		notice_writer=#{noticeWriter}
 </delete>
 
 <update id="updateNotice" parameterType="com.admin.domain.board.NoticeBoardVO">
-		UPDATE FROM admin_Notice
+		UPDATE admin_Notice
 		SET notice_category=#{noticeCategory},
 			notice_title=#{noticeTitle},
 			notice_content=#{noticeContent},
-			notice_date=#{noticeDate},
+			notice_date=SYSDATE
 			WHERE notice_writer=#{noticeWriter}
 </update>
 

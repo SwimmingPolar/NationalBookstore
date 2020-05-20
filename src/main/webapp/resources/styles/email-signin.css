@@ -1,3 +1,7 @@
+body {
+  margin-bottom: 0;
+}
+
 .body-wrapper {
   height: calc(100vh - 48px);
   display: flex;

@@ -14,7 +14,7 @@
 		DELETE FROM BOOK_MARK
 		WHERE MEMBER_EMAIL LIKE #{memberEmail }
 		AND BOOK_NUM LIKE #{booknumber }
-		AND PAGE_NUM LIKE #{pageNum };
+		AND PAGE_NUM LIKE #{pageNum }
 	</delete>
 	<select id="getBookMark" resultType="com.ryan.domain.book.BookMarkVO" >
 		SELECT * FROM BOOK_MARK

@@ -35,7 +35,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService{
 	
 	@Override
 	public boolean noticeDelete(NoticeBoardVO notice,HttpServletRequest request) {
-		String path=request.getSession().getServletContext().getRealPath("\\")+"\\NationalBookstore\\src\\main\\webapp\\resources\\noticeFile";
+		String path=request.getSession().getServletContext().getRealPath("\\")+"\\resources\\noticeFile";
 		if(mapper.numChk(notice.getNoticeNo())>0) {
 			ArrayList<FileVO> tmp=fileMapper.selectNoticeFileList(notice.getNoticeNo());
 			if(tmp!=null&&tmp.size()>0&&fileMapper.deleteAllNoticeFiles(notice.getNoticeNo())>0) {
@@ -102,7 +102,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService{
 
 	@Override
 	public boolean updateFileList(NoticeBoardVO notice, ArrayList<MultipartFile> files,HttpServletRequest request) {
-		String path = request.getSession().getServletContext().getRealPath("\\")+"\\NationalBookstore\\src\\main\\webapp\\resources\\noticeFile";
+		String path = request.getSession().getServletContext().getRealPath("\\")+"\\resources\\noticeFile";
 		boolean flag=true;
 		if(notice!=null) {
 			ArrayList<FileVO> tmp=fileMapper.selectNoticeFileList(notice.getNoticeNo());

@@ -45,7 +45,7 @@ public class EnquiryBoardServiceImpl implements EnquiryBoardService{
 	@Override
 	public boolean eqUpdate(EnquiryBoardVO enquiry,ArrayList<MultipartFile> files,HttpServletRequest request) {
 		if(files!=null) {
-			String path = request.getSession().getServletContext().getRealPath("\\")+"\\NationalBookstore\\src\\main\\webapp\\resources\\enquiryFile";
+			String path = request.getSession().getServletContext().getRealPath("\\")+"\\resources\\enquiryFile";
 			boolean flag=true;
 			ArrayList<FileVO> tmp=fileMapper.selectEqFileList(enquiry.getBoardNum());
 			if(tmp!=null) {
