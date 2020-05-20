@@ -99,12 +99,16 @@ public class ViewerServiceImpl implements ViewerService {
 		return mapper.getBookFilePath(bookNum);
 	}
 	@Override
-	public Boolean addBookMark(@Param("booknumber") String bookNum, @Param("page") String page, @Param("pageStatus") String pageStatus) {
-		return mapper.addBookMark(bookNum, page, pageStatus);
+	public Boolean addBookMark(@Param("booknumber") String bookNum, @Param("pageNum") String pageNum, @Param("memberEmail") String memberEmail) {
+		return mapper.addBookMark(bookNum, pageNum, memberEmail);
 	}
 	@Override
-	public List<BookMarkVO> getBookMark() {
-		return mapper.getBookMark();
+	public Boolean removeBookMark(@Param("booknumber") String bookNum, @Param("pageNum") String pageNum, @Param("memberEmail") String memberEmail) {
+		return mapper.removeBookMark(bookNum, pageNum, memberEmail);
+	}
+	@Override
+	public List<BookMarkVO> getBookMark(@Param("memberEmail") String memberEmail, @Param("booknumber") int booknumber) {
+		return mapper.getBookMark(memberEmail, booknumber);
 	}
 
 }

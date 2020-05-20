@@ -184,22 +184,20 @@ public class DetailBookServiceImpl implements DetailBookService{
 	public boolean checkLike(int booknumber, Authentication auth) {
 		// TODO Auto-generated method stub
 		RyanMember ryanmember = (RyanMember) auth.getPrincipal();
-		MemberVO member = (MemberVO) ryanmember.getMember();
-		ArrayList<BookLikeVO> list = mapper.bookLikeList(booknumber);
-		
-		
 		boolean flag = false;
-		if(member!=null) {
+		
+		if(ryanmember != null) {
+			MemberVO member = (MemberVO) ryanmember.getMember();
+			ArrayList<BookLikeVO> list = mapper.bookLikeList(booknumber);		
 			for(int i=0; i<list.size();i++) {
 				if(list.get(i).getMemberEmail().equals(member.getMemberEmail())) {
 					flag = true;
 					break;
 				}
 			}	
-		}else {
 			return flag;
 		}
-			
+		
 		return flag;
 	}
 

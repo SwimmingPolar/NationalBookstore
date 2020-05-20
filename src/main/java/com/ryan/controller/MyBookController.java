@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,33 +49,48 @@ public class MyBookController {
 	@RequestMapping("/myLibList")	//찜 책장
 	public String myBookList(@RequestParam(name="clickId", required = false) String clickId,Model model, Authentication auth) {
 		Boolean flag = false;
-		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
-		MemberVO member = (MemberVO) ryanMember.getMember();
-		if(clickId != null && clickId != "") {
-			if(member != null && member.getMemberEmail().equals(clickId)) {
-				model.addAttribute("checkId",flag);
-			} else {
-				flag = true;
-				model.addAttribute("checkId",flag);
-				model.addAttribute("followId",service.readClickId(clickId));
-		//		model.addAttribute("followCheck",service.followCheck());
+		Authentication auth2 = SecurityContextHolder.getContext().getAuthentication();
+		if(auth2 != null) {
+			try {
+				RyanMember ryanMember = (RyanMember) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+				if(ryanMember != null) {
+					MemberVO member = (MemberVO) ryanMember.getMember();
+					if(clickId != null && !clickId.equals("")) {
+						if(member.getMemberEmail().equals(clickId)) {
+							model.addAttribute("checkId",flag);
+							clickId = member.getMemberEmail();
+						} else {
+							flag = true;
+							model.addAttribute("checkId",flag);
+							model.addAttribute("followId",service.readClickId(clickId));
+							//		model.addAttribute("followCheck",service.followCheck());
+						}
+					}
+
+				}
+			}catch (Exception e) {
+				if(clickId != null && !clickId.equals("")) {
+					flag = true;
+					model.addAttribute("checkId",flag);
+					model.addAttribute("followId",service.readClickId(clickId));
+					//		model.addAttribute("followCheck",service.followCheck());
+				} else {
+					return "redirect:/member/signin"; // 로그인도 안한거고 클릭한 아이디도 없을경우
+				}
 			}
-		}else {
-			if(member != null) {
-				model.addAttribute("checkId",flag);
-			} else {
-				return "redirect:/member/signin";
-			}
-		}
-		ArrayList<EBookVO> list = service.libBook(clickId,auth);
+		}	
+
+		ArrayList<EBookVO> list = service.libBook(clickId,auth2);
 		model.addAttribute("libbooklist", list);
-		model.addAttribute("libcount",service.countLibBook(clickId,auth));		//찜 책장 수량
-		model.addAttribute("readbooklist", service.readBook(clickId,auth));	//읽은책 리스트
-		model.addAttribute("readbookcount", service.countReadBook(clickId,auth)); 		//읽은책 수량
-		model.addAttribute("likeBookcount", service.countLikeBook(clickId,auth));
-		model.addAttribute("myFollower",fservice.countFollow(clickId,auth)); //나를 팔로우 한 사람
-		model.addAttribute("myreviewlist", rservice.myReviewList(auth));//내 reviewlist
-		return "myLibrary";
+		model.addAttribute("libcount",service.countLibBook(clickId,auth2));		//찜 책장 수량
+		model.addAttribute("readbooklist", service.readBook(clickId,auth2));	//읽은책 리스트
+		model.addAttribute("readbookcount", service.countReadBook(clickId,auth2)); 		//읽은책 수량
+		model.addAttribute("likeBookcount", service.countLikeBook(clickId,auth2));
+		model.addAttribute("myFollower",fservice.countFollow(clickId,auth2)); //나를 팔로우 한 사람
+		/*
+		 * model.addAttribute("myreviewlist",
+		 * rservice.myReviewList(auth2));//내reviewlist
+		 */		return "myLibrary";
 	}
 	
 	

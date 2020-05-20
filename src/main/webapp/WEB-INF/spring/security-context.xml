@@ -31,7 +31,10 @@
 		<!-- 제한 매핑주소 post는 다 걸어줘야함..4-->
 		<security:intercept-url pattern="/myaccount" access="hasRole('ROLE_MEMBER')" />
 		
+<<<<<<< HEAD
 		<security:intercept-url pattern="/booklist/myLibList" access="hasRole('ROLE_MEMBER')"/>
+=======
+>>>>>>> branch 'master' of https://github.com/SwimmingPolar/NationalBookstore.git
 		
 		<!-- 접근권한이 없을경우 -->
 		<security:access-denied-handler ref="ryanAccessDenied" />

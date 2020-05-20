@@ -43,6 +43,7 @@ public class MyBookServiceImpl implements MyBookService{
 	public ArrayList<EBookVO> libBook(String clickId,Authentication auth) {	//찜 책장 조회
 		// TODO Auto-generated method stub		
 		ArrayList<EBookVO> list = new ArrayList<EBookVO>();
+
 		if(clickId != null && clickId != "") {
 			list = mapper.libBook(clickId);
 		}else {
