@@ -113,8 +113,10 @@ div.page {
 	/* width: 50%; height: 200%; */
 	padding: 70px 110px;
 	line-height: 3.0;
+	/* line-height: 2.7; */
 	font-family : 'Nanum Gothic', 'Roboto', sans-serif;
-	font-size: 1.35em;
+	font-size: 21.6px;
+	/* font-size: 0.9em; */
 }
 
 div.page > h3 {
@@ -132,6 +134,22 @@ div.page.right {
 	right: 0;
 	border-radius: 15px 0 0 15px;
 	box-shadow: -3px 0 15px -3px rgba(0, 0, 0, 0.5);
+}
+
+div.pageNum {
+	position: fixed;
+	font-family : 'Montserrat', sans-serif;
+	font-size: 1em;
+	width: 20px; height: 20px;
+	color: rgba(0, 0, 0, 0.5);
+}
+
+div.pageNum.left {
+	bottom: 3%; left: 25%;
+}
+
+div.pageNum.right {
+	bottom: 3%; right: 25%;
 }
 
 div.bookmark-container.left {

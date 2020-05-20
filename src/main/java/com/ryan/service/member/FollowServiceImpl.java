@@ -47,10 +47,14 @@ public class FollowServiceImpl implements FollowService{
 	}
 
 	@Override
-	public int countFollow(HttpSession session) {
+	public int countFollow(String clickId,HttpSession session) {
 		// TODO Auto-generated method stub
-		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
-		return mapper.countFollower(member);
+		if(clickId != null && clickId != "") {
+			return mapper.countFollower(clickId);
+		}else {
+			MemberVO member = (MemberVO) session.getAttribute("ryanMember");
+			return mapper.countFollower(member.getMemberEmail());
+		}
 	}
 	
 	

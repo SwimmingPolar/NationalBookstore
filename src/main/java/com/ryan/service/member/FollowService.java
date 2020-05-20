@@ -21,5 +21,5 @@ public interface FollowService {
 	
 	public Boolean followCheck( String follower , String following);
 	
-	public int countFollow(HttpSession session);
+	public int countFollow(String clickId, HttpSession session);
 }

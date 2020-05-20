@@ -2,10 +2,13 @@ package com.ryan.service.main;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ryan.domain.book.ReviewVO;
+import com.ryan.domain.member.MemberVO;
 import com.ryan.mapper.ReviewMapper;
 
 @Service
@@ -21,7 +24,7 @@ public class ReviewServiceImpl implements ReviewService{
 		else {
 			flag=(int)mapper.searchOrder(review)+(int)mapper.searchRead(review);
 			if(flag>0) {
-				return mapper.insertReview(review)==1?true : false;
+				return mapper.insertReview(review)>1?true : false;
 			}else
 				return false;
 		}
@@ -44,7 +47,13 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
-	public ArrayList<ReviewVO> myReviewList(String memeberEmail) {
-		return mapper.myReviewList(memeberEmail);
+	public ArrayList<ReviewVO> myReviewList(HttpSession session) {
+		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
+		return mapper.myReviewList(member.getMemberEmail());
+	}
+
+	@Override
+	public Boolean insertGrade(int bookNum) {
+		return mapper.insertGrade(bookNum)>0?true:false;
 	}
 }
