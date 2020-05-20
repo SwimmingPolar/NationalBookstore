@@ -1,32 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ryan.mapper.ReviewMapper">
+
 <insert id="insertReview" parameterType="com.ryan.domain.book.ReviewVO">
-<selectKey keyProperty="reviewNum" resultType="int" order="BEFORE">
+<!-- <selectKey keyProperty="reviewNum" resultType="int" order="BEFORE">
 SELECT review_num.NEXTVAL FROM book_Review
-</selectKey>
-		INSERT INTO book_Review
-		VALUES
-		(
-			#{reviewNum},
-			#{bookNum},
-			#{memberEmail},
-			#{reviewTitle},
-			#{reviewContent},
-			SYSDATE
-		)
-	</insert>
-	<select id="test">
-	SELECT review_num.NEXTVAL FROM book_Review
-	</select>
-	
-<!-- 	<insert id="insertReview" parameterType="com.ryan.domain.book.ReviewVO">
-<selectKey keyProperty="reviewNum" resultType="int" order="BEFORE">
-SELECT review_num.nextval FROM book_Review
-</selectKey>
+</selectKey> -->
 		INSERT INTO book_Review
 		(
-			review_num,
 			book_num,
 			member_email,
 			review_title,
@@ -35,14 +16,13 @@ SELECT review_num.nextval FROM book_Review
 		)
 		VALUES
 		(
-			#{reviewNum}
 			#{bookNum},
 			#{memberEmail},
 			#{reviewTitle},
 			#{reviewContent},
-			#{reviewRegdate}
+			SYSDATE
 		)
-	</insert> -->
+	</insert>
 	
 	<delete id="deleteReview">
 		DELETE FROM book_Review
@@ -50,7 +30,7 @@ SELECT review_num.nextval FROM book_Review
 	</delete>
 	
 		<update id="updateReview">
-		UPDATE FROM book_Review
+		UPDATE book_Review
 		SET review_title = #{reviewTitle},
 		review_content = #{reviewContent},
 		review_regdate = #{reviewRegdate}
@@ -59,27 +39,27 @@ SELECT review_num.nextval FROM book_Review
 	
 	<select id="searchRead">
 	SELECT count(*) FROM my_read_book
-	WHERE member_email=#{memberEmail},
+	WHERE member_email=#{memberEmail} and
 	book_num=#{bookNum}
 	</select>
 	
 	<select id="searchOrdertmp">
 	SELECT o.orderlist_num FROM order_object o
 	JOIN order_number n ON o.order_num=n.order_num
-	WHERE n.member_email=#{memberEmail},
+	WHERE n.member_email=#{memberEmail} and
 	o.book_num=#{bookNum}
 	</select>
 	
 	<select id="searchOrder">
 	SELECT count(*) FROM order_object o
 	JOIN order_number n ON o.order_num=n.order_num
-	WHERE n.member_email=#{memberEmail},
+	WHERE n.member_email=#{memberEmail} and
 	o.book_num=#{bookNum}
 	</select>
 	
 	<select id="duplicationChk">
 	SELECT count(*) FROM book_Review
-	WHERE member_email=#{memberEmail},
+	WHERE member_email=#{memberEmail} and
 	book_num=#{bookNum}
 	</select>
 	
@@ -90,14 +70,12 @@ SELECT review_num.nextval FROM book_Review
 	<insert id="insertGrade">
 	INSERT INTO book_Review
 		(
-			grade_num,
 			member_email,
 			book_num,
 			grade_score
 		)
 		VALUES
 		(
-			#{reviewNum}
 			#{memberEmail},
 			#{bookNum},
 			#{gradeScore}

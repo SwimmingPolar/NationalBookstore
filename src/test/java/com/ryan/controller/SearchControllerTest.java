@@ -1,63 +1,56 @@
 package com.ryan.controller;
 
-import java.io.IOException;
-import java.sql.SQLException;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.admin.mapper.NoticeBoardMapper;
+import com.admin.domain.board.EnquiryBoardVO;
+import com.admin.mapper.EnquiryBoardMapper;
 import com.ryan.domain.book.ReviewVO;
 import com.ryan.mapper.ReviewMapper;
 
+import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
-/*@RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml","file:src/main/webapp/WEB-INF/spring/root-context.xml"})*/
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
 public class SearchControllerTest {
-	
-	/*@Autowired
-	private WebApplicationContext ctx;
-	@Autowired
-	private ReviewService service;*/
-	@Autowired
+	@Setter(onMethod_ = {@Autowired})
 	private ReviewMapper mapper;
 	
-	@Autowired
-	private NoticeBoardMapper nmapper;
 	
-	//private MockMvc mockMvc;
+	@Setter(onMethod_ = {@Autowired})
+	private EnquiryBoardMapper emapper;
 	
-	/*@Before
-	public void setup() {
-		this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
-	}*/
+	/*
+	 * @Test public void insertReviewTests() {
+	 * 
+	 * ReviewVO review = new ReviewVO();
+	 * 
+	 * review.setBookNum(680); review.setMemberEmail("abc1234@naver.com");
+	 * review.setReviewTitle("테스트용 제목입니다."); review.setReviewContent("테스트용 내용입니다.");
+	 * 
+	 * int result = mapper.insertReview(review);
+	 * 
+	 * log.info("result :  " + result);
+	 * 
+	 * }
+	 */
 	
-	@SuppressWarnings("unused")
+	
 	@Test
-	public void test() throws IOException, SQLException{
-		ReviewVO review=new ReviewVO();
-		int bookNum=22;
-		review.setBookNum(bookNum);
-		review.setReviewTitle("test");
-		review.setReviewContent("tttttest");
-		review.setMemberEmail("test@email.com");
-		
-		//review=null;
-		boolean flag;
-		System.out.println(mapper.test());
-		//flag=mapper.insertReview(review)>0?true:false;
+	public void inserten() {
+		EnquiryBoardVO eq=new EnquiryBoardVO();
+		eq.setBoardContent("내용");
+		eq.setMemberEmail("abc1234@naver.com");
+		eq.setBoardTitle("테스트");
+		eq.setBoardState(1);
 
-		//assertTrue(flag);
-		//assertNull(review);
-		//assertNull(mapper.insertReview(review));
-
+		int result = emapper.insertEq(eq);
 		
+		log.info("result :  " + result);
 	}
-
 }

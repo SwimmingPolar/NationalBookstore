@@ -180,14 +180,14 @@
                     <th> 등록날짜 </th>
                 </tr>
                 <tr>
-                	<td><b>${reviewTitle}</b><td>
+                	<td><b>${review.reviewTitle}</b><td>
                     </td>
                     <td>
                     	<textarea name="postText" id="postText" readonly>  
-                            ${reviewContent}
+                            ${review.reviewContent}
                         </textarea>
                     </td>
-                    <td>${reviewRegdate}<td>
+                    <td>${review.reviewRegdate}<td>
                 </tr>
                </c:forEach>
             </table>

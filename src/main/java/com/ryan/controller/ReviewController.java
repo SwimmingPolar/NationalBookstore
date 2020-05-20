@@ -36,6 +36,7 @@ public class ReviewController {
 		if(memberEmail.equals((String)review.getMemberEmail())) {
 			service.insertReview(review);
 			service.insertGrade(review.getBookNum());
+			model.addAttribute("message", "입력 성공");
 		}else {
 			model.addAttribute("message", "본인이 작성한 리뷰가 아닙니다");
 			

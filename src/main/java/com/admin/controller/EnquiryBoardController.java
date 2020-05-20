@@ -42,7 +42,7 @@ public class EnquiryBoardController {
 			boolean flag=service.eqWrite(enquiry);
 			//문의사항 등록이 완료되면 등록할 파일이 있는지 확인후 있으면 등록
 			if(flag&&files!=null&&files.isEmpty()&&files.size()>0) {
-				String path = request.getSession().getServletContext().getRealPath("\\")+"\\NationalBookstore\\src\\main\\webapp\\resources\\enquiryFile";
+				String path = request.getSession().getServletContext().getRealPath("\\")+"\\resources\\enquiryFile";
 				boolean flag2=false;
 				try {
 					//파일등록
