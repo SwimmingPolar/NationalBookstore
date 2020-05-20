@@ -8,7 +8,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.admin.domain.board.EnquiryBoardVO;
 import com.admin.mapper.EnquiryBoardMapper;
-import com.ryan.domain.book.ReviewVO;
 import com.ryan.mapper.ReviewMapper;
 
 import lombok.Setter;
