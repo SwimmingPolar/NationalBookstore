@@ -13,11 +13,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ryan.domain.book.EBookVO;
 import com.ryan.domain.book.HashtagVO;
 import com.ryan.domain.book.MyLibVO;
 import com.ryan.domain.book.MyReadBookVO;
+import com.ryan.domain.member.MemberVO;
+import com.ryan.domain.security.RyanMember;
 import com.ryan.service.book.DetailBookService;
 import com.ryan.service.book.MyBookService;
 
@@ -99,9 +102,17 @@ public class DetailBookController {
 	
 	//읽은책 추가 //바로보기 버튼 클릭
 	@RequestMapping("/insertreadbook")
-	public String insertReadBook(@RequestParam("booknumber") int booknumber, Authentication auth) {
+	public String insertReadBook(@RequestParam("booknumber") int booknumber, Authentication auth , RedirectAttributes rttr) {
 		mservice.insertReadBook(booknumber,auth);
-		return "redirect:/viewer?booknumber="+booknumber;
+		
+		rttr.addAttribute("booknumber", booknumber);
+		
+		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
+		MemberVO member = ryanMember.getMember();
+		
+		rttr.addAttribute("memberEmail", member.getMemberEmail());
+		
+		return "redirect:/viewer";
 	}
 	
 }

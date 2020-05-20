@@ -74,6 +74,7 @@ a {
    right:0;
    outline:none;
    cursor: pointer;
+   border-radius: 0 0 5px 5px;
 }
 
 
@@ -81,6 +82,7 @@ a {
 #modalCloseBtn button:hover {
     font-weight: bold;
     background-color:rgb(5, 142, 233);
+    border-radius: 0 0 5px 5px;
 }
 
 .modal .modal_content {
@@ -92,8 +94,9 @@ a {
     width: 450px;
     height: 550px;
     border:1px solid #0099FF;
-    border-radius: 3px;
+    border-radius: 5px;
     border-bottom:none;
+   
  }
  
  .modal_content > p {

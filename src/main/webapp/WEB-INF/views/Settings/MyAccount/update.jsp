@@ -194,9 +194,9 @@
             var msg = ""; 
 
             if(pw.length) {
-                if(pw.length==""||pw.length<=2) {
+                if(pw.length==""||pw.length<=4) {
                     msg = "8자 이상, 16자 이하로 입력해주세요.";
-                }else if(pw.length <8) {
+                }else if(pw.length <9) {
                     msg= " 보안이 취약한 비밀번호입니다.";
                 }else {
                     msg = " 보안이 강력한 비밀번호입니다.";

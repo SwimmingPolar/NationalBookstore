@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,9 +14,11 @@
     <link rel="stylesheet" href="../../resources/styles/reset.css">
     <link rel="stylesheet" href="../../resources/styles/common.css">
     <script src="../../resources/js/common.js"></script>
-
+  
 </head>
 <body>
+
+	<sec:authentication property="principal" var="member"/>
     <!-- <header class="topbar">
         <nav>
           <div class="container">
@@ -31,18 +34,21 @@
 <div class="firstColumn">
 <!-- 배경화면 넣는곳 -->
 <div class="follow">
+
    	<c:if test="${checkId}">
    		<button type="button" id="followBtn"> <i class="fas fa-plus-circle"></i> 팔로우 </button>
-   	</c:if>    
+     </c:if>    
+    <button type="button" id="categoryAdd" onclick="location.href='interestedBook.jsp'"> <i class="fas fa-plus"></i> 관심 카테고리 </button>
+     
   </div>
 <div class="bigbox">
 <div class="myImage"> 
-    <a href="#modalGo" id="modalOpen"><img id="myFaceImage" src="${pageContext.request.contextPath }/resources/images/myLibrary/picture1.png" ></a>   
+    <a href="#"><img id="myFaceImage" src="${pageContext.request.contextPath }/resources/images/myLibrary/picture1.png" ></a>   
 </div>
 <div class="myNickname">
 		<c:choose>
 			<c:when test="${checkId}"> <a> ${followId.memberNickName }<%-- ${ryanMember.memberNickName } --%> </a> 님의 서재  </c:when>
-			<c:otherwise><a>  ${ryanMember.memberNickName }  </a> 님의 서재 </c:otherwise>
+			<c:otherwise><a>  ${member.member.memberNickName }  </a> 님의 서재 </c:otherwise>
 		</c:choose>
 </div>
 </div>
@@ -72,7 +78,7 @@
     <input type="radio" name="myPage" id="mybookcart"><label for="mybookcart">책장</label>
     <input type="radio" name="myPage" id="mypost"><label for="mypost">포스트</label>
     
-    <div class="content one">
+     <div class="content one">
         <div class="mybookTitle">
             <a> ${readbookcount} </a> 권의 도서
         </div>
@@ -84,7 +90,6 @@
             	<li>
               	<a href="#">
               	<div class="books"> 
-             
               	<div class="mybookimage">
                    <a href="/book/bookdetail?booknumber=${readbook.bookNum }"> 
                    	<img src="${pageContext.request.contextPath }${readbook.bookThumbnail }" alt="없음">	
@@ -108,8 +113,8 @@
       		     </div>
            	</c:otherwise>
           </c:choose>  	
-        </div>
-           <div class="content two">
+    </div>
+     <div class="content two">
         <div class="mybookTitle">
             <a>${libcount}</a> 개의 책장
         </div>
@@ -131,7 +136,6 @@
                      <c:when test="${libbooklist.size() >0 }">
                   <table>
                          <c:forEach var="book" items="${libbooklist}">
-                          
                           <tr>
                   <td><input type="checkbox" name="chkbox" id="chkbox" value="${book.bookNum }"></td>
                   <td>
@@ -183,46 +187,26 @@
                     <th> 등록날짜 </th>
                 </tr>
                 <tr>
-                	<td><b>${reviewTitle}</b><td>
-                    </td>
-                    <td>
+                	<td><b>${review.reviewTitle}</b><td>
+                    <td >
                     	<textarea name="postText" id="postText" readonly>  
                             ${reviewContent}
                         </textarea>
                     </td>
                     <td>${reviewRegdate}<td>
                 </tr>
-               </c:forEach>
-            </table>
-            </c:when>
-		</c:choose> 
-            <%-- <table>
-                <tr>
-                    <th> 도서명 </th>
-                    <th> 별점 </th>
-                    <th> 등록날짜 </th>
-                </tr>
-                <tr>
-                    <td> 달빛 마신 마녀 </td>
-                    <td> ★★★★☆ </td>
-                    <td> ${reviewRegdate} </td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <input type="text" name="postTitleChk" id="postTitleChk" 
-                        value="${reviewTitle}" readonly>     
-                        <textarea name="postText" id="postText" readonly>  
-                            ${reviewContent}
-                        </textarea>
-                    </td>
-                </tr>
-            </table> --%>
+             		  </c:forEach>
+           	 		</table>
+           	 	</c:when>
+	     	 </c:choose> 
         </div>
+
+        <form id="postRegister" action="/review/write" method="get">  
         <div class="postInsert" id="postInsert">
             <select name="bookSelect" id="bookSelect">
-                <option value="bookChoice"> ===== 책선택 ===== </option>
-                <option value="bookChoice"> book1 </option>
-                <option value="bookChoice"> book2 </option>
+              <c:forEach var="list" items ="${libbooklist}">
+                <option value="bookChoice"> ${list.bookTitle} </option>
+              </c:forEach>
             </select>
             <div class ="bookStarScore">
                 <b>별점 등록</b>     
@@ -233,28 +217,52 @@
                 <span><i class="fas fa-star"></i></span>
                 <span id=starScore> 0 </span> 점
             </div>
-            <div class="postImgFile">  
+            <!-- <div class="postImgFile">  
                 <input type="file" name="postImageFile" id="postImageFile" onchange="uploadImg(this);">
                     <div class="postImage" id="postImage">
                         <img id ="imgimg" width=200>
-                    </div>
-                    
-            </div>
-
-            <input type="text" name="postTitle" id="postTitle" placeholder="제목을 입력하세요">
-            <textarea name="post_Content" id="post_Content" placeholder="솔직한 생각을 입력해주세요."></textarea>
-            
+                    </div>   
+            </div> -->
+	 
+            <input type="text" name="reviewTitle" id="postTitle" placeholder="제목을 입력하세요">
+            <textarea name="reviewContent" id="post_Content" placeholder="솔직한 생각을 입력해주세요."></textarea>
+           
+           
             <div class="postEndBtn">
                 <button type="button" id="postSave"> 저장 </button>
                 <button type="button" id="postCancel"> 취소 </button>
             </div>
-       
-        </div>
-   	 </div>
-        </div>
-   
- 
+          </form>
+     </div>
 </div>
+
+<!-- 팔로우 모달창 -->
+<div id ="modalGo" class="modal">
+    
+  <div class="modal_content">
+    <span id="modalCloseBtn">
+      <button type="button" > <i class="fas fa-times-circle"></i> </button>
+  </span>
+
+  <span class="followNum">
+    <i class="fas fa-user-plus"></i> 팔로우한 사람들
+  </span>
+
+  <div class = "likeList"> 
+    
+    <!-- foreach 시작 -->
+
+      <ul>
+          <li><img id="myFace" src="../../resources/images/myLibrary/picture1.png" ></li>
+          <li><a> 지혜로운 셀럽 </a>님</li>
+      </ul>
+      <!-- foreach 끝  -->       
+    </div>
+  </div>
+</div>
+
+
+<!-- 별점 등록 -->
 
 <script>
 $(document).ready(function(){
@@ -314,7 +322,9 @@ $(document).ready(function(){
 
 
 </script>
+
     <script>
+      
 $(function() {
 
 $('.bookStarScore span').click(function() {
@@ -322,10 +332,29 @@ $('.bookStarScore span').click(function() {
   $('.bookStarScore span').css({color:'#979797'});
   $('.bookStarScore span:nth-child(-n+'+starNum+')').css({color:'#f1c40f'});
   $('#starScore').html(starNum-1);
-});
+
+  });
 
 });
     </script>
+
+<!-- 별점 보여주기 -->
+<script>
+ 
+  $(function() {
+     var rating = $('.myreviewScore');
+ 
+     rating.each(function(){
+         var score = $(this).attr('data-rate');
+         console.log(score);
+         $(this).find('span:nth-child(-n+'+score+')').css({color:'#f1c40f'});
+        //  $('#starScore').html(targetScore);
+     });
+ 
+  });
+</script>
+
+
     <script>    
         function openNewPost() {          
             var openP = document.getElementById('postInsert');
@@ -380,6 +409,7 @@ $('.bookStarScore span').click(function() {
  </script>
 
  <script>
+
     $(document).ready(() => {
       const li = document.querySelector('footer.fixed a[href="/booklist/myLibList"]').parentElement;
       const ul = li.parentElement;
@@ -387,6 +417,30 @@ $('.bookStarScore span').click(function() {
     });
   </script>
 
+  <script>
+  
+  function allDelte(){
+	  location.href = "/booklist/allDelte";
+  }
+    
+  </script>
+  <script>
+    /* var cnt=0; */
+function followClick(){
+  /* cnt++; */
+  var btn = document.getElementById('followBtn');
+  
+    btn.innerHTML="팔로잉";
+    btn.style.backgroundColor="transparent";
+    
+ /*  }else {
+    btn.innerHTML="<i class='fas fa-plus-circle'></i> 팔로우";
+    btn.style.backgroundColor="#17769c";
+    
+  } */
+
+}
+  </script>
 <%@ include file="template/footer.jsp" %>
 </body>
 </html>
