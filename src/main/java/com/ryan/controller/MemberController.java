@@ -228,15 +228,18 @@ public class MemberController {
 	
 	//레뒤
 	@PostMapping("/paymentReady")
-	public String memberPaymentReady(@ModelAttribute("ryanMember") MemberVO member) {
-		
+	public String memberPaymentReady(Authentication auth) {
+		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
+		MemberVO member = ryanMember.getMember();
 		
 		return "redirect:" + paymentService.regularPaymentReady(member);
 	}
 	
 	//성공~
 	@GetMapping("/paymentSuccess")
-	public String memberPaymentSuccess(@RequestParam("pg_token") String pg_token, @ModelAttribute("ryanMember") MemberVO member, Model model) {
+	public String memberPaymentSuccess(@RequestParam("pg_token") String pg_token, Authentication auth, Model model) {
+		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
+		MemberVO member = ryanMember.getMember();
 		
 		KakaoPayApprovalVO kakaoPayApprovalVO = paymentService.paymentComplete(pg_token, member);
 		
