@@ -6,10 +6,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.ryan.domain.book.BookAlarmVO;
 import com.ryan.domain.member.MemberVO;
+import com.ryan.domain.security.RyanMember;
 import com.ryan.mapper.MyBookAlarmMapper;
 
 import lombok.Setter;
@@ -24,15 +26,17 @@ public class MyBookAlarmServiceImpl implements MyBookAlarmService {
 	
 	//알람요청
 	@Override
-	public Boolean requestAlarm(BookAlarmVO vo, HttpSession session) {
-		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
+	public Boolean requestAlarm(BookAlarmVO vo, Authentication auth) {
+		RyanMember ryanmember = (RyanMember) auth.getPrincipal();
+		MemberVO member = (MemberVO) ryanmember.getMember();
 		vo.setFkMemberAlarm(member.getMemberEmail());
 		return mapper.requestAlarm(vo)==1 ? true : false;
 	}
 
 	@Override
-	public ArrayList<BookAlarmVO> showAlarm(HttpSession session) {
-		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
+	public ArrayList<BookAlarmVO> showAlarm(Authentication auth) {
+		RyanMember ryanmember = (RyanMember) auth.getPrincipal();
+		MemberVO member = (MemberVO) ryanmember.getMember();
 		return mapper.showAlarm(member.getMemberEmail());
 	}
 

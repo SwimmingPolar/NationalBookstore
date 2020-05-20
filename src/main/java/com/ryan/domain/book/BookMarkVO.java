@@ -4,7 +4,7 @@ public class BookMarkVO {
 	private int bookmarkNum;
 	private String memberEmail;
 	private int bookNum;
-	private int pageStatus;
+	private int pageNum;
 	public int getBookmarkNum() {
 		return bookmarkNum;
 	}
@@ -23,10 +23,10 @@ public class BookMarkVO {
 	public void setBookNum(int bookNum) {
 		this.bookNum = bookNum;
 	}
-	public int getPageStatus() {
-		return pageStatus;
+	public int getPageNum() {
+		return pageNum;
 	}
-	public void setPageStatus(int pageStatus) {
-		this.pageStatus = pageStatus;
+	public void setPageNum(int pageNum) {
+		this.pageNum = pageNum;
 	}
 }

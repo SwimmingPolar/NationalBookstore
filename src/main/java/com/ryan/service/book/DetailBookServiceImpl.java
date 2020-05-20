@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 
@@ -20,6 +21,7 @@ import com.ryan.domain.book.HashtagVO;
 import com.ryan.domain.book.MyReadBookVO;
 import com.ryan.domain.book.ReviewVO;
 import com.ryan.domain.member.MemberVO;
+import com.ryan.domain.security.RyanMember;
 import com.ryan.mapper.DetailBookMapper;
 
 import lombok.Setter;
@@ -121,11 +123,11 @@ public class DetailBookServiceImpl implements DetailBookService{
 	}
 */
 	@Override
-	public int insertLike(int booknumber, HttpServletRequest request) {
+	public int insertLike(int booknumber, Authentication auth) {
 		int result = 0;
 		ArrayList<BookLikeVO> list = mapper.bookLikeList(booknumber);
-		HttpSession session = request.getSession();	
-		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
+		RyanMember ryanmember = (RyanMember) auth.getPrincipal();
+		MemberVO member = (MemberVO) ryanmember.getMember();
 			if(!list.isEmpty()) {
 				for(int i=0; i<list.size(); i++) {
 					if(list.get(i).getMemberEmail().equals(member.getMemberEmail())) {
@@ -153,18 +155,14 @@ public class DetailBookServiceImpl implements DetailBookService{
 
 	@Override
 	public void updateBookLookUp(EBookVO vo, HttpServletRequest request, HttpServletResponse response) {
-		
 		Cookie[] cookies = request.getCookies();
-		
 		boolean flag = false;
-		
 		if(cookies != null) {
 			for(Cookie c : cookies) {
 				if(c.getName().equals(vo.getBookNum() + "lookUp")) {
 					flag = true;
 				} 
 			}
-			
 			if(!flag) {
 				mapper.updateBookLookUp(vo);
 				Cookie bookLookUpCookie = new Cookie(vo.getBookNum()+ "lookUp", "update");
@@ -172,7 +170,6 @@ public class DetailBookServiceImpl implements DetailBookService{
 				bookLookUpCookie.setPath("/");
 				response.addCookie(bookLookUpCookie);
 			}
-				
 		} else {
 			mapper.updateBookLookUp(vo);
 			Cookie bookLookUpCookie = new Cookie(vo.getBookNum()+ "lookUp", "update");
@@ -184,25 +181,23 @@ public class DetailBookServiceImpl implements DetailBookService{
 	}
 
 	@Override
-	public boolean checkLike(int booknumber, HttpServletRequest request) {
+	public boolean checkLike(int booknumber, Authentication auth) {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-		ArrayList<BookLikeVO> list = mapper.bookLikeList(booknumber);
-		
-		MemberVO vo = (MemberVO) session.getAttribute("ryanMember");
-		
+		RyanMember ryanmember = (RyanMember) auth.getPrincipal();
 		boolean flag = false;
-		if(vo!=null) {
+		
+		if(ryanmember != null) {
+			MemberVO member = (MemberVO) ryanmember.getMember();
+			ArrayList<BookLikeVO> list = mapper.bookLikeList(booknumber);		
 			for(int i=0; i<list.size();i++) {
-				if(list.get(i).getMemberEmail().equals(vo.getMemberEmail())) {
+				if(list.get(i).getMemberEmail().equals(member.getMemberEmail())) {
 					flag = true;
 					break;
 				}
 			}	
-		}else {
 			return flag;
 		}
-			
+		
 		return flag;
 	}
 
@@ -210,9 +205,7 @@ public class DetailBookServiceImpl implements DetailBookService{
 	public boolean hashtagCookieCheck(int booknumber, HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		Cookie[] cookies = request.getCookies();
-		
 		boolean flag = false;
-		
 		if(cookies != null) {
 			for(Cookie c : cookies) {
 				if(c.getName().equals(booknumber+"hashtag")) {

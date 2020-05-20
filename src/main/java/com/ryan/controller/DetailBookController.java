@@ -7,16 +7,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ryan.domain.book.EBookVO;
 import com.ryan.domain.book.HashtagVO;
 import com.ryan.domain.book.MyLibVO;
 import com.ryan.domain.book.MyReadBookVO;
+import com.ryan.domain.member.MemberVO;
+import com.ryan.domain.security.RyanMember;
 import com.ryan.service.book.DetailBookService;
 import com.ryan.service.book.MyBookService;
 
@@ -36,7 +40,7 @@ public class DetailBookController {
 	
 	//상세보기 페이지 
 	@RequestMapping("/bookdetail")
-	public String searchEBook(@RequestParam("booknumber") int booknumber, Model model, HttpServletRequest request, HttpServletResponse response) {
+	public String searchEBook(@RequestParam("booknumber") int booknumber, Model model, HttpServletRequest request, HttpServletResponse response, Authentication auth) {
 	
 		EBookVO vo = service.searchEBook(booknumber);
 		
@@ -49,7 +53,7 @@ public class DetailBookController {
 		
 		model.addAttribute("booklist", service.interestbooks(vo.getCategoryNum()));// 카테고리 추천 도서
 
-		model.addAttribute("likecheck", service.checkLike(booknumber, request)); //좋아요 클릭 했는지 확인
+		model.addAttribute("likecheck", service.checkLike(booknumber, auth)); //좋아요 클릭 했는지 확인
 		
 		model.addAttribute("booklike", service.bookLike(booknumber)); //좋아요 수
 		
@@ -84,23 +88,31 @@ public class DetailBookController {
 	
 	//좋아요 입력
 	@RequestMapping("/insertlike")
-	public @ResponseBody String insertLike(@RequestParam("booknumber") int booknumber, HttpServletRequest request, Model model) {
-		int result = service.insertLike(booknumber, request);
-		boolean check =  service.checkLike(booknumber, request);
+	public @ResponseBody String insertLike(@RequestParam("booknumber") int booknumber, Authentication auth, Model model) {
+		int result = service.insertLike(booknumber, auth);
+		boolean check =  service.checkLike(booknumber, auth);
 		return result+"+"+check;
 	}
 	
 	//찜 책장에 추가
 	@RequestMapping("/insertLibList")
-	public @ResponseBody Boolean insertList(@RequestParam("booknumber") int booknumber, HttpSession session) {
-		return mservice.insertLibBook(booknumber,session);
+	public @ResponseBody Boolean insertList(@RequestParam("booknumber") int booknumber, Authentication auth) {
+		return mservice.insertLibBook(booknumber,auth);
 	}
 	
 	//읽은책 추가 //바로보기 버튼 클릭
 	@RequestMapping("/insertreadbook")
-	public String insertReadBook(@RequestParam("booknumber") int booknumber, HttpServletRequest request) {
-		mservice.insertReadBook(booknumber,request);
-		return "redirect:/viewer?booknumber="+booknumber;
+	public String insertReadBook(@RequestParam("booknumber") int booknumber, Authentication auth , RedirectAttributes rttr) {
+		mservice.insertReadBook(booknumber,auth);
+		
+		rttr.addAttribute("booknumber", booknumber);
+		
+		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
+		MemberVO member = ryanMember.getMember();
+		
+		rttr.addAttribute("memberEmail", member.getMemberEmail());
+		
+		return "redirect:/viewer";
 	}
 	
 }
