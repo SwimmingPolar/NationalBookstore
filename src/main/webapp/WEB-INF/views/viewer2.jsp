@@ -102,7 +102,7 @@ font-family: 'Nanum Gothic', sans-serif;
 		<c:forEach var="c" items="${chapter.get(0) }" varStatus="status">
 			pages.push("${c }");
 			if("${c }".indexOf("<h3>") >= 0) {
-				$(".modal.index").append("<button class='btn goindex ${status.index}' >"+(temp+1)+"."+ index[temp]+"</button>");
+				$(".modal.index div.result").append("<button class='btn goindex ${status.index}' >"+(temp+1)+"."+ index[temp]+"</button>");
 				temp++;
 				indexFinder++;
 			}
@@ -533,6 +533,7 @@ font-family: 'Nanum Gothic', sans-serif;
 				<span class="title" >${book.bookTitle }</span>
 				<span class="author" >${book.bookWriter }</span>
 			</div>
+			<div class="result" ></div>
 			<%-- <button class="btn goindex ${페이지번호 }" >${인덱스 } ${목차 이름 }</button> 형식으로 나옴 --%>
 		</div>
 		<div class="modal search" >
