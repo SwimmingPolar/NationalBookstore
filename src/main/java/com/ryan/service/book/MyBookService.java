@@ -42,5 +42,8 @@ public interface MyBookService {
 	
 	//개인정보조회
 	public MemberVO readClickId(String clickId);
+	
+	//팔로우 되어 있는지 확인
+	public Boolean followCheck(String clickId);
 
 }

@@ -54,13 +54,13 @@ public class MyBookController {
 				flag = true;
 				model.addAttribute("checkId",flag);
 				model.addAttribute("followId",service.readClickId(clickId));
-			//	model.addAttribute("followCheck",service.followCheck());
+		//		model.addAttribute("followCheck",service.followCheck());
 			}
 		}else {
 			if(member != null) {
 				model.addAttribute("checkId",flag);
 			} else {
-				return "redirect:/signin";
+				return "redirect:/member/signin";
 			}
 		}
 		ArrayList<EBookVO> list = service.libBook(clickId,session);

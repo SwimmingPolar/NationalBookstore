@@ -191,6 +191,11 @@ public class MyBookServiceImpl implements MyBookService{
 		return memberMapper.readClickId(clickId);
 	}
 
+	@Override
+	public Boolean followCheck(String clickId) {	//팔로우 되어 있는지 확인
+		return null;
+	}
+
 	
 	
 	
