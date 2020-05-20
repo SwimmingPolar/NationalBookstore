@@ -26,6 +26,7 @@ public class ReviewController {
 	 * reviewForm(HttpServletRequest request,Model model){ return ""; }
 	 */
 	
+	//리뷰를 작성하고 입력 요청하면 처리
 	@RequestMapping("/write")
 	public String insertEbookReview(@ModelAttribute("review") ReviewVO review,HttpServletRequest request,Model model) {
 		HttpSession session = request.getSession();
@@ -33,11 +34,14 @@ public class ReviewController {
 		String memberEmail=member.getMemberEmail();
 		
 		if(memberEmail.equals((String)review.getMemberEmail())) {
-			return service.insertReview(review)? "정상입력시 갈 jsp":"실패시";
+			service.insertReview(review);
+			service.insertGrade(review.getBookNum());
 		}else {
 			model.addAttribute("message", "본인이 작성한 리뷰가 아닙니다");
-			return "";
+			
 		}
+		
+		return "myLibrary";
 	}
 	
 	@RequestMapping("/delete")
@@ -72,13 +76,14 @@ public class ReviewController {
 		}
 	}
 	
-	@RequestMapping("/myReviewList")
+	//review 목록요청시  model에 myreviewlist로 reviewVO어레이리스트를 보낸다
+	/*@RequestMapping("/myReviewList")
 	public String reviewList(HttpServletRequest request,Model model) {
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
 		String memberEmail=member.getMemberEmail();
 		service.myReviewList(memberEmail);
 		model.addAttribute("myreviewlist", service.myReviewList(memberEmail));
-		return "";
-	}
+		return "myLibrary";
+	}*/
 }

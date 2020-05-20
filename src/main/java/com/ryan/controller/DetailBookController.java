@@ -100,7 +100,7 @@ public class DetailBookController {
 	@RequestMapping("/insertreadbook")
 	public String insertReadBook(@RequestParam("booknumber") int booknumber, HttpServletRequest request) {
 		mservice.insertReadBook(booknumber,request);
-		return "redirect:/viewer";
+		return "redirect:/viewer?booknumber="+booknumber;
 	}
 	
 }

@@ -55,7 +55,29 @@ public class MainController {
 		
 	}
 	
+	@GetMapping("/myaccount")
+	public String myAccountMain() {
+		
+		return "Settings/MyAccount/myAccount-main";
+	}
 	
+	@GetMapping("/goSubscribe")
+	public String goSubscribe() {
+		return "Settings/MyAccount/goSubscribe";
+	}
+	
+	@GetMapping("/updateMyInfo")
+	public String updateMyInfo() {
+		
+		return "Settings/MyAccount/update";
+	}
+	
+	@GetMapping("deleteMyInfo")
+	public String deleteMyInfo() {
+		return "Settings/MyAccount/delete";
+	}
+	
+//	@GetMapping("myAccount-main")
 	
 //	@GetMapping("/filterSearch")
 //	public String filterSearch(FilterSearchVO filterSearch, Model model) {

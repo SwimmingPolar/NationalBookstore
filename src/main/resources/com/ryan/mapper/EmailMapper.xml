@@ -39,11 +39,18 @@
 		</where>
 	</update>
 	
-	<select id="authCompleteCheck" resultType="int">
+	<select id="authCompleteCheck" resultType="boolean">
 		SELECT email_auth_complete FROM email_check
 		<where>
 			member_email = #{memberEmail}
 		</where>
 	</select>
+	
+	<delete id="emailCodeDelete">
+		DELETE FROM email_check
+		<where>
+			member_email = #{memberEmail}
+		</where>
+	</delete>
 	
 </mapper>

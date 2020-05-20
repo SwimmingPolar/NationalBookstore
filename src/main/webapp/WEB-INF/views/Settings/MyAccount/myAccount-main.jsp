@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +17,8 @@
     <script src="../../../../resources/js/common.js"></script>
 </head>
 <body>
+<sec:authentication property="principal" var="member"/>
+
 <header class="topbar">
         <nav>
           <div class="container">
@@ -26,12 +29,12 @@
       </header>
 <div class="wrapper">
     <div class="title">
-        <h2> <i class="fas fa-bell-on"></i>  <p> ${ryanMember.memberNickName }</p></h2>
+        <h2> <i class="fas fa-bell-on"></i>  <p> ${member.member.memberNickName } 님의 관리 페이지 입니다.</p></h2>
     </div>        
     <div class="summary">
         <div class="goSub">
             
-            <button type="button" id="gogoSub" onclick="location.href='goSubscribe.jsp'">
+            <button type="button" id="gogoSub" onclick="location.href='/goSubscribe'">
                 <p>
                     정기구독 신청하기
                 </p>
@@ -54,8 +57,8 @@
     <div class="listChoice">
         <p> 정보 관리 </p>
         <ul>
-            <li><a href="myInfoUpdate.jsp">회원정보수정 <i class="far fa-chevron-right"></i></a></li>
-            <li><a href="deleteMyInfo.jsp">회원탈퇴<i class="far fa-chevron-right"></i></a> </li>
+            <li><a href="/updateMyInfo">회원정보수정 <i class="far fa-chevron-right"></i></a></li>
+            <li><a href="/member/delete">회원탈퇴<i class="far fa-chevron-right"></i></a> </li>
         </ul>
     </div>
 
@@ -75,7 +78,11 @@
         </ul>
     </div>
     <div class="lastColumn">
-        <button type="button" >로그아웃</button>
+    	<form action="/member/logout" method="post">
+    		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+    		<button type="submit">로그아웃</button>
+    	</form>
+        
     </div>
 </div>
 
@@ -132,12 +139,12 @@
    </script>
 <script>
     $(document).ready(() => {
-      const li = document.querySelector('footer.fixed a[href="myAccount.jsp"]').parentElement;
+      const li = document.querySelector('footer.fixed a[href="/myaccount"]').parentElement;
       const ul = li.parentElement;
       [ul, li].forEach(element => element.classList.add('active'));
     });
   </script>
 
-<%@ include file="../template/footer.jsp" %>
+<%@ include file="../../template/footer.jsp" %>
 </body>
 </html>

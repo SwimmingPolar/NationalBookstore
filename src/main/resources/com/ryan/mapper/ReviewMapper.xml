@@ -3,6 +3,25 @@
 <mapper namespace="com.ryan.mapper.ReviewMapper">
 <insert id="insertReview" parameterType="com.ryan.domain.book.ReviewVO">
 <selectKey keyProperty="reviewNum" resultType="int" order="BEFORE">
+SELECT review_num.NEXTVAL FROM book_Review
+</selectKey>
+		INSERT INTO book_Review
+		VALUES
+		(
+			#{reviewNum},
+			#{bookNum},
+			#{memberEmail},
+			#{reviewTitle},
+			#{reviewContent},
+			SYSDATE
+		)
+	</insert>
+	<select id="test">
+	SELECT review_num.NEXTVAL FROM book_Review
+	</select>
+	
+<!-- 	<insert id="insertReview" parameterType="com.ryan.domain.book.ReviewVO">
+<selectKey keyProperty="reviewNum" resultType="int" order="BEFORE">
 SELECT review_num.nextval FROM book_Review
 </selectKey>
 		INSERT INTO book_Review
@@ -23,7 +42,7 @@ SELECT review_num.nextval FROM book_Review
 			#{reviewContent},
 			#{reviewRegdate}
 		)
-	</insert>
+	</insert> -->
 	
 	<delete id="deleteReview">
 		DELETE FROM book_Review
@@ -44,12 +63,12 @@ SELECT review_num.nextval FROM book_Review
 	book_num=#{bookNum}
 	</select>
 	
-	<select id="searchOrdertmp">
+<!-- 	<select id="searchOrdertmp">
 	SELECT o.orderlist_num FROM order_object o
 	JOIN order_number n ON o.order_num=n.order_num
 	WHERE n.member_email=#{memberEmail},
 	o.book_num=#{bookNum}
-	</select>
+	</select> -->
 	
 	<select id="searchOrder">
 	SELECT count(*) FROM order_object o
@@ -58,13 +77,30 @@ SELECT review_num.nextval FROM book_Review
 	o.book_num=#{bookNum}
 	</select>
 	
-	<select id="duplicationChk">
+	<select id="duplication">
 	SELECT count(*) FROM book_Review
 	WHERE member_email=#{memberEmail},
 	book_num=#{bookNum}
 	</select>
 	
-	<select id="myreviewList" resultType="com.ryan.domain.book.ReviewVO">
+	<select id="myReviewList" resultType="com.ryan.domain.book.ReviewVO">
 	SELECT * FROM book_Review WHERE member_email=#{memberEmail}
 	</select>
+	
+	<insert id="insertGrade">
+	INSERT INTO book_Review
+		(
+			grade_num,
+			member_email,
+			book_num,
+			grade_score
+		)
+		VALUES
+		(
+			#{reviewNum}
+			#{memberEmail},
+			#{bookNum},
+			#{gradeScore}
+		)
+	</insert>
 </mapper>

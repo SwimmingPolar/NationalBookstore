@@ -16,28 +16,37 @@
   
 </head>
 <body>
-    <header class="topbar">
+    <!-- <header class="topbar">
         <nav>
           <div class="container">
             <a href="javascript: history.back();"><i class="far fa-arrow-left"></i></a>
-            <h2>내 서재</h2>
+            <c:choose>
+            	<c:when test="${checkId}">  <h2>${followId.memberNickName } 님의 서재</h2></c:when>
+            	<c:otherwise> <h2>내 서재</h2></c:otherwise>
+            </c:choose>
           </div>
         </nav>
-      </header>
+      </header> -->
 <div class="wrapper">
 <div class="firstColumn">
 <!-- 배경화면 넣는곳 -->
 <div class="follow">
-    <button type="button" id="followBtn"> <i class="fas fa-plus-circle"></i> 팔로우 </button>
+
+   	<c:if test="${checkId}">
+   		<button type="button" id="followBtn"> <i class="fas fa-plus-circle"></i> 팔로우 </button>
+     </c:if>    
     <button type="button" id="categoryAdd" onclick="location.href='interestedBook.jsp'"> <i class="fas fa-plus"></i> 관심 카테고리 </button>
+     
   </div>
 <div class="bigbox">
 <div class="myImage"> 
     <a href="#"><img id="myFaceImage" src="${pageContext.request.contextPath }/resources/images/myLibrary/picture1.png" ></a>   
 </div>
 <div class="myNickname">
-        <a> ${ryanMember.memberNickName } </a> 님의 서재 
-      <%--   <a> ${ryanMember.memberEmail } </a> --%>
+		<c:choose>
+			<c:when test="${checkId}"> <a> ${followId.memberNickName }<%-- ${ryanMember.memberNickName } --%> </a> 님의 서재  </c:when>
+			<c:otherwise><a>  ${ryanMember.memberNickName }  </a> 님의 서재 </c:otherwise>
+		</c:choose>
 </div>
 </div>
 <div class = "manyBtn">
@@ -48,12 +57,13 @@
     </ul>
 </div>
 <div class="goSubscribe">
+<c:if test="${checkId eq false}">
 <a href="goSubscribe.jsp"> 
   <b> 정기구독 시작 </b><br>
   <em> 바로가기 </em> 
   <i class="fas fa-arrow-circle-right"></i>
 </a>
-
+</c:if>
     
 </div>
 
@@ -65,7 +75,7 @@
     <input type="radio" name="myPage" id="mybookcart"><label for="mybookcart">책장</label>
     <input type="radio" name="myPage" id="mypost"><label for="mypost">포스트</label>
     
-    <div class="content one">
+     <div class="content one">
         <div class="mybookTitle">
             <a> ${readbookcount} </a> 권의 도서
         </div>
@@ -100,8 +110,8 @@
       		     </div>
            	</c:otherwise>
           </c:choose>  	
-        </div>
-           <div class="content two">
+    </div>
+     <div class="content two">
         <div class="mybookTitle">
             <a>${libcount}</a> 개의 책장
         </div>
@@ -111,10 +121,12 @@
               <strong> 찜 목록 </strong> 
             </div>
             <div class="totalBtn">
+           	  <c:if test="${checkId eq false}">
               <label for="allChk">
               <input type="checkbox" name="allChk" id="allChk"> 전체선택
               </label>    
-              <button type="button" id="allDelete" onclick="allDelete();"> 전체삭제 </button>      
+              <button type="button" id="allDelete"> 선택삭제 </button>   
+              </c:if>   
             </div>
             <div class="ebookList"> 
                  <c:choose>
@@ -122,7 +134,7 @@
                   <table>
                          <c:forEach var="book" items="${libbooklist}">
                           <tr>
-                  <td><input type="checkbox" name="chkbox" id="chkbox"></td>
+                  <td><input type="checkbox" name="chkbox" id="chkbox" value="${book.bookNum }"></td>
                   <td>
                      <a href="/book/bookdetail?booknumber=${book.bookNum }"> 
                   		<img src="${pageContext.request.contextPath }${book.bookThumbnail }" alt="없음">
@@ -135,8 +147,10 @@
                       <li> <span>${book.bookPublisher}</span></li>
                     </ul>
                   </td>
+                <c:if test="${checkId eq false}">
                   <td><button type="button" id="goRead">바로보기</button>
                   <a href="/booklist/deleteLibList?booknum=${book.bookNum }" id=eachDelete>삭제</a></td>
+                  </c:if>
                 </tr>
                        </c:forEach>   	
                        </table>		
@@ -160,38 +174,30 @@
         </div>
             
         <div class="myPostCheck" id="myPostCheck">
-            <table>
-              <c:foreach var ="i" items="${myReviewList}">
+         <c:choose>
+          <c:when test="${myreviewlist.size() >0 }">
+          <table>
+          <c:forEach var="review" items="${myreviewlist}">
                 <tr>
-                    <th>  </th>
-                    <th> 별점 </th>
+                    <th> 도서명 </th>
+                    <th> 내용 </th>
                     <th> 등록날짜 </th>
                 </tr>
                 <tr>
-                    <td> 달빛 마신 마녀 </td>
-                    <td style="text-indent: 5px;"> 
-                      <div class="myreviewScore" data-rate="3">
-                      <span><i class="fas fa-star"></i></span>
-                      <span><i class="fas fa-star"></i></span>
-                      <span><i class="fas fa-star"></i></span>
-                      <span><i class="fas fa-star"></i></span>
-                      <span><i class="fas fa-star"></i></span>
-                      </div>
-                    </td>
-                    <td> ${reviewRegdate} </td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <input type="text" name="postTitleChk" id="postTitleChk" 
-                        value="${reviewTitle}" readonly>     
-                        <textarea name="postText" id="postText" readonly>  
+                	<td><b>${review.reviewTitle}</b><td>
+                    <td >
+                    	<textarea name="postText" id="postText" readonly>  
                             ${reviewContent}
                         </textarea>
                     </td>
+                    <td>${reviewRegdate}<td>
                 </tr>
-              </c:foreach>
-            </table>
+             		  </c:forEach>
+           	 		</table>
+           	 	</c:when>
+	     	 </c:choose> 
         </div>
+
         <form id="postRegister" action="/review/write" method="get">  
         <div class="postInsert" id="postInsert">
             <select name="bookSelect" id="bookSelect">
@@ -214,7 +220,7 @@
                         <img id ="imgimg" width=200>
                     </div>   
             </div> -->
-
+	 
             <input type="text" name="reviewTitle" id="postTitle" placeholder="제목을 입력하세요">
             <textarea name="reviewContent" id="post_Content" placeholder="솔직한 생각을 입력해주세요."></textarea>
            
@@ -224,12 +230,8 @@
                 <button type="button" id="postCancel"> 취소 </button>
             </div>
           </form>
-        </div>
-   	 </div>
-    </div> 
-  </div>
+     </div>
 </div>
-
 
 <!-- 팔로우 모달창 -->
 <div id ="modalGo" class="modal">
@@ -248,7 +250,7 @@
     <!-- foreach 시작 -->
 
       <ul>
-          <li><img id="myFace" src="NationalBookstore/src/main/webapp/resources/images/myLibrary/picture1.png" ></li>
+          <li><img id="myFace" src="../../resources/images/myLibrary/picture1.png" ></li>
           <li><a> 지혜로운 셀럽 </a>님</li>
       </ul>
       <!-- foreach 끝  -->       
@@ -258,6 +260,66 @@
 
 
 <!-- 별점 등록 -->
+
+<script>
+$(document).ready(function(){
+	$("#followBtn").on('click',function(){
+		var followId = "${followId}";
+		$.ajax({
+			url:"/follow/requestFollow",
+			type:"get",
+			data:{
+				following:followId
+			},
+			success:function(data){
+				if(data){
+					alert("팔로우 되었습니다.");
+					
+				}else{
+					alert("오류가 발생하였습니다. 고객센터로 문의해주세요");
+				}
+			},
+			error:function(){
+				alert("에러");
+			}
+		})
+	});
+});
+</script>
+
+<script>
+$(document).ready(function(){
+	
+	$("#allDelete").on('click',function(){
+		var array = [];
+		$("input[name=chkbox]:checked").each(function(){
+			array.push($(this).val());
+		});
+		$.ajax({
+			url:"/booklist/deleteLibList",
+			type:"post",
+			traditional:true,
+			data:{
+				booknum:array
+			},
+			success:function(data){
+				if(data==null || data == ""){
+					console.log("컨트롤러에서 받은 배열 : "+data);
+					
+				}else{
+					console.log("컨 : "+data);
+				}
+			},
+			error:function(){
+				alert("에러");
+			}
+		});
+	});	
+});
+
+
+</script>
+
     <script>
       
 $(function() {
@@ -346,11 +408,12 @@ $('.bookStarScore span').click(function() {
  <script>
 
     $(document).ready(() => {
-      const li = document.querySelector('footer.fixed a[href="myLibrary.jsp"]').parentElement;
+      const li = document.querySelector('footer.fixed a[href="/booklist/myLibList"]').parentElement;
       const ul = li.parentElement;
       [ul, li].forEach(element => element.classList.add('active'));
     });
   </script>
+
   <script>
   
   function allDelte(){
@@ -359,25 +422,22 @@ $('.bookStarScore span').click(function() {
     
   </script>
   <script>
-    var cnt=0;
+    /* var cnt=0; */
 function followClick(){
-  cnt++;
+  /* cnt++; */
   var btn = document.getElementById('followBtn');
   
-  if(cnt%2==1) {
     btn.innerHTML="팔로잉";
     btn.style.backgroundColor="transparent";
     
-  }else {
+ /*  }else {
     btn.innerHTML="<i class='fas fa-plus-circle'></i> 팔로우";
     btn.style.backgroundColor="#17769c";
     
-  }
+  } */
 
 }
   </script>
-
-
 <%@ include file="template/footer.jsp" %>
 </body>
 </html>

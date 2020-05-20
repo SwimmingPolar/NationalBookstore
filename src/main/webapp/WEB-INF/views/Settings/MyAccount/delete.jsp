@@ -16,10 +16,14 @@
     <script src="../../../../resources/js/common.js"></script>
 </head>
 <body>
- <div class="title">
-        <h3> 회원 탈퇴 </h3>
-    </div>
-
+<header class="topbar">
+	<nav>
+		<div class="container">
+		    <a href="javascript: history.back();"><i class="far fa-arrow-left"></i></a>
+		    <h2>회원 탈퇴</h2>
+		</div>
+    </nav>
+</header>
     <div class="wrapper">
         <h3> 서재 이용 현황 </h3>
         <div class="useInfo">
@@ -61,8 +65,8 @@
 
     </div>
     <div class="finishBtn">
-        <button type="button" id="doLater" onclick="location.href='myAccount.jsp'">나중에 하기</button>
-        <button type="button" id="goRightNow" onclick="goDeleteNext()">계속 진행하기</button>
+        <button type="button" id="doLater" onclick="history.back()">나중에 하기</button>
+        <button type="button" id="goRightNow" onclick="location.href='/member/deleteNext'">계속 진행하기</button>
 
     </div>
 
@@ -82,5 +86,14 @@
         }
 
     </script>
+
+<script>
+    $(document).ready(() => {
+      const li = document.querySelector('footer.fixed a[href="/myaccount"]').parentElement;
+      const ul = li.parentElement;
+      [ul, li].forEach(element => element.classList.add('active'));
+    });
+  </script>
+<%@ include file="../../template/footer.jsp" %>
 </body>
 </html>

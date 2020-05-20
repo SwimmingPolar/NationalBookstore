@@ -10,25 +10,25 @@ pageEncoding="UTF-8"%>
         </a>
       </li>
       <li>
-        <a href="search">
+        <a href="/search">
           <i class="far fa-search"></i>
           <span>검색</span>
         </a>
       </li>
       <li>
-        <a href="feed">
+        <a href="/feed">
           <i class="fad fa-stream"></i>
           <span>피드</span>
         </a>
       </li>
       <li>
-        <a href="myLibrary.jsp">
+        <a href="/booklist/myLibList">
           <i class="fas fa-books"></i>
           <span>내서재</span>
         </a>
       </li>
       <li>
-        <a href="myAccount.jsp">
+        <a href="/myaccount">
           <i class="far fa-user"></i>
           <span>관리</span>
         </a>

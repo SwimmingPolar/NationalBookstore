@@ -18,7 +18,7 @@
 			#{noticeTitle},
 			#{noticeContent},
 			#{noticeWriter},
-			sysdate
+			SYSDATE
 		)
 </insert>
 

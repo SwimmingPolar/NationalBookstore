@@ -21,6 +21,7 @@ import com.ryan.domain.book.EBookVO;
 import com.ryan.domain.book.MyLibVO;
 import com.ryan.domain.book.MyReadBookVO;
 import com.ryan.domain.member.MemberVO;
+import com.ryan.mapper.MemberMapper;
 import com.ryan.mapper.MyBookMapper;
 
 import lombok.Setter;
@@ -32,27 +33,32 @@ public class MyBookServiceImpl implements MyBookService{
 	
 	@Setter(onMethod_ = {@Autowired})
 	private MyBookMapper mapper;
+	
+	@Setter(onMethod_ = {@Autowired})
+	private MemberMapper memberMapper;
 
 	@Override
-	public ArrayList<EBookVO> libBook(HttpSession session) {	//찜 책장 조회
+	public ArrayList<EBookVO> libBook(String clickId,HttpSession session) {	//찜 책장 조회
 		// TODO Auto-generated method stub		
-		MemberVO vo = (MemberVO) session.getAttribute("ryanMember");
 		ArrayList<EBookVO> list = new ArrayList<EBookVO>();
-		if(vo != null) {
+		if(clickId != null && clickId != "") {
+			list = mapper.libBook(clickId);
+		}else {
+			MemberVO vo = (MemberVO) session.getAttribute("ryanMember");
 			list = mapper.libBook(vo.getMemberEmail());
-			return list;
-		}		
+		}
 		return list;
 	}
 
 	@Override	//찜 책장 삭제
-	public ArrayList<EBookVO> deleteLibBook(ArrayList<EBookVO> booknum, HttpSession session) {
+	public ArrayList<EBookVO> deleteLibBook(int[] booknum, HttpServletRequest request) {
 		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
 		ArrayList<MyLibVO> number = new ArrayList<MyLibVO>();
-		for(EBookVO i : booknum) {
+		for(int i : booknum) {
 			MyLibVO mylib = new MyLibVO();
-			mylib.setBookNum(i.getBookNum());
+			mylib.setBookNum(i);
 			mylib.setMemberEmail(member.getMemberEmail());
 			number.add(mylib);
 		}
@@ -77,10 +83,15 @@ public class MyBookServiceImpl implements MyBookService{
 	}
 
 	@Override		//읽은책 조회
-	public ArrayList<EBookVO> readBook(HttpSession session) {
+	public ArrayList<EBookVO> readBook(String clickId,HttpSession session) {
 		// TODO Auto-generated method stub
-		MemberVO member = (MemberVO)session.getAttribute("ryanMember");
-		ArrayList<EBookVO> list = mapper.readBook(member.getMemberEmail());
+		ArrayList<EBookVO> list = new ArrayList<EBookVO>();
+		if(clickId != null && clickId != "") {
+			list = mapper.readBook(clickId);
+		}else {
+			MemberVO member = (MemberVO)session.getAttribute("ryanMember");
+			list = mapper.readBook(member.getMemberEmail());
+		}
 		return list;
 	}
 
@@ -103,7 +114,8 @@ public class MyBookServiceImpl implements MyBookService{
 		MyReadBookVO vo = new MyReadBookVO();
 		vo.setBookNum(booknumber);
 		vo.setReadDate(df.format(cal.getTime()));
-	//	vo.setMemberEmail("abc1234@naver.com"); 
+//		vo.setMemberEmail("abc1234@naver.com"); 
+	
 		MemberVO member = (MemberVO) request.getSession().getAttribute("ryanMember");
 		ArrayList<EBookVO> list = mapper.readBook(member.getMemberEmail());
 		vo.setMemberEmail(member.getMemberEmail());
@@ -124,21 +136,33 @@ public class MyBookServiceImpl implements MyBookService{
 	}
 
 	@Override
-	public int countLibBook(HttpSession session) {
-		MemberVO member =(MemberVO) session.getAttribute("ryanMember");
-		return mapper.countLibBook(member.getMemberEmail());
+	public int countLibBook(String clickId,HttpSession session) {
+		if(clickId != null && clickId != "") {
+			return mapper.countLibBook(clickId);
+		}else {
+			MemberVO member =(MemberVO) session.getAttribute("ryanMember");
+			return mapper.countLibBook(member.getMemberEmail());
+		}
 	}
 
 	@Override
-	public int countReadBook(HttpSession session) {
-		MemberVO member =(MemberVO) session.getAttribute("ryanMember");
-		return mapper.countReadBook(member.getMemberEmail());
+	public int countReadBook(String clickId,HttpSession session) {
+		if(clickId != null && clickId != "") {
+			return mapper.countReadBook(clickId);
+		}else {
+			MemberVO member =(MemberVO) session.getAttribute("ryanMember");
+			return mapper.countReadBook(member.getMemberEmail());
 		}
+	}
 
 	@Override
-	public int countLikeBook(HttpSession session) {
-		MemberVO member =(MemberVO) session.getAttribute("ryanMember");
-		return mapper.countLikeBook(member.getMemberEmail());
+	public int countLikeBook(String clickId,HttpSession session) {
+		if(clickId != null && clickId != "") {
+			return mapper.countLikeBook(clickId);
+		}else {
+			MemberVO member =(MemberVO) session.getAttribute("ryanMember");
+			return mapper.countLikeBook(member.getMemberEmail());
+		}
 	}
 
 	@Override
@@ -163,21 +187,10 @@ public class MyBookServiceImpl implements MyBookService{
 	}
 
 	@Override
-	public Boolean allDelete(HttpSession session) {
-		
-		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
-		int i = mapper.allDelete(member.getMemberEmail());
-		if(i==1) return true;
-		return false;
+	public MemberVO readClickId(String clickId) {
+		return memberMapper.readClickId(clickId);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	

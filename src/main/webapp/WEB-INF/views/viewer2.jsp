@@ -5,8 +5,8 @@
 <html lang="ko">    
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>책 제목 예정 책번호${param.booknumber }</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.5, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>${book.bookTitle }</title>
  <!-- Google Fonts -->
 <link
 href="https://fonts.googleapis.com/css?family=Black+Han+Sans|Nanum+Gothic|Kaushan+Script|Montserrat|Noto+Sans+KR|Open+Sans|Roboto&display=swap"
@@ -42,54 +42,138 @@ font-family: 'Nanum Gothic', sans-serif;
 <script type="text/javascript" >
 	$(document).ready(function() {
 		var width = window.innerWidth, height = window.innerHeight;
+		console.dir(width+","+height);
+		var jumpLeft = width / 8;
+		var jumpRight = width- (width/8);
 		$("div.main-container").css("width", width).css("height", height);
 		$("div.page").css("width", width/2).css("height", height);
+		$("div.result").css("height", (height - 100));
+		//기본 line-height: 3.0
+		var lineHeight = width/768;
+		//기본 font-size: 1.35em;
+		var fontSize = width/88.88888;
+		//기본 padding: 70px 110px;
+		var paddingV = width/27.42857;
+		var paddingH = width/17.45454; 
+		//console.dir(fontSize);
+		$("div.page").css("font-size", fontSize).css("line-height", lineHeight);
+		//내 화면 크기는 1920,969
 	 	//화면 사이즈가 변할때마다 main-container의 크기 변환
 		$(window).resize(function() {
-			var width = window.innerWidth, height = window.innerHeight;
+			width = window.innerWidth;
+			height = window.innerHeight;
+			//console.dir(width/640+"//"+width/1422.22222);
+			fontSize = width/88.88888;
+			lineHeight = width/768;
+			paddingV = width/27.42857;
+			paddingH = width/17.45454; 
+			$("div.page").css("font-size", fontSize).css("line-height", lineHeight);
+			$("div.page").css("padding", paddingV+"px "+paddingH+"px");
+			//console.dir(width*lineHeight+","+width*fontSize);
+			jumpLeft = width / 8;
+			jumpRight = width - (width/8);
 			$("div.main-container").css("width", width).css("height", height);
 			$("div.page").css("width", width/2).css("height", height);
+			$("div.result").css("height", (height - 100));
 		});
 	 	//책 데이터 파싱
 		var pages = [];
 	 	var index = [];
-	 	var temp = 0;
+	 	var indexMap = new Map();
+	 	var temp = 0; //목차 할당 용도.
 		//List로 불러온 목차를 javascript Array로 저장
 		<c:forEach var="i" items="${index }" >
 			index.push("${i }");
 		</c:forEach>
 		//페이지 나누는 동시에 목차 할당
+		var indexFinder = -1; //페이지마다 목차 이름을 Map으로 할당. 검색결과 위해
 		<c:forEach var="c" items="${chapter.get(0) }" varStatus="status">
 			pages.push("${c }");
 			if("${c }".indexOf("<h3>") >= 0) {
 				$(".modal.index").append("<button class='btn goindex ${status.index}' >"+(temp+1)+"."+ index[temp]+"</button>");
 				temp++;
+				indexFinder++;
 			}
+			indexMap.set("${status.index }", index[indexFinder]);
+			
 		</c:forEach>
 		//페이지 new
 		//로드시 첫 두 페이지 초기화
 		var startPage = 0; <%--나중에는 ${마지막읽던곳 }으로--%>
 		var currentPage = startPage;
-		console.dir("currentPage는"+currentPage+"로 세팅됐습니다.")
+		//console.dir("currentPage는"+currentPage+"로 세팅됐습니다.")
 		var prevPage = (currentPage-2), nextPage = (currentPage+2);
-		console.dir("prevPage는"+prevPage+",nextPage는"+nextPage+"로 세팅됐습니다.")
-		$(".page.left").empty().append(pages[startPage]);
-		$(".page.right").empty().append(pages[(startPage+1)]);
-		function jumpTo(e) { //페이지 이동 함수 e = 페이지번호
+		//console.dir("prevPage는"+prevPage+",nextPage는"+nextPage+"로 세팅됐습니다.")
+		jumpTo(startPage);
+		/* $(".page").each(function() {
+			$(this).empty().append(pages[startPage]);
+			$(this).attr("value", startPage);
+			startPage++;
+		}); */
+		startPage = 0; <%--나중에는 ${마지막읽던곳 }으로--%>
+		//$(".page.left").empty().append(pages[startPage]);
+		//$(".page.right").empty().append(pages[(startPage+1)]);
+		function jumpTo(e) { //페이지 이동 함수 e = 페이지번호. 두 페이지용
 			currentPage = e;
-			console.dir("currentPage:"+currentPage);
+			if(currentPage == -2)
+				currentPage = 0;
+			//console.dir("currentPage:"+currentPage);
 			if( (e>=0) && (e<pages.length) ) {
 				if(e%2 == 1 && (e-1>=0)) {
+					console.dir("index가 짝수입니다! -1 합니다.")
+					currentPage--;
 					e--;
 				}
 				$(".page").each(function() {
 					$(this).empty().append(pages[e]);
+					$(this).attr("value", e);
 					e++;
 				});
+				var tempCurrent = currentPage;
+				$(".btn.bookmark").each(function() {
+					$(this).attr("value", tempCurrent);
+					tempCurrent++;
+				});
+				var tempCurrent2 = parseInt(currentPage);
+				$(".pageNum").each(function() {
+					$(this).empty().append(tempCurrent2+1);
+					tempCurrent2++;
+				});
+				
 				prevPage = (currentPage-2);
 				nextPage = (currentPage+2);
 			}
-			console.dir("prevPage:"+prevPage+",nextPage:"+nextPage);
+			if(currentPage == 0)
+				prevPage = 0;
+			//console.dir("prevPage:"+prevPage+",nextPage:"+nextPage);
+		}
+		
+		
+		function jumpToSingle(e) { //페이지 이동 함수 e = 페이지번호. 단일 페이지용
+			currentPage = e;
+			console.dir("currentPage:"+currentPage);
+			if( (e>=0) && (e<pages.length) ) {
+				$(".page").each(function() {
+					$(this).empty().append(pages[e]);
+					$(this).attr("value", e);
+					e++;
+				});
+				var tempCurrent = currentPage;
+				$(".btn.bookmark").each(function() {
+					$(this).attr("value", tempCurrent);
+					tempCurrent++;
+				});
+				var tempCurrent2 = parseInt(currentPage);
+				$(".pageNum").each(function() {
+					$(this).empty().append(tempCurrent2+1);
+					tempCurrent2++;
+				});
+				
+				prevPage = (currentPage-1);
+				nextPage = (currentPage+1);
+			}
+			if(currentPage == 0)
+				prevPage = 0;
 		}
 		$(".modal.index .btn.goindex").click(function(e) { //목차로 이동
 			var goTo = parseInt(e.target.classList[2]);
@@ -97,70 +181,173 @@ font-family: 'Nanum Gothic', sans-serif;
 		});
 		function keyJump(e) { //키입력
 			var keyCode = e.keyCode;
-			if(keyCode == 39 || keyCode == 40) { //다음
+			// 107 Num Key  +
+		    // 109 Num Key  -
+		    // 173 Min Key  hyphen/underscor Hey
+		    // 61 Plus key  +/= key
+		    // 37 left
+		    // 38 up
+		    // 39 right
+		    // 40 down
+			if (e.ctrlKey==true&&(e.which == '61' || e.which == '107' || e.which == '173' || e.which == '109'  || e.which == '187'  || e.which == '189' )) {
+				e.preventDefault(); //브라우저 줌인 줌아웃 불가
+			} else if(keyCode == 39 || keyCode == 40) { //다음
 				e.preventDefault();
 				jumpTo(nextPage);
-			}
-			else if(keyCode == 37 || keyCode == 38) { //이전
+			} else if(keyCode == 37 || keyCode == 38) { //이전
 				e.preventDefault();
 				jumpTo(prevPage);
 			}
 		}
 		document.addEventListener("keydown", keyJump, {passive:false});
 		function scrollJump(e) { //스크롤
-			e.preventDefault();
+			$(".btn.bookmark").css("display", "none");
+			$(".result").unbind();
+			//console.dir(e.path[0].classList[0]);
 			var d = e.wheelDelta;
-			if(d < 0) { //다음
-				jumpTo(nextPage);
-			}
-			else if(d > 0) { //이전
-				jumpTo(prevPage);
+			var currentOn = e.path[0].classList[0];
+			if(currentOn == "page") {
+				e.preventDefault();
+				if(d < 0) { //다음
+					jumpTo(nextPage);
+				}
+				else if(d > 0) { //이전
+					jumpTo(prevPage);
+				}
 			}
 		}
 		document.addEventListener("wheel", scrollJump, {passive:false});
+		//var a = document.querySelectorAll(".page");
+		//a.forEach.call(a ,function(a){ a.addEventListener("wheel", keyJump, {passive:false} ); });
+		
+		//마우스 이벤트
+		var mouseX, mouseY, mousedX, mousedY;
+		//var docWidth = window.innerWidth, docHeight = window.innerHeight;
+		//var jumpLeft = docWidth / 8;
+		//var jumpRight = docWidth - (docWidth/8);
+		$(".page").on("mousedown", function(e) {
+			mouseX = e.pageX;
+			mouseY = e.pageY;
+		});
+		$(".page").on("mouseup", function(e) {
+			mousedX = e.pageX;
+			mousedY = e.pageY;
+			if(mouseX == mousedX && mouseY == mousedY) { //시작,끝 위치 같을떄
+				if(mouseX < jumpLeft) { //페이지 넘기기 부분 클릭. 왼쪽. 이전페이지
+					//console.dir("페이지를 넘기려고 하시는군요")
+					jumpTo(prevPage);
+				} else if(mouseX > jumpRight) { //페이지 넘기기 부분 클릭. 오른쪽. 다음페이지
+					//console.dir("페이지를 넘기려고 하시는군요")
+					jumpTo(nextPage);
+				} else { //페이지 넘기기 부분 클릭 X
+					if($(".modal-container").hasClass("modal-pop")) { //옵션창이 떠있을떄
+						$(".modal-container").removeClass("modal-pop");
+					} else {
+						$(".header-container").toggleClass("header-pop");
+					}
+				}
+			} else { //시작, 끝 위치 다를때
+				console.dir("드래그 감지");
+			}
+		});
+		
 		//본문검색
+		var keyword;
 		$(".modal.search input.keyword").on("keydown", function(e) {
-			console.dir(e.keyCode);
+			//console.dir(e.keyCode);
 			if(e.keyCode == 13) {
 				$(".modal.search div.result").empty();
 				var counter = 0;
-				var keyword = $(".modal.search input.keyword").val();
+				keyword = $(".modal.search input.keyword").val().toLowerCase();
+				var keywordo = ""; //검색 결과에 노출될 검색어
 				var keywordLength = keyword.length;
 				if(keyword != "") {
 					for(var index in pages) {
-						var finder = pages[index].indexOf(keyword);
+						var contento = pages[index].toLowerCase(); //검색중인 페이지의 내용
+						//var contentForLighting = contento.replace("<h3>", "").replace("</h3>", "");
+						var finder = contento.indexOf(keyword);
+						//var finderForLighting = contentForLighting.indexOf(keyword);
+						keywordo = pages[index].substring(finder, (finder+keywordLength));
 						while(finder >= 0) {
-							console.dir("단어를 찾았습니다!");
+							//console.dir(index+"번째 index(페이지),"+finder+"번째 글자에서 키워드를 발견!");
+							//console.dir("finderForLighting:"+finderForLighting);
+							//112자 출력할 예정
+							var contentPrev = "";//pages[index].substring(0, finder);
+							var contentNext = "";//pages[index].substring((finder+keywordLength), pages[index].length);
+							if(finder < 32) {
+								contentPrev = pages[index].substring(0, finder);
+							} else {
+								contentPrev = pages[index].substring((finder-32), finder);
+							}
+							if(finder + 32 > 600) {
+								contentNext = pages[index].substring((finder+keywordLength), pages[index].length);
+							} else {
+								contentNext = pages[index].substring((finder+keywordLength), (finder+32));
+							}
+							contentPrev = contentPrev.replace("<h3>", "").replace("</h3>","");
+							contentNext = contentNext.replace("<h3>", "").replace("</h3>","");
+							/////////////////////////////////////////
 							var inPage = parseInt(index) + 1;
-							$(".modal.search div.result").append("<div class='goindex 1'>"
+							$(".modal.search div.result").append("<div class='goindex "+index+"'>"
 									+"<div class='title' >"
-									+"<span class='chapter' >회상</span>"
-									+"<span class='index'>"+inpage+"페이지</span>"
+									+"<span class='chapter' >"+indexMap.get(index+"")+"</span>"
+									+"<span class='index'>"+inPage+"페이지</span>"
 									+"</div>"
 									+"<div class='content' >"
-									+"최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 자네답게 살았어,"
-									+"조선의 주먹 황제답게 말이야... 늘 야인이었지만, 용감하고 멋있게 살았어."
-									+"나름대로 자네의 역사를 가지고 자네의 시대를 치열하고 열심히 살았다는 얘기야..."
-									+"뭐랄까... 야인시대 라고나 할까...?"
+									+contentPrev
+									+"<span class='result-keyword' >"+keywordo+"</span>"
+									+contentNext
+									//+"최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 자네답게 살았어,"
+									//+"조선의 주먹 황제답게 말이야... 늘 야인이었지만, 용감하고 멋있게 살았어."
+									//+"얘기야... 뭐랄까... 야인시대 라고나 할까...?"
 									+"</div>"
 									+"</div>");
-							finder = pages[index].indexOf(keyword, (finder+1));
+							finder = contento.indexOf(keyword, (finder+1));
+							//finderForLighting = contentForLighting.indexOf(keyword, (finderForLighting+1));
 						}
 					}
 				}
 			}
 		});
-		//본문검색 후 해당 페이지로 이동
-		$(document).on("click", ".modal.search li", function(e) {
-			var value = (e.target.value);
-			current = value;
-			if(value%2==1) {
-				current--;
+		//검색결과로 이동
+		$(document).on("click", "div.goindex", function(e) {
+			var goTo = parseInt($(this).parents("div.goindex").prevObject[0].classList[1]);
+			jumpTo(goTo);
+			//console.dir(goTo);
+			//console.dir($("div.page[value="+goTo+"]").text().toLowerCase());
+		});
+		//책갈피
+		$(document).on("mouseover", "div.page", function(e) {
+			var side = e.target.classList[1];
+			var pageNum = $(this).attr("value");
+			//console.dir(pageNum);
+			if(pageNum >= 0 && pageNum < pages.length){
+				if(side == "left") {
+					$(".btn.bookmark").css("display", "none");
+					$(".btn.bookmark."+side).css("display", "inline");
+				} else if(side == "right") {
+					$(".btn.bookmark").css("display", "none");
+					$(".btn.bookmark."+side).css("display", "inline");
+				}
 			}
-			$(".page.left>div").empty().append(page[current]);
-			$(".page.right>div").empty().append(page[(current+1)]);
-			$(".left span").empty().append(current+1);
-			$(".right span").empty().append(current+2);
+		});
+		$(document).on("click", ".btn.bookmark", function(e) {
+			var thisPage = e.target.value;
+			//console.dir(thisPage);
+			$.ajax ({
+				url : "/addBookmark",
+				data : {
+					"bookNum" : ${book.bookNum},
+					"page" : thisPage,
+					"pageStatus" : "2"
+				}
+			})
+			.done(function() {
+				//console.dir("북마크 추가 성공")
+			})
+			.fail(function() {
+				//console.dir("북마크 추가 실패")
+			});
 		})
 	});
 </script>
@@ -169,6 +356,7 @@ font-family: 'Nanum Gothic', sans-serif;
 	<script type="text/javascript" >
 		$(document).ready(function() {
 			var headerTimerId;
+			var modalTimerId;
 			$(".header-caller").on("mouseover", function() {
 				$(".header-container").addClass("header-pop");
 			});
@@ -180,22 +368,27 @@ font-family: 'Nanum Gothic', sans-serif;
 			$(".header-container").on("mouseover", function() {
 				clearTimeout(headerTimerId);
 			});
+			//모달
 			$(".modal-container").on("mouseover", function() {
 				clearTimeout(headerTimerId);
+			});
+			$(".modal-caller").on("mouseover", function() {
+				$(".modal-container").addClass("modal-pop");
 			});
 		});
 	</script>
 	<div class="header-caller"></div>
+	<div class="modal-caller"></div>
 	<%-- 상단바 --%>
 	<div class="header-container" >
 		<div class="header" >
 			<button class="btn tomain far fa-arrow-left" ></button>
-			<span class="title">책 제목</span>
+			<span class="title">${book.bookTitle }</span>
 			<script type="text/javascript" >
 				$(document).ready(function() {
 					$(".configuration > .btn").on("click", function(e) {
 						var modalName = e.target.classList[1];
-						console.dir(modalName);
+						//console.dir(modalName);
 						$(".modal").css("display", "none");
 						$(".modal."+modalName).css("display", "flex");
 						$(".modal-container").addClass("modal-pop");
@@ -211,85 +404,32 @@ font-family: 'Nanum Gothic', sans-serif;
 			</div>
 		</div>
 	</div> <%-- header-container 끝 --%>
-	<script type="text/javascript" >
-		$(document).ready(function() {
-			var mouseX, mouseY, mousedX, mousedY;
-			var docWidth = window.innerWidth, docHeight = window.innerHeight;
-			var jumpLeft = docWidth / 8;
-			var jumpRight = docWidth - (docWidth/8);
-			$(".page").on("mousedown", function(e) {
-				mouseX = e.pageX;
-				mouseY = e.pageY;
-			});
-			$(".page").on("mouseup", function(e) {
-				mousedX = e.pageX;
-				mousedY = e.pageY;
-				if(mouseX == mousedX && mouseY == mousedY) { //시작,끝 위치 같을떄
-					if(mouseX < jumpLeft || mouseX > jumpRight) { //페이지 넘기기 부분 클릭
-						console.dir("페이지를 넘기려고 하시는군요")
-					} else { //페이지 넘기기 부분 클릭 X
-						if($(".modal-container").hasClass("modal-pop")) { //옵션창이 떠있을떄
-							$(".modal-container").removeClass("modal-pop");
-						} else {
-							$(".header-container").toggleClass("header-pop");
-						}
-					}
-				} else { //시작, 끝 위치 다를때
-					console.dir("드래그 해서 검색이나 그런걸 하려는군");
-				}
-			});
-		});
-	</script>
 	<div class="main-container" >
+		<div style="color: red; font-size:2em;" >계정정보:${member.memberEmail }</div>
 		<%-- 책 내용 보여줌 --%>
 		<div class="page left" >
-			
-			<!-- 최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 자네답게 살았어, 조선의 주먹 황제답게 말이야... 
-			늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의 역사를 가지고 자네의 시대를 치열하고 열심히 살았다는
-			얘기야... 뭐랄까... 야인시대 라고나 할까...? 최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 
-			자네답게 살았어, 조선의 주먹 황제답게 말이야... 늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의
-			역사를 가지고 자네의 시대를 치열하고 열심히 살았다는 얘기야... 뭐랄까... 야인시대 라고나 할까...?
-			최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 자네답게 살았어, 조선의 주먹 황제답게 말이야... 
-			늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의 역사를 가지고 자네의 시대를 치열하고 열심히 살았다는
-			얘기야... 뭐랄까... 야인시대 라고나 할까...? 최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 
-			자네답게 살았어, 조선의 주먹 황제답게 말이야... 늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의
-			역사를 가지고 자네의 시대를 치열하고 열심히 살았다는 얘기야... 뭐랄까... 야인시대 라고나 할까...?
-			최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 자네답게 살았어, 조선의 주먹 황제답게 말이야... 
-			늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의 역사를 가지고 자네의 시대를 치열하고 열심히 살았다는
-			얘기야... 뭐랄까... 야인시대 라고나 할까...? 최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 
-			자네답게 살았어, 조선의 주먹 황제답게 말이야... 늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의
-			역사를 가지고 자네의 시대를 치열하고 열심히 살았다는 얘기야... 뭐랄까... 야인시대 라고나 할까...? -->
 		</div>
-		<%--<div class="depth left" ></div>
-		<div class="depth right" ></div>--%>
 		<div class="page right" >
-			<!-- 최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 자네답게 살았어, 조선의 주먹 황제답게 말이야... 
-			늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의 역사를 가지고 자네의 시대를 치열하고 열심히 살았다는
-			얘기야... 뭐랄까... 야인시대 라고나 할까...? 최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 
-			자네답게 살았어, 조선의 주먹 황제답게 말이야... 늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의
-			역사를 가지고 자네의 시대를 치열하고 열심히 살았다는 얘기야... 뭐랄까... 야인시대 라고나 할까...?
-			최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 자네답게 살았어, 조선의 주먹 황제답게 말이야... 
-			늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의 역사를 가지고 자네의 시대를 치열하고 열심히 살았다는
-			얘기야... 뭐랄까... 야인시대 라고나 할까...? 최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 
-			자네답게 살았어, 조선의 주먹 황제답게 말이야... 늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의
-			역사를 가지고 자네의 시대를 치열하고 열심히 살았다는 얘기야... 뭐랄까... 야인시대 라고나 할까...?
-			최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 자네답게 살았어, 조선의 주먹 황제답게 말이야... 
-			늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의 역사를 가지고 자네의 시대를 치열하고 열심히 살았다는
-			얘기야... 뭐랄까... 야인시대 라고나 할까...? 최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 
-			자네답게 살았어, 조선의 주먹 황제답게 말이야... 늘 야인이었지만, 용감하고 멋있게 살았어. 나름대로 자네의
-			역사를 가지고 자네의 시대를 치열하고 열심히 살았다는 얘기야... 뭐랄까... 야인시대 라고나 할까...? -->
 		</div>
+		<div class="pageNum left" ></div>
+		<div class="pageNum right" ></div>
 	</div> <%-- main-container 끝 --%>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$(".btn.bookmark").on("click", function() {
-				console.dir("북마크 추가");
+				//console.dir("북마크 추가");
 			});
 		});
 	</script>
-	<div class="bookmark-container" >
+	<div class="bookmark-container left" >
 		<%-- 북마크 추가 버튼 --%>
-		<button class="btn bookmark fas fa-bookmark"></button>
+		<button class="btn bookmark left fal fa-bookmark"></button>
+		<%-- 색칠된 북마크 fas fa-bookmark --%>
+		<%-- 안된거 fal fa-bookmark --%>
+	</div>
+	<div class="bookmark-container right" >
+		<%-- 북마크 추가 버튼 --%>
+		<button class="btn bookmark right fal fa-bookmark"></button>
 		<%-- 색칠된 북마크 fas fa-bookmark --%>
 		<%-- 안된거 fal fa-bookmark --%>
 	</div> <%-- bookmark-container 끝 --%>
@@ -308,54 +448,14 @@ font-family: 'Nanum Gothic', sans-serif;
 			<span class="title">본문검색</span>
 			<input class="keyword" type="text" placeholder="단어.." />
 			<div class="result" >
-				<div class="goindex 1">
-					<div class="title" >
-						<span class="chapter" >회상</span>
-						<span class="index">10 페이지</span>
-					</div>
-					<div class="content" >
-						최동열 : 난 오랫동안 자네를 지켜봐온 사람일세, 자네는 자네답게 살았어,
-						조선의 주먹 황제답게 말이야... 늘 야인이었지만, 용감하고 멋있게 살았어.
-						나름대로 자네의 역사를 가지고 자네의 시대를 치열하고 열심히 살았다는 얘기야...
-						뭐랄까... 야인시대 라고나 할까...?
-					</div>
-				</div>
-				<div class="goindex 2">
-					<div class="title" >
-						<span class="chapter" >여정의 시작</span>
-						<span class="index">100 페이지</span>
-					</div>
-					<div class="content" >
-						이 이야기는 암울했던 민족의 수난기와 격동기의 역사를 살다가 갔던 영원한 야인
-						김두한의 삶을 극화한 것이다. 본 드라마에 소개되는 사건과 인물은 본인의 회고록과
-						취재록, 자료수집 등 대부분 실화에 그 근거를 두었다.
-					</div>
-				</div>
-				<div class="goindex 3">
-					<div class="title" >
-						<span class="chapter" >할거야 안할거야</span>
-						<span class="index">210 페이지</span>
-					</div>
-					<div class="content" >
-						야인시대! 그렇다. 그것은 바로 그가 몸 바쳐 살아왔던 이 나라 격동기의
-						 또 다른 역사의 한 장이었다.
-					</div>
-				</div>
-				<div class="goindex 4">
-					<div class="title" >
-						<span class="chapter" >안하겠소 닷씬 안하겠소</span>
-						<span class="index">310 페이지</span>
-					</div>
-					<div class="content" >
-						누구인가? 누가 기침소리를 내었는가? 지금 관심법으로 가만히 지켜보고
-						있는데. 마구니가 가득하단 말이야. 저놈의 머리를 철퇴로 으깨어주어라.
-						사 살려주시옵소서. 신이옵니다.
-					</div>
-				</div>
 			</div>
 		</div>
 		<div class="modal note" >
-			<span class="title">독서노트</span>
+			<span class="title">독서노트
+			</span>
+			<c:forEach var="bm" items="${bookmark }" >
+				<h4 style="color: white;">${bm.memberEmail }</h4>
+			</c:forEach> 
 		</div>
 		<div class="modal setting" >
 			<span class="title">보기설정</span>
@@ -364,9 +464,17 @@ font-family: 'Nanum Gothic', sans-serif;
 				document.addEventListener("DOMContentLoaded", function() {
 					$(".btn.color").on("click", function(e) {
 						var color = e.target.classList[2];
+						if(color == "black") {
+							//console.dir("black!!");
+							$("div.page.left").css("box-shadow", "3px 0 15px -3px rgba(255, 255, 255, 0.5)");
+							$("div.page.right").css("box-shadow", "-3px 0 15px -3px rgba(255, 255, 255, 0.5)");
+						} else {
+							$("div.page.left").css("box-shadow", "3px 0 15px -3px rgba(0, 0, 0, 0.5)");
+							$("div.page.right").css("box-shadow", "-3px 0 15px -3px rgba(0, 0, 0, 0.5)");
+						}
 						var background = $(".btn.color."+color).css("background-color");
 						var fontColor = $(".btn.color."+color).css("color");
-						console.dir(fontColor);
+						//console.dir(fontColor);
 						$(".main-container").css("background", background);
 						$(".page").css("color", fontColor);
 					});

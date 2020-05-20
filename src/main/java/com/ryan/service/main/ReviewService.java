@@ -3,8 +3,9 @@ package com.ryan.service.main;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import com.ryan.domain.book.ReviewVO;
-import com.ryan.domain.member.MemberVO;
 
 public interface ReviewService {
 	
@@ -14,5 +15,7 @@ public interface ReviewService {
 	
 	public Boolean updateReview(ReviewVO review);
 	
-	public ArrayList<ReviewVO> myReviewList(String memberEmail);
+	public ArrayList<ReviewVO> myReviewList(HttpSession session);
+	
+	public Boolean insertGrade(int bookNum);
 }

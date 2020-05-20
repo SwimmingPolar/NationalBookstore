@@ -32,10 +32,10 @@
                     <li>
                         <div class="booklist">
                             
-                            <form action="" method="post" name ="addLabelChk"></form>
+                            <form action="" method="post" name ="addLabelChk" onClick="selectChkBox(this.form)"></form>
                             <label for="chk1">
                             <div class="banner">
-                                <img src="NationalBookstore/src/main/webapp/resources/images/myLibrary/example.jpg">  
+                                <img src="../../resources/images/myLibrary/example.jpg">  
                                 <span class="text"> 판타지 </span>
                             </div>
                              </label>
@@ -85,6 +85,20 @@
          }
     
     
+    </script>
+    <script>
+function selectChkBox(frm) {
+
+var sum = 0;
+var count = frm.checkbox.length;
+  for(var i=0; i < count; i++ ){
+       if( frm.checkbox[i].checked == true ){
+	    sum += 1;
+		}
+  } 
+  alert("선택되어진 체크박스의 갯수는 " + sum + "개입니다." );
+}
+
     </script>
 </body>
 </html>

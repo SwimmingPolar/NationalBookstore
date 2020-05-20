@@ -1,0 +1,94 @@
+.body-wrapper {
+  height: calc(100vh - 48px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 525px;
+  background-color: #fff;
+}
+
+.selection-container {
+  margin-top: -42px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 9px;
+  padding: 24px;
+  background-color: var(--light-gray-color);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.09);
+}
+
+.selection-container > div {
+  width: 360px;
+}
+
+.selection-container h3 {
+  font-size: 18px;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: rgba(0, 0, 0, 0.66);
+  margin-bottom: 20px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container label {
+  font-size: 16px;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.form-container input {
+  border: 0;
+  outline: 0;
+  background-color: var(--light-gray-color);
+  font-size: 16px;
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  letter-spacing: -0.01em;
+  color: rgba(0, 0, 0, 0.7);
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+}
+
+.form-container input::placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.form-container button[type="submit"] {
+  border: 0;
+  outline: 0;
+  border-radius: 6px;
+  height: 48px;
+  font-size: 18px;
+  color: #fff;
+  margin-bottom: 18px;
+  transition: 0.4s ease;
+}
+
+.form-container button[type="submit"]:not(:disabled) {
+  background-color: rgba(0, 0, 0, 0.15);
+  background-color: var(--main-color);
+  box-shadow: 0 2px 5px -2px rgba(0, 153, 255, 0.65);
+  cursor: pointer;
+}
+.form-container button[type="submit"]:not(:disabled):hover {
+  box-shadow: 0 2px 6px -1px rgba(0, 153, 255, 0.85);
+}
+
+.disclaimer ul {
+  list-style: none;
+}
+.disclaimer li {
+  padding: 3px 0;
+}
+.disclaimer p {
+  font-family: '맑은 고딕', 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: lighter;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+header.topbar .container {
+  width: 520px;
+}

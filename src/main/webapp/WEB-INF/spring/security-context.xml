@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security.xsd
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- 접근 제한 -->
+	<bean id="ryanAccessDenied" class="com.ryan.domain.security.RyanAcessDeniedHandler"/>
+	
+	<!-- 로그인 관리 -->
+	<!-- <bean id="ryanLoginSuccess" class="com.ryan.domain.security.RyanLoginSuccessHandler"/> -->
+	
+	<!-- 비밀번호 암호화  -->
+	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	
+	<!-- 유저정보 -->
+	<bean id="ryanUserDetailService" class="com.ryan.domain.security.RyanMemberDetailsService" />
+	
+	<security:http pattern="/member/signUpCheck" security="none"/>
+	<security:http pattern="/member/emailAuthentication" security="none"/>
+	<security:http pattern="/member/authenticationCheck" security="none"/>
+	<security:http pattern="/member/authenticationCompleteCheck" security="none"/>
+	
+		
+	<security:http>
+		
+				
+		<!-- 제한 매핑주소 post는 다 걸어줘야함..4-->
+		<security:intercept-url pattern="/myaccount" access="hasRole('ROLE_MEMBER')" />
+		
+		<!-- 접근권한이 없을경우 -->
+		<security:access-denied-handler ref="ryanAccessDenied" />
+		
+		<!-- 로그인 -->
+		<security:form-login login-page="/member/signin"
+			username-parameter="memberEmail"
+			password-parameter="memberPw"
+			login-processing-url="/member/signin"
+			authentication-failure-url="/member/email-signin"
+		/>
+		
+		<!-- 로그아웃 -->
+		<security:logout logout-url="/member/logout" invalidate-session="true" delete-cookies="remeber-me" logout-success-url="/"/>
+		
+		<!-- 자동로그인 -->
+		<security:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/>
+		
+	</security:http>
+	
+	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="ryanUserDetailService">
+			
+			<security:password-encoder ref="bcryptPasswordEncoder"/>
+			
+		</security:authentication-provider>
+	</security:authentication-manager>
+	
+</beans>

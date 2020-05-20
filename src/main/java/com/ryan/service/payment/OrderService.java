@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.security.core.Authentication;
+
 import com.ryan.domain.payment.KakaoPayApprovalVO;
 import com.ryan.domain.payment.OrderVO;
 
@@ -13,7 +15,7 @@ public interface OrderService {
 	public int insertOrder(OrderVO order);
 	
 	//구매리스트 가져오기
-	public ArrayList<OrderVO> getOrderList(HttpServletRequest request);
+	public ArrayList<OrderVO> getOrderList(Authentication auth);
 	
 	//카카오페이
 	public String kakaoPayTest();

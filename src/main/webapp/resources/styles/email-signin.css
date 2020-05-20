@@ -78,6 +78,19 @@
   color: rgba(0, 0, 0, 0.8);
 }
 
+.find-my-account label[for="remember-me"] {
+  cursor: pointer;
+}
+.find-my-account label[for="remember-me"]::after {
+  content: '';
+  margin-left: 8px;
+  display: inline-block;
+  width: 1px;
+  height: 14px;
+  background-color: rgba(0, 0, 0, 0.25);
+  transform: translateY(1px);
+}
+
 .form-container button[type="submit"] {
   border: 0;
   outline: 0;
