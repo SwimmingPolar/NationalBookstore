@@ -29,7 +29,6 @@ button {
     margin:0 auto;
     /* border:2px solid blue; */
     position: relative;
-   
 }
 
 
@@ -115,13 +114,12 @@ input[type="radio"]:checked + label {
 .secondColumn {
     z-index:2;
     margin-bottom: 100px;
-    
+    position: relative; 
 }
 
 .secondColumn > label {
     /* border:1px solid lightgray; */
     position:sticky;
-    top:0;
     padding:10px 25px 10px 25px;
     margin:0px;
     color:rgb(90, 90, 90);

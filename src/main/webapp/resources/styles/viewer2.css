@@ -274,14 +274,22 @@ div.modal.index > div.book > span.author {
 	font-size: 0.8em;
 }
 
-div.modal.index > .btn.goindex {
+div.modal.index > div.result {
+	display: flex;
+	flex-direction: column;
+	padding: 5px;
+	overflow: auto;
+	height: 700px;
+}
+
+div.modal.index > div.result > .btn.goindex {
 	color: #FFFFFF;
 	font-family : 'Nanum Gothic', sans-serif;
 	font-size: 1em;
 	margin: 5px; padding: 5px;
 }
 
-div.modal.index > .btn.goindex:nth-child(2n+1) {
+div.modal.index > div.result > .btn.goindex:nth-child(2n+1) {
 	background: rgba(0, 0, 0, 0.3);
 }
 /*본문검색*/

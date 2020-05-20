@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>    
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>   
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,6 +55,10 @@
 	if(pageNum == null)
 		pageNum = "1";
 %>
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication property="principal" var="member"/>
+</sec:authorize>
+
 <script type="text/javascript" >
 	$(document).ready(function() {
 		var type = "<%=type %>";
@@ -111,23 +116,25 @@
 			var cartList = [];
 			$(".checkbox-cart").each(function() {
 				if($(this).prop("checked") == true)
-					cartList.push({ bookNum : $(this).val(), bookCount : "1" });
+					cartList.push({ bookNum : $(this).val(), bookCount : "1", memberEmail : "${member.member.memberEmail}" });
 			})
+			console.log(cartList);
 			if(cartList.length == 0)
 				alert("추가할 도서를 선택해주세요.");
 			else {
+				
 				$.ajax({
 					url : "/cart/insert",
 					dataType : "json",
-					contentType : "string",
-					data : cartList,
-					type : "POST"
+					contentType : "application/json",
+					data : JSON.stringify(cartList),
+					type : "POST",
+					traditional:true
 				})
 				.done(function(response) {
-					//console.dir(response.doneM);
-					/* var moveToCart = confirm("장바구니로 이동 하시겠습니까?");
+					var moveToCart = confirm("장바구니로 이동 하시겠습니까?");
 					if(moveToCart == true)
-						location.href="/cartPage"; */
+						location.href="/cartPage";
 				})
 				.fail(function(response) {
 					alert("장바구니 담기에 실패했습니다. 다시 시도해주세요.")
@@ -217,6 +224,7 @@
 </script>
 </head>
 <body>
+
   <header class="topbar">
     <nav>
       <div class="container">
@@ -242,7 +250,7 @@
 	<%-- 빈 화면에 내보낼 것들 --%>
 	<c:if test="${empty param.keyword }" >
 		<div class="empty-spot" >
-			<h3>호호아아!</h3>
+			
 		</div>
 	</c:if>
 	<!-- 검색 결과 요약 -->

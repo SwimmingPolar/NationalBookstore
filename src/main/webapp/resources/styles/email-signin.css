@@ -17,7 +17,6 @@ body {
   border-radius: 9px;
   padding: 18px;
   height: 402px;
-  background-color: var(--light-gray-color);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.09);
 }
 
@@ -47,7 +46,6 @@ body {
 .form-container input {
   border: 0;
   outline: 0;
-  background-color: var(--light-gray-color);
   font-size: 16px;
   font-family: 'Roboto', 'Noto Sans KR', sans-serif;
   letter-spacing: -0.01em;

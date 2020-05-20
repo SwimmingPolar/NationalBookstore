@@ -86,5 +86,11 @@ public class MainController {
 //		
 //		return "주소";
 //	}
+	
+	@GetMapping("/test")
+	public String gsdag(@RequestParam("page") String page) {
+		
+		return page;
+	}
 
 }

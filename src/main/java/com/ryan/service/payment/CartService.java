@@ -9,7 +9,7 @@ import com.ryan.domain.payment.CartVO;
 
 public interface CartService {
 	
-	public boolean insertCart(CartVO[] cart , MemberVO member);
+	public boolean insertCart(CartVO[] cart);
 	
 	public ArrayList<CartVO> getCartList(MemberVO member);
 	

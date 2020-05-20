@@ -43,7 +43,7 @@ a {
     display:inline-block;
     font-size: 25px;
     margin-bottom: 10px;
-    color:#c990b9;
+    color:rgba(0, 153, 255, 0.568);
 
 }
 
@@ -78,7 +78,7 @@ a {
 }
 
 .bigBox .firstBox {
-    background-color: #ffeb60;
+    background-color:#0099FF;
     flex:1;
 }
 
@@ -92,11 +92,17 @@ a {
     /* margin-left: 5px;  */
 }
 
+.firstBox strong {
+    color:white;
+}
+
 
 .firstBox p {
-    color: rgba(51,51,51,.7);
+    /* color: rgba(51,51,51,.7); */
+    color: #fff;
+    font-size: 13px;
     /* margin-left:24px; */
-    margin-top:3px;
+    margin:5px 0 10px 10px;
 
 }
 
