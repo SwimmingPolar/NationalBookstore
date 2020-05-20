@@ -190,7 +190,6 @@
                 </tr>
                 <tr>
                 	<td>${review.reviewTitle}<td>
-                    </td>
                     <td>
                     	<textarea name="postText" id="postText" readonly>  
                             ${review.reviewContent}
