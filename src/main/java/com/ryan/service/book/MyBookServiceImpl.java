@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.ryan.domain.book.BookGradeVO;
@@ -21,6 +22,7 @@ import com.ryan.domain.book.EBookVO;
 import com.ryan.domain.book.MyLibVO;
 import com.ryan.domain.book.MyReadBookVO;
 import com.ryan.domain.member.MemberVO;
+import com.ryan.domain.security.RyanMember;
 import com.ryan.mapper.MemberMapper;
 import com.ryan.mapper.MyBookMapper;
 
@@ -38,23 +40,24 @@ public class MyBookServiceImpl implements MyBookService{
 	private MemberMapper memberMapper;
 
 	@Override
-	public ArrayList<EBookVO> libBook(String clickId,HttpSession session) {	//찜 책장 조회
+	public ArrayList<EBookVO> libBook(String clickId,Authentication auth) {	//찜 책장 조회
 		// TODO Auto-generated method stub		
 		ArrayList<EBookVO> list = new ArrayList<EBookVO>();
 		if(clickId != null && clickId != "") {
 			list = mapper.libBook(clickId);
 		}else {
-			MemberVO vo = (MemberVO) session.getAttribute("ryanMember");
+			RyanMember ryanmember = (RyanMember) auth.getPrincipal();
+			MemberVO vo = (MemberVO) ryanmember.getMember();
 			list = mapper.libBook(vo.getMemberEmail());
 		}
 		return list;
 	}
 
 	@Override	//찜 책장 삭제
-	public ArrayList<EBookVO> deleteLibBook(int[] booknum, HttpServletRequest request) {
+	public ArrayList<EBookVO> deleteLibBook(int[] booknum, HttpServletRequest request, Authentication auth) {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
+		RyanMember ryanmember = (RyanMember) auth.getPrincipal();
+		MemberVO member = (MemberVO) ryanmember.getMember();
 		ArrayList<MyLibVO> number = new ArrayList<MyLibVO>();
 		for(int i : booknum) {
 			MyLibVO mylib = new MyLibVO();
@@ -71,9 +74,10 @@ public class MyBookServiceImpl implements MyBookService{
 	}
 
 	@Override 	//찜 책장 추가
-	public Boolean insertLibBook(int booknumber, HttpSession session) {
+	public Boolean insertLibBook(int booknumber, Authentication auth) {
 		// TODO Auto-generated method stub
-		MemberVO member = (MemberVO)session.getAttribute("ryanMember");
+		RyanMember ryanmember = (RyanMember) auth.getPrincipal();
+		MemberVO member = (MemberVO) ryanmember.getMember();
 		MyLibVO vo = new MyLibVO();
 		vo.setBookNum(booknumber);
 		vo.setMemberEmail(member.getMemberEmail());
@@ -83,13 +87,14 @@ public class MyBookServiceImpl implements MyBookService{
 	}
 
 	@Override		//읽은책 조회
-	public ArrayList<EBookVO> readBook(String clickId,HttpSession session) {
+	public ArrayList<EBookVO> readBook(String clickId,Authentication auth) {
 		// TODO Auto-generated method stub
 		ArrayList<EBookVO> list = new ArrayList<EBookVO>();
 		if(clickId != null && clickId != "") {
 			list = mapper.readBook(clickId);
 		}else {
-			MemberVO member = (MemberVO)session.getAttribute("ryanMember");
+			RyanMember ryanmember = (RyanMember) auth.getPrincipal();
+			MemberVO member = (MemberVO) ryanmember.getMember();
 			list = mapper.readBook(member.getMemberEmail());
 		}
 		return list;
@@ -104,19 +109,19 @@ public class MyBookServiceImpl implements MyBookService{
 	}
 
 	@Override		//읽은책 추가
-	public Boolean insertReadBook(int booknumber, HttpServletRequest request) {
+	public Boolean insertReadBook(int booknumber, Authentication auth) {
 		// TODO Auto-generated method stub
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());		
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
-		HttpSession session = request.getSession();
+		RyanMember ryanmember = (RyanMember) auth.getPrincipal();
+		MemberVO member = (MemberVO) ryanmember.getMember();
 		MyReadBookVO vo = new MyReadBookVO();
 		vo.setBookNum(booknumber);
 		vo.setReadDate(df.format(cal.getTime()));
 //		vo.setMemberEmail("abc1234@naver.com"); 
 	
-		MemberVO member = (MemberVO) request.getSession().getAttribute("ryanMember");
 		ArrayList<EBookVO> list = mapper.readBook(member.getMemberEmail());
 		vo.setMemberEmail(member.getMemberEmail());
 		boolean flag= false;
@@ -136,38 +141,42 @@ public class MyBookServiceImpl implements MyBookService{
 	}
 
 	@Override
-	public int countLibBook(String clickId,HttpSession session) {
+	public int countLibBook(String clickId,Authentication auth) {
 		if(clickId != null && clickId != "") {
 			return mapper.countLibBook(clickId);
 		}else {
-			MemberVO member =(MemberVO) session.getAttribute("ryanMember");
+			RyanMember ryanmember = (RyanMember) auth.getPrincipal();
+			MemberVO member = (MemberVO) ryanmember.getMember();
 			return mapper.countLibBook(member.getMemberEmail());
 		}
 	}
 
 	@Override
-	public int countReadBook(String clickId,HttpSession session) {
+	public int countReadBook(String clickId,Authentication auth) {
 		if(clickId != null && clickId != "") {
 			return mapper.countReadBook(clickId);
 		}else {
-			MemberVO member =(MemberVO) session.getAttribute("ryanMember");
+			RyanMember ryanmember = (RyanMember) auth.getPrincipal();
+			MemberVO member = (MemberVO) ryanmember.getMember();
 			return mapper.countReadBook(member.getMemberEmail());
 		}
 	}
 
 	@Override
-	public int countLikeBook(String clickId,HttpSession session) {
+	public int countLikeBook(String clickId,Authentication auth) {
 		if(clickId != null && clickId != "") {
 			return mapper.countLikeBook(clickId);
 		}else {
-			MemberVO member =(MemberVO) session.getAttribute("ryanMember");
+			RyanMember ryanmember = (RyanMember) auth.getPrincipal();
+			MemberVO member = (MemberVO) ryanmember.getMember();
 			return mapper.countLikeBook(member.getMemberEmail());
 		}
 	}
 
 	@Override
-	public ArrayList<BookGradeVO> insertGrade(BookGradeVO vo, HttpSession session) {
-		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
+	public ArrayList<BookGradeVO> insertGrade(BookGradeVO vo,Authentication auth) {
+		RyanMember ryanmember = (RyanMember) auth.getPrincipal();
+		MemberVO member = (MemberVO) ryanmember.getMember();
 		ArrayList<BookGradeVO> gradeList = mapper.checkEmail(member.getMemberEmail());
 		boolean flag=false;
 		for(BookGradeVO grade : gradeList) {
@@ -189,6 +198,11 @@ public class MyBookServiceImpl implements MyBookService{
 	@Override
 	public MemberVO readClickId(String clickId) {
 		return memberMapper.readClickId(clickId);
+	}
+
+	@Override
+	public Boolean followCheck(String clickId) {	//팔로우 되어 있는지 확인
+		return null;
 	}
 
 	

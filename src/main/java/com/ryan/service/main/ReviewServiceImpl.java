@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.ryan.domain.book.ReviewVO;
 import com.ryan.domain.member.MemberVO;
+import com.ryan.domain.security.RyanMember;
 import com.ryan.mapper.ReviewMapper;
 
 @Service
@@ -47,8 +49,9 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
-	public ArrayList<ReviewVO> myReviewList(HttpSession session) {
-		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
+	public ArrayList<ReviewVO> myReviewList(Authentication auth) {
+		RyanMember ryanmember = (RyanMember) auth.getPrincipal();
+		MemberVO member = (MemberVO) ryanmember.getMember();
 		return mapper.myReviewList(member.getMemberEmail());
 	}
 

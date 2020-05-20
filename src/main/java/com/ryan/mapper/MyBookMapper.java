@@ -47,4 +47,5 @@ public interface MyBookMapper {
 	
 	//찜 책장 전체삭제
 	public int allDelete(String email);
+	
 }
