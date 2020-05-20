@@ -55,7 +55,7 @@
 	if(pageNum == null)
 		pageNum = "1";
 %>
-<sec:authorize access="isAuthenticatied()">
+<sec:authorize access="isAuthenticated()">
 	<sec:authentication property="principal" var="member"/>
 </sec:authorize>
 
