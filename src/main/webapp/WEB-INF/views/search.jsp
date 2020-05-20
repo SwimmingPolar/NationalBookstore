@@ -56,7 +56,10 @@
 	if(pageNum == null)
 		pageNum = "1";
 %>
-<sec:authentication property="principal" var="member"/>
+<sec:authorize access="isAuthenticatied()">
+	<sec:authentication property="principal" var="member"/>
+</sec:authorize>
+
 <script type="text/javascript" >
 	$(document).ready(function() {
 		var type = "<%=type %>";
