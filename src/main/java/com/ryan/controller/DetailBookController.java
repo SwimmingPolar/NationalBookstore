@@ -105,12 +105,12 @@ public class DetailBookController {
 	public String insertReadBook(@RequestParam("booknumber") int booknumber, Authentication auth , RedirectAttributes rttr) {
 		mservice.insertReadBook(booknumber,auth);
 		
-		rttr.addAttribute("booknumber", booknumber);
+		rttr.addFlashAttribute("booknumber", booknumber);
 		
 		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
 		MemberVO member = ryanMember.getMember();
 		
-		rttr.addAttribute("memberEmail", member.getMemberEmail());
+		rttr.addFlashAttribute("memberEmail", member.getMemberEmail());
 		
 		return "redirect:/viewer";
 	}

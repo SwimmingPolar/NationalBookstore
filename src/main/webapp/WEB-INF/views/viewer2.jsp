@@ -41,14 +41,14 @@ font-family: 'Nanum Gothic', sans-serif;
 <!-- <script src="../../resources/js/viewer2.js"></script> -->
 <script type="text/javascript" >
 	<%-- 로그인 검증 --%> 
-	<%-- var memberEmail = "${ryanMember.memberEmail }";
-	function chkEmail() {
+	var memberEmail = "${memberEmail }";
+	<%--function chkEmail() {
 		if(memberEmail == null || memberEmail == "") {
 			alert("로그인이 필요합니다.");
 			location.href = "/member/signin";
 		}
 	};
-	chkEmail(); --%>
+	chkEmail();--%>
 	$(document).ready(function() {
 		var width = window.innerWidth, height = window.innerHeight;
 		//console.dir(width+","+height);
@@ -364,13 +364,12 @@ font-family: 'Nanum Gothic', sans-serif;
 				}
 			}
 		});
-		var memberEmail = "abc1234@naver.com";
 		$(document).on("click", ".btn.bookmark.fal", function(e) {
 			var thisPage = e.target.value;
 			<%-- 색칠된 북마크 fas fa-bookmark --%>
 			<%-- 안된거 fal fa-bookmark --%>
 			$(this).addClass("fas added").removeClass("fal");
-			console.dir("북마크 추가!");
+			//console.dir("북마크 추가!");
 			$.ajax ({
 				url : "/addBookmark",
 				data : {
@@ -406,9 +405,8 @@ font-family: 'Nanum Gothic', sans-serif;
 			<%-- 색칠된 북마크 fas fa-bookmark --%>
 			<%-- 안된거 fal fa-bookmark --%>
 			$(this).removeClass("fas added").addClass("fal");
-			console.dir("북마크 추가!");
 			$.ajax ({
-				url : "/addBookmark",
+				url : "/removeBookmark",
 				data : {
 					"bookNum" : ${book.bookNum},
 					"pageNum" : thisPage,
