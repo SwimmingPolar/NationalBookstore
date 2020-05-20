@@ -46,7 +46,9 @@
     <script src="../../resources/js/common.js"></script>
 </head>
 <body>
-<sec:authentication property="principal" var="member"/>
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication property="principal" var="member"/>
+</sec:authorize>
     <header class="topbar">
         <nav>
             <div class="container">

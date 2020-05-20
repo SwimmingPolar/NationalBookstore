@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +38,8 @@ public class DetailBookController {
 	
 	@Setter(onMethod_ = {@Autowired})
 	private MyBookService mservice;
+	
+	private Authentication authTemp;
 	
 	//상세보기 페이지 
 	@RequestMapping("/bookdetail")
@@ -96,8 +99,15 @@ public class DetailBookController {
 	
 	//찜 책장에 추가
 	@RequestMapping("/insertLibList")
-	public @ResponseBody Boolean insertList(@RequestParam("booknumber") int booknumber, Authentication auth) {
-		return mservice.insertLibBook(booknumber,auth);
+	public @ResponseBody Boolean insertList(@RequestParam("booknumber") int booknumber) {
+		
+		authTemp = SecurityContextHolder.getContext().getAuthentication();
+		
+		RyanMember ryanMember = (RyanMember) authTemp.getPrincipal();
+		MemberVO member = ryanMember.getMember();
+		
+		log.info(member);
+		return mservice.insertLibBook(booknumber,authTemp);
 	}
 	
 	//읽은책 추가 //바로보기 버튼 클릭
