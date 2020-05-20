@@ -55,7 +55,7 @@ public class MainController {
 		
 	}
 	
-	@GetMapping("/myAccount-main")
+	@GetMapping("/myaccount")
 	public String myAccountMain() {
 		
 		return "Settings/MyAccount/myAccount-main";

@@ -148,7 +148,7 @@ public class EmailFunction {
 	
 	//비밀번호
 	
-	public void sendUserPW(String member_Id , String member_Email , String code) {
+	public boolean forgotPassword(String memberEmail , String randomPw) {
 		
 		Authenticator auth = new Authenticator() {
 
@@ -173,15 +173,15 @@ public class EmailFunction {
 			
 			msg.setFrom(from);
 			//제목
-			msg.setSubject("Memory Boost! 비밀번호 찾기" , "UTF-8");
+			msg.setSubject("ryanBookStore 비밀번호 찾기" , "UTF-8");
 			//내용 나중에 시간되면 좀..있어보이게 수정
-			msg.setContent("<h1>" + member_Id + "님의 비밀번호는: " + code + "입니다" + " 보안을 위해 비밀번호를 꼭 변경해주세요!" + "</h1>", "text/html; charset=UTF-8");
+			msg.setContent("<h1>" + memberEmail + "님의 비밀번호는: " + randomPw + "입니다" + " 보안을 위해 비밀번호를 꼭 변경해주세요!" + "</h1>", "text/html; charset=UTF-8");
 			
 			msg.setSentDate(new Date());
 			
 			//받는사람
 			
-			InternetAddress to = new InternetAddress(member_Email);
+			InternetAddress to = new InternetAddress(memberEmail);
 			
 			msg.setRecipient(Message.RecipientType.TO, to);
 			
@@ -189,10 +189,11 @@ public class EmailFunction {
 			
 			Transport.send(msg);
 			
-			
+			return true;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
 
 	}

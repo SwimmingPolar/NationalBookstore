@@ -50,38 +50,85 @@
             <h2>NATIONAL BOOKSTORE</h2>
           </a>
         </div>
-        <div class="search-wrapper hasResult">
+        <div class="search-wrapper">
           <div class="filter">
             <ul>
               <li class="selected">제목</li>
             </ul>
           </div>
-          <form action="search" method="get">
+          <form action="/search" method="GET">
             <button><span class="far fa-search"></span></button>
-            <input class="search-input" name="keyword" type="text" placeholder="제목, 저자, 해쉬태그 검색" autocomplete="off" spellcheck="false">
-            <input type="hidden" name="type" value="title">
-            <div class="search-result">
+            <input id="search-input" name="keyword" type="text" placeholder="제목, 저자, 해쉬태그 검색" autocomplete="off" spellcheck="false">
+            <input id="search-type" type="hidden" name="type" value="title">
+            <div class="search-result hasResult">
               <ul>
-                <li>아이언</li>
-                <li>브론즈</li>
-                <li>실버</li>
-                <li>골드</li>
-                <li>플레티넘</li>
-                <li>다이아</li>
-                <li>마스터</li>
-                <li>챌린저</li>
-                <li>아이언</li>
-                <li>브론즈</li>
-                <li>실버</li>
-                <li>골드</li>
-                <li>플레티넘</li>
-                <li>다이아</li>
-                <li>마스터</li>
-                <li>챌린저</li>
               </ul>
             </div>
           </form>
         </div> 
+        <!-- search preview ajax request -->
+        <script>
+          function getSearchResult(type, keyword) {
+            return new Promise((resolve, reject) => {
+              const xhr = new XMLHttpRequest();
+              xhr.open('GET', '/search-preview?type=' + type + '&keyword=' + keyword);
+              xhr.onreadystatechange = function() {
+                if (!(xhr.readyState === 4 && xhr.status === 200)) return;
+                resolve(JSON.parse(xhr.response));
+              }
+              xhr.send();
+            });
+          }
+          async function searchKeyword() {
+            const searchResult = document.querySelector('.search-wrapper .search-result');
+            const searchResultList = document.querySelector('.search-wrapper .search-result ul');
+            const type = document.getElementById('search-type').value.trim();
+            const keyword = document.getElementById('search-input').value.trim();
+
+            // do not request on empty keyword
+            if (keyword === null || keyword === undefined || keyword.length === 0) return;
+
+            // do not request on single korean vowel or consonant (ㄱ, ㄴ, ㄷ, ㅏ, ㅣ, ㅔ, ...)
+            const lastKeywordUnicode = keyword.charAt(keyword.length-1).charCodeAt(0);
+            if (12593 <= lastKeywordUnicode && lastKeywordUnicode <= 12643) return;
+
+            // get result from server
+            const bookList = await getSearchResult(type, keyword);
+  
+            let searchResultListHTML = '';
+            if (bookList.length === 0)
+              searchResultListHTML = '<li><p><b>"' + keyword + '"</b>에 대한 결과가 없습니다.</p></li>';
+            bookList.forEach(book => {
+              searchResultListHTML += '<li>' +
+                                        '<a href="/search?type=' + type + '&keyword=' + keyword + '>' +
+                                          book.bookTitle + ' : ' + book.bookWriter +
+                                        '</a>' +
+                                      '</li>';
+            });
+            console.dir(searchResultListHTML);
+            searchResultList.innerHTML = searchResultListHTML;
+            searchResult.classList.add('hasResult');
+          }
+          $(document).ready(function() {
+            const searchResult = document.querySelector('.search-wrapper .search-result');
+            const searchInput = document.getElementById('search-input');
+            let timeoutID = undefined;
+            
+            searchInput.addEventListener('input', () => {
+              if (searchInput.value.trim().length === 0)
+                searchResult.classList.remove('hasResult');
+
+              // cancel previous search-preview request on new input
+              if (timeoutID) clearTimeout(timeoutID);
+              // schedule search-preview request
+              timeoutID = setTimeout(() => searchKeyword(), 850);
+            });
+            searchInput.addEventListener('focus', () => {
+              if (searchInput.value.trim().length !== 0)
+                searchResult.classList.add('hasResult');
+            })
+          });
+        </script>
         <!-- toggle filter menu on click -->
         <script>
           $(document).ready(function() {
@@ -214,7 +261,7 @@
             </div>
             <div class="slider infinite-slider">
             	<c:forEach var="today" items="${todayBook}">
-            		<div class="slide infinite-slide"><a href="${pageContext.request.contextPath}/book/bookdetail?booknumber=${today.bookNum} " src="#"><img src="${pageContext.request.contextPath }${today.bookThumbnail}" alt="" width="250px" height="320px"></a></div>
+            		<div class="slide infinite-slide"><a href="${pageContext.request.contextPath}/book/bookdetail?booknumber=${today.bookNum} " src="#"><img src="${pageContext.request.contextPath }${today.bookThumbnail}" alt=""></a></div>
             	</c:forEach>
             </div>
           </div>
@@ -233,49 +280,22 @@
               <ul>
                 <li>
                   <a href="#">
-                    <img src="https://via.placeholder.com/55x75" alt="">
+                    <img src="https://via.placeholder.com/65x85" width="55px" alt="">
                   </a>
                 </li>
                 <li>
                   <a href="#">
-                    <img src="https://via.placeholder.com/55x75" alt="">
+                    <img src="https://via.placeholder.com/65x85" alt="">
                   </a>
                 </li>
                 <li>
                   <a href="#">
-                    <img src="https://via.placeholder.com/55x75" alt="">
+                    <img src="https://via.placeholder.com/65x85" alt="">
                   </a>
                 </li>
                 <li>
                   <a href="#">
-                    <img src="https://via.placeholder.com/50x75" alt="">
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div class="shelf">
-              <div class="bookend-left"></div>
-              <div class="bookend-right"></div>
-              <div class="reflection"></div>
-              <ul>
-                <li>
-                  <a href="#">
-                    <img src="https://via.placeholder.com/55x75" alt="">
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <img src="https://via.placeholder.com/55x75" alt="">
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <img src="https://via.placeholder.com/55x75" alt="">
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <img src="https://via.placeholder.com/55x75" alt="">
+                    <img src="https://via.placeholder.com/65x85" alt="">
                   </a>
                 </li>
               </ul>
@@ -287,27 +307,54 @@
               <ul>
                 <li>
                   <a href="#">
-                    <img src="https://via.placeholder.com/55x75" alt="">
+                    <img src="https://via.placeholder.com/65x85" alt="">
                   </a>
                 </li>
                 <li>
                   <a href="#">
-                    <img src="https://via.placeholder.com/55x75" alt="">
+                    <img src="https://via.placeholder.com/65x85" alt="">
                   </a>
                 </li>
                 <li>
                   <a href="#">
-                    <img src="https://via.placeholder.com/55x75" alt="">
+                    <img src="https://via.placeholder.com/65x85" alt="">
                   </a>
                 </li>
                 <li>
                   <a href="#">
-                    <img src="https://via.placeholder.com/55x75" alt="">
+                    <img src="https://via.placeholder.com/65x85" alt="">
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="shelf">
+              <div class="bookend-left"></div>
+              <div class="bookend-right"></div>
+              <div class="reflection"></div>
+              <ul>
+                <li>
+                  <a href="#">
+                    <img src="https://via.placeholder.com/65x85" alt="">
                   </a>
                 </li>
                 <li>
                   <a href="#">
-                    <img src="https://via.placeholder.com/50x75" alt="">
+                    <img src="https://via.placeholder.com/65x85" alt="">
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <img src="https://via.placeholder.com/65x85" alt="">
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <img src="https://via.placeholder.com/65x85" alt="">
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <img src="https://via.placeholder.com/65x85" alt="">
                   </a>
                 </li>
               </ul>
@@ -364,12 +411,12 @@
         </script>
         <div class="list-container">
           <ul>
-          	<c:set var="count" value="${1 }"/>
+          	<c:set var="count" value="${1}"/>
           	<c:forEach var="read" items="${bestReadBook }">
           		<li>
               	<a href="${pageContext.request.contextPath}/book/bookdetail?booknumber=${read.bookNum}">
                 	<div class="img-wrapper">
-                  		<img src="${pageContext.request.contextPath}${read.bookThumbnail}" alt="" width="50px" height="75px">
+                  		<img src="${pageContext.request.contextPath}${read.bookThumbnail}" alt="">
                 	</div>
                 	<div class="text-wrapper">
                   	<div class="ranking">
@@ -428,7 +475,7 @@
                   <li class="flexible-slide">
                     <a href="${"/book/bookdetail?booknumber=${book.bookNum}"}">
                       <div class="thumbnail-wrapper">
-                        <img src="${"${book.bookThumbnail}"}" width="100px" alt="">
+                        <img src="${"${book.bookThumbnail}"}" alt="">
                       </div>  
                       <div class="text-wrapper">
                         <div class="meta-data">
@@ -529,7 +576,7 @@
                 			<a href="${pageContext.request.contextPath}/book/bookdetail?booknumber=${disCount.bookNum}">
                   		<div class="thumbnail-wrapper">
                     		<span class="discount-rate">${disCount.bookDiscount }<span>%</span></span>
-                    		<img src="${pageContext.request.contextPath }${disCount.bookThumbnail}" alt="" width="150px" height="200px">
+                    		<img src="${pageContext.request.contextPath }${disCount.bookThumbnail}" alt="">
                   		</div>
                   		<div class="text-wrapper">
                     		<strong>${disCount.bookTitle }</strong>

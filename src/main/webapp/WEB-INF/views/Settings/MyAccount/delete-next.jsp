@@ -14,9 +14,14 @@
     <script src="../../../../resources/js/common.js"></script>
 </head>
 <body>
-    <div class="title">
-        <h3> 회원 탈퇴 </h3>
-    </div> 
+<header class="topbar">
+	<nav>
+		<div class="container">
+		    <a href="javascript: history.back();"><i class="far fa-arrow-left"></i></a>
+		    <h2>회원 탈퇴</h2>
+		</div>
+    </nav>
+</header>
     <div class="wrapper">
         <div class="inputPw">
             <h2> 비밀번호 확인 </h2> 
@@ -60,5 +65,13 @@ $.ajax({
 
 
 
+<script>
+    $(document).ready(() => {
+      const li = document.querySelector('footer.fixed a[href="/myaccount"]').parentElement;
+      const ul = li.parentElement;
+      [ul, li].forEach(element => element.classList.add('active'));
+    });
+  </script>
+<%@ include file="../../template/footer.jsp" %>
 </body>
 </html>

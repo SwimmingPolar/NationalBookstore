@@ -2,19 +2,67 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ryan.mapper.MemberMapper">
 	
+	<resultMap type="com.ryan.domain.member.MemberVO" id="memberMap">
+		<id property="memberEmail" column="member_email"/>
+		<result property="memberEmail" column="member_email"/>
+		<result property="memberPw" column="member_pw"/>
+		<result property="memberNickName" column="member_nick_name"/>
+		<result property="memberZipcode" column="member_zipcode"/>
+		<result property="memberAddress" column="member_address"/>
+		<result property="memberDaddress" column="member_daddress"/>
+		<result property="memberTel" column="member_tel"/>
+		<result property="memberSignupDate" column="member_signup_date"/>
+		<result property="memberEnabled" column="member_enabled"/>
+		<collection property="memberAuthList" resultMap="memberAuthMap">
+		</collection>
+	</resultMap>
+	
+	<resultMap type="com.ryan.domain.member.MemberAuthVO" id="memberAuthMap">
+		<result property="memberEmail" column="member_email"/>
+		<result property="auth" column="auth"/>
+	</resultMap>
+	
+	<select id="getLoginMemberInfo" resultMap="memberMap">
+		SELECT m.*, a.auth FROM member m, tbl_member_auth a
+		<where>
+			m.member_email = a.member_email 
+			and m.member_email = #{memberEmail}
+		</where>
+	</select>
+	
 	<insert id="memberSignUp">
-		INSERT INTO member
-		VALUES(
-		#{memberEmail},
-		#{memberPw},
-		#{memberNickName},
-		#{memberZipcode},
-		#{memberAddress},
-		#{memberDaddress},
-		#{memberTel},
-		#{memberAdmin},
-		SYSDATE
+		INSERT ALL
+		INTO member
+		(
+			member_email,
+			member_pw,
+			member_nick_name,
+			member_zipcode,
+			member_address,
+			member_daddress,
+			member_tel
 		)
+		VALUES
+		(
+			#{memberEmail},
+			#{memberPw},
+			#{memberNickName},
+			#{memberZipcode},
+			#{memberAddress},
+			#{memberDaddress},
+			#{memberTel}
+		)
+		INTO tbl_member_auth
+		(
+			member_email,
+			AUTH
+		)
+		VALUES
+		(
+			#{memberEmail},
+			'ROLE_MEMBER'
+		)
+		SELECT * FROM dual
 	</insert>
 	
 	<select id="signUpCheck" resultType="Integer">
@@ -54,15 +102,15 @@
 	<!-- 로그인  유효성 체크--> <!-- 주말에 시큐리티 적용예정 -->
 	<select id="memberSignIn" resultType="int">
 		SELECT count(*) FROM member WHERE member_email = #{memberEmail} and member_pw = #{memberPw}
-	</select>
+	</select> 
 	
 	<!-- 로그인 한사람 정보 가져오기 -->
 	
-	<select id="getLoginMemberInfo" resultType="com.ryan.domain.member.MemberVO">
+<!-- 	<select id="getLoginMemberInfo" resultType="com.ryan.domain.member.MemberVO">
 		SELECT member_email, member_nick_name, member_zipcode, member_address, member_daddress, member_tel, member_signup_date
 		FROM member
 		WHERE member_email = #{memberEmail} and member_pw = #{memberPw}
-	</select>
+	</select> -->
 	
 	<!-- 정지 유효성체크? -->
 	<select id="memberBanCheck" resultType="int">
@@ -75,19 +123,18 @@
 	
 	<!-- 회원탈퇴 -->
 	
+	<!-- 비밀번호 찾기 -->
+	<update id="forgotPassword">
+		UPDATE member
+		<set>
+			member_pw = #{memberPw}
+		</set>
+		<where>
+			member_email = #{memberEmail}
+		</where>
+	</update>
 	
 	
-	
-	<!-- 여기부터 쿠키 -->
-	<!-- 자동로그인 체크시 회원의 닉네임을 가져옴 -->
-	<select id="getMemberNickName" resultType="String">
-		SELECT member_nick_name FROM member WHERE member_email = #{memberEmail}
-	</select>
-	
-	<!-- 쿠키 로그인 확인 -->
-	<select id="autoLogin" resultType="int">
-		SELECT count(*) FROM member WHERE member_email = #{memberEmail} and member_nick_name = #{memberNickName}
-	</select>
 	
 	<select id="readClickId" resultType="com.ryan.domain.member.MemberVO">
 		SELECT * FROM member WHERE member_email = #{clickId}
