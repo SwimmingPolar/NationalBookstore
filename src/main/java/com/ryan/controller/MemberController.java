@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +33,11 @@ import com.ryan.domain.security.RyanMember;
 import com.ryan.function.EmailThread;
 import com.ryan.mapper.EmailMapper;
 import com.ryan.service.book.BookCategoryService;
+import com.ryan.service.book.DetailBookService;
+import com.ryan.service.book.MyBookService;
+import com.ryan.service.main.ReviewService;
 import com.ryan.service.member.EmailService;
+import com.ryan.service.member.FollowService;
 import com.ryan.service.member.InterestsService;
 import com.ryan.service.member.MemberService;
 import com.ryan.service.member.RegularPaymentService;
@@ -64,7 +69,14 @@ public class MemberController {
 	@Setter(onMethod_ = {@Autowired})
 	private RevenueService revenueService;
 	
-
+	@Setter(onMethod_ = {@Autowired})
+	private MyBookService bookService;
+	
+	@Setter(onMethod_ = {@Autowired})
+	private FollowService followService;
+	
+	@Setter(onMethod_ = {@Autowired})
+	private ReviewService reviewService;
 	
 	@PostMapping("/signUp")
 	public String memberSignUp(MemberVO member) {
@@ -264,8 +276,14 @@ public class MemberController {
 	
 	//회원탈퇴 페이지이동
 	@GetMapping("/delete")
-	public String memberDelete() {
-		
+	public String memberDelete(Model model, Authentication auth) {
+		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
+		MemberVO member = ryanMember.getMember();	
+		model.addAttribute("myInfo", memberService.getLoginMemberInfo(member)); //내정보
+		model.addAttribute("myBookInfo", bookService.countReadBook(null, auth));//내 도서 
+		model.addAttribute("myPost", reviewService.countMyPost(member.getMemberEmail()));//내 포스트 수
+		model.addAttribute("myFollowInfo", followService.countFollow(null, auth));//팔로우 수
+		//종이책 결제 건수 - 아직 모름
 		return "Settings/MyAccount/delete";
 	}
 	

@@ -16,7 +16,7 @@ public interface FollowService {
 	
 	public Boolean deleteFollow(String follower ,String following);
 	
-	public  ArrayList<FollowVO> getMyFollowing(MemberVO member);
+	public  ArrayList<FollowVO> getMyFollowing(String clickId, Authentication auth);
 	
 	public ArrayList<FollowVO> getMyFollower(MemberVO member);
 	

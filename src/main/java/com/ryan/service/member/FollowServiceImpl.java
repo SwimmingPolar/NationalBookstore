@@ -34,8 +34,14 @@ public class FollowServiceImpl implements FollowService{
 	}
 
 	@Override
-	public ArrayList<FollowVO> getMyFollowing(MemberVO member) {
-		return mapper.getMyFollowing(member);
+	public ArrayList<FollowVO> getMyFollowing(String clickId, Authentication auth ) {
+		if(clickId != null && clickId != "") {
+			return mapper.getMyFollowing(clickId);
+		}else {
+			RyanMember ryanmember = (RyanMember) auth.getPrincipal();
+			MemberVO member = (MemberVO) ryanmember.getMember();
+			return mapper.getMyFollowing(member.getMemberEmail());
+		}
 	}
 
 	@Override

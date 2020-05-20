@@ -27,11 +27,11 @@
     <div class="wrapper">
         <h3> 서재 이용 현황 </h3>
         <div class="useInfo">
-            <p>${ryanMember.memberNickName } 님의 서재</p>
+            <p>${myInfo.memberNickName } 님의 서재</p>
             <ul>
-                <li><strong>서재에 기록된 도서</strong> <span>${readbookcount } 권</span></li>
-                <li><strong>서재에 기록된 포스트</strong><span>0 개</span></li>
-                <li><strong>팔로우 수 </strong><span>${myFollower} 명</span></li>
+                <li><strong>서재에 기록된 도서</strong> <span>${myBookInfo } 권</span></li>
+                <li><strong>서재에 기록된 포스트</strong><span>${myPost } 개</span></li>
+                <li><strong>팔로우 수 </strong><span>${myFollowInfo} 명</span></li>
                 <li><strong>종이책 결제 건수</strong><span>0 권</span></li>
             </ul>
             
