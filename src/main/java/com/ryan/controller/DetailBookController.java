@@ -39,8 +39,6 @@ public class DetailBookController {
 	@Setter(onMethod_ = {@Autowired})
 	private MyBookService mservice;
 	
-	private Authentication authTemp;
-	
 	//상세보기 페이지 
 	@RequestMapping("/bookdetail")
 	public String searchEBook(@RequestParam("booknumber") int booknumber, Model model, HttpServletRequest request, HttpServletResponse response, Authentication auth) {
@@ -99,15 +97,11 @@ public class DetailBookController {
 	
 	//찜 책장에 추가
 	@RequestMapping("/insertLibList")
-	public @ResponseBody Boolean insertList(@RequestParam("booknumber") int booknumber) {
+	public @ResponseBody Boolean insertList(@RequestParam("booknumber") int booknumber, @RequestParam("memberEmail") String memberEmail) {
+		log.info(memberEmail);
 		
-		authTemp = SecurityContextHolder.getContext().getAuthentication();
 		
-		RyanMember ryanMember = (RyanMember) authTemp.getPrincipal();
-		MemberVO member = ryanMember.getMember();
-		
-		log.info(member);
-		return mservice.insertLibBook(booknumber,authTemp);
+		return mservice.insertLibBook(booknumber,memberEmail);
 	}
 	
 	//읽은책 추가 //바로보기 버튼 클릭

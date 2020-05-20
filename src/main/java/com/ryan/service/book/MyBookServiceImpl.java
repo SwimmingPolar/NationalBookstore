@@ -76,16 +76,12 @@ public class MyBookServiceImpl implements MyBookService{
 	}
 
 	@Override 	//찜 책장 추가
-	public Boolean insertLibBook(int booknumber, Authentication auth) {
+	public Boolean insertLibBook(int booknumber, String memberEmail) {
 		// TODO Auto-generated method stub
 		try {
-			RyanMember ryanmember = (RyanMember) auth.getPrincipal();
-			log.info(ryanmember);
-			MemberVO member = (MemberVO) ryanmember.getMember();
-			log.info(member);
 			MyLibVO vo = new MyLibVO();
 			vo.setBookNum(booknumber);
-			vo.setMemberEmail(member.getMemberEmail());
+			vo.setMemberEmail(memberEmail);
 			mapper.insertLibBook(vo);
 			return true;
 		}catch (Exception e) {

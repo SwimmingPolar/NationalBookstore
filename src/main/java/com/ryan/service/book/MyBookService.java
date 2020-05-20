@@ -20,7 +20,7 @@ public interface MyBookService {
 	
 	public ArrayList<EBookVO> deleteLibBook(int[] booknum, HttpServletRequest request, Authentication auth);
 	
-	public Boolean insertLibBook(int booknumber, Authentication auth);
+	public Boolean insertLibBook(int booknumber, String memberEmail);
 	
 	public int countLibBook(String clickId,Authentication auth);
 	

@@ -189,14 +189,8 @@
                     <th> 등록날짜 </th>
                 </tr>
                 <tr>
-<<<<<<< HEAD
                 	<td>${review.reviewTitle}<td>
-                    </td>
                     <td>
-=======
-                	<td><b>${review.reviewTitle}</b><td>
-                    <td >
->>>>>>> branch 'master' of https://github.com/SwimmingPolar/NationalBookstore.git
                     	<textarea name="postText" id="postText" readonly>  
                             ${review.reviewContent}
                         </textarea>
