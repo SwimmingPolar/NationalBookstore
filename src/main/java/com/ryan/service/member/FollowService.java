@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.security.core.Authentication;
 
 import com.ryan.domain.member.FollowVO;
 import com.ryan.domain.member.MemberVO;
@@ -21,5 +22,5 @@ public interface FollowService {
 	
 	public Boolean followCheck( String follower , String following);
 	
-	public int countFollow(String clickId, HttpSession session);
+	public int countFollow(String clickId, Authentication auth);
 }

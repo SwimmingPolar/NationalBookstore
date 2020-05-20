@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,9 +66,9 @@ public class OrderController {
 	
 	//결제한 내역 주문리스트
 	@RequestMapping("/list")
-	public String orderList(HttpServletRequest request, Model model) {
+	public String orderList(Authentication auth, Model model) {
 		
-		model.addAttribute("orderList", orderService.getOrderList(request));
+		model.addAttribute("orderList", orderService.getOrderList(auth));
 		
 		return "주문한 목록 보여줄 페이지";
 	}
