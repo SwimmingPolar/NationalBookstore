@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 
@@ -45,6 +46,7 @@
     <script src="../../resources/js/common.js"></script>
 </head>
 <body>
+<sec:authentication property="principal" var="member"/>
     <header class="topbar">
         <nav>
             <div class="container">
@@ -353,7 +355,7 @@
   $(document).ready(function(){ 
 	  var check = "${likecheck}";
             $('#heartClick').change(function () {
-            	var memberId = "${ryanMember.memberNickName}";
+            	var memberId = "${member.member.memberNickName}";
             	if(memberId==""){
             		if(confirm("로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?")) {
             			location.href = "/member/signin";
@@ -459,7 +461,7 @@
         var count = 0;
         $(function () {
             $('.inputBtn').click(function () {
-            	var memberId = "${ryanMember.memberNickName}";
+            	var memberId = "${member.member.memberNickName}";
             	if(memberId==""){
             		if(confirm("로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?")) {
             			location.href = "/member/signin";
@@ -510,7 +512,7 @@
     </script>
     <script>
     function insertReadBook(){
-    	var memberId = "${ryanMember.memberNickName}";
+    	var memberId = "${member.member.memberNickName}";
     	if(memberId==""){
     		if(confirm("로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?")) {
     			location.href = "/member/signin";
@@ -520,7 +522,7 @@
     	}
     }
     function insertLibBook(){
-    	var memberId = "${ryanMember.memberNickName}";
+    	var memberId = "${member.member.memberNickName}";
     	if(memberId==""){
     		if(confirm("로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?")) {
     			location.href = "/member/signin";

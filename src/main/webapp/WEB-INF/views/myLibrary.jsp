@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +17,8 @@
 
 </head>
 <body>
+
+	<sec:authentication property="principal" var="member"/>
     <!-- <header class="topbar">
         <nav>
           <div class="container">
@@ -42,7 +45,7 @@
 <div class="myNickname">
 		<c:choose>
 			<c:when test="${checkId}"> <a> ${followId.memberNickName }<%-- ${ryanMember.memberNickName } --%> </a> 님의 서재  </c:when>
-			<c:otherwise><a>  ${ryanMember.memberNickName }  </a> 님의 서재 </c:otherwise>
+			<c:otherwise><a>  ${member.member.memberNickName }  </a> 님의 서재 </c:otherwise>
 		</c:choose>
 </div>
 </div>

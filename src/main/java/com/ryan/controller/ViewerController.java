@@ -9,6 +9,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.xml.sax.SAXException;
@@ -21,7 +22,7 @@ public class ViewerController {
 	ViewerService sv;
 	
 	@RequestMapping(value="/viewer")
-	public String ViewerMain(String booknumber, Model model, HttpServletRequest request) throws ParserConfigurationException, SAXException, IOException {
+	public String ViewerMain(@ModelAttribute("booknumber") String booknumber, Model model, HttpServletRequest request) throws ParserConfigurationException, SAXException, IOException {
 		String path = null;
 		try {
 			path = request.getSession().getServletContext().getRealPath(sv.getBookFilePath(booknumber).getBookPath());
