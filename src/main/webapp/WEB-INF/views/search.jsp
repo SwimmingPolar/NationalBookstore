@@ -193,11 +193,6 @@
 			e.preventDefault();
 			$("form.search-form").submit();
 		});
-		//topbar
-		$(".topbar h2").click(function() {
-			location.href="search";
-		});
-		$(".topbar h2").append("::${param.keyword }");
 		//책정보 보기
 		$(".book .title, .book .cover").click(function() {
 			var bookNum = $(this).parents(".search")[0].classList[1];
@@ -223,14 +218,10 @@
 </script>
 </head>
 <body>
-	<!-- <div class="div-title" >
-		<h3>National Bookstore</h3>
-	</div>
-	<div ></div> -->
 	<header class="topbar">
 		<nav>
 			<div class="container">
-				<a href="/"><i class="far fa-arrow-left"></i></a>
+				<a href="javascript: history.back();"><i class="far fa-arrow-left"></i></a>
 				<h2>검색</h2>
 			</div>
 		</nav>
