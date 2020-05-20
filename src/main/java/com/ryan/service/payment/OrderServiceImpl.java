@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -21,6 +22,7 @@ import com.ryan.domain.member.MemberVO;
 import com.ryan.domain.payment.KakaoPayApprovalVO;
 import com.ryan.domain.payment.KakaoPayResponseVO;
 import com.ryan.domain.payment.OrderVO;
+import com.ryan.domain.security.RyanMember;
 import com.ryan.mapper.OrderMapper;
 
 import lombok.Setter;
@@ -45,11 +47,10 @@ public class OrderServiceImpl implements OrderService {
 	
 
 	@Override
-	public ArrayList<OrderVO> getOrderList(HttpServletRequest request) {
+	public ArrayList<OrderVO> getOrderList(Authentication auth) {
 		
-		HttpSession session = request.getSession();
-		
-		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
+		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
+		MemberVO member = ryanMember.getMember();
 		
 		return mapper.getOrderList(member.getMemberEmail());
 	}
