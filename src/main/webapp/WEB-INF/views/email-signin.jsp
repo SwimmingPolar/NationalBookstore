@@ -55,13 +55,14 @@
             <label for="passwd">비밀번호</label>
             <input id="passwd" type="password" placeholder="영어, 숫자 포함 4자리 이상 입력해주세요." name="memberPw"/>
             <div class="find-my-account">
-              <input type="checkbox" id="remember-me" name="rememberMe">
+              <input type="checkbox" id="remember-me" name="remember-me">
               <label for="remember-me">로그인 유지</label>
               <a href="/member/findPasswd">비밀번호 찾기</a>
             </div>
             <button type="submit" disabled="disabled">로그인</button>
             <a href="/member/signup">회원가입</a>
           </div>
+          <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
         </form>
       </div>
     </div>

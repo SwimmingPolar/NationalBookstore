@@ -43,12 +43,12 @@ SELECT review_num.NEXTVAL FROM book_Review
 	book_num=#{bookNum}
 	</select>
 	
-	<select id="searchOrdertmp">
+<!-- 	<select id="searchOrdertmp">
 	SELECT o.orderlist_num FROM order_object o
 	JOIN order_number n ON o.order_num=n.order_num
 	WHERE n.member_email=#{memberEmail} and
 	o.book_num=#{bookNum}
-	</select>
+	</select> -->
 	
 	<select id="searchOrder">
 	SELECT count(*) FROM order_object o
@@ -57,13 +57,13 @@ SELECT review_num.NEXTVAL FROM book_Review
 	o.book_num=#{bookNum}
 	</select>
 	
-	<select id="duplicationChk">
+	<select id="duplication">
 	SELECT count(*) FROM book_Review
 	WHERE member_email=#{memberEmail} and
 	book_num=#{bookNum}
 	</select>
 	
-	<select id="myreviewList" resultType="com.ryan.domain.book.ReviewVO">
+	<select id="myReviewList" resultType="com.ryan.domain.book.ReviewVO">
 	SELECT * FROM book_Review WHERE member_email=#{memberEmail}
 	</select>
 	

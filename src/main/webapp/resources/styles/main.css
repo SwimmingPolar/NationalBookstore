@@ -30,13 +30,13 @@
 }
 .head-upper a {
   text-decoration: none;
-  color: #fff;
 }
 .head-upper h2 {
   letter-spacing: 0.03em;
   font-size: 19px;
   font-family: 'Roboto', 'Noto Sans KR', sans-serif;
   line-height: 36px;
+  color: #fff;
 }
 .head-upper form {
   display: flex;
@@ -145,18 +145,25 @@
   border-radius: 3px;
   overflow-y: auto;
 }
-.search-wrapper.hasResult input.search-input:focus ~ .search-result {
+#search-input:focus ~ .search-result.hasResult,
+.search-result.hasResult:focus-within {
   display: block;
 }
+
 .search-result ul {
   list-style: none;
 }
 .search-result li {
   padding: 10px 20px;
   cursor: pointer;
+  color: var(--subtle-font-color);
+  text-overflow: ellipsis;
+  word-break: break-all;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .search-result li:hover {
-  background-color: rgba(0, 0, 0, 0.09);
+  background-color: rgba(0, 0, 0, 0.07);
 }
 
 .head-lower.sticky {
@@ -274,9 +281,17 @@
   display: block;
   width: 250px;
   height: 320px;
+  overflow: hidden;
+  box-sizing: content-box;
 }
 .recommendation .slide a * {
   pointer-events: none;
+}
+.recommendation .slide a img {
+  width: 250px;
+  height: 320px;
+  object-fit: cover;
+  object-position: top;
 }
 .recommendation .button-wrapper {
   position: absolute;
@@ -364,6 +379,14 @@
 .recommendation .right-section h2 {
   margin-bottom: 20px;
 }
+.recommendation .right-section h2 a {
+  display: inline-block;
+  max-width: 33.33%;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  white-space: nowrap;
+  overflow:hidden;
+}
 .recommendation .right-section a {
   text-decoration: none;
   color: inherit;
@@ -372,7 +395,7 @@
   list-style: none;
   position: absolute;
   z-index: 998;
-  top: -60px;
+  top: -72px;
   left: 0;
   font-size: 0;
   width: 100%;
@@ -390,6 +413,16 @@
 }
 .recommendation .right-section li a {
   display: block;
+  width: 65px;
+  height: 85px;
+  box-sizing: content-box;
+  overflow: hidden;
+}
+.recommendation .right-section li a img {
+  width: 65px;
+  height: 85px;
+  object-fit: cover;
+  object-position: top;
 }
 .recommendation .bookshelf-wrapper {
   width: 100%;
@@ -510,9 +543,17 @@
 .trending .list-container .img-wrapper {
   font-size: 0;
   padding: 7px 25px 7px 0;
+  width: 60px;
+  height: 85px;
+  box-sizing: content-box;
+  overflow: hidden;
 }
 .trending .list-container .img-wrapper img {
   box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1), 0 0 2px rgba(0, 0, 0, 0.2);
+  width: 60px;
+  height: 85px;
+  object-fit: cover;
+  object-position: top;
 }
 .trending .list-container .text-wrapper {
   flex: 1;
@@ -676,7 +717,17 @@
 }
 .best-seller .list-container .thumbnail-wrapper {
   font-size: 0;
-  box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.175)
+  box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.175);
+  width: 100px;
+  height: 150px;
+  box-sizing: content-box;
+  overflow: hidden;
+}
+.best-seller .list-container .thumbnail-wrapper img {
+  width: 100px;
+  height: 150px;
+  object-fit: cover;
+  object-position: top;
 }
 .best-seller .list-container .text-wrapper {
   width: 214px;
@@ -785,6 +836,15 @@
   position: relative;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   font-size: 0;
+  width: 150px;
+  height: 200px;
+  box-sizing: content-box;
+}
+.paperbook-sale .thumbnail-wrapper img {
+  width: 150px;
+  height: 200px;
+  object-fit: cover;
+  object-position: top;
 }
 .paperbook-sale .discount-rate {
   display: block;
@@ -838,6 +898,16 @@
 .coming-soon .thumbnail-wrapper {
   position: relative;
   font-size: 0;
+  width: 100px;
+  height: 140px;
+  overflow: hidden;
+  box-sizing: content-box;
+}
+.coming-soon .thumbnail-wrapper img {
+  width: 100px;
+  height: 140px;
+  object-fit: cover;
+  object-position: top;
 }
 .coming-soon .text-wrapper {
   padding: 4px 3px 13px;

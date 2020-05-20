@@ -17,6 +17,7 @@ import com.ryan.domain.book.BookAlarmVO;
 import com.ryan.domain.book.BookGradeVO;
 import com.ryan.domain.book.EBookVO;
 import com.ryan.domain.book.MyReadBookVO;
+import com.ryan.domain.member.MemberVO;
 import com.ryan.service.book.MyBookAlarmService;
 import com.ryan.service.book.MyBookService;
 import com.ryan.service.main.ReviewService;
@@ -45,13 +46,22 @@ public class MyBookController {
 	@RequestMapping("/myLibList")	//찜 책장
 	public String myBookList(@RequestParam(name="clickId", required = false) String clickId,Model model, HttpSession session) {
 		Boolean flag = false;
+		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
 		if(clickId != null && clickId != "") {
-			flag = true;
-			model.addAttribute("checkId",flag);
-			log.info(flag);
+			if(member != null && member.getMemberEmail().equals(clickId)) {
+				model.addAttribute("checkId",flag);
+			} else {
+				flag = true;
+				model.addAttribute("checkId",flag);
+				model.addAttribute("followId",service.readClickId(clickId));
+			//	model.addAttribute("followCheck",service.followCheck());
+			}
 		}else {
-			model.addAttribute("checkId",flag);
-			log.info(flag);
+			if(member != null) {
+				model.addAttribute("checkId",flag);
+			} else {
+				return "redirect:/member/signin";
+			}
 		}
 		ArrayList<EBookVO> list = service.libBook(clickId,session);
 		model.addAttribute("libbooklist", list);

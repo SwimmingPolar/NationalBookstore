@@ -9,6 +9,7 @@ import com.ryan.domain.book.BookGradeVO;
 import com.ryan.domain.book.EBookVO;
 import com.ryan.domain.book.MyLibVO;
 import com.ryan.domain.book.MyReadBookVO;
+import com.ryan.domain.member.MemberVO;
 
 public interface MyBookService {
 
@@ -39,5 +40,7 @@ public interface MyBookService {
 	//평점 등록
 	public ArrayList<BookGradeVO> insertGrade(BookGradeVO vo, HttpSession session);
 	
+	//개인정보조회
+	public MemberVO readClickId(String clickId);
 
 }
