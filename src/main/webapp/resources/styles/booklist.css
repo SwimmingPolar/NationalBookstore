@@ -97,12 +97,9 @@ div.sort > form > .btn.sort {
 	margin-left: 20px;
 }
 
-li {
+.genre > li {
 	cursor: pointer;
 	margin: 5px;
-}
-
-.genre > li {
 	padding-bottom: 5px;
 	border-bottom: 1px solid rgba(0, 0, 0, 1.0);
 }

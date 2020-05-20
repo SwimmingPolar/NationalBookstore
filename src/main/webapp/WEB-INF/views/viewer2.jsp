@@ -40,9 +40,18 @@ font-family: 'Nanum Gothic', sans-serif;
 <!-- <script src="../../resources/js/common.js"></script> -->
 <!-- <script src="../../resources/js/viewer2.js"></script> -->
 <script type="text/javascript" >
+	<%-- 로그인 검증 --%> 
+	var memberEmail = "${memberEmail }";
+	<%--function chkEmail() {
+		if(memberEmail == null || memberEmail == "") {
+			alert("로그인이 필요합니다.");
+			location.href = "/member/signin";
+		}
+	};
+	chkEmail();--%>
 	$(document).ready(function() {
 		var width = window.innerWidth, height = window.innerHeight;
-		console.dir(width+","+height);
+		//console.dir(width+","+height);
 		var jumpLeft = width / 8;
 		var jumpRight = width- (width/8);
 		$("div.main-container").css("width", width).css("height", height);
@@ -79,6 +88,7 @@ font-family: 'Nanum Gothic', sans-serif;
 	 	//책 데이터 파싱
 		var pages = [];
 	 	var index = [];
+	 	var bookmarks = [];
 	 	var indexMap = new Map();
 	 	var temp = 0; //목차 할당 용도.
 		//List로 불러온 목차를 javascript Array로 저장
@@ -95,7 +105,13 @@ font-family: 'Nanum Gothic', sans-serif;
 				indexFinder++;
 			}
 			indexMap.set("${status.index }", index[indexFinder]);
-			
+		</c:forEach>
+		//북마크 불러옴
+		$("div.modal.bookmarks > div.result").empty();
+		<c:forEach var="bm" items="${bookmark }" >
+			bookmarks.push("${bm.pageNum }");
+			$("div.modal.bookmarks > div.result").append(
+					"<button class='btn goindex ${bm.pageNum }' >${bm.pageNum + 1 }페이지</button>");
 		</c:forEach>
 		//페이지 new
 		//로드시 첫 두 페이지 초기화
@@ -117,8 +133,9 @@ font-family: 'Nanum Gothic', sans-serif;
 			currentPage = e;
 			if(currentPage == -2)
 				currentPage = 0;
-			//console.dir("currentPage:"+currentPage);
-			if( (e>=0) && (e<pages.length) ) {
+			console.dir("currentPage:"+currentPage);
+			console.dir("pagelength:"+pages.length);
+			if( (e>=0) && (e<=pages.length) ) {
 				if(e%2 == 1 && (e-1>=0)) {
 					console.dir("index가 짝수입니다! -1 합니다.")
 					currentPage--;
@@ -130,7 +147,20 @@ font-family: 'Nanum Gothic', sans-serif;
 					e++;
 				});
 				var tempCurrent = currentPage;
+				//console.clear();
 				$(".btn.bookmark").each(function() {
+					//console.dir("#"+tempCurrent+"번째 북마크버튼 체크!")
+					<%-- 색칠된 북마크 fas fa-bookmark --%>
+					<%-- 안된거 fal fa-bookmark --%>
+					$(this).removeClass("fas added").addClass("fal");
+					for(var a in bookmarks) {
+						//console.dir(tempCurrent+"북마크 버튼과"+bookmarks[a]+" 비교함");
+						if(tempCurrent == bookmarks[a]) {
+							//console.dir("리스트 안에 북마크 있음!");
+							//console.dir($(this));
+							$(this).addClass("fas added").removeClass("fal");
+						} 
+					}
 					$(this).attr("value", tempCurrent);
 					tempCurrent++;
 				});
@@ -145,13 +175,13 @@ font-family: 'Nanum Gothic', sans-serif;
 			}
 			if(currentPage == 0)
 				prevPage = 0;
-			//console.dir("prevPage:"+prevPage+",nextPage:"+nextPage);
+			console.dir("prevPage:"+prevPage+",nextPage:"+nextPage);
 		}
 		
 		
 		function jumpToSingle(e) { //페이지 이동 함수 e = 페이지번호. 단일 페이지용
 			currentPage = e;
-			console.dir("currentPage:"+currentPage);
+			//console.dir("currentPage:"+currentPage);
 			if( (e>=0) && (e<pages.length) ) {
 				$(".page").each(function() {
 					$(this).empty().append(pages[e]);
@@ -181,6 +211,7 @@ font-family: 'Nanum Gothic', sans-serif;
 		});
 		function keyJump(e) { //키입력
 			var keyCode = e.keyCode;
+			//console.dir(keyCode);
 			// 107 Num Key  +
 		    // 109 Num Key  -
 		    // 173 Min Key  hyphen/underscor Hey
@@ -197,6 +228,8 @@ font-family: 'Nanum Gothic', sans-serif;
 			} else if(keyCode == 37 || keyCode == 38) { //이전
 				e.preventDefault();
 				jumpTo(prevPage);
+			} else if(keyCode == 27) { //esc
+				e.preventDefault();
 			}
 		}
 		document.addEventListener("keydown", keyJump, {passive:false});
@@ -247,7 +280,7 @@ font-family: 'Nanum Gothic', sans-serif;
 					}
 				}
 			} else { //시작, 끝 위치 다를때
-				console.dir("드래그 감지");
+				//console.dir("드래그 감지");
 			}
 		});
 		
@@ -331,24 +364,74 @@ font-family: 'Nanum Gothic', sans-serif;
 				}
 			}
 		});
-		$(document).on("click", ".btn.bookmark", function(e) {
+		$(document).on("click", ".btn.bookmark.fal", function(e) {
 			var thisPage = e.target.value;
-			//console.dir(thisPage);
+			<%-- 색칠된 북마크 fas fa-bookmark --%>
+			<%-- 안된거 fal fa-bookmark --%>
+			$(this).addClass("fas added").removeClass("fal");
+			//console.dir("북마크 추가!");
 			$.ajax ({
 				url : "/addBookmark",
 				data : {
 					"bookNum" : ${book.bookNum},
-					"page" : thisPage,
-					"pageStatus" : "2"
+					"pageNum" : thisPage,
+					"memberEmail" : memberEmail
 				}
 			})
-			.done(function() {
+			.done(function(data) {
 				//console.dir("북마크 추가 성공")
+				console.dir(data);
+				//북마크 다시 불러옴
+				bookmarks = [];
+				$("div.modal.bookmarks > div.result").empty();
+				for(var a in data) {
+					bookmarks.push(data[a].pageNum);
+					$("div.modal.bookmarks > div.result").append(
+							"<button class='btn goindex "+parseInt(data[a].pageNum)+"' >"+(parseInt(data[a].pageNum)+1)+"페이지</button>");
+				}
+				/*<c:forEach var="bm" items="${bookmark }" >
+					bookmarks.push("${bm.pageNum }");
+				</c:forEach> */
+				
 			})
-			.fail(function() {
+			.fail(function(data) {
 				//console.dir("북마크 추가 실패")
 			});
-		})
+		});
+		<%-- 색칠된 북마크 fas fa-bookmark --%>
+		<%-- 안된거 fal fa-bookmark --%>
+		$(document).on("click", ".btn.bookmark.fas", function(e) {
+			var thisPage = e.target.value;
+			<%-- 색칠된 북마크 fas fa-bookmark --%>
+			<%-- 안된거 fal fa-bookmark --%>
+			$(this).removeClass("fas added").addClass("fal");
+			$.ajax ({
+				url : "/removeBookmark",
+				data : {
+					"bookNum" : ${book.bookNum},
+					"pageNum" : thisPage,
+					"memberEmail" : memberEmail
+				}
+			})
+			.done(function(data) {
+				bookmarks = [];
+				$("div.modal.bookmarks > div.result").empty();
+				for(var a in data) {
+					bookmarks.push(data[a].pageNum);
+					$("div.modal.bookmarks > div.result").append(
+							"<button class='btn goindex "+parseInt(data[a].pageNum)+"' >"+(parseInt(data[a].pageNum)+1)+"페이지</button>");
+				}
+			})
+			.fail(function(data) {
+				//console.dir("북마크 추가 실패")
+			});
+		});
+		//책갈피로 이동
+		$(document).on("click", ".modal.bookmarks .btn.goindex", function(e) {
+			var goTo = parseInt(e.target.classList[2]);
+			console.dir(goTo);
+			jumpTo(goTo);
+		});
 	});
 </script>
 <body>
@@ -405,7 +488,6 @@ font-family: 'Nanum Gothic', sans-serif;
 		</div>
 	</div> <%-- header-container 끝 --%>
 	<div class="main-container" >
-		<div style="color: red; font-size:2em;" >계정정보:${member.memberEmail }</div>
 		<%-- 책 내용 보여줌 --%>
 		<div class="page left" >
 		</div>
@@ -453,9 +535,6 @@ font-family: 'Nanum Gothic', sans-serif;
 		<div class="modal note" >
 			<span class="title">독서노트
 			</span>
-			<c:forEach var="bm" items="${bookmark }" >
-				<h4 style="color: white;">${bm.memberEmail }</h4>
-			</c:forEach> 
 		</div>
 		<div class="modal setting" >
 			<span class="title">보기설정</span>
@@ -489,13 +568,15 @@ font-family: 'Nanum Gothic', sans-serif;
 		</div>
 		<div class="modal bookmarks" >
 			<span class="title">책갈피</span>
-			<button class="btn goindex 1" >1. 중요부분 3p</button>
-			<button class="btn goindex 2" >2. 다시 봐야할 부분 28p</button>
-			<button class="btn goindex 3" >3. 이해안됨 55p</button>
-			<button class="btn goindex 4" >4. 시험에 나오는 부분 150p</button>
-			<button class="btn goindex 5" >5. 시험범위 끝 250p</button>
-			<button class="btn goindex 6" >6. 책갈피1 252p</button>
-			<button class="btn goindex 7" >7. 책갈피2 255p</button>
+			<div class="result" >
+				<!-- <button class="btn goindex 1" >1. 중요부분 3p</button>
+				<button class="btn goindex 2" >2. 다시 봐야할 부분 28p</button>
+				<button class="btn goindex 3" >3. 이해안됨 55p</button>
+				<button class="btn goindex 4" >4. 시험에 나오는 부분 150p</button>
+				<button class="btn goindex 5" >5. 시험범위 끝 250p</button>
+				<button class="btn goindex 6" >6. 책갈피1 252p</button>
+				<button class="btn goindex 7" >7. 책갈피2 255p</button> -->
+			</div>
 		</div>
 	</div> <%-- modal-container 끝 --%>
 </body>

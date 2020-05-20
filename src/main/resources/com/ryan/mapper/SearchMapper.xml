@@ -38,19 +38,25 @@
 	WHERE 
 	<choose>
 			<when test="param1.equals('BOOK_TITLE')" >
+				<where>
 				<foreach collection="param2" index="index" item="search" separator="or">
 					BOOK_TITLE LIKE  '%'||#{search}||'%'
 				</foreach>
+				</where>
 			</when>
 			<when test="param1.equals('BOOK_WRITER')" >
+			<where>
 				<foreach collection="param2" index="index" item="search" separator="or" >
 					BOOK_WRITER LIKE '%'||#{search}||'%'
 				</foreach>
+				</where>
 			</when>
 			<when test="param1.equals('BOOK_PUBLISHER')" >
+			<where>
 				<foreach collection="param2" index="index" item="search" separator="or" >
 					BOOK_PUBLISHER LIKE '%'||#{search }||'%'
 				</foreach>
+				</where>
 			</when>
 		</choose>
 		ORDER BY book_title

@@ -7,10 +7,19 @@
 	</select>
 	<!-- 책갈피 추가 -->
 	<insert id="addBookMark" >
-		INSERT INTO BOOK_MARK (MEMBER_EMAIL, BOOK_NUM, PAGE_NUM, PAGE_STATUS)
-		VALUES ('temp', #{booknumber}, #{page}, #{pageStatus})
+		INSERT INTO BOOK_MARK (MEMBER_EMAIL, BOOK_NUM, PAGE_NUM)
+		VALUES (#{memberEmail}, #{booknumber}, #{pageNum})
 	</insert>
+	<delete id="removeBookMark" >
+		DELETE FROM BOOK_MARK
+		WHERE MEMBER_EMAIL LIKE #{memberEmail }
+		AND BOOK_NUM LIKE #{booknumber }
+		AND PAGE_NUM LIKE #{pageNum }
+	</delete>
 	<select id="getBookMark" resultType="com.ryan.domain.book.BookMarkVO" >
 		SELECT * FROM BOOK_MARK
+		WHERE MEMBER_EMAIL LIKE #{memberEmail }
+		AND BOOK_NUM LIKE #{booknumber }
+		ORDER BY PAGE_NUM
 	</select>
 </mapper>

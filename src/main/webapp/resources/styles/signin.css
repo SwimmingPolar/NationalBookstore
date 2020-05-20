@@ -1,3 +1,7 @@
+body {
+  margin-bottom: 0;
+}
+
 .body-wrapper {
   height: calc(100vh - 48px);
   display: flex;
@@ -42,9 +46,9 @@
 }
 
 .selection a {
-  display: block;
+  display: flex;
   width: 100%;
-  color: #000;
+  color: rgba(0, 0, 0, 0.75);
   text-align: center;
   text-decoration: none;
   background-color: #fff;
@@ -55,6 +59,16 @@
   line-height: 48px;
   text-align: left;
   padding-left: 135px;
+  align-items: center;
+  font-family: '맑은 고딕', 'Roboto', 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+}
+
+.selection a span {
+  font-size: 24px;
+  display: inline-block;
+  padding-right: 10px;
+  opacity: 0.7;
 }
 
 .selection a:hover {
@@ -63,10 +77,17 @@
   background-color: rgba(0, 123, 255, 0.03);
 }
 
-.selection a span {
-  display: inline-block;
-  padding-right: 10px;
-  opacity: 0.7;
+/* 카카오 svg */
+.selection a span.kakao {
+  width: 24px;
+  height: 100%;
+  line-height: 52px;
+  box-sizing: content-box;
+  align-items: center;
+  fill: rgba(0, 0, 0, 0.75);
+}
+.selection a:hover span.kakao {
+  fill: var(--main-color);
 }
 
 header.topbar .container {

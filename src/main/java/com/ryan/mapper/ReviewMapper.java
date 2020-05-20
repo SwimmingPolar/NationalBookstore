@@ -1,8 +1,8 @@
 package com.ryan.mapper;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.ryan.domain.book.BookGradeVO;
 import com.ryan.domain.book.ReviewVO;
 
 public interface ReviewMapper {
@@ -22,5 +22,5 @@ public interface ReviewMapper {
 	
 	public ArrayList<ReviewVO> myReviewList(String memberEmail);
 	
-	public int insertGrade(int bookNum);
+	public int insertGrade(BookGradeVO grade);
 }

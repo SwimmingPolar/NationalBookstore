@@ -60,9 +60,8 @@
             <button><span class="far fa-search"></span></button>
             <input id="search-input" name="keyword" type="text" placeholder="제목, 저자, 해쉬태그 검색" autocomplete="off" spellcheck="false">
             <input id="search-type" type="hidden" name="type" value="title">
-            <div class="search-result hasResult">
-              <ul>
-              </ul>
+            <div class="search-result">
+              <ul></ul>
             </div>
           </form>
         </div> 
@@ -97,15 +96,14 @@
   
             let searchResultListHTML = '';
             if (bookList.length === 0)
-              searchResultListHTML = '<li><p><b>"' + keyword + '"</b>에 대한 결과가 없습니다.</p></li>';
+              searchResultListHTML = '<li style="padding: 10px 20px"><p><b><span class="no-search-result>"' + keyword + '</span>"</b>에 대한 결과가 없습니다.</p></li>';
             bookList.forEach(book => {
               searchResultListHTML += '<li>' +
-                                        '<a href="/search?type=' + type + '&keyword=' + keyword + '>' +
-                                          book.bookTitle + ' : ' + book.bookWriter +
+                                        '<a href="/search?type=' + type + '&keyword=' + keyword + '">' +
+                                          '<span class="title">' + book.bookTitle + '</span><span class="seperator"> :: </span><span class="writer">' + book.bookWriter + '</span>' +
                                         '</a>' +
                                       '</li>';
             });
-            console.dir(searchResultListHTML);
             searchResultList.innerHTML = searchResultListHTML;
             searchResult.classList.add('hasResult');
           }
@@ -126,18 +124,19 @@
             searchInput.addEventListener('focus', () => {
               if (searchInput.value.trim().length !== 0)
                 searchResult.classList.add('hasResult');
-            })
+            });
+            searchResult.addEventListener('mouseover', () => searchResult.classList.add('isHovered'));
+            searchResult.addEventListener('mouseout', () => searchResult.classList.remove('isHovered'));
           });
         </script>
         <!-- toggle filter menu on click -->
         <script>
           $(document).ready(function() {
             const filterList = document.querySelector('.head .search-wrapper .filter ul');
-            const filterMenus = ['제목', '저자', '해쉬태그'];
+            const filterMenus = ['제목', '저자'];
             const filterItems = {
               '제목': 'title',
-              '저자': 'author',
-              '해쉬태그': 'hashtag'
+              '저자': 'author'
             };
             const filterHiddenInput = document.querySelector('.search-wrapper input[name="type"]');
 

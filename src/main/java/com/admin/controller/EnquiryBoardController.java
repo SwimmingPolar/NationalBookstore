@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ import com.admin.domain.board.EnquiryBoardVO;
 import com.admin.domain.board.ReplyVO;
 import com.admin.service.board.EnquiryBoardService;
 import com.ryan.domain.member.MemberVO;
+import com.ryan.domain.security.RyanMember;
 
 @Controller
 @RequestMapping("/board/enquiry/*")
@@ -30,19 +32,23 @@ public class EnquiryBoardController {
 	
 	@RequestMapping("/writeForm")
 	public String enquiryWriteForm() {
-		return "입력view";
+		return "redirect:/board/enquiry/write";
 	}
 	
 	//문의사항을 등록할때는 문의사항 객체와 파일 어레이객체(이건 안넘어왇도됨) 넘김
 	@RequestMapping(value="/write", method=RequestMethod.POST)
-	public String enquiryWrite(Model model,EnquiryBoardVO enquiry,HttpServletRequest request,ArrayList<MultipartFile> files) {
-		HttpSession session = request.getSession();
-		MemberVO member = (MemberVO) session.getAttribute("ryanMember");	
+	public String enquiryWrite(Model model,EnquiryBoardVO enquiry,Authentication auth,ArrayList<MultipartFile> files,HttpServletRequest request) {
+		/*
+		 * HttpSession session = request.getSession(); MemberVO member = (MemberVO)
+		 * session.getAttribute("ryanMember");
+		 */
+		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
+		MemberVO member = ryanMember.getMember();
 		if(enquiry!=null&&enquiry.getMemberEmail().equals(member.getMemberEmail())) {
 			boolean flag=service.eqWrite(enquiry);
 			//문의사항 등록이 완료되면 등록할 파일이 있는지 확인후 있으면 등록
 			if(flag&&files!=null&&files.isEmpty()&&files.size()>0) {
-				String path = request.getSession().getServletContext().getRealPath("\\")+"\\NationalBookstore\\src\\main\\webapp\\resources\\enquiryFile";
+				String path = request.getSession().getServletContext().getRealPath("\\")+"\\resources\\enquiryFile";
 				boolean flag2=false;
 				try {
 					//파일등록
@@ -66,9 +72,9 @@ public class EnquiryBoardController {
 	}
 	
 	@RequestMapping("/delete")
-	public String enquiryDelete(Model model,EnquiryBoardVO enquiry,HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		MemberVO member = (MemberVO) session.getAttribute("ryanMember");	
+	public String enquiryDelete(Model model,EnquiryBoardVO enquiry,Authentication auth) {
+		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
+		MemberVO member = ryanMember.getMember();	
 		if(enquiry!=null&&enquiry.getMemberEmail().equals(member.getMemberEmail())) {
 			
 			
@@ -84,19 +90,19 @@ public class EnquiryBoardController {
 	}
 	
 	@RequestMapping("/updateForm")
-	public String enquiryUpdateForm(Model model,HttpServletRequest request) {
+	public String enquiryUpdateForm(Model model,Authentication auth) {
 		
-		HttpSession session = request.getSession();
-		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
+		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
+		MemberVO member = ryanMember.getMember();
 		
 		return "입력view";
 	}
 	
 	//문의사항 
 	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public String enquiryUpdate(Model model,EnquiryBoardVO enquiry,ArrayList<MultipartFile> files,HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		MemberVO member = (MemberVO) session.getAttribute("ryanMember");	
+	public String enquiryUpdate(Model model,EnquiryBoardVO enquiry,ArrayList<MultipartFile> files,Authentication auth,HttpServletRequest request) {
+		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
+		MemberVO member = ryanMember.getMember();	
 		if(enquiry!=null&&enquiry.getMemberEmail().equals(member.getMemberEmail())) {
 			service.eqUpdate(enquiry,files,request);
 			return "";
@@ -108,9 +114,9 @@ public class EnquiryBoardController {
 	
 	//문의사항 리스트가 보임
 	@RequestMapping("/showList")
-	public String enquiryList(Model model,HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		MemberVO member = (MemberVO) session.getAttribute("ryanMember");	
+	public String enquiryList(Model model,Authentication auth) {
+		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
+		MemberVO member = ryanMember.getMember();
 		String memberEmail=member.getMemberEmail();
 		model.addAttribute("enquiryList", service.selectList(memberEmail));
 		return "본인 문의사항 보이는 view";
@@ -119,9 +125,9 @@ public class EnquiryBoardController {
 	//리스트중 특정 문의사항 클릭시
 	@RequestMapping("/select")
 	//클릭한 문의사항관련 객체를 EnquiryBoardVO enquiry로 넘겨야 합니다
-	public String enquirySelect(Model model,@RequestParam(value="boardNum", defaultValue="1")int boardNum,HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
+	public String enquirySelect(Model model,@RequestParam(value="boardNum", defaultValue="1")int boardNum,Authentication auth) {
+		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
+		MemberVO member = ryanMember.getMember();
 		EnquiryBoardVO enquiry=service.selectEq(boardNum);
 		if(enquiry!=null&&enquiry.getMemberEmail().equals(member.getMemberEmail())) {
 			//선택한 문의사항 객체 
