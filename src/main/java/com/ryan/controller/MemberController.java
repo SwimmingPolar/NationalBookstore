@@ -305,19 +305,9 @@ public class MemberController {
 	@GetMapping("/delete")
 	public String memberDelete(Model model, Authentication auth) {
 		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
-<<<<<<< HEAD
 		MemberVO member = ryanMember.getMember();
 		
 		model.addAttribute("memberAllData", memberService.getMemberAllData(member));
-		
-=======
-		MemberVO member = ryanMember.getMember();	
-		model.addAttribute("myInfo", memberService.getLoginMemberInfo(member)); //내정보
-		model.addAttribute("myBookInfo", bookService.countReadBook(null, auth));//내 도서 
-		model.addAttribute("myPost", reviewService.countMyPost(member.getMemberEmail()));//내 포스트 수
-		model.addAttribute("myFollowInfo", followService.countFollow(null, auth));//팔로우 수
-		//종이책 결제 건수 - 아직 모름
->>>>>>> branch 'master' of https://github.com/SwimmingPolar/NationalBookstore.git
 		return "Settings/MyAccount/delete";
 	}
 	
