@@ -32,7 +32,7 @@ public class MyBookMapperTest {
 		log.info(mapper.readingBook(vo));
 	}
 	*/
-	/*
+	
 	@Test
 	public void insertReadBook() {
 		MyReadBookVO vo = new MyReadBookVO();
@@ -44,11 +44,11 @@ public class MyBookMapperTest {
 		String time = df.format(cal.getTime());
 			
 		vo.setReadDate(time);
-		vo.setMemberEmail("abc1234@naver.com");
-		vo.setBookNum(196);
+		vo.setMemberEmail("abc1234554@naver.com");
+		vo.setBookNum(443);
 		log.info("insert 결과 : " +mapper.insertReadBook(vo));
 	}
-	*/
+	
 	
 	/*
 	@Test
@@ -61,7 +61,7 @@ public class MyBookMapperTest {
 		log.info(mapper.deleteList(vo));
 		
 	}*/
-	
+	/*
 	@Test
 	public void insertLibBook() {
 		MyLibVO vo = new MyLibVO();
@@ -70,5 +70,5 @@ public class MyBookMapperTest {
 		
 		
 		log.info(mapper.insertLibBook(vo));
-	}
+	}*/
 }

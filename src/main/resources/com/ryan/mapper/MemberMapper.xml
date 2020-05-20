@@ -89,5 +89,9 @@
 		SELECT count(*) FROM member WHERE member_email = #{memberEmail} and member_nick_name = #{memberNickName}
 	</select>
 	
+	<select id="readClickId" resultType="com.ryan.domain.member.MemberVO">
+		SELECT * FROM member WHERE member_email = #{clickId}
+	</select>
+	
 	
 </mapper>

@@ -21,6 +21,7 @@ import com.ryan.domain.book.EBookVO;
 import com.ryan.domain.book.MyLibVO;
 import com.ryan.domain.book.MyReadBookVO;
 import com.ryan.domain.member.MemberVO;
+import com.ryan.mapper.MemberMapper;
 import com.ryan.mapper.MyBookMapper;
 
 import lombok.Setter;
@@ -32,6 +33,9 @@ public class MyBookServiceImpl implements MyBookService{
 	
 	@Setter(onMethod_ = {@Autowired})
 	private MyBookMapper mapper;
+	
+	@Setter(onMethod_ = {@Autowired})
+	private MemberMapper memberMapper;
 
 	@Override
 	public ArrayList<EBookVO> libBook(String clickId,HttpSession session) {	//찜 책장 조회
@@ -106,11 +110,12 @@ public class MyBookServiceImpl implements MyBookService{
 		cal.setTime(new Date());		
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
-//		HttpSession session = request.getSession();
+		HttpSession session = request.getSession();
 		MyReadBookVO vo = new MyReadBookVO();
 		vo.setBookNum(booknumber);
 		vo.setReadDate(df.format(cal.getTime()));
-		vo.setMemberEmail("abc1234@naver.com"); 
+//		vo.setMemberEmail("abc1234@naver.com"); 
+	
 		MemberVO member = (MemberVO) request.getSession().getAttribute("ryanMember");
 		ArrayList<EBookVO> list = mapper.readBook(member.getMemberEmail());
 		vo.setMemberEmail(member.getMemberEmail());
@@ -179,6 +184,11 @@ public class MyBookServiceImpl implements MyBookService{
 			mapper.insertGrade(vo);
 		}
 		return mapper.checkEmail(member.getMemberEmail());
+	}
+
+	@Override
+	public MemberVO readClickId(String clickId) {
+		return memberMapper.readClickId(clickId);
 	}
 
 	
