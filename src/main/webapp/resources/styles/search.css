@@ -483,6 +483,10 @@ div.page {
 
 .grid-layout .title {
 	font-size: 1em;
+	width: 136.59px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .grid-layout .author {
@@ -494,6 +498,7 @@ div.page {
 }
 
 .grid-layout .interact {
+	position: relative;
 	flex-basis: 10%;
 	flex-direction: row;
 	justify-content: flex-end;
@@ -513,9 +518,11 @@ div.page {
 }
 
 .grid-layout .btn-list-cart {
-	display: none;
+	position: absolute;
+	bottom: 0; right: 0;
+	width: 2.5em; height: 2.5em;
+	transform: translate(11px, -196px);
 }
-
 .grid-layout .book {
 	position: relative;
 }
