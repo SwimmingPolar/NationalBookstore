@@ -59,8 +59,6 @@ public class CartMapperTests {
 		
 		
 		
-		int result = mapper.insertCart(cartArr,"abc1234@naver.com");
-		log.info("리턴값: " + result);
 	}
 	
 //	@Test

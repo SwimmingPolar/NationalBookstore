@@ -1,5 +1,7 @@
 package com.ryan.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -10,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,13 +42,10 @@ public class CartController {
 	 */
 	
 	@PostMapping("/insert")
-	public @ResponseBody Boolean insertCart(CartVO[] cart, Authentication auth) {
+	public @ResponseBody Boolean insertCart(@RequestBody CartVO[] cart) {
 		log.info(cart);
 		
-		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
-		MemberVO member = ryanMember.getMember();
-		
-		if(cartService.insertCart(cart,member)) { // 장바구니 입력 성공시 true 리턴해줍니다 필요하시면 쓰면됩니다.
+		if(cartService.insertCart(cart)) { // 장바구니 입력 성공시 true 리턴해줍니다 필요하시면 쓰면됩니다.
 			return true; 
 		} 
 		

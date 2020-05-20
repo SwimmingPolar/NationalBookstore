@@ -23,8 +23,8 @@ public class CartServiceImpl implements CartService {
 	private CartMapper mapper;
 
 	@Override
-	public boolean insertCart(CartVO[] cart , MemberVO member) {
-		return mapper.insertCart(cart , member.getMemberEmail()) >= 1 ? true : false;
+	public boolean insertCart(CartVO[] cart) {
+		return mapper.insertCart(cart) >= 1 ? true : false;
 	}
 
 	@Override

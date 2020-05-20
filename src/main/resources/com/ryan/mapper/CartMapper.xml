@@ -14,7 +14,7 @@
 			VALUES
 			(
 				#{cart.bookNum},
-				#{memberEmail},
+				#{cart.memberEmail},
 				#{cart.bookCount}
 			)
 		</foreach>
