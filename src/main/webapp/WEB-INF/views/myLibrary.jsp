@@ -231,15 +231,13 @@
             <input type="text" name="postTitle" id="postTitle" placeholder="제목을 입력하세요">
             <textarea name="post_Content" id="post_Content" placeholder="솔직한 생각을 입력해주세요."></textarea>
             
-=======
-                    </div>   
-            </div> -->
+            </div>   
+            </div> 
 	 
             <input type="text" name="reviewTitle" id="postTitle" placeholder="제목을 입력하세요">
             <textarea name="reviewContent" id="post_Content" placeholder="솔직한 생각을 입력해주세요."></textarea>
            
            
->>>>>>> branch 'master' of https://github.com/SwimmingPolar/NationalBookstore.git
             <div class="postEndBtn">
                 <button type="button" id="postSave"> 저장 </button>
                 <button type="button" id="postCancel"> 취소 </button>

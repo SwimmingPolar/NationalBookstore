@@ -96,7 +96,7 @@
   
             let searchResultListHTML = '';
             if (bookList.length === 0)
-              searchResultListHTML = '<li style="padding: 10px 20px"><p><b><span class="no-search-result>"' + keyword + '</span>"</b>에 대한 결과가 없습니다.</p></li>';
+              searchResultListHTML = '<li style="padding: 10px 20px"><p><b>"<span class="no-search-result-keyword">' + keyword + '</span>"</b>에 대한 결과가 없습니다.</p></li>';
             bookList.forEach(book => {
               searchResultListHTML += '<li>' +
                                         '<a href="/search?type=' + type + '&keyword=' + keyword + '">' +

@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.5, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="shorcut icon" href="../../resources/images/favicon.ico" />
+<link rel="icon" href="../../resources/images/favicon.ico" />
 <title>${book.bookTitle }</title>
  <!-- Google Fonts -->
 <link
@@ -465,6 +467,13 @@ font-family: 'Nanum Gothic', sans-serif;
 	<%-- 상단바 --%>
 	<div class="header-container" >
 		<div class="header" >
+			<script type="text/javascript" >
+				document.addEventListener("DOMContentLoaded", function() {
+					$(".btn.tomain").on("click", function() {
+						location.href= "/booklist/myLibList";
+					})
+				});
+			</script>
 			<button class="btn tomain far fa-arrow-left" ></button>
 			<span class="title">${book.bookTitle }</span>
 			<script type="text/javascript" >

@@ -136,7 +136,7 @@
   display: none;
   background-color: #fff;
   height: auto;
-  max-height: 287px;
+  max-height: 266px;
   width: 100%;
   position: absolute;
   z-index: 999;
@@ -175,13 +175,14 @@
 .search-result li a:hover {
   background-color: rgba(0, 0, 0, 0.07);
 }
-.search-result li .no-search-result {
+.search-result li .no-search-result-keyword {
   display: inline-block;
   max-width: 90px;
   text-overflow: ellipsis;
   word-break: break-all;
   white-space: nowrap;
   overflow: hidden;
+  vertical-align: bottom;
 }
 .search-result li .title {
   font-size: 14px;

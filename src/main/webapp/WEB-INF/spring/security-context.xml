@@ -26,6 +26,7 @@
 	<security:http pattern="/book/insertLibList" security="none"/>
 	<security:http pattern="/book/inserthashtag" security="none"/>
 	<security:http pattern="/booklist/deleteLibList" security="none"/>
+	<security:http pattern="/cart/insert" security="none"/>
 		
 	<security:http>
 		

@@ -54,12 +54,12 @@
 }
 .fadeInUp.revealed {
   visibility: visible;
-  animation: fadeInUp 0.65s ease-out;
+  animation: fadeInUp 0.6s ease-out;
 }
 
 @keyframes fadeInUp {
   from {
-    transform: translateY(3%);
+    transform: translateY(7px);
     opacity: 0;
   }
   to {

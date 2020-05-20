@@ -4,12 +4,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>검색</title>
-
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<title>전체 도서</title>
@@ -56,6 +56,10 @@
 	if(pageNum == null)
 		pageNum = "1";
 %>
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication property="principal" var="member"/>
+</sec:authorize>
+
 <script type="text/javascript" >
 	$(document).ready(function() {
 		var type = "<%=type %>";
@@ -113,17 +117,20 @@
 			var cartList = [];
 			$(".checkbox-cart").each(function() {
 				if($(this).prop("checked") == true)
-					cartList.push({ bookNum : $(this).val(), bookCount : "1" });
+					cartList.push({ bookNum : $(this).val(), bookCount : "1", memberEmail : "${member.member.memberEmail}" });
 			})
+			console.log(cartList);
 			if(cartList.length == 0)
 				alert("추가할 도서를 선택해주세요.");
 			else {
+				
 				$.ajax({
-					url : "/search/cart",
+					url : "/cart/insert",
 					dataType : "json",
 					contentType : "application/json",
 					data : JSON.stringify(cartList),
-					type : "POST"
+					type : "POST",
+					traditional:true
 				})
 				.done(function(response) {
 					var moveToCart = confirm("장바구니로 이동 하시겠습니까?");
