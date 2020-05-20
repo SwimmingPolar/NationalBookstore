@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import com.ryan.domain.book.BookGradeVO;
 import com.ryan.domain.book.EBookVO;
 import com.ryan.domain.book.MyReadBookVO;
 import com.ryan.domain.member.MemberVO;
+import com.ryan.domain.security.RyanMember;
 import com.ryan.service.book.MyBookAlarmService;
 import com.ryan.service.book.MyBookService;
 import com.ryan.service.main.ReviewService;
@@ -44,9 +46,10 @@ public class MyBookController {
 	private ReviewService rservice;
 	
 	@RequestMapping("/myLibList")	//찜 책장
-	public String myBookList(@RequestParam(name="clickId", required = false) String clickId,Model model, HttpSession session) {
+	public String myBookList(@RequestParam(name="clickId", required = false) String clickId,Model model, Authentication auth) {
 		Boolean flag = false;
-		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
+		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
+		MemberVO member = (MemberVO) ryanMember.getMember();
 		if(clickId != null && clickId != "") {
 			if(member != null && member.getMemberEmail().equals(clickId)) {
 				model.addAttribute("checkId",flag);
@@ -63,28 +66,28 @@ public class MyBookController {
 				return "redirect:/member/signin";
 			}
 		}
-		ArrayList<EBookVO> list = service.libBook(clickId,session);
+		ArrayList<EBookVO> list = service.libBook(clickId,auth);
 		model.addAttribute("libbooklist", list);
-		model.addAttribute("libcount",service.countLibBook(clickId,session));		//찜 책장 수량
-		model.addAttribute("readbooklist", service.readBook(clickId,session));	//읽은책 리스트
-		model.addAttribute("readbookcount", service.countReadBook(clickId,session)); 		//읽은책 수량
-		model.addAttribute("likeBookcount", service.countLikeBook(clickId,session));
-		model.addAttribute("myFollower",fservice.countFollow(clickId,session)); //나를 팔로우 한 사람
-		model.addAttribute("myreviewlist", rservice.myReviewList(session));//내 reviewlist
+		model.addAttribute("libcount",service.countLibBook(clickId,auth));		//찜 책장 수량
+		model.addAttribute("readbooklist", service.readBook(clickId,auth));	//읽은책 리스트
+		model.addAttribute("readbookcount", service.countReadBook(clickId,auth)); 		//읽은책 수량
+		model.addAttribute("likeBookcount", service.countLikeBook(clickId,auth));
+		model.addAttribute("myFollower",fservice.countFollow(clickId,auth)); //나를 팔로우 한 사람
+		model.addAttribute("myreviewlist", rservice.myReviewList(auth));//내 reviewlist
 		return "myLibrary";
 	}
 	
 	
 	@RequestMapping("/deleteLibList")
 	@ResponseBody
-	public ArrayList<EBookVO> deleteList(HttpServletRequest request) {
+	public ArrayList<EBookVO> deleteList(HttpServletRequest request, Authentication auth) {
 		String[] ajaxResult = request.getParameterValues("booknum");
 		int[] booknum = new int[ajaxResult.length];
 		for(int i=0; i<ajaxResult.length;i++) {
 			booknum[i] = Integer.parseInt(ajaxResult[i]);
 		}
 		//return service.deleteLibBook(booknum, session)
-		return service.deleteLibBook(booknum, request);
+		return service.deleteLibBook(booknum, request, auth);
 	}
 	
 //	@RequestMapping("/readbooklist") 	//읽은 책 조회
@@ -102,13 +105,13 @@ public class MyBookController {
 	
 	//알람 받을 책 등록
 	@RequestMapping("/alarm")
-	public @ResponseBody Boolean requestAlarm(BookAlarmVO vo, HttpSession session) {
-		return aservice.requestAlarm(vo, session);
+	public @ResponseBody Boolean requestAlarm(BookAlarmVO vo, Authentication auth) {
+		return aservice.requestAlarm(vo, auth);
 	}
 	
 	//출판 되어 알람시켜줘야 할 책 
-	public ArrayList<BookAlarmVO> showAlarm(HttpSession session){
-		return aservice.showAlarm(session);
+	public ArrayList<BookAlarmVO> showAlarm(Authentication auth){
+		return aservice.showAlarm(auth);
 	}
 
 	
@@ -116,8 +119,8 @@ public class MyBookController {
 	
 	//평점 등록
 	@RequestMapping("/insertGrade")
-	public @ResponseBody ArrayList<BookGradeVO> insertGrade(BookGradeVO vo, HttpSession session) {
-		return service.insertGrade(vo, session);
+	public @ResponseBody ArrayList<BookGradeVO> insertGrade(BookGradeVO vo, Authentication auth) {
+		return service.insertGrade(vo, auth);
 	}
 	
 
