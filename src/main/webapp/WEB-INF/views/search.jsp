@@ -417,6 +417,14 @@
 		</c:if>
 	</c:if>
 	</div>
+ 
+ 	<script>
+	    $(document).ready(() => {
+	      const li = document.querySelector('footer.fixed a[href="/search"]').parentElement;
+	      const ul = li.parentElement;
+	      [ul, li].forEach(element => element.classList.add('active'));
+	    });
+	</script>
 	<%@ include file="template/footer.jsp" %>
 </body>
 </html>

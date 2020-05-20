@@ -16,7 +16,7 @@
 
 </head>
 <body>
-    <header class="topbar">
+    <!-- <header class="topbar">
         <nav>
           <div class="container">
             <a href="javascript: history.back();"><i class="far fa-arrow-left"></i></a>
@@ -24,10 +24,9 @@
             	<c:when test="${checkId}">  <h2>${followId.memberNickName } 님의 서재</h2></c:when>
             	<c:otherwise> <h2>내 서재</h2></c:otherwise>
             </c:choose>
-          
           </div>
         </nav>
-      </header>
+      </header> -->
 <div class="wrapper">
 <div class="firstColumn">
 <!-- 배경화면 넣는곳 -->
@@ -382,7 +381,7 @@ $('.bookStarScore span').click(function() {
 
  <script>
     $(document).ready(() => {
-      const li = document.querySelector('footer.fixed a[href="myLibrary.jsp"]').parentElement;
+      const li = document.querySelector('footer.fixed a[href="/booklist/myLibList"]').parentElement;
       const ul = li.parentElement;
       [ul, li].forEach(element => element.classList.add('active'));
     });

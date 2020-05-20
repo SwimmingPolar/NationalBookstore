@@ -60,7 +60,7 @@ public class MyBookController {
 			if(member != null) {
 				model.addAttribute("checkId",flag);
 			} else {
-				return "redirect:/signin";
+				return "redirect:/member/signin";
 			}
 		}
 		ArrayList<EBookVO> list = service.libBook(clickId,session);

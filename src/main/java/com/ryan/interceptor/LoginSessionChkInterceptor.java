@@ -18,7 +18,7 @@ public class LoginSessionChkInterceptor extends HandlerInterceptorAdapter {
 		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
 		
 		if(member == null) {
-			response.sendRedirect("/member/login");
+			response.sendRedirect("/member/signin");
 			return false;
 		} else {
 			return true;

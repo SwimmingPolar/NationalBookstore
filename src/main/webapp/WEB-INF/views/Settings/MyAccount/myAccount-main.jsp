@@ -132,7 +132,7 @@
    </script>
 <script>
     $(document).ready(() => {
-      const li = document.querySelector('footer.fixed a[href="myAccount.jsp"]').parentElement;
+      const li = document.querySelector('footer.fixed a[href="/myaccount"]').parentElement;
       const ul = li.parentElement;
       [ul, li].forEach(element => element.classList.add('active'));
     });

@@ -11,6 +11,7 @@
     <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
     <script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
     <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
+    <link rel="stylesheet" href="../../resources/styles/reset.css" />
     <link rel="stylesheet" href="../../../../resources/styles/common.css" />
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
@@ -236,5 +237,13 @@
             }
         }
     </script>
+  <script>
+    $(document).ready(() => {
+      const li = document.querySelector('footer.fixed a[href="/myaccount"]').parentElement;
+      const ul = li.parentElement;
+      [ul, li].forEach(element => element.classList.add('active'));
+    });
+  </script>
+  <%@ include file="../../template/footer.jsp" %>
 </body>
 </html>
