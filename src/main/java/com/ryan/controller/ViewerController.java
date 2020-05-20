@@ -3,6 +3,7 @@ package com.ryan.controller;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,11 @@ public class ViewerController {
 	ViewerService sv;
 	
 	@RequestMapping(value="/viewer")
-	public String ViewerMain(String booknumber, Model model) throws ParserConfigurationException, SAXException, IOException {
+	public String ViewerMain(String booknumber, Model model, HttpServletRequest request) throws ParserConfigurationException, SAXException, IOException {
 		String path = null;
-		//String path = "";
 		try {
-			path = "../eclipse_workspace/NationalBookstore/src/main/webapp/"+sv.getBookFilePath(booknumber).getBookPath();
+			path = request.getSession().getServletContext().getRealPath(sv.getBookFilePath(booknumber).getBookPath());
+			//path = "../eclipse_workspace/NationalBookstore/src/main/webapp/"+sv.getBookFilePath(booknumber).getBookPath();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

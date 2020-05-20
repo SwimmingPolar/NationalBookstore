@@ -14,7 +14,7 @@ font-family: 'Noto Sans KR', sans-serif;
 	margin: 0 auto;
 } */
 
-* {
+.main-container {
 	font-family: 'Nanum Gothic', 'Montserrat', 'sans-serif';
 	font-weight: bold;
 }

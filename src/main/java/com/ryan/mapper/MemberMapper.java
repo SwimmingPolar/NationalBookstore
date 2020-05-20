@@ -29,5 +29,7 @@ public interface MemberMapper {
 	
 	//비밀번호 찾기 할시 비밀번호 변경
 	public int forgotPassword(MemberVO member);
+	//다른사람의 서재 닉네임 가져오기
+	public MemberVO readClickId(String clickId);
 	
 }

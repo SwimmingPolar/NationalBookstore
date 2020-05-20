@@ -134,4 +134,11 @@
 		</where>
 	</update>
 	
+	
+	
+	<select id="readClickId" resultType="com.ryan.domain.member.MemberVO">
+		SELECT * FROM member WHERE member_email = #{clickId}
+	</select>
+	
+	
 </mapper>

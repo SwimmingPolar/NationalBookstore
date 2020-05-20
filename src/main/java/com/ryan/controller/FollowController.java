@@ -23,7 +23,7 @@ public class FollowController {
 	@Setter(onMethod_ = {@Autowired})
 	private FollowService service;
 	
-	@RequestMapping("/request")
+	@RequestMapping("/requestFollow")
 	public Boolean requestFollow(@RequestParam("following") String following, HttpSession session ) {
 		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
 		// return false == 이미 팔로우 한사람

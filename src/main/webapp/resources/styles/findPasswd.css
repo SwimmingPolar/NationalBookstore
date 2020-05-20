@@ -66,14 +66,27 @@
   transition: 0.4s ease;
 }
 
-.form-container button[type="submit"] {
+.form-container button[type="submit"]:not(:disabled) {
   background-color: rgba(0, 0, 0, 0.15);
   background-color: var(--main-color);
   box-shadow: 0 2px 5px -2px rgba(0, 153, 255, 0.65);
   cursor: pointer;
 }
-.form-container button[type="submit"]:hover {
+.form-container button[type="submit"]:not(:disabled):hover {
   box-shadow: 0 2px 6px -1px rgba(0, 153, 255, 0.85);
+}
+
+.disclaimer ul {
+  list-style: none;
+}
+.disclaimer li {
+  padding: 3px 0;
+}
+.disclaimer p {
+  font-family: '맑은 고딕', 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: lighter;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.55);
 }
 
 header.topbar .container {

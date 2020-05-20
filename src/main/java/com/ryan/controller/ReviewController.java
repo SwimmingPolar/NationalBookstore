@@ -35,6 +35,7 @@ public class ReviewController {
 		
 		if(memberEmail.equals((String)review.getMemberEmail())) {
 			service.insertReview(review);
+			service.insertGrade(review.getBookNum());
 		}else {
 			model.addAttribute("message", "본인이 작성한 리뷰가 아닙니다");
 			
@@ -76,13 +77,13 @@ public class ReviewController {
 	}
 	
 	//review 목록요청시  model에 myreviewlist로 reviewVO어레이리스트를 보낸다
-	@RequestMapping("/myReviewList")
+	/*@RequestMapping("/myReviewList")
 	public String reviewList(HttpServletRequest request,Model model) {
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
 		String memberEmail=member.getMemberEmail();
 		service.myReviewList(memberEmail);
 		model.addAttribute("myreviewlist", service.myReviewList(memberEmail));
-		return "";
-	}
+		return "myLibrary";
+	}*/
 }
