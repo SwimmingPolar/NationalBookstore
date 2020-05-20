@@ -28,7 +28,7 @@ pageEncoding="UTF-8"%>
         </a>
       </li>
       <li>
-        <a href="/myAccount-main">
+        <a href="/myaccount">
           <i class="far fa-user"></i>
           <span>관리</span>
         </a>
