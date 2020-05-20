@@ -10,7 +10,7 @@ import com.ryan.domain.book.BookAlarmVO;
 
 public interface MyBookAlarmService {
 
-	public Boolean requestAlarm(BookAlarmVO vo, Authentication auth);	//알람 요청
+	public Boolean requestAlarm(BookAlarmVO vo, String memberEmail);	//알람 요청
 	
 	public ArrayList<BookAlarmVO> showAlarm(Authentication auth); 	//알람 보여주기
 	

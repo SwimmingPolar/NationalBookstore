@@ -49,12 +49,13 @@ public interface DetailBookService {
 //	public double insertGrade(BookGradeVO vo);
 	
 	//좋아요 입력
-	public int insertLike(int booknumber, Authentication auth);
+	public int insertLike(int booknumber, String memberEmail);
 	
 	// 조회수 증가
 	public void updateBookLookUp(EBookVO vo , HttpServletRequest request , HttpServletResponse response);
 
 	//좋아요 눌렀는지 확인
-	public boolean checkLike(int booknumber, Authentication auth);
+	public boolean checkLike(int booknumber, String memberEmail);
+
 	
 }

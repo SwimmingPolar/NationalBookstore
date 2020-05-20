@@ -21,4 +21,7 @@ public interface ReviewService {
 	public ArrayList<ReviewVO> myReviewList(Authentication auth);
 	
 	public Boolean insertGrade(BookGradeVO grade);
+	
+	//회원 탈퇴 시 내가 작성한 포스트 수 불러오기
+	public int countMyPost(String memberEmail);
 }

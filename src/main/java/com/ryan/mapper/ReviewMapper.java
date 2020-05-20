@@ -23,4 +23,7 @@ public interface ReviewMapper {
 	public ArrayList<ReviewVO> myReviewList(String memberEmail);
 	
 	public int insertGrade(BookGradeVO grade);
+	
+	//회원 탈퇴시 내가 작성한 포스트 수 불러오기
+	public int countMyPost(String memberEmail);
 }

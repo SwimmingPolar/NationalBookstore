@@ -62,17 +62,18 @@ public class FollowController {
 			return false;
 		}
 	}
-	
-	//내가 팔로우한 사람들 보여주기
-	@PostMapping("/myfollowing")
-	public ArrayList<FollowVO> getMyFollowing(Authentication auth){
-		
-		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
-		MemberVO member = ryanMember.getMember();
-		
-		return service.getMyFollowing(member);
-	}
-	
+
+	/*
+	 * //내가 팔로우한 사람들 보여주기
+	 * 
+	 * @PostMapping("/myfollowing") public ArrayList<FollowVO>
+	 * getMyFollowing(Authentication auth){
+	 * 
+	 * RyanMember ryanMember = (RyanMember) auth.getPrincipal(); MemberVO member =
+	 * ryanMember.getMember();
+	 * 
+	 * return service.getMyFollowing(member.getMemberEmail()); }
+	 */
 	//나를 팔로우 한 사람
 	@PostMapping("/myfollower")
 	public ArrayList<FollowVO> getMyFollower(Authentication auth){

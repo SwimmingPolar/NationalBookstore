@@ -382,7 +382,6 @@ function addFadeInUpEffects() {
       window.removeEventListener('scroll', fadeInUp);
   });
 }
-if (window.onload) alert('common.js load warning: window.onload event already exists');
 window.onload = function() {
   // slidify targeted elements
   // slider structure: 

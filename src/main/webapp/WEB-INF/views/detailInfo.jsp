@@ -151,13 +151,16 @@
                             <div class="likeList">
                                 <c:forEach var="p" items="${likepeople}">
                                     <ul>
-                                        <li> <span>
+                                        <li>
+                                       	 <a href="/booklist/myLibList?clickId=${p.memberEmail }"> 
+                                        	<span>
                                                 <img id="myFaceImage" src="${pageContext.request.contextPath}/resources/images/myLibrary/photoImg.png">
                                             </span>
                                             <span>
-                                                <a>${p.memberNickName } 님</a>  <button value="${p.memberEmail }" id="follow">방문하기</button><br>
-                                                <a>by ${p.memberEmail }</a>
+                                                ${p.memberNickName } 님<br>
+                                              <%--   by ${p.memberEmail } --%>
                                             </span>
+                                           </a>
                                         </li>
                                     </ul>
                                 </c:forEach>
@@ -311,13 +314,14 @@
         <!-- wrapper end -->
     </div>
     </div>
-    <script>
+<!--     <script>
     $("#follow").click(function(){
     	var followId = $(this).val();
+    	alert(followId);
     	location.href = "/booklist/myLibList?clickId="+followId;
     });
     
-    </script>
+    </script> -->
     <script>
         $(function () {
             var cnt = 0;
@@ -359,6 +363,7 @@
 	  var check = "${likecheck}";
             $('#heartClick').change(function () {
             	var memberId = "${member.member.memberNickName}";
+            	var memberEmail = "${member.member.memberEmail}";
             	if(memberId==""){
             		if(confirm("로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?")) {
             			location.href = "/member/signin";
@@ -369,7 +374,8 @@
                         url: "/book/insertlike",
                         type: "get",
                         data: {
-                            booknumber: '${bookdetail.bookNum}'
+                            booknumber: '${bookdetail.bookNum}',
+                            memberEmail : memberEmail
                         },
                  //       dataType:"json",
                         success: function (response) {
@@ -396,24 +402,48 @@
     </script>
 
     <script>
-        var modal = document.getElementById('modalGo');
-        var openBtn = document.getElementById('modalOpen');
-        var closeBtn = document.getElementById('modalCloseBtn');
+        $(document).ready(function() {
+            var modal = document.getElementById('modalGo');
+            var openBtn = document.getElementById('modalOpen');
+            var closeBtn = document.getElementById('modalCloseBtn');
 
-        openBtn.onclick = function () {
-            modal.style.display = "block";
-        }
-
-        closeBtn.onclick = function () {
-            modal.style.display = "none";
-        }
-
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
+            var body = document.body;
+            var topbar = document.querySelector('header.topbar');
+            var bodyWrapper = document.querySelector('body > .wrapper');
+            var footer = document.querySelector('footer.fixed');
+            var elements = [topbar, bodyWrapper, footer];
+            
+            function hideScrollbar() {
+                var scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+                elements.forEach(element => element.style.paddingRight = scrollbarWidth + 'px');
+                body.style.overflowY = 'hidden';
             }
-        }
-    </script>
+            
+            function showScrollbar() {
+                elements.forEach(element => element.style.paddingRight = '');
+                body.style.overflowY = 'initial';
+            }
+            
+            openBtn.onclick = function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                modal.style.display = "block";
+                hideScrollbar();
+            };
+            
+            closeBtn.onclick = function () {
+                modal.style.display = "none";
+                showScrollbar();
+            };
+            
+            modal.onclick = function (event) {
+                if (event.currentTarget !== event.target) return;
+                modal.style.display = "none";
+                showScrollbar();
+            };
+        });
+        </script>
     
     
 
@@ -465,6 +495,7 @@
         $(function () {
             $('.inputBtn').click(function () {
             	var memberId = "${member.member.memberNickName}";
+            	var memberEmail = "${member.member.memberEmail}";
             	if(memberId==""){
             		if(confirm("로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?")) {
             			location.href = "/member/signin";
@@ -472,17 +503,17 @@
             	}else{
             		 $.ajax({
                          url: "/book/inserthashtag",
-                         type: 'post',
+                         type: "get",
                          data: {
                              bookNum: '${bookdetail.bookNum}',
-                             hashTag: $('#hashTag').val()
+                             hashTag: $('.emoTag').val()
                          },
                          success: function (data) {
                              /* var result = data.json;
                              alert(data); */
-                             $('.hashTag').html('');
+                             $('#hashTag').html('');
                              $.each(data, function (idx, val) {
-                                 $(".hashTag").append("<label>" + val.hashTag + "</label>");
+                                 $('#hashTag').append("<label>" + val.hashTag + "</label>");
                                  count++;
                                  if (count == 5) {
                                      return false;
@@ -516,12 +547,13 @@
     <script>
     function insertReadBook(){
     	var memberId = "${member.member.memberNickName}";
+    	var memberEmail= "${member.member.memberEmail}";
     	if(memberId==""){
     		if(confirm("로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?")) {
     			location.href = "/member/signin";
     		}else{         }  			
     	}else{
-    		location.href="/book/insertreadbook?booknumber=${bookdetail.bookNum}";
+    		location.href="/book/insertreadbook?booknumber=${bookdetail.bookNum}&memberEmail="+memberEmail;
     	}
     }
     function insertLibBook(){

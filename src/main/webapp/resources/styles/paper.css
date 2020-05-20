@@ -492,7 +492,7 @@ div.page {
 	position: absolute;
 	bottom: 0; right: 0;
 	width: 2.5em; height: 2.5em;
-	transform: translate(12px, -196px);
+	transform: translate(11px, -196px);
 }
 
 .grid-layout .book {

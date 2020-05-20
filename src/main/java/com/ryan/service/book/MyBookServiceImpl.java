@@ -56,22 +56,20 @@ public class MyBookServiceImpl implements MyBookService{
 	}
 
 	@Override	//찜 책장 삭제
-	public ArrayList<EBookVO> deleteLibBook(int[] booknum, HttpServletRequest request, Authentication auth) {
+	public ArrayList<EBookVO> deleteLibBook(int[] booknum, HttpServletRequest request, String memberEmail) {
 		// TODO Auto-generated method stub
-		RyanMember ryanmember = (RyanMember) auth.getPrincipal();
-		MemberVO member = (MemberVO) ryanmember.getMember();
 		ArrayList<MyLibVO> number = new ArrayList<MyLibVO>();
 		for(int i : booknum) {
 			MyLibVO mylib = new MyLibVO();
 			mylib.setBookNum(i);
-			mylib.setMemberEmail(member.getMemberEmail());
+			mylib.setMemberEmail(memberEmail);
 			number.add(mylib);
 		}
 			
 		Map list = new HashMap();
 		list.put("numberlist", number);
 		mapper.deleteLibBook(list);
-		ArrayList<EBookVO> libBookList = mapper.libBook(member.getMemberEmail());		
+		ArrayList<EBookVO> libBookList = mapper.libBook(memberEmail);		
 		return libBookList;
 	}
 
@@ -114,21 +112,19 @@ public class MyBookServiceImpl implements MyBookService{
 	}
 
 	@Override		//읽은책 추가
-	public Boolean insertReadBook(int booknumber, Authentication auth) {
+	public Boolean insertReadBook(int booknumber, String memberEmail) {
 		// TODO Auto-generated method stub
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());		
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
-		RyanMember ryanmember = (RyanMember) auth.getPrincipal();
-		MemberVO member = (MemberVO) ryanmember.getMember();
 		MyReadBookVO vo = new MyReadBookVO();
 		vo.setBookNum(booknumber);
 		vo.setReadDate(df.format(cal.getTime()));
 //		vo.setMemberEmail("abc1234@naver.com"); 
 	
-		ArrayList<EBookVO> list = mapper.readBook(member.getMemberEmail());
-		vo.setMemberEmail(member.getMemberEmail());
+		ArrayList<EBookVO> list = mapper.readBook(memberEmail);
+		vo.setMemberEmail(memberEmail);
 		boolean flag= false;
 		for(int i=0; i<list.size();i++) {
 			if(list.get(i).getBookNum()==vo.getBookNum()) {
@@ -179,13 +175,11 @@ public class MyBookServiceImpl implements MyBookService{
 	}
 
 	@Override
-	public ArrayList<BookGradeVO> insertGrade(BookGradeVO vo,Authentication auth) {
-		RyanMember ryanmember = (RyanMember) auth.getPrincipal();
-		MemberVO member = (MemberVO) ryanmember.getMember();
-		ArrayList<BookGradeVO> gradeList = mapper.checkEmail(member.getMemberEmail());
+	public ArrayList<BookGradeVO> insertGrade(BookGradeVO vo,String memberEmail) {
+		ArrayList<BookGradeVO> gradeList = mapper.checkEmail(memberEmail);
 		boolean flag=false;
 		for(BookGradeVO grade : gradeList) {
-			if(grade.getMemberEmail().equals(member.getMemberEmail())) {
+			if(grade.getMemberEmail().equals(memberEmail)) {
 				if(grade.getBookNum()==vo.getBookNum()) {
 					flag = true;
 					break;
@@ -197,25 +191,16 @@ public class MyBookServiceImpl implements MyBookService{
 		if(!flag) {
 			mapper.insertGrade(vo);
 		}
-		return mapper.checkEmail(member.getMemberEmail());
+		return mapper.checkEmail(memberEmail);
 	}
 
 	@Override
 	public MemberVO readClickId(String clickId) {
+		log.info("결과 " + memberMapper.readClickId(clickId));
 		return memberMapper.readClickId(clickId);
 	}
 
-	@Override
-	public Boolean followCheck(String clickId) {	//팔로우 되어 있는지 확인
-		return null;
-	}
 
-	
-	
-	
-	
-	
-	
 	
 	
 }

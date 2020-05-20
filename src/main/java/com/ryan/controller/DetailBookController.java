@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -49,30 +50,33 @@ public class DetailBookController {
 		service.updateBookLookUp(vo, request, response);
 		
 		model.addAttribute("bookdetail", vo); //책 정보- 상세정보
-		
 		model.addAttribute("bookreview", service.searchReview(booknumber));		//책 번호 - 리뷰
-		
 		model.addAttribute("booklist", service.interestbooks(vo.getCategoryNum()));// 카테고리 추천 도서
-
-		model.addAttribute("likecheck", service.checkLike(booknumber, auth)); //좋아요 클릭 했는지 확인
-		
 		model.addAttribute("booklike", service.bookLike(booknumber)); //좋아요 수
-		
 		model.addAttribute("bookgrade", service.bookGrade(booknumber)); //평점
-		
 		model.addAttribute("hashtag", service.hashtag(booknumber));//해쉬태그 
-		
 		//좋아요 한 사람들 랜덤 조회
 		model.addAttribute("likepeople", service.likepeople(vo.getBookNum()));
-		
 		//해시태그 쿠키체크
 		model.addAttribute("hashtagCookieCheck", service.hashtagCookieCheck(booknumber, request));
 		
+		auth = SecurityContextHolder.getContext().getAuthentication();
+		try {
+			if(auth != null) {
+				RyanMember ryanmember = (RyanMember) auth.getPrincipal();
+				MemberVO member = ryanmember.getMember();
+				model.addAttribute("likecheck", service.checkLike(booknumber, member.getMemberEmail())); //좋아요 클릭 했는지 확인
+			}else {
+				model.addAttribute("likecheck", false);
+			}
+		}catch (Exception e) {	model.addAttribute("likecheck", false);
+		}
 		return "detailInfo";				
 	}
 	
-	@RequestMapping("/inserthashtag")
+	@RequestMapping(value = "/inserthashtag", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody List<HashtagVO> insertHashtag(HashtagVO vo, HttpServletRequest request, HttpServletResponse response) {		
+		log.info(vo);
 		service.hashtagCookie(vo, request, response);
 		return service.hashtag(vo.getBookNum());
 	}
@@ -89,9 +93,9 @@ public class DetailBookController {
 	
 	//좋아요 입력
 	@RequestMapping("/insertlike")
-	public @ResponseBody String insertLike(@RequestParam("booknumber") int booknumber, Authentication auth, Model model) {
-		int result = service.insertLike(booknumber, auth);
-		boolean check =  service.checkLike(booknumber, auth);
+	public @ResponseBody String insertLike(@RequestParam("booknumber") int booknumber, @RequestParam("memberEmail") String memberEmail, Model model) {
+		int result = service.insertLike(booknumber, memberEmail);
+		boolean check =  service.checkLike(booknumber, memberEmail);
 		return result+"+"+check;
 	}
 	
@@ -106,8 +110,8 @@ public class DetailBookController {
 	
 	//읽은책 추가 //바로보기 버튼 클릭
 	@RequestMapping("/insertreadbook")
-	public String insertReadBook(@RequestParam("booknumber") int booknumber, Authentication auth , RedirectAttributes rttr) {
-		mservice.insertReadBook(booknumber,auth);
+	public String insertReadBook(@RequestParam("booknumber") int booknumber, @RequestParam("memberEmail") String memberEmail , RedirectAttributes rttr) {
+		mservice.insertReadBook(booknumber,memberEmail);
 		return "redirect:/viewer?booknumber="+booknumber;
 	}
 	

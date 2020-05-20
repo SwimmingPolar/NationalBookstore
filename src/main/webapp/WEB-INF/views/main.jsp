@@ -43,7 +43,7 @@
 </head>
 <body>
   <div class="container">
-    <div class="head fadeInUp">
+    <div class="head">
       <div class="head-upper">
         <div class="logo">
           <a href="#">
@@ -96,7 +96,7 @@
   
             let searchResultListHTML = '';
             if (bookList.length === 0)
-              searchResultListHTML = '<li style="padding: 10px 20px"><p><b><span class="no-search-result>"' + keyword + '</span>"</b>에 대한 결과가 없습니다.</p></li>';
+              searchResultListHTML = '<li style="padding: 10px 20px"><p><b>"<span class="no-search-result-keyword">' + keyword + '</span>"</b>에 대한 결과가 없습니다.</p></li>';
             bookList.forEach(book => {
               searchResultListHTML += '<li>' +
                                         '<a href="/search?type=' + type + '&keyword=' + keyword + '">' +
@@ -226,7 +226,7 @@
       </script>
     </div>
     <div class="body-wrapper">
-      <section class="recommendation fadeInUp">
+      <section class="recommendation">
         <div class="left-section">
           <h2>오늘의 추천도서</h2>
           <div class="slider-wrapper slider-window infinite-slider-window">
@@ -380,7 +380,7 @@
           </script> -->
         </div>
       </section>
-      <section class="trending fadeInUp">
+      <section class="trending">
         <h2 class="section-heading">
           <div class="clock">
             <i class="fas fa-clock"></i>

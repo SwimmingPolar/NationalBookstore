@@ -12,7 +12,7 @@ header {
 }
 
 .wrapper {
-    
+    box-sizing: content-box; 
     width:700px;
     margin:0 auto;
     /* border:2px solid black; */
@@ -107,7 +107,6 @@ header {
 .choiceBtnOne input[type="button"]:nth-child(1) {
     background-color:#0099FF;
     color:white;
-    
 }
 
 .introWrite li {
@@ -131,13 +130,11 @@ header {
 }
 
 .reviewDetail table {
-
     border-bottom : 1px solid lightgray;
     border-top:2px solid rgb(0, 0, 133);
     width:95%;
     margin:0 auto;
     text-indent: 10px;
-
 }
 
 .reviewDetail textarea {
@@ -176,8 +173,6 @@ header {
     border-radius:10px;
     padding:10px;
     box-shadow: 0 0 10px rgba(0,0,0,.05);
-
-
 }
 
 .emoTag {
@@ -185,34 +180,25 @@ header {
     font-size:13px;
 }
 
-
-
 .tagtag {
-    border:1px solid #0099FF;
-    border-radius:15px;
-    height:25px;
     position: relative;
     margin-top:30px;
     margin-bottom:20px;
-
 }
 
 .tagtag input[type="text"] {
-    position: absolute;
-    width:550px;
-    border:none;
-    margin-left:20px;
+    width:100%;
     outline:none;
-
+    border:1px solid #0099FF;
+    border-radius:15px;
+    padding: 10px 15px;
 }
-
 
 .tagtag input[type="button"] {
     position: absolute;
-    /* float:right; */
     border-radius: 0 15px 15px 0;
-    height:25px;
-    font-size:13px;
+    height:100%;
+    font-size:14px;
     color:white;
     background-color:#0099FF;
     border:none;
@@ -221,9 +207,11 @@ header {
     top:0;
     margin-right:-1px;
     cursor: pointer;
-    padding:0 12px 0 12px;
-    
-
+    padding: 0 16px;
+}
+.tagtag input[type="button"]:hover {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05));
+    background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05));
 }
 
 .bookDetail .inputBtn {
@@ -453,7 +441,6 @@ header {
     margin-right: 40px;
 }
 
-
  .modal {
     display:none;
     position:fixed;
@@ -463,8 +450,7 @@ header {
     height:100%;
     overflow:auto;
     background-color: rgba(0,0,0,0.6);
-    z-index: 3;
-
+    z-index: 999999;
 }
 
 #modalCloseBtn button {

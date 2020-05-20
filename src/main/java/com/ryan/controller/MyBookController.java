@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -56,17 +57,19 @@ public class MyBookController {
 				if(ryanMember != null) {
 					MemberVO member = (MemberVO) ryanMember.getMember();
 					if(clickId != null && !clickId.equals("")) {
-						if(member.getMemberEmail().equals(clickId)) {
+						if(member.getMemberEmail().equals(clickId)) {	//clickId 가 있는데 본인이면 false 리턴
 							model.addAttribute("checkId",flag);
 							clickId = member.getMemberEmail();
-						} else {
+						} else {			//clickId 가 있고 본인이 아니면 true 리턴
 							flag = true;
 							model.addAttribute("checkId",flag);
+							model.addAttribute("followCheck", fservice.followCheck(member.getMemberEmail(), clickId));
 							model.addAttribute("followId",service.readClickId(clickId));
-							//		model.addAttribute("followCheck",service.followCheck());
 						}
+					}else {	//clickId 가 없으면 본인 false 리턴
+						model.addAttribute("checkId",flag);
+						clickId = member.getMemberEmail();
 					}
-
 				}
 			}catch (Exception e) {
 				if(clickId != null && !clickId.equals("")) {
@@ -85,7 +88,9 @@ public class MyBookController {
 		model.addAttribute("readbooklist", service.readBook(clickId,auth2));	//읽은책 리스트
 		model.addAttribute("readbookcount", service.countReadBook(clickId,auth2)); 		//읽은책 수량
 		model.addAttribute("likeBookcount", service.countLikeBook(clickId,auth2));
-		model.addAttribute("myFollower",fservice.countFollow(clickId,auth2)); //나를 팔로우 한 사람
+		model.addAttribute("myFollower",fservice.countFollow(clickId,auth2)); //내가 팔로우한사람
+		model.addAttribute("followerList", fservice.getMyFollowing(clickId, auth2));
+		
 		/*
 		 * model.addAttribute("myreviewlist",
 		 * rservice.myReviewList(auth2));//내reviewlist
@@ -93,16 +98,16 @@ public class MyBookController {
 	}
 	
 	
-	@RequestMapping("/deleteLibList")
+	@RequestMapping(value = "/deleteLibList", method = {RequestMethod.GET,RequestMethod.POST})
 	@ResponseBody
-	public ArrayList<EBookVO> deleteList(HttpServletRequest request, Authentication auth) {
+	public ArrayList<EBookVO> deleteList(HttpServletRequest request, @RequestParam("memberEmail") String memberEmail) {
 		String[] ajaxResult = request.getParameterValues("booknum");
 		int[] booknum = new int[ajaxResult.length];
 		for(int i=0; i<ajaxResult.length;i++) {
 			booknum[i] = Integer.parseInt(ajaxResult[i]);
 		}
 		//return service.deleteLibBook(booknum, session)
-		return service.deleteLibBook(booknum, request, auth);
+		return service.deleteLibBook(booknum, request, memberEmail);
 	}
 	
 //	@RequestMapping("/readbooklist") 	//읽은 책 조회
@@ -120,8 +125,8 @@ public class MyBookController {
 	
 	//알람 받을 책 등록
 	@RequestMapping("/alarm")
-	public @ResponseBody Boolean requestAlarm(BookAlarmVO vo, Authentication auth) {
-		return aservice.requestAlarm(vo, auth);
+	public @ResponseBody Boolean requestAlarm(BookAlarmVO vo, @RequestParam("memberEmail") String memberEmail) {
+		return aservice.requestAlarm(vo, memberEmail);
 	}
 	
 	//출판 되어 알람시켜줘야 할 책 
@@ -134,8 +139,8 @@ public class MyBookController {
 	
 	//평점 등록
 	@RequestMapping("/insertGrade")
-	public @ResponseBody ArrayList<BookGradeVO> insertGrade(BookGradeVO vo, Authentication auth) {
-		return service.insertGrade(vo, auth);
+	public @ResponseBody ArrayList<BookGradeVO> insertGrade(BookGradeVO vo, @RequestParam("memberEmail") String memberEmail) {
+		return service.insertGrade(vo, memberEmail);
 	}
 	
 

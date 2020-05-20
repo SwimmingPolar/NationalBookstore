@@ -211,10 +211,21 @@
 			location.href = "?type="+type+"&keyword="+keywordo;
 		});
 		//바로보기
-		$(".btn-read").click(function() {
-			var bookNum = $(this).parents(".search")[0].classList[1];
-			location.href = "viewer?booknumber="+bookNum;
+		$(".btn-read").click(function(e) {
+			var bookNum = parseInt(e.target.classList[1]);
+			console.dir(bookNum);
+			insertReadBook(bookNum);
 		});
+		function insertReadBook(booknum){
+	    	var memberId = "${member.member.memberNickName}";
+	    	if(memberId==""){
+	    		if(confirm("로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?")) {
+	    			location.href = "/member/signin";
+	    		}else{         }  			
+	    	}else{
+	    		location.href="/book/insertreadbook?booknumber="+booknum;
+	    	}
+	    }
 		//바로구매
 		$(".btn-purchase").click(function(e) {
 			var bookNum = $(this).parents(".search")[0].classList[1];
@@ -329,7 +340,7 @@
 										</div>
 									</div>
 									<div class="interact" >
-										<button class="btn-read" >바로보기</button>
+										<button class="btn-read ${book.bookNum }" >바로보기</button>
 										<!-- <button class="btn-purchase" >구매</button> -->
 									</div>
 								</div>
