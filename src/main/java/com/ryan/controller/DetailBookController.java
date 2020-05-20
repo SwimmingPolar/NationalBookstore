@@ -115,14 +115,14 @@ public class DetailBookController {
 	public String insertReadBook(@RequestParam("booknumber") int booknumber, Authentication auth , RedirectAttributes rttr) {
 		mservice.insertReadBook(booknumber,auth);
 		
-		rttr.addFlashAttribute("booknumber", booknumber);
+		//rttr.addFlashAttribute("booknumber", booknumber);
 		
-		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
-		MemberVO member = ryanMember.getMember();
+		//RyanMember ryanMember = (RyanMember) auth.getPrincipal();
+		//MemberVO member = ryanMember.getMember();
 		
-		rttr.addFlashAttribute("memberEmail", member.getMemberEmail());
+		//rttr.addFlashAttribute("memberEmail", member.getMemberEmail());
 		
-		return "redirect:/viewer";
+		return "redirect:/viewer?booknumber="+booknumber;
 	}
 	
 }
