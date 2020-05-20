@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ryan.domain.member.MemberVO;
 import com.ryan.domain.payment.CartVO;
+import com.ryan.domain.security.RyanMember;
 import com.ryan.service.payment.CartService;
 
 import lombok.Setter;
@@ -37,8 +39,12 @@ public class CartController {
 	 */
 	
 	@PostMapping("/insert")
-	public @ResponseBody Boolean insertCart(CartVO[] cart, @ModelAttribute("ryanMember") MemberVO member) {
+	public @ResponseBody Boolean insertCart(CartVO[] cart, Authentication auth) {
 		log.info(cart);
+		
+		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
+		MemberVO member = ryanMember.getMember();
+		
 		if(cartService.insertCart(cart,member)) { // 장바구니 입력 성공시 true 리턴해줍니다 필요하시면 쓰면됩니다.
 			return true; 
 		} 
@@ -48,9 +54,10 @@ public class CartController {
 	
 	//장바구니 페이지 이동
 	@GetMapping("/list")
-	public String getCartList(Model model,HttpSession session) {
+	public String getCartList(Model model,Authentication auth) {
 		
-		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
+		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
+		MemberVO member = ryanMember.getMember();
 		
 		model.addAttribute("cartList", cartService.getCartList(member));
 		
@@ -81,9 +88,10 @@ public class CartController {
 	}
 	
 	@RequestMapping("/removeAll") //버튼 하나 만들고 경로 입력해주면 됩니다.
-	public String removeAll(HttpSession session) {
+	public String removeAll(Authentication auth) {
 		
-		MemberVO member = (MemberVO) session.getAttribute("ryanMember");
+		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
+		MemberVO member = ryanMember.getMember();
 		
 		log.info(member);
 		if(cartService.removeAll(member)) return "redirect:/cart/list";

@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.ryan.domain.member.FollowVO;
 import com.ryan.domain.member.MemberVO;
+import com.ryan.domain.security.RyanMember;
 import com.ryan.mapper.FollowMapper;
 
 import lombok.Setter;
@@ -47,12 +49,13 @@ public class FollowServiceImpl implements FollowService{
 	}
 
 	@Override
-	public int countFollow(String clickId,HttpSession session) {
+	public int countFollow(String clickId,Authentication auth) {
 		// TODO Auto-generated method stub
 		if(clickId != null && clickId != "") {
 			return mapper.countFollower(clickId);
 		}else {
-			MemberVO member = (MemberVO) session.getAttribute("ryanMember");
+			RyanMember ryanmember = (RyanMember) auth.getPrincipal();
+			MemberVO member = (MemberVO) ryanmember.getMember();
 			return mapper.countFollower(member.getMemberEmail());
 		}
 	}

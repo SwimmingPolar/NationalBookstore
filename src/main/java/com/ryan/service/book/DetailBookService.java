@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.security.core.Authentication;
 
 import com.ryan.domain.book.BookGradeVO;
 import com.ryan.domain.book.BookLikeVO;
@@ -48,12 +49,12 @@ public interface DetailBookService {
 //	public double insertGrade(BookGradeVO vo);
 	
 	//좋아요 입력
-	public int insertLike(int booknumber, HttpServletRequest request);
+	public int insertLike(int booknumber, Authentication auth);
 	
 	// 조회수 증가
 	public void updateBookLookUp(EBookVO vo , HttpServletRequest request , HttpServletResponse response);
 
 	//좋아요 눌렀는지 확인
-	public boolean checkLike(int booknumber, HttpServletRequest request);
+	public boolean checkLike(int booknumber, Authentication auth);
 	
 }

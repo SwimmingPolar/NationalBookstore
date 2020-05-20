@@ -1,6 +1,7 @@
 package com.ryan.service.member;
 
 import com.ryan.domain.member.EmailCheckVO;
+import com.ryan.mapper.EmailMapper;
 
 public interface EmailService {
 	
@@ -18,5 +19,8 @@ public interface EmailService {
 	//인증완료된 유저인지 확인
 	
 	public boolean authCompleteCheck(EmailCheckVO email);
+	
+	//인증코드제거
+	public void emailCodeDelete(EmailCheckVO email);
 	
 }
