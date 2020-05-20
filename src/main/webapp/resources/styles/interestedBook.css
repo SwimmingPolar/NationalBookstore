@@ -1,8 +1,8 @@
 
-.bigBox {
+.bigBox2 {
 
-    width: 700px;
-    border:2px solid red;
+    width: 1000px;
+    /* border:2px solid red; */
     padding: 20px;
     margin:0 auto;
 }
@@ -15,7 +15,17 @@ li {
     list-style:none;
 }
 
-.title {
+.interestTitle {
+    font-size: 19px;
+    padding:20px;
+    font-weight: bold;
+    text-align:center;
+    border-bottom:1px solid #e8e8e8;
+    color: rgb(126, 123, 123);
+}
+
+
+.title2 {
     display:block;
     background-color:rgb(93, 180, 238);
 }
@@ -23,6 +33,7 @@ li {
 .bookListBox {
     position: relative;
     box-sizing: border-box;
+    margin-top:15px;
     
 }
 
@@ -35,7 +46,7 @@ li {
 }
 
 .bookListBox ul li {
-    width: 25%;
+    width: 20%;
     margin-bottom:14px;
     padding:0 10px;
     box-sizing: border-box;
@@ -72,40 +83,165 @@ li {
     
 }
 
-.followGo {
+.addLabel {
     /* border:2px solid red; */
+    color:#999;
+
 }
 
-.followGo input[type="checkbox"] {
-
+.addLabel input[type="checkbox"] {
     display:none;
     
 }
 
-.followGo label {
+.addLabel label {
     display:block;
     cursor: pointer;
-    height:40px;
-    line-height:40px;
+    height:60px;
+    line-height:60px;
     text-align:center;
     border:1px solid #e8e8e8;
-    border-radius: 0 0 8px 8px;
-    font-size: 14px;
-    color:#0099FF;
+    border-radius: 7px;
+    /* color:#0099FF; */
+    /* color:#999; */
     background-color: #fff;
+    font-size: 16px;
 }
 
-.followGo label i {
+.addLabel label i {
     margin-right:5px;
-    font-size: 19px;
-    color:#0099FF;
+    /* font-size: 22px; */
+    /* color:#0099FF; */
 }
 
 
-.followGo input[type="checkbox"]:checked + label {
-    background-color:#0099FF;
-    color:white;
-    border:1px dotted rgba(0, 101, 216, 0.904);
+.addLabel input[type="checkbox"]:checked + label {
+    /* backgropx dotted rgba(0, 101, 216, 0.904); */
+    position: relative;
+    /* visibility:hidden; */
+    /* content:"추가완료"; */
     cursor: pointer;
     font-weight:bold;
+    color: white;
+    /* background-color: #888888; */
+    background-color:rgba(0, 153, 255, 0.705);
 }
+
+.addLabel input[type="checkbox"]:checked + label::before {
+    content:"\f00c";
+    font-family: FontAwesome;
+}
+
+
+.addLabel input[type="checkbox"] ~ label {
+    position: absolute;
+    visibility: hidden;
+    content:"";
+}
+
+.addLabel input[type="checkbox"]:checked ~ label {
+    visibility: visible;
+}
+
+
+/* .followGo input[type="checkbox"]:checked + label::before{
+    content:"\f14a";
+    font-weight:bold;
+    color:rgb(105, 105, 105);
+    font-family: "font awesome 5 free";
+} */
+
+/* 
+.modal {
+    display:none;
+    position:fixed;
+    left:0; 
+    top:0;
+    width:100%;
+    height:100%;
+    overflow:auto;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 3;
+
+}
+
+#closeBtn button {
+
+   width: 100%; 
+   height: 50px;
+   margin:0 auto;
+   font-size: 19px;
+   background-color:#0099FF;
+   color:white;
+   border:none;
+   position: absolute;
+   bottom:0;
+   left:0;
+   right:0;
+   outline:none;
+   cursor: pointer;
+}
+.modal .modal_content02 {
+    position: relative;
+    background-color:  #fefefe;
+    margin:13% auto;
+    padding: 15px 8px 20px 20px;
+    border:1px solid #888;
+    width: 300px;
+    height: 400px;
+
+ }
+  */
+
+  
+.banner {
+    position:relative;
+    display:inline-block;
+}
+.banner img { 
+    max-width:100%;
+}
+
+.banner span.text {
+    position:absolute;
+    top:50%;
+    left:0; 
+    transform:translateY(-50%);
+    display:none;
+    width:100%;
+    font-size:43px;
+    color:#fff;
+    font-weight:900;
+    text-align:center;
+
+}
+
+.banner::before, .banner::after {
+    content:"";
+    position: absolute;
+    top:50%;
+    left:50%;
+    width: 95%;
+    height:95%;
+    transform:translate(-50%,-50%);
+    background-color: rgba(0, 0, 0, 0.267);
+    transition:all .6s;
+    cursor: pointer;
+}
+
+.banner::before {
+    border-top:2px solid #fff;
+    border-bottom:2px solid #fff;
+    width:0;
+}
+
+.banner::after {
+    border-left:2px solid #fff;
+    border-right:2px solid #fff;
+    height:0;
+}
+
+.banner:hover span.text {display:block; }
+.banner:hover::before {width:95%;}
+.banner:hover::after {height:95%;}
+
