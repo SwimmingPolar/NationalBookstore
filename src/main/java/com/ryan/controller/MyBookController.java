@@ -48,10 +48,8 @@ public class MyBookController {
 		if(clickId != null && clickId != "") {
 			flag = true;
 			model.addAttribute("checkId",flag);
-			log.info(flag);
 		}else {
 			model.addAttribute("checkId",flag);
-			log.info(flag);
 		}
 		ArrayList<EBookVO> list = service.libBook(clickId,session);
 		model.addAttribute("libbooklist", list);

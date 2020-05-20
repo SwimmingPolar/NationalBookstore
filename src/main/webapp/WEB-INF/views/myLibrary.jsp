@@ -29,7 +29,7 @@
 <!-- 배경화면 넣는곳 -->
 <div class="follow">
    	<c:if test="${checkId}">
-   		<button type="button" id="followBtn"> <i class="fas fa-plus-circle"></i> 팔로우 </button>
+   		<button type="button" id="followBtn"> <i class="fas fa-plus-circle"></i> 방문하기 </button>
    	</c:if>    
   </div>
 <div class="bigbox">
@@ -170,7 +170,7 @@
         </div>
             
         <div class="myPostCheck" id="myPostCheck">
-        <c:choose>
+         <c:choose>
           <c:when test="${myreviewlist.size() >0 }">
           <table>
           <c:forEach var="review" items="${myreviewlist}">
@@ -192,7 +192,7 @@
                </c:forEach>
             </table>
             </c:when>
-		</c:choose>
+		</c:choose> 
             <%-- <table>
                 <tr>
                     <th> 도서명 </th>
@@ -358,13 +358,7 @@ $('.bookStarScore span').click(function() {
       [ul, li].forEach(element => element.classList.add('active'));
     });
   </script>
-  <script>
-  
-  function allDelte(){
-	  location.href = "/booklist/allDelte";
-  }
-  
-  </script>
+
 <%@ include file="template/footer.jsp" %>
 </body>
 </html>
