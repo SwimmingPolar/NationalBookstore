@@ -35,5 +35,8 @@ public class MemberVO {
     // 사용 
     private boolean memberEnabled;
     
+    //프로필
+    private String memberProfile;
+    
     private List<MemberAuthVO> memberAuthList;
 }

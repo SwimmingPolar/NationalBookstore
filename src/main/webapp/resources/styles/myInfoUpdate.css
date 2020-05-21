@@ -449,12 +449,14 @@ margin-bottom:10px;
 
 }
 
-.finishBtn {
-    display:flex;
-    
-    
+.finishBtn button:disabled {
+	cursor: default;
+	background: rgba(0, 0, 0, 0.1);
 }
 
+.finishBtn {
+    display:flex;
+}
 
 .btn1, .btn2 {
     flex:1;
@@ -474,4 +476,14 @@ margin-bottom:10px;
 .btn1 button:hover {
 
     background-color:rgb(168, 168, 168);
+}
+
+.nickNameAlert {
+	display: none;
+	width: 690px; height: 18px;
+	margin-top: 2px;
+	margin-left: 10px;
+	color: red;
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size: 12px;
 }

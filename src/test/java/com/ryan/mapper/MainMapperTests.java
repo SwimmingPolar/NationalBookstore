@@ -17,7 +17,7 @@ import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
+@ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/security-context.xml","file:src/main/webapp/WEB-INF/spring/root-context.xml"})
 @Log4j
 public class MainMapperTests {
 	
@@ -91,16 +91,23 @@ public class MainMapperTests {
 //		mapper.getDisCountBook().forEach(ebook -> log.info(ebook));
 //	}
 	
+//	@Test
+//	public void autoKeywordTests() {
+//		
+//		ArrayList<KeywordAutoCompletionVO> keywordList = mapper.getAutoKeyword("title", "룬의");
+//		
+//		for(KeywordAutoCompletionVO keyword : keywordList) {
+//			keyword.setHashTagList(mapper.getAutoKeywordHashtag(keyword.getBookNum()));
+//		}
+//		
+//		keywordList.forEach(keyword -> log.info(keywordList));
+//		
+//	}
+	
 	@Test
-	public void autoKeywordTests() {
+	public void getreview() {
 		
-		ArrayList<KeywordAutoCompletionVO> keywordList = mapper.getAutoKeyword("title", "룬의");
-		
-		for(KeywordAutoCompletionVO keyword : keywordList) {
-			keyword.setHashTagList(mapper.getAutoKeywordHashtag(keyword.getBookNum()));
-		}
-		
-		keywordList.forEach(keyword -> log.info(keywordList));
+		mapper.getLatestReview().forEach(review -> log.info(review));
 		
 	}
 }

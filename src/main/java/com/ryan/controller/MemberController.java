@@ -90,7 +90,7 @@ public class MemberController {
 	public @ResponseBody Map<String, Boolean> signUpCheck(MemberVO member) {
 		
 		Map<String, Boolean> resultMap = new HashMap<String, Boolean>();
-		
+		System.out.println(member.getMemberNickName());
 		if(memberService.signUpCheck(member)) {
 			resultMap.put("result", true);
 			return resultMap;
@@ -270,6 +270,8 @@ public class MemberController {
 		MemberVO member = ryanMember.getMember();
 		
 		KakaoPayApprovalVO kakaoPayApprovalVO = paymentService.paymentComplete(pg_token, member);
+		
+		log.info(kakaoPayApprovalVO);
 		
 		if(paymentService.insertPaymentInfo(member.getMemberEmail(), kakaoPayApprovalVO.getSid(),kakaoPayApprovalVO.getTid(),kakaoPayApprovalVO.getAmount().getTotal()+"")) {
 			if(revenueService.insertRevenue()) {

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,6 +20,7 @@
     <script src="../../../../resources/js/common.js"></script>
 
 <body>
+<sec:authentication property="principal" var="member"/>
     <header class="topbar">
         <nav>
           <div class="container">
@@ -29,11 +31,11 @@
       </header>
     <div class="newMyInfo">
         <div class="imageBox">
-            <img id="myFaceImage" src="${pageContext.request.contextPath}/resources/images/myLibrary/picture1.png" >
+            <img id="myFaceImage" src="${pageContext.request.contextPath}${member.member.memberProfile}" >
             <!-- 사진 넣을거임 -->
             <label for="camera">
                 <i class="fas fa-camera-retro"></i>
-                <input type="file" name="camera" id="camera" onchange="uploadMyImg(this);">
+                <input type="file" name="memberProfile" id="camera" onchange="uploadMyImg(this);">
             </label>
                    <button type="button" id="deleteBtn" onclick="deletePhoto();"><i class="fas fa-times"></i></button> 
         </div>
@@ -41,18 +43,55 @@
         <div class="wrapperOne">
         <p>필명</p>
         <div class="updateLists">
+            <script type="text/javascript" >
+            	document.addEventListener("DOMContentLoaded", function() {
+            		$("#nickNameChk").on("click", function() {
+            			chkNickName();
+            		});
+            		$("input[name=nickName]").on("focus blur keyup", function() {
+            			chkNickName();
+            		});
+            		
+            		function chkNickName() {
+            			var memberVO = [];
+	            		var currentNickname = $("input[name=nickName]").val().toLowerCase();
+            			memberVO.push({memberNickName : currentNickname});
+	            		$.ajax({
+	            			url : "/member/signUpCheck",
+	            			type : "POST",
+	            			data : { memberNickName : currentNickname }
+	            		})
+	            		.done(function(data) {
+	            			//true면 없는거, false면 있는거
+	            			var result = data.result;
+	            			$("button[class=chkBtn]").attr("disabled", false);
+	            			if(result == true) {
+	            				$("div.nickNameAlert").css("display",  "none");
+	            				$("button[class=chkBtn]").attr("disabled", false);
+	            			} else {
+	            				$("div.nickNameAlert").css("display",  "block");
+	            				$("button[class=chkBtn]").attr("disabled", true);
+	            			}
+	            		})
+	            		.fail(function() {
+	            			console.dir("중복체크 실패!");
+	            		});
+            		};
+            	});
+            </script>
             <input type="text" name="nickName" id="nickName ">
-            <button type="button" id="nickNameChk">중복확인</button>    
+           	<%-- <button type="button" id="nickNameChk">중복확인</button> --%>
         </div>
+        <div class="nickNameAlert" ><i class='fas fa-exclamation-circle'></i>중복된 닉네임입니다.</div>
         <span style ="color:rgb(194, 16, 16)">  <i class='fas fa-exclamation-circle'></i> 욕설, 비속어 사용 시 서비스 이용이 제한될 수 있습니다. </span>
         </div>
 <!-- wrapperOne end -->
         <div class="wrapperOne_half">
             <p>비밀번호 </p>
-            <input type="password" id="inputPw" maxlength="16" onKeyup="inputText(this);" placeholder="비밀번호 입력">
+            <input type="password" name="memberPw" id="inputPw" maxlength="16" onKeyup="inputText(this);" placeholder="비밀번호 입력">
             <!-- <span id="hereChk">영문, 숫자를 포함한 8 ~ 16자 조합으로 입력해 주세요. </span> -->
             <span id="hereText">8자 이상, 16자 이하로 입력해주세요.</span>
-            <input type="password" name="inputPwAgain" id="inputPwAgain" placeholder="비밀번호 재입력" onkeyup="pwRechk();">
+            <input type="password" name="memberPw" id="inputPwAgain" placeholder="비밀번호 재입력" onkeyup="pwRechk();">
             <span id="rechkPW"></span>
         </div>
         <hr class="firstLine">
@@ -60,7 +99,7 @@
         <div class="wrapperTwo">
             <p>핸드폰 번호</p>
             <div class="phoneUpdate">
-            <input type="text" name="phoneNum" id="phoneNum">
+            <input type="text" name="memberTel" id="phoneNum">
             <span> ※ ' - ' 없이 숫자로만 입력해주세요. </span>
             </div>
     
@@ -92,11 +131,11 @@
         <p> 주소 </p>
      <div class="address1">
         <button type="button" id="zipCodeSearch" onclick="zipCodeClick()">검색</button>
-        <input type="text" name="homeZipcode" id="homeZipcode" >
-        <input type="text" name="homeAdrs" id="homeAdrs">
+        <input type="text" name="memberZipcode" id="homeZipcode" >
+        <input type="text" name="memberaddress" id="homeAdrs">
      </div>
      <div class="address2">       
-        <input type="text" name="homeDetail" id="homeDetail" placeholder="상세 주소를 입력해주세요.">
+        <input type="text" name="memberDaddress" id="homeDetail" placeholder="상세 주소를 입력해주세요.">
         </div>
      </div>
        <div class="wrapperThree">   
