@@ -145,14 +145,17 @@ public class MemberController {
 	}
 	
 	@PostMapping("/update")
-	public String memberInfoUpdate(MemberVO member) {
-		log.info(member);
-//		if (memberService.memberUpdate(member)) {
-//			log.info("controller member: " + member.getMemberPw());
-//		} else {
-//			log.info("member..!= null!");
-//		}
-		return "업데이트 완료후 보여줄 페이지 경로";
+	public String memberInfoUpdate(MemberVO member, Authentication auth, ArrayList<MultipartFile> files , HttpServletRequest request) {
+		
+		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
+		member.setMemberEmail(ryanMember.getMember().getMemberEmail());
+		
+		if (memberService.memberUpdate(member,files,request)) {
+			log.info("controller member: " + member.getMemberPw());
+		} else {
+			log.info("member..!= null!");
+		}
+		return "redirect:/";
 	}
 	
 	//아래주석은 security 로  대체 되었습니다.
@@ -276,7 +279,7 @@ public class MemberController {
 		if(paymentService.insertPaymentInfo(member.getMemberEmail(), kakaoPayApprovalVO.getSid(),kakaoPayApprovalVO.getTid(),kakaoPayApprovalVO.getAmount().getTotal()+"")) {
 			if(revenueService.insertRevenue()) {
 				model.addAttribute("info", kakaoPayApprovalVO);
-				
+				memberService.memememe(member);
 				return "redirect:/myaccount"; // 결제 완료 페이지 써주세요~!
 			}
 			

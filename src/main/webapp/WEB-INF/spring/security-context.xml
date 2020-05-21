@@ -33,31 +33,13 @@
 				
 		<!-- 제한 매핑주소 post는 다 걸어줘야함..4-->
 		<security:intercept-url pattern="/myaccount" access="hasRole('ROLE_MEMBER')" />
-		
-		
-		
 		<security:intercept-url pattern="/member/delete" access="hasRole('ROLE_MEMBER')"/>
-		
+		<security:intercept-url pattern="/book/insertreadbook" access="hasRole('ROLE_SUB')"/>
 		
 		<!-- 이기석 -->
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+	
 		
 		
 		<!-- 김송이 -->
@@ -103,7 +85,8 @@
 			username-parameter="memberEmail"
 			password-parameter="memberPw"
 			login-processing-url="/member/signin"
-			authentication-failure-url="/member/email-signin"
+			
+			
 		/>
 		
 		<!-- 로그아웃 -->

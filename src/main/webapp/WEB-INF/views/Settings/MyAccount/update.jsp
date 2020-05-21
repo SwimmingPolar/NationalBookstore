@@ -29,7 +29,7 @@
           </div>
         </nav>
       </header>
-      <form action="/member/update" method="post" id="updateForm">
+      <form action="/member/update" method="post" id="updateForm" enctype="multipart/form-data">
     <div class="newMyInfo">
         <div class="imageBox">
             <img id="myFaceImage" src="${pageContext.request.contextPath}${member.member.memberProfile}" >
@@ -80,7 +80,7 @@
             		};
             	});
             </script>
-            <input type="text" name="nickName" id="nickName ">
+            <input type="text" name="memberNickName" id="nickName ">
            	<%-- <button type="button" id="nickNameChk">중복확인</button> --%>
         </div>
         <div class="nickNameAlert" ><i class='fas fa-exclamation-circle'></i>중복된 닉네임입니다.</div>
@@ -92,7 +92,7 @@
             <input type="password" name="memberPw" id="inputPw" maxlength="16" onKeyup="inputText(this);" placeholder="비밀번호 입력">
             <!-- <span id="hereChk">영문, 숫자를 포함한 8 ~ 16자 조합으로 입력해 주세요. </span> -->
             <span id="hereText">8자 이상, 16자 이하로 입력해주세요.</span>
-            <input type="password" name="memberPw" id="inputPwAgain" placeholder="비밀번호 재입력" onkeyup="pwRechk();">
+            <input type="password" name="memberPwChk" id="inputPwAgain" placeholder="비밀번호 재입력" onkeyup="pwRechk();">
             <span id="rechkPW"></span>
         </div>
         <hr class="firstLine">
@@ -133,7 +133,7 @@
      <div class="address1">
         <button type="button" id="zipCodeSearch" onclick="zipCodeClick()">검색</button>
         <input type="text" name="memberZipcode" id="homeZipcode" >
-        <input type="text" name="memberaddress" id="homeAdrs">
+        <input type="text" name="memberAddress" id="homeAdrs">
      </div>
      <div class="address2">       
         <input type="text" name="memberDaddress" id="homeDetail" placeholder="상세 주소를 입력해주세요.">
