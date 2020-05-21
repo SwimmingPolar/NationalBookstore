@@ -34,17 +34,24 @@ function flexibleSlidify(sliderWindow) {
   const getCurrentX = () => Number(window.getComputedStyle(slider).transform.split(',')[4]);
   // prevent clicking on 'a' and/or 'button' tag after moving slider
   document.addEventListener('click', event => {
-    if (!isMoved) return;
     event.stopPropagation();
     event.preventDefault();
+
+    if (!isMoved) return;
   });
   document.addEventListener('mousedown', event => {
+    event.preventDefault();
+    event.stopPropagation();
+
     // enable sliding only if event target is descendant of slider
     if (!(slider.contains(event.target))) return;
     isGrabbing = true;
     isMoved = false;
   });
   document.addEventListener('mousemove', event => {
+    event.preventDefault();
+    event.stopPropagation();
+
     if (!isGrabbing) return;
     isMoved = true;
     movementX = event.movementX;
@@ -69,6 +76,10 @@ function flexibleSlidify(sliderWindow) {
     slider.style.transform = 'translateX(' + currentX + 'px)';
   });
   document.addEventListener('mouseup', event => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (!isGrabbing) return;
     isGrabbing = false;
     mouseUpTimestamp = event.timeStamp;
     // time < 1 : add sliding effect when swing mouse to accelerate
@@ -268,16 +279,23 @@ function infiniteSlidify(sliderWindow) {
   });
 
   document.addEventListener('click', event => {
-    if (!isMoved) return;
     event.stopPropagation();
     event.preventDefault();
+
+    if (!isMoved) return;
   });
   document.addEventListener('mousedown', event => {
+    event.stopPropagation();
+    event.preventDefault();
+
     if (!(slider.contains(event.target))) return;
     isGrabbing = true;
     isMoved = false;
   });
   document.addEventListener('mousemove', event => {
+    event.stopPropagation();
+    event.preventDefault();
+
     if (!isGrabbing) return;
     transitionLock = true;
     isMoved = true;
@@ -299,6 +317,9 @@ function infiniteSlidify(sliderWindow) {
     slider.style.transform = 'translateX(' + currentX + 'px)';
   });
   document.addEventListener('mouseup', event => {
+    event.stopPropagation();
+    event.preventDefault();
+
     if (!isGrabbing) return;
     isGrabbing = false;
     mouseUpTimestamp = event.timeStamp;
