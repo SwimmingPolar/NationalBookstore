@@ -15,4 +15,6 @@ public interface MyBookAlarmMapper {
 	public int changeNO(int AlarmNO);
 	
 	public int deleteAlarm(int AlarmNO);
+	
+	public ArrayList<BookAlarmVO> checkAlarm(String memberEmail);
 }
