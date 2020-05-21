@@ -364,7 +364,7 @@ fieldset {
 
 .detailQuestion {
     display:inline-block;
-    /* display:none; */
+    display:none;
     /* background-color:#F3F4F6;  */
     /* display:flex;
     flex-direction: column; */
