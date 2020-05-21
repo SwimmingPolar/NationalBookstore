@@ -13,6 +13,9 @@ font-family: 'Noto Sans KR', sans-serif;
 	width: 700px;
 	margin: 0 auto;
 } */
+body {
+	overflow-y: scroll;
+}
 
 .main-container {
 	font-family: 'Nanum Gothic', 'Montserrat', 'sans-serif';

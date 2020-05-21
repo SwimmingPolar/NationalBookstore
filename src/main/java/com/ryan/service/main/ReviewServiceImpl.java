@@ -60,4 +60,9 @@ public class ReviewServiceImpl implements ReviewService{
 	public Boolean insertGrade(BookGradeVO grade) {
 		return mapper.insertGrade(grade)>0?true:false;
 	}
+
+	@Override
+	public int countMyPost(String memberEmail) {
+		return mapper.countMyPost(memberEmail);
+	}
 }

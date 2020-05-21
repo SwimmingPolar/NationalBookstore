@@ -1,5 +1,6 @@
 package com.ryan.service.member;
 
+import com.ryan.domain.member.MemberAllDataVO;
 import com.ryan.domain.member.MemberVO;
 
 public interface MemberService {
@@ -24,6 +25,12 @@ public interface MemberService {
 	//비밀번호 찾기 할시 비밀번호 변경
 	public boolean forgotPassword(MemberVO member);
 	
+	//회원탈퇴전 회원의 데이터를 리턴
+	public MemberAllDataVO getMemberAllData(MemberVO member);
 	
+	//회원탈퇴전 비밀번호 확인
+	public boolean memberPasswordCheck(MemberVO member);
+	
+	public boolean memberDelete(MemberVO member);
 	
 }

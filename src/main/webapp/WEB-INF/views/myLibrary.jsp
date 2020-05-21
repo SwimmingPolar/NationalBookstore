@@ -38,7 +38,9 @@
 <div class="follow">
 
    	<c:if test="${checkId}">
-   		<button type="button" id="followBtn"> <i class="fas fa-plus-circle"></i> 팔로우 </button>
+   		<c:if test="${followCheck eq false }">
+   			<button type="button" id="followBtn"> <i class="fas fa-plus-circle"></i> 팔로우 </button>
+     	</c:if>
      </c:if>    
     <button type="button" id="categoryAdd" onclick="location.href='interestedBook.jsp'"> <i class="fas fa-plus"></i> 관심 카테고리 </button>
      
@@ -58,7 +60,7 @@
     <ul>
         <li><a href="#"> 읽은 책 <b>( ${readbookcount } )</b> </a></li>
         <li><a href="#"> 좋아요 <b>( ${likeBookcount } )</b> </a></li>
-        <li><a href="#"> 팔로우 <b>( ${myFollower} )</b> </a></li>
+   	    <li><a href="#" id="modalOpen"> 팔로우 <b>( ${myFollower} )</b> </a></li>
     </ul>
 </div>
 <div class="goSubscribe">
@@ -78,7 +80,7 @@
 <div class="secondColumn">
     <input type="radio" name="myPage" id="mybook" checked><label for="mybook"> 내 책</label>
     <input type="radio" name="myPage" id="mybookcart"><label for="mybookcart">책장</label>
-    <input type="radio" name="myPage" id="mypost"><label for="mypost">포스트</label>
+   <c:if test="${checkId eq false}"><input type="radio" name="myPage" id="mypost"><label for="mypost">포스트</label></c:if>
     
      <div class="content one">
         <div class="mybookTitle">
@@ -89,22 +91,17 @@
         <div class="myBookbook">
           <ul>
             <c:forEach var="readbook" items="${readbooklist}">
-            	<li>
-              	<a href="#">
-              	<div class="books"> 
-              	<div class="mybookimage">
-                   <a href="/book/bookdetail?booknumber=${readbook.bookNum }"> 
-                   	<img src="${pageContext.request.contextPath }${readbook.bookThumbnail }" alt="없음">	
-                   </a>
-              	</div>
-              	<div class="names">
-                <strong>${readbook.bookTitle}</strong> <br>
-                <span>${readbook.bookWriter}</span> 
-              	</div>
-              	</div> <!-- books end -->
-           		 </a>
-            	</li>
-          	</c:forEach>
+						<li><a href="/book/bookdetail?booknumber=${readbook.bookNum }">
+							<div class="books">
+								<div class="mybookimage">
+										<img src="${pageContext.request.contextPath }${readbook.bookThumbnail }" alt="없음">
+								</div>
+								<div class="names">
+									<strong>${readbook.bookTitle}</strong> <br> <span>${readbook.bookWriter}</span>
+								</div>
+							</div> <!-- books end -->
+						</a></li>
+			</c:forEach>
           </ul>
    		 </div> <!-- myBookbook end -->  
    		 </c:when>     
@@ -133,7 +130,7 @@
               <button type="button" id="allDelete"> 선택삭제 </button>   
               </c:if>   
             </div>
-            <div class="ebookList"> 
+            <div class="ebookList" id="ebooklist" > 
                  <c:choose>
                      <c:when test="${libbooklist.size() >0 }">
                   <table>
@@ -169,6 +166,7 @@
           </div>
     </div>
     </div>
+    <c:if test="${checkId eq false}">
      <div class="content four">
 
         <div class="mybookTitle">
@@ -220,15 +218,17 @@
                 <span id=starScore> 0 </span> 점
             </div>
 
-            <input type="text" name="postTitle" id="postTitle" placeholder="제목을 입력하세요">
-            <textarea name="post_Content" id="post_Content" placeholder="솔직한 생각을 입력해주세요."></textarea>
+            <input type="text" name="reviewTitle" id="postTitle" placeholder="제목을 입력하세요">
+            <textarea name="reviewContent" id="post_Content" placeholder="솔직한 생각을 입력해주세요."></textarea>
            
             <div class="postEndBtn">
-                <button type="button" id="postSave"> 저장 </button>
+                <input type="submit" id="postSave" value="저장">
                 <button type="button" id="postCancel"> 취소 </button>
             </div>
+             </div> 
           </form>
      </div>
+     </c:if>
 </div>
 </div>
 </div>
@@ -245,25 +245,31 @@
   </span>
 
   <div class = "likeList"> 
-    
-    <!-- foreach 시작 -->
-
-      <ul>
-          <li><img id="myFace" src="../../resources/images/myLibrary/picture1.png" ></li>
-          <li><a> 지혜로운 셀럽 </a>님</li>
-      </ul>
-      <!-- foreach 끝  -->       
+  <ul>
+    <c:choose>
+    <c:when test="${followerList.size() > 0 }">
+	<c:forEach var="foll" items="${followerList }">
+          <li><img id="myFace" src="${pageContext.request.contextPath }/resources/images/myLibrary/picture1.png" ></li>
+          <li><a href="/booklist/myLibList?clickId=${foll.fkMemberFollow2 }"> ${foll.memberNickName} </a>님</li>
+     </c:forEach>
+     </c:when>
+     <c:otherwise>
+     	<li><img id="myFace" src="${pageContext.request.contextPath }/resources/images/myLibrary/picture1.png" ></li>
+     	<li>친애하는 셀럽님이 없습니다</li>
+     </c:otherwise>
+</c:choose>
+          </ul>
     </div>
   </div>
 </div>
-
+</div>
 
 <!-- 별점 등록 -->
 
 <script>
 $(document).ready(function(){
 	$("#followBtn").on('click',function(){
-		var followId = "${followId}";
+		var followId = "${followId.memberEmail}";
 		$.ajax({
 			url:"/follow/requestFollow",
 			type:"get",
@@ -273,13 +279,14 @@ $(document).ready(function(){
 			success:function(data){
 				if(data){
 					alert("팔로우 되었습니다.");
-					
+					//팔로우 하고 나서 버튼 변경..?
+					$("#followBtn").css("display","none");
 				}else{
 					alert("오류가 발생하였습니다. 고객센터로 문의해주세요");
 				}
 			},
 			error:function(){
-				alert("에러");
+				alert("오류가 발생하였습니다. 고객센터로 문의해주세요");
 			}
 		})
 	});
@@ -291,6 +298,7 @@ $(document).ready(function(){
 	
 	$("#allDelete").on('click',function(){
 		var array = [];
+		var memberEmail = "${member.member.memberEmail}";
 		$("input[name=chkbox]:checked").each(function(){
 			array.push($(this).val());
 		});
@@ -299,14 +307,16 @@ $(document).ready(function(){
 			type:"post",
 			traditional:true,
 			data:{
-				booknum:array
+				booknum:array,
+				memberEmail : memberEmail
 			},
 			success:function(data){
 				if(data==null || data == ""){
-					console.log("컨트롤러에서 받은 배열 : "+data);
-					
+					console.log("data 받음");
+					// 데이터가 없을 시 .. 찜 목록이 없습니다. 표시
 				}else{
 					console.log("컨 : "+data);
+					//있으면 데이터 보여주기
 				}
 			},
 			error:function(){
@@ -420,23 +430,43 @@ $('.bookStarScore span').click(function() {
   }
     
   </script>
-  <script>
-    /* var cnt=0; */
-function followClick(){
-  /* cnt++; */
-  var btn = document.getElementById('followBtn');
-  
-    btn.innerHTML="팔로잉";
-    btn.style.backgroundColor="transparent";
-    
- /*  }else {
-    btn.innerHTML="<i class='fas fa-plus-circle'></i> 팔로우";
-    btn.style.backgroundColor="#17769c";
-    
-  } */
 
-}
-  </script>
+
+<!-- <script>
+
+$('#postSave').click(function(){
+    
+    var bookSelect = document.getElementById('bookSelect').value;
+    var postTitle = document.getElementById('postTitle').value;
+    var post_Content= document.getElementById('post_Content').value;
+
+    $.ajax({
+
+            type :"POST", 
+            url : "",
+            data : {"bookSelect" : bookSelect,
+                    "postTitle" : postTitle,
+                    "post_Content" : post_Content
+            },
+            cache : false,
+            contentType : "application/json;charset=UTF-8",
+            success : function(data) {
+                alert("리뷰가 등록되었습니다.");
+
+            },
+            error:function(request, status, error) {
+                aler("code:"+request.status+"message:"+request.responseText+"error:"+error);
+            }
+    });
+
+});
+
+</script> -->
+
+
+</script>
+
+
 <%@ include file="template/footer.jsp" %>
 </body>
 </html>
