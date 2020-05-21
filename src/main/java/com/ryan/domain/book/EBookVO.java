@@ -52,5 +52,8 @@ public class EBookVO{
     //책 소개 추가
     
     //목차 추가
+    
+    //현재일자와 차이 일자
+    private int commingBook;
 	
 }

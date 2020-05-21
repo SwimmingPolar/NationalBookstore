@@ -38,6 +38,7 @@ public interface MainPageService {
 	
 	public ArrayList<EBookVO> getinterests(MemberVO member);
 	
+	public ArrayList<EBookVO> getAlarmBook();
 	//최신 리뷰
 	public ArrayList<CustomReviewVO> getLatestReview();
 	

@@ -251,6 +251,11 @@
 		</where>
 	</select>
 	
+	<select id="getAlarmBook" resultType="com.ryan.domain.book.EBookVO">
+	<![CDATA[
+		SELECT ebook.*, to_char(book_pb_date,'YYYYMMDD') - to_char(sysdate,'YYYYMMDD') commingBook FROM ebook WHERE to_char(book_pb_date,'YYYYMMDD') >= to_char(sysdate,'YYYYMMDD')
+	]]>
+	</select>
 	<select id="getLatestReview" resultType="com.ryan.domain.custom.CustomReviewVO">
 		SELECT * FROM
 		(
@@ -262,7 +267,7 @@
 		)
 		<where>
 			<![CDATA[
-				rownum <= 5
+				rownum <= 13
 			]]>
 		</where>
 	</select>

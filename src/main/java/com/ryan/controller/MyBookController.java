@@ -126,8 +126,8 @@ public class MyBookController {
 	
 	//알람 받을 책 등록
 	@RequestMapping("/alarm")
-	public @ResponseBody Boolean requestAlarm(BookAlarmVO vo, @RequestParam("memberEmail") String memberEmail) {
-		return aservice.requestAlarm(vo, memberEmail);
+	public @ResponseBody Boolean requestAlarm(@RequestParam("booknumber") int booknumber, @RequestParam("memberEmail") String memberEmail) {
+		return aservice.requestAlarm(booknumber, memberEmail);
 	}
 	
 	//출판 되어 알람시켜줘야 할 책 

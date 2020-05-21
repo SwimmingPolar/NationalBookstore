@@ -130,8 +130,6 @@ public class DetailBookServiceImpl implements DetailBookService{
 		ArrayList<BookLikeVO> list = mapper.bookLikeList(booknumber);
 			if(!list.isEmpty()) {
 				for(int i=0; i<list.size(); i++) {
-					log.info("memberEmail : "+memberEmail);
-					log.info("getmemberEmail : "+list.get(i).getMemberEmail());
 					if(list.get(i).getMemberEmail().equals(memberEmail)) {
 						mapper.deleteLike(list.get(i).getLikeNum());
 						flag = true;

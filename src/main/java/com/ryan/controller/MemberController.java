@@ -146,12 +146,12 @@ public class MemberController {
 	
 	@PostMapping("/update")
 	public String memberInfoUpdate(MemberVO member) {
-		
-		if (memberService.memberUpdate(member)) {
-			log.info("controller member: " + member.getMemberPw());
-		} else {
-			log.info("member..!= null!");
-		}
+		log.info(member);
+//		if (memberService.memberUpdate(member)) {
+//			log.info("controller member: " + member.getMemberPw());
+//		} else {
+//			log.info("member..!= null!");
+//		}
 		return "업데이트 완료후 보여줄 페이지 경로";
 	}
 	
