@@ -59,30 +59,36 @@
         </div>
         <hr class="firstLine">
         <!-- updateLists end -->
-       <div class="wrapperTwo">
-        <p>이메일</p>
-        <div class="updateMail">    
-        <div class="input">
-            <input type="text" name="mailAdrsB" id="mailAdrsA" placeholder="이메일 입력">
-        </div> 
-        <span> @ </span>    
-        <div class="dis">
-            <input type="text" name="mailAdrsA" id="mailAdrsB" placeholder="직접 입력" disabled>
-        </div>       
-        </div>
-        <div class="mailChoice">
-            <select name="mchoice" id="mchoice" onchange="clickHere();">
-                <option value="hotmail.com">hotmail.com</option>
-                <option value="naver.com">naver.com</option>
-                <option value="gmail.com">gmail.com</option>
-                <option value="hanmail.com">hanmail.net</option>
-                <option value="nate.com">nate.com</option>
-                <option value="selfInput" id="selfInput" selected>직접입력</option>
-            </select>
-         </div>    
-        <!-- mailChoice end -->
-        <hr class="secondLine">        
-       </div>
+        <div class="wrapperTwo">
+            <p>핸드폰 번호</p>
+            <div class="phoneUpdate">
+            <input type="text" name="phoneNum" id="phoneNum">
+            <span> ※ ' - ' 없이 숫자로만 입력해주세요. </span>
+            </div>
+    
+            <!-- <div class="updateMail">    
+            <div class="input">
+                <input type="text" name="mailAdrsB" id="mailAdrsA" placeholder="이메일 입력">
+            </div> 
+            <span> @ </span>    
+            <div class="dis">
+                <input type="text" name="mailAdrsA" id="mailAdrsB" placeholder="직접 입력" disabled>
+            </div>       
+            </div>
+            <div class="mailChoice">
+                <select name="mchoice" id="mchoice" onchange="clickHere();">
+                    <option value="hotmail.com">hotmail.com</option>
+                    <option value="naver.com">naver.com</option>
+                    <option value="gmail.com">gmail.com</option>
+                    <option value="hanmail.com">hanmail.net</option>
+                    <option value="nate.com">nate.com</option>
+                    <option value="selfInput" id="selfInput" selected>직접입력</option>
+                </select>
+             </div>     -->
+             
+            <!-- mailChoice end -->
+            <hr class="secondLine">        
+           </div>
     <!-- wrapperTwo end -->
        <div class="wrapperFour">
         <p> 주소 </p>

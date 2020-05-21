@@ -134,7 +134,7 @@
                  <c:choose>
                      <c:when test="${libbooklist.size() >0 }">
                   <table>
-                         <c:forEach var="book" items="${libbooklist}">
+                     <c:forEach var="book" items="${libbooklist}">
                           <tr>
                   <td><input type="checkbox" name="chkbox" id="chkbox" value="${book.bookNum }"></td>
                   <td>
@@ -220,9 +220,9 @@
 
             <input type="text" name="reviewTitle" id="postTitle" placeholder="제목을 입력하세요">
             <textarea name="reviewContent" id="post_Content" placeholder="솔직한 생각을 입력해주세요."></textarea>
-
+           
             <div class="postEndBtn">
-                <button type="button" id="postSave"> 저장 </button>
+                <input type="submit" id="postSave" value="저장">
                 <button type="button" id="postCancel"> 취소 </button>
             </div>
              </div> 
@@ -230,7 +230,8 @@
      </div>
      </c:if>
 </div>
-
+</div>
+</div>
 <!-- 팔로우 모달창 -->
 <div id ="modalGo" class="modal">
     
@@ -278,8 +279,8 @@ $(document).ready(function(){
 			success:function(data){
 				if(data){
 					alert("팔로우 되었습니다.");
-					//팔로우 하고 나서 버튼 변경..?
-					$("#followBtn").css("display","none");
+					//$("#followBtn").css("display","none");
+					$("#followBtn").text("팔로우취소");
 				}else{
 					alert("오류가 발생하였습니다. 고객센터로 문의해주세요");
 				}
@@ -296,6 +297,7 @@ $(document).ready(function(){
 $(document).ready(function(){
 	
 	$("#allDelete").on('click',function(){
+		var count=0;
 		var array = [];
 		var memberEmail = "${member.member.memberEmail}";
 		$("input[name=chkbox]:checked").each(function(){
@@ -310,12 +312,30 @@ $(document).ready(function(){
 				memberEmail : memberEmail
 			},
 			success:function(data){
-				if(data==null || data == ""){
-					console.log("data 받음");
-					// 데이터가 없을 시 .. 찜 목록이 없습니다. 표시
-				}else{
-					console.log("컨 : "+data);
+				if(data ==null || data == ""){
+					console.log("data 받음"); //다 삭제했을때 
+					// 데이터가 없을 시 .. 찜 목록이 없습니다. 표tl
+					$('#ebooklist tbody').html('');
+					$('#ebooklist').append(" <span> <i class='fas fa-books'></i></span>찜 목록이 없습니다");
+				}else if(data.length > 0){
 					//있으면 데이터 보여주기
+					$('#ebooklist tbody').html('');
+					for(var index=0;index<data.length;index++) {
+		 				$('#ebooklist tbody').append("<tr>"
+		               +"<td>"
+		 						+"<input type='checkbox' name='chkbox' id='chkbox' value="+data[index].bookNum +"'></td>"
+		               +"<td>  <a href='/book/bookdetail?booknumber="+data[index].bookNum+"'>" 
+		               +"<img src='"+${pageContext.request.contextPath }data[index].bookThumbnail +"'alt='없음'>"
+		               +"</a> </td><td> <ul><li> <strong>"+data[index].bookTitle+"</strong> </li>"
+		               +"<li> <a>"+data[index].bookWriter+"지음</a>  </li>"
+		               +"<li> <span>"+data[index].bookPublisher+"</span></li>"
+		               +"</ul>"
+		               +"</td>"
+		               +"<td><button type='button' id='goRead'>바로보기</button>"
+		               +"<a href='/booklist/deleteLibList?booknum="+data[index].bookNum +"' id=eachDelete>삭제</a></td>"
+		            	+"</tr>");
+		 			}
+			                     
 				}
 			},
 			error:function(){
@@ -398,7 +418,7 @@ $('.bookStarScore span').click(function() {
 <script>
   var modal = document.getElementById('modalGo');
   var openBtn = document.getElementById('modalOpen');
-  var closeBtn = document.getElementsByClassName('close')[0]; 
+  var closeBtn = document.getElementsByClassName('modalCloseBtn'); 
   openBtn.onclick = function() {
      modal.style.display = "block";
   }
@@ -429,23 +449,43 @@ $('.bookStarScore span').click(function() {
   }
     
   </script>
-  <script>
-    /* var cnt=0; */
-function followClick(){
-  /* cnt++; */
-  var btn = document.getElementById('followBtn');
-  
-    btn.innerHTML="팔로잉";
-    btn.style.backgroundColor="transparent";
-    
- /*  }else {
-    btn.innerHTML="<i class='fas fa-plus-circle'></i> 팔로우";
-    btn.style.backgroundColor="#17769c";
-    
-  } */
 
-}
-  </script>
+
+<!-- <script>
+
+$('#postSave').click(function(){
+    
+    var bookSelect = document.getElementById('bookSelect').value;
+    var postTitle = document.getElementById('postTitle').value;
+    var post_Content= document.getElementById('post_Content').value;
+
+    $.ajax({
+
+            type :"POST", 
+            url : "",
+            data : {"bookSelect" : bookSelect,
+                    "postTitle" : postTitle,
+                    "post_Content" : post_Content
+            },
+            cache : false,
+            contentType : "application/json;charset=UTF-8",
+            success : function(data) {
+                alert("리뷰가 등록되었습니다.");
+
+            },
+            error:function(request, status, error) {
+                aler("code:"+request.status+"message:"+request.responseText+"error:"+error);
+            }
+    });
+
+});
+
+</script> -->
+
+
+</script>
+
+
 <%@ include file="template/footer.jsp" %>
 </body>
 </html>
