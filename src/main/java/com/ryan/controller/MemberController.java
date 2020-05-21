@@ -271,6 +271,8 @@ public class MemberController {
 		
 		KakaoPayApprovalVO kakaoPayApprovalVO = paymentService.paymentComplete(pg_token, member);
 		
+		log.info(kakaoPayApprovalVO);
+		
 		if(paymentService.insertPaymentInfo(member.getMemberEmail(), kakaoPayApprovalVO.getSid(),kakaoPayApprovalVO.getTid(),kakaoPayApprovalVO.getAmount().getTotal()+"")) {
 			if(revenueService.insertRevenue()) {
 				model.addAttribute("info", kakaoPayApprovalVO);
