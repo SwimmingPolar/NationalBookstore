@@ -18,7 +18,7 @@ public interface ReviewService {
 	
 	public Boolean updateReview(ReviewVO review);
 	
-	public ArrayList<ReviewVO> myReviewList(Authentication auth);
+	public ArrayList<ReviewVO> myReviewList(String clickId);
 	
 	public Boolean insertGrade(BookGradeVO grade);
 	

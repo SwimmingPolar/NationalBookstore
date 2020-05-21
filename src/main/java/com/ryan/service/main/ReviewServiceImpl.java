@@ -15,50 +15,51 @@ import com.ryan.domain.security.RyanMember;
 import com.ryan.mapper.ReviewMapper;
 
 @Service
-public class ReviewServiceImpl implements ReviewService{
+public class ReviewServiceImpl implements ReviewService {
 	@Autowired
 	private ReviewMapper mapper;
 
 	@Override
 	public Boolean insertReview(ReviewVO review) {
-		int flag=0;
-		if(mapper.duplication(review)>0)
-			return false;
-		else {
-			flag=(int)mapper.searchOrder(review)+(int)mapper.searchRead(review);
-			if(flag>0) {
-				return mapper.insertReview(review)>1?true : false;
-			}else
-				return false;
-		}
+		int flag = 0;
+		/*
+		 * if(mapper.duplication(review)==1) return false; else {
+		 * if(mapper.searchOrder(review)==1&&mapper.searchRead(review)==1) { return
+		 * false; }else { mapper.insertReview(review);
+		 * 
+		 * BookGradeVO vo=new BookGradeVO(); vo.setBookNum(review.getBookNum());
+		 * vo.setMemberEmail(review.getMemberEmail()); vo.setGradeScore(grade);
+		 * mapper.insertGrade(vo);
+		 * 
+		 * return true; } }
+		 */
+		return mapper.insertReview(review) > 0 ? true : false;
 	}
 
 	@Override
 	public Boolean delecteReview(ReviewVO review) {
-		if(mapper.duplication(review)>0)
-			return mapper.deleteReview(review)==1?true:false;
+		if (mapper.duplication(review) > 0)
+			return mapper.deleteReview(review) == 1 ? true : false;
 		else
 			return false;
 	}
 
 	@Override
 	public Boolean updateReview(ReviewVO review) {
-		if(mapper.duplication(review)>0)
-			return mapper.updateReview(review)==1?true:false;
+		if (mapper.duplication(review) > 0)
+			return mapper.updateReview(review) == 1 ? true : false;
 		else
 			return false;
 	}
 
 	@Override
-	public ArrayList<ReviewVO> myReviewList(Authentication auth) {
-		RyanMember ryanmember = (RyanMember) auth.getPrincipal();
-		MemberVO member = (MemberVO) ryanmember.getMember();
-		return mapper.myReviewList(member.getMemberEmail());
+	public ArrayList<ReviewVO> myReviewList(String clickId) {
+		return mapper.myReviewList(clickId);
 	}
 
 	@Override
 	public Boolean insertGrade(BookGradeVO grade) {
-		return mapper.insertGrade(grade)>0?true:false;
+		return mapper.insertGrade(grade) > 0 ? true : false;
 	}
 
 	@Override

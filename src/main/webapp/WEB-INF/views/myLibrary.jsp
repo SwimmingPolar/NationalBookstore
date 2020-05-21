@@ -134,7 +134,7 @@
                  <c:choose>
                      <c:when test="${libbooklist.size() >0 }">
                   <table>
-                         <c:forEach var="book" items="${libbooklist}">
+                     <c:forEach var="book" items="${libbooklist}">
                           <tr>
                   <td><input type="checkbox" name="chkbox" id="chkbox" value="${book.bookNum }"></td>
                   <td>
@@ -178,34 +178,37 @@
             
         <div class="myPostCheck" id="myPostCheck">
          <c:choose>
-          <c:when test="${myreviewlist.size() >0 }">
+          <c:when test="${myreviewlist.size() > 0}">
           <table>
           <c:forEach var="review" items="${myreviewlist}">
                 <tr>
                     <th> 도서명 </th>	
-                    <th> 내용 </th>
                     <th> 등록날짜 </th>
                 </tr>
                 <tr>
-                	<td>${review.reviewTitle}<td>
-                    <td>
-                    	<textarea name="postText" id="postText" readonly>  
+                	<td>${review.reviewTitle}</td>
+                  <td>${review.reviewRegdate}</td>
+                </tr>   
+                <tr> 
+                    <td colspan="2" style="border-bottom: 2px solid gray; padding-bottom:10px;">
+                      <input type="text" name="postTitleChk" id="postTitleChk" 
+                      value="${review.reviewTitle}" readonly>
+                      <textarea name="postText" id="postText" readonly>  
                             ${review.reviewContent}
                         </textarea>
                     </td>
-                    <td>${review.reviewRegdate}<td>
-                </tr>
-             		  </c:forEach>
-           	 		</table>
-           	 	</c:when>
-	     	 </c:choose> 
-        </div>
+                	</tr>
+           </c:forEach>
+           </table>
+         </c:when>
+	   </c:choose> 
+    </div>
 
         <form id="postRegister" action="/review/write" method="get">  
         <div class="postInsert" id="postInsert">
-            <select name="bookSelect" id="bookSelect">
+            <select name="bookNum" id="bookSelect">
               <c:forEach var="list" items ="${libbooklist}">
-                <option value="bookChoice"> ${list.bookTitle} </option>
+                <option value="${list.bookNum}" > ${list.bookTitle} </option>
               </c:forEach>
             </select>
             <!-- <div class ="bookStarScore">
@@ -220,7 +223,6 @@
 
             <input type="text" name="reviewTitle" id="postTitle" placeholder="제목을 입력하세요">
             <textarea name="reviewContent" id="post_Content" placeholder="솔직한 생각을 입력해주세요."></textarea>
-           
             <div class="postEndBtn">
                 <input type="submit" id="postSave" value="저장">
                 <button type="button" id="postCancel"> 취소 </button>
@@ -281,8 +283,9 @@ $(document).ready(function(){
 					alert("팔로우 되었습니다.");
 					//팔로우 하고 나서 버튼 변경..?
 					$("#followBtn").css("backgroundColor","transparent");
-					
-					
+					//$("#followBtn").css("display","none");
+					$("#followBtn").text("팔로잉");
+
 				}else{
 					alert("오류가 발생하였습니다. 고객센터로 문의해주세요");
 				}
@@ -293,12 +296,14 @@ $(document).ready(function(){
 		})
 	});
 });
+
 </script>
 
 <script>
 $(document).ready(function(){
 	
 	$("#allDelete").on('click',function(){
+		var count=0;
 		var array = [];
 		var memberEmail = "${member.member.memberEmail}";
 		$("input[name=chkbox]:checked").each(function(){
@@ -313,12 +318,30 @@ $(document).ready(function(){
 				memberEmail : memberEmail
 			},
 			success:function(data){
-				if(data==null || data == ""){
-					console.log("data 받음");
-					// 데이터가 없을 시 .. 찜 목록이 없습니다. 표시
-				}else{
-					console.log("컨 : "+data);
+				if(data ==null || data == ""){
+					console.log("data 받음"); //다 삭제했을때 
+					// 데이터가 없을 시 .. 찜 목록이 없습니다. 표tl
+					$('#ebooklist tbody').html('');
+					$('#ebooklist').append(" <span> <i class='fas fa-books'></i></span>찜 목록이 없습니다");
+				}else if(data.length > 0){
 					//있으면 데이터 보여주기
+					$('#ebooklist tbody').html('');
+					for(var index=0;index<data.length;index++) {
+		 				$('#ebooklist tbody').append("<tr>"
+		               +"<td>"
+		 						+"<input type='checkbox' name='chkbox' id='chkbox' value="+data[index].bookNum +"'></td>"
+		               +"<td>  <a href='/book/bookdetail?booknumber="+data[index].bookNum+"'>" 
+		               +"<img src='"+${pageContext.request.contextPath }data[index].bookThumbnail +"'alt='없음'>"
+		               +"</a> </td><td> <ul><li> <strong>"+data[index].bookTitle+"</strong> </li>"
+		               +"<li> <a>"+data[index].bookWriter+"지음</a>  </li>"
+		               +"<li> <span>"+data[index].bookPublisher+"</span></li>"
+		               +"</ul>"
+		               +"</td>"
+		               +"<td><button type='button' id='goRead'>바로보기</button>"
+		               +"<a href='/booklist/deleteLibList?booknum="+data[index].bookNum +"' id=eachDelete>삭제</a></td>"
+		            	+"</tr>");
+		 			}
+			                     
 				}
 			},
 			error:function(){
@@ -399,9 +422,11 @@ $('.bookStarScore span').click(function() {
 </script> 
 
 <script>
+
   var modal = document.getElementById('modalGo');
   var openBtn = document.getElementById('modalOpen');
   var closeBtn = document.getElementById('modalCloseBtn'); 
+
   openBtn.onclick = function() {
      modal.style.display = "block";
   }
@@ -464,9 +489,6 @@ $('#postSave').click(function(){
 });
 
 </script> -->
-
-
-</script>
 
 
 <%@ include file="template/footer.jsp" %>

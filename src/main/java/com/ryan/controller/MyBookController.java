@@ -90,6 +90,7 @@ public class MyBookController {
 		model.addAttribute("likeBookcount", service.countLikeBook(clickId,auth2));
 		model.addAttribute("myFollower",fservice.countFollow(clickId,auth2)); //내가 팔로우한사람
 		model.addAttribute("followerList", fservice.getMyFollowing(clickId, auth2));
+		model.addAttribute("myreviewlist", rservice.myReviewList(clickId));
 		
 		/*
 		 * model.addAttribute("myreviewlist",

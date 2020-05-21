@@ -29,26 +29,25 @@ public class ReviewController {
 	
 	//리뷰를 작성하고 입력 요청하면 처리
 	@RequestMapping("/write")
-	public String insertEbookReview(@ModelAttribute("review") ReviewVO review,@ModelAttribute("grade") BookGradeVO grade,Authentication auth,Model model) {
-		//HttpServletRequest request
-		/*
-		 * HttpSession session = request.getSession(); MemberVO member = (MemberVO)
-		 * session.getAttribute("ryanMember");
-		 */
+	public String insertEbookReview(@ModelAttribute("review") ReviewVO review,Authentication auth,Model model) {
 		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
 		MemberVO member = ryanMember.getMember();
 		String memberEmail=member.getMemberEmail();
+		review.setMemberEmail(memberEmail);
 		
-		if(memberEmail.equals((String)review.getMemberEmail())&&grade!=null) {
-			service.insertReview(review);
-			service.insertGrade(grade);
-			model.addAttribute("message", "입력 성공");
-		}else {
-			model.addAttribute("message", "본인이 작성한 리뷰가 아닙니다");
-			
-		}
 		
-		return "myLibrary";
+		
+		boolean x=service.insertReview(review);
+		/*
+		 * if(memberEmail.equals((String)review.getMemberEmail())) {
+		 * System.out.println("여기"); boolean x=service.insertReview(review);
+		 * model.addAttribute("message", "입력 성공"); }else { model.addAttribute("message",
+		 * "본인이 작성한 리뷰가 아닙니다");
+		 * 
+		 * }
+		 */
+		
+		return "redirect:/booklist/myLibList";
 	}
 	
 	@RequestMapping("/delete")

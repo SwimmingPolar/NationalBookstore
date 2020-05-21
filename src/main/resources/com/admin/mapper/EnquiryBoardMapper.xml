@@ -90,6 +90,10 @@ INSERT INTO reply
 		ORDER BY reply_num
 </select>
 
+<select id="selectEqList">
+	
+</select>
+
 <select id="selectLastSeqNum" parameterType="com.admin.domain.board.EnquiryBoardVO">
 		SELECT * FROM enquiry_Board
 		WHERE member_email = #{memberEmail}

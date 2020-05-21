@@ -41,7 +41,7 @@
                 	
                 	<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
                    	<input type="hidden" name="price" value="26900">
-                    <button type="button" id="innerTwo">
+                    <button type="submit" id="innerTwo">
                         <span> 3개월 </span>
                         <span> 26,900원 <i class="fal fa-chevron-right"></i></span>
                     </button>
