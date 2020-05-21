@@ -616,7 +616,6 @@
               </button>
             </li>
             </c:forEach>
-       
           </ul>
         </div>
       </section>

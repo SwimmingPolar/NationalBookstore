@@ -921,6 +921,7 @@
 .coming-soon li {
   flex: 1;
   padding-right: 10px;
+  max-width: 110px;
 }
 
 .coming-soon a {
@@ -947,8 +948,8 @@
 }
 .coming-soon .text-wrapper strong {
   display: block;
-  font-family: 'Nanum Gothic', 'Roboto', 'Noto Sans KR', sans-serif;
-  color: rgba(0, 0, 0, 0.75);
+  font-family: '맑은 고딕', 'Roboto', 'Noto Sans KR', sans-serif;
+  color: rgba(0, 0, 0, 0.65);
   font-size: 18px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -957,13 +958,14 @@
 }
 .coming-soon .text-wrapper span {
   display: block;
-  font-family: 'Nanum Gothic', 'Roboto', 'Noto Sans KR', sans-serif;
-  color: rgba(0, 0, 0, 0.65);
+  font-family: '맑은 고딕', 'Roboto', 'Noto Sans KR', sans-serif;
+  color: rgba(0, 0, 0, 0.45);
   font-size: 15px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   word-break: break-all;
+  margin-top: 3px;
 }
 
 .coming-soon .overlay {
@@ -1013,6 +1015,9 @@
   overflow: hidden;
   width: 100%;
 }
+.coming-soon button.alarmSet {
+  background-color: var(--emphasis-color);
+}
 
 .coming-soon .button-content-wrapper {
   display: flex;
@@ -1040,6 +1045,9 @@
   font-size: 13px;
   letter-spacing: 1px;
   color: var(--emphasis-color);
+}
+.coming-soon button.alarmSet span {
+  color: #fff;
 }
 
 .recent-posts .content-wrapper {
