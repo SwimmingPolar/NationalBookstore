@@ -173,7 +173,7 @@
      <div class="content four">
 
         <div class="mybookTitle">
-        	   나의 포스트 <a>0</a> 개
+        	   나의 포스트 <a>${reviewcnt}</a> 개
         </div>
         <div class ="postInputBtn">
         <button type= "button" id = postInput onclick="openNewPost()"> <i class="fas fa-pencil-alt"></i> 포스트 작성</button>
@@ -192,7 +192,7 @@
                 <tr>
                 	<td>${review.bookTitle}</td>
                   <td>${review.reviewRegdate}</td>
-                  <td><a href="#">삭제</a></td>
+                  	<td> <a href="/review/delete?reviewNum=${review.reviewNum}">삭제</a></td>
                 </tr>   
                 <tr> 
                     <td colspan="3" style="border-bottom: 2px solid gray; padding-bottom:10px;">
