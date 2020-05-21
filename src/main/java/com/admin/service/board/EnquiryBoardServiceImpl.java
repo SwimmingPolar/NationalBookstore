@@ -110,7 +110,7 @@ public class EnquiryBoardServiceImpl implements EnquiryBoardService{
 
 	@Override
 	public boolean replyUpdate(ReplyVO reply) {
-		return mapper.updateReply(reply)>0?true: false;
+		return mapper.updateReply(reply) > 0 ? true: false;
 	}
 
 	@Override

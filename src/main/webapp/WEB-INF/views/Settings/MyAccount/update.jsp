@@ -90,7 +90,6 @@
         <div class="wrapperOne_half">
             <p>비밀번호 </p>
             <input type="password" name="memberPw" id="inputPw" maxlength="16" onKeyup="inputText(this);" placeholder="비밀번호 입력">
-            <!-- <span id="hereChk">영문, 숫자를 포함한 8 ~ 16자 조합으로 입력해 주세요. </span> -->
             <span id="hereText">8자 이상, 16자 이하로 입력해주세요.</span>
             <input type="password" name="memberPw" id="inputPwAgain" placeholder="비밀번호 재입력" onkeyup="pwRechk();">
             <span id="rechkPW"></span>
@@ -206,7 +205,7 @@
         // var aa = document.getElementById('');
         
         if(confirm('기본이미지로 변경하시겠습니까?')==true) {
-        document.getElementById('myFaceImage').src="../../resources/images/myLibrary/picture1.png";
+        document.getElementById('myFaceImage').src="../../../../resources/images/myLibrary/picture1.png";
         }else {
             return false;
         }

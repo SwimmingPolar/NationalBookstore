@@ -132,14 +132,14 @@
                     <tr>
                         <td>배송 문의</td>
                         <td><a href="#"> 달빛 마신 소녀</a></td>
-                        <td><a href="#detailQuestion" id ="titleClick" rel="detailQuestion">언제 도착하나요?</a></td>
+                        <td><a href="#detailQuestion" id ="titleClick">언제 도착하나요?</a></td>
                         <td>2020.05.01</td>
                         <td>답변완료</td>
                         <td><button type="button" id=deleteBtn><i class="fas fa-trash-alt"></i></button></td>
                     </tr>
                     <tr>
                         <td colspan="6"> 
-                        <div class="detailQuestion" id="detailQuestion">
+                        <div class="detailQuestion">
                             <div class="question">
                                 <strong><i class="fab fa-quora"></i></strong> 
                                 <p> 배송이 대체 언제오나요~~~~~~~~~~~~
@@ -229,18 +229,16 @@ $(document).ready(function(){
 </script> -->
 
 <script>
-$(document).ready(function(){
-    $('.detailQuestion').hide();
 
-    $('#titleClick').click(function(){
-       $('#titleClick').removeclass("active");
-       $(this).addClass("active");
-       $('.detailQuestion').hide();
-       var open = $(this).attr('rel');
-       $('#'+open).fadeIn();
+    $(document).on("click", "#titleClick", function(){
+        if($(".detailQuestion").css("display")=="none"){
+            $(".detailQuestion").show();
+        }else {
+            $(".detailQuestion").hide();
+        }
     });
-});
-
-</script>
+    
+    </script>
+    
 </body>
 </html>

@@ -187,13 +187,15 @@
                 <tr>
                     <th> 도서명 </th>	
                     <th> 등록날짜 </th>
+                    <th> 삭제 </th>
                 </tr>
                 <tr>
                 	<td>${review.bookTitle}</td>
                   <td>${review.reviewRegdate}</td>
+                  <td><a href="#">삭제</a></td>
                 </tr>   
                 <tr> 
-                    <td colspan="2" style="border-bottom: 2px solid gray; padding-bottom:10px;">
+                    <td colspan="3" style="border-bottom: 2px solid gray; padding-bottom:10px;">
                       <input type="text" name="postTitleChk" id="postTitleChk" 
                       value="${review.reviewTitle}" readonly>
                       <textarea name="postText" id="postText" readonly>  
