@@ -60,6 +60,7 @@ public class MainController {
 		model.addAttribute("todayBook", service.getTodayBookList());
 		model.addAttribute("bestReadBook", service.getBestReadBook());
 		model.addAttribute("disCountBook", service.getDisCountBook());
+		model.addAttribute("AlarmBook", service.getAlarmBook());
 		model.addAttribute("latestReview", service.getLatestReview());
 		model.addAttribute("lastestReview",service.getLatestReview());
 		

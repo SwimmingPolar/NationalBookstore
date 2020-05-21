@@ -37,7 +37,7 @@
                 </li>
           </ul>
       </div>
-    <form action="/board/enquiry/writeForm" method="POST">
+    <form onsubmit="/board/enquiry/writeForm" method="POST" id="inputForm">
          <div class="contentBox one" id="one">
             <div class="goQuestion">
               <div id="selectTopic">
@@ -111,7 +111,7 @@
         </div>
         <div class="btn">
             <button type="button" id="preBtn" onclick="history.back()">이전</button>
-            <button type="button" id="finishBtn">문의하기</button>
+            <button type="button" id="finishBtn" onclink="inputFinish()">문의하기</button>
         </div>
         </div>
          <!--one end  -->
@@ -132,14 +132,14 @@
                     <tr>
                         <td>배송 문의</td>
                         <td><a href="#"> 달빛 마신 소녀</a></td>
-                        <td><a href="#detailQuestion" id ="titleClick" rel="detailQuestion">언제 도착하나요?</a></td>
+                        <td><a href="#detailQuestion" id ="titleClick">언제 도착하나요?</a></td>
                         <td>2020.05.01</td>
                         <td>답변완료</td>
                         <td><button type="button" id=deleteBtn><i class="fas fa-trash-alt"></i></button></td>
                     </tr>
                     <tr>
                         <td colspan="6"> 
-                        <div class="detailQuestion" id="detailQuestion">
+                        <div class="detailQuestion">
                             <div class="question">
                                 <strong><i class="fab fa-quora"></i></strong> 
                                 <p> 배송이 대체 언제오나요~~~~~~~~~~~~
@@ -229,18 +229,31 @@ $(document).ready(function(){
 </script> -->
 
 <script>
-$(document).ready(function(){
-    $('.detailQuestion').hide();
 
-    $('#titleClick').click(function(){
-       $('#titleClick').removeclass("active");
-       $(this).addClass("active");
-       $('.detailQuestion').hide();
-       var open = $(this).attr('rel');
-       $('#'+open).fadeIn();
+    $(document).on("click", "#titleClick", function(){
+        if($(".detailQuestion").css("display")=="none"){
+            $(".detailQuestion").show();
+        }else {
+            $(".detailQuestion").hide();
+        }
     });
-});
+    
+    </script>
 
+<script>
+    function inputFinish(){
+        var infoChk =document.getElementById('infoChk');
+        var chkbox = document.getElementById("chkbox");
+
+        if(chkbox.checked==false){
+                alert("개인정보 수집 및 이용에 동의해주세요.");
+                return;
+        }else{
+            alert("등록 완료되었습니다.")
+        document.getElementById('inputForm').submit();
+        }
+    }
 </script>
+    
 </body>
 </html>

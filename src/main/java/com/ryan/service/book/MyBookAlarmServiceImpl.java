@@ -26,9 +26,27 @@ public class MyBookAlarmServiceImpl implements MyBookAlarmService {
 	
 	//알람요청
 	@Override
-	public Boolean requestAlarm(BookAlarmVO vo, String memberEmail) {
-		vo.setFkMemberAlarm(memberEmail);
-		return mapper.requestAlarm(vo)==1 ? true : false;
+	public Boolean requestAlarm(int booknumber, String memberEmail) {
+		Boolean flag=false;
+		BookAlarmVO vo = new BookAlarmVO();
+		ArrayList<BookAlarmVO> list = mapper.checkAlarm(memberEmail);
+		if(!list.isEmpty()) {
+			vo.setFkBookAlarm(booknumber);
+			vo.setFkMemberAlarm(memberEmail);
+			for(int i=0; i<list.size(); i++) {
+				if(list.get(i).getFkMemberAlarm().equals(memberEmail) && list.get(i).getFkBookAlarm()==booknumber) { //북 넘버가 같고 이메일이 같을 때 삭제
+					mapper.deleteAlarm(list.get(i).getAlarmNo());	//false 리턴
+					break;
+				}else {	//북 넘버가 같지 않거나 이메일이 다를때 
+					return mapper.requestAlarm(vo)==1 ? true : false;
+				}
+			}	
+		}else {
+			vo.setFkBookAlarm(booknumber);
+			vo.setFkMemberAlarm(memberEmail);
+			return mapper.requestAlarm(vo)==1 ? true : false;
+		}
+		return flag;
 	}
 
 	@Override
@@ -51,7 +69,6 @@ public class MyBookAlarmServiceImpl implements MyBookAlarmService {
 			}else if(vo.getBookPbDate() >= 2) {
 				mapper.deleteAlarm(vo.getAlarmNo());
 			}else {
-				log.info("모름");
 			}
 		}
 	}

@@ -12,7 +12,7 @@
     <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
     <script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
     <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
-    <link rel="stylesheet" href="../../resources/styles/reset.css" />
+    <link rel="stylesheet" href="../../../../resources/styles/reset.css" />
     <link rel="stylesheet" href="../../../../resources/styles/common.css" />
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
@@ -90,7 +90,6 @@
         <div class="wrapperOne_half">
             <p>비밀번호 </p>
             <input type="password" name="memberPw" id="inputPw" maxlength="16" onKeyup="inputText(this);" placeholder="비밀번호 입력">
-            <!-- <span id="hereChk">영문, 숫자를 포함한 8 ~ 16자 조합으로 입력해 주세요. </span> -->
             <span id="hereText">8자 이상, 16자 이하로 입력해주세요.</span>
             <input type="password" name="memberPwChk" id="inputPwAgain" placeholder="비밀번호 재입력" onkeyup="pwRechk();">
             <span id="rechkPW"></span>
@@ -206,7 +205,7 @@
         // var aa = document.getElementById('');
         
         if(confirm('기본이미지로 변경하시겠습니까?')==true) {
-        document.getElementById('myFaceImage').src="../../resources/images/myLibrary/picture1.png";
+        document.getElementById('myFaceImage').src="../../../../resources/images/myLibrary/picture1.png";
         }else {
             return false;
         }
@@ -258,9 +257,9 @@
        function zipCodeClick() {
         new daum.Postcode({
             oncomplete: function(data) {
-                $('[name=homeZipcode]').val(data.zonecode);
-                $('[name=homeAdrs]').val(data.address);
-                $('[name=homeDetail]').val(data.buildingName);
+                $('[name=memberZipcode]').val(data.zonecode);
+                $('[name=memberaddress]').val(data.address);
+                $('[name=memberDaddress]').val(data.buildingName);
             }
         }).open();
      }

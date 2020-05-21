@@ -14,7 +14,7 @@ public interface ReviewService {
 	
 	public Boolean insertReview(ReviewVO review);
 	
-	public Boolean delecteReview(ReviewVO review);
+	public Boolean delecteReview(int reviewNum);
 	
 	public Boolean updateReview(ReviewVO review);
 	

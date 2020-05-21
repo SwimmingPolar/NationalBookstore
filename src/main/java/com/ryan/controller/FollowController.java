@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,13 +47,12 @@ public class FollowController {
 	}
 	
 	
-	@PostMapping("/delete")
+	@GetMapping("/deleteFollow")
 	public Boolean deleteFollow(@RequestParam("following") String following, Authentication auth) {
-		
 		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
 		MemberVO member = ryanMember.getMember();
 		
-		if(!service.followCheck(member.getMemberEmail(), following)) {
+		if(service.followCheck(member.getMemberEmail(), following)) {
 			if(service.deleteFollow(member.getMemberEmail(), following)) {
 				return true;
 			}else {

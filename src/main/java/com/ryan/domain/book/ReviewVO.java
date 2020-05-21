@@ -1,4 +1,5 @@
 package com.ryan.domain.book;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 //import javax.validation.constraints.Future;
@@ -29,4 +30,6 @@ public class ReviewVO {
     // 작성날짜 
     //@Future(message="날짜 형식이 잘못되었습니다")
     private Date reviewRegdate;
+    
+    private String bookTitle;
 }

@@ -39,7 +39,10 @@
 
    	<c:if test="${checkId}">
    		<c:if test="${followCheck eq false }">
-   			<button type="button" id="followBtn"> <i class="fas fa-plus-circle"></i> 팔로우 </button>
+   			<button type="button" id="followBtn1"> <i class="fas fa-plus-circle"></i> 팔로우 </button>
+     	</c:if>
+     	<c:if test="${followCheck}">
+     		<button type="button" id="followBtn2"><i class="fas fa-minus-circle"></i>팔로우</button>
      	</c:if>
      </c:if>    
     <button type="button" id="categoryAdd" onclick="location.href='interestedBook.jsp'"> <i class="fas fa-plus"></i> 관심 카테고리 </button>
@@ -170,7 +173,7 @@
      <div class="content four">
 
         <div class="mybookTitle">
-        	   나의 포스트 <a>0</a> 개
+        	   나의 포스트 <a>${reviewcnt}</a> 개
         </div>
         <div class ="postInputBtn">
         <button type= "button" id = postInput onclick="openNewPost()"> <i class="fas fa-pencil-alt"></i> 포스트 작성</button>
@@ -184,13 +187,15 @@
                 <tr>
                     <th> 도서명 </th>	
                     <th> 등록날짜 </th>
+                    <th> 삭제 </th>
                 </tr>
                 <tr>
-                	<td>${review.reviewTitle}</td>
+                	<td>${review.bookTitle}</td>
                   <td>${review.reviewRegdate}</td>
+                  	<td> <a href="/review/delete?reviewNum=${review.reviewNum}">삭제</a></td>
                 </tr>   
                 <tr> 
-                    <td colspan="2" style="border-bottom: 2px solid gray; padding-bottom:10px;">
+                    <td colspan="3" style="border-bottom: 2px solid gray; padding-bottom:10px;">
                       <input type="text" name="postTitleChk" id="postTitleChk" 
                       value="${review.reviewTitle}" readonly>
                       <textarea name="postText" id="postText" readonly>  
@@ -270,7 +275,7 @@
 
 <script>
 $(document).ready(function(){
-	$("#followBtn").on('click',function(){
+	$("#followBtn1").on('click',function(){
 		var followId = "${followId.memberEmail}";
 		$.ajax({
 			url:"/follow/requestFollow",
@@ -281,6 +286,7 @@ $(document).ready(function(){
 			success:function(data){
 				if(data){
 					alert("팔로우 되었습니다.");
+		//			$("#followBtn1").css("display","none");
 					//팔로우 하고 나서 버튼 변경..?
 					$("#followBtn").css("backgroundColor","transparent");
 					//$("#followBtn").css("display","none");
@@ -294,6 +300,28 @@ $(document).ready(function(){
 				alert("오류가 발생하였습니다. 고객센터로 문의해주세요");
 			}
 		})
+	});
+	
+	$("#followBtn2").on('click',function(){
+		var followId = "${followId.memberEmail}";
+		$.ajax({
+			url:"/follow/deleteFollow",
+			type:"get",
+			data:{
+				following:followId
+			},
+			success:function(data){
+				if(data){
+					alert("팔로우가 취소되었습니다.");
+					$("#followBtn2").css("display","none");
+				}else{
+					alert("오류가 발생하였습니다. 고객센터로 문의해주세요 data : "+data);
+				}
+			},
+			error:function(){
+				alert("오류가 발생하였습니다. 고객센터로 문의해주세요 error");
+			}
+		});
 	});
 });
 

@@ -91,6 +91,7 @@ public class MyBookController {
 		model.addAttribute("myFollower",fservice.countFollow(clickId,auth2)); //내가 팔로우한사람
 		model.addAttribute("followerList", fservice.getMyFollowing(clickId, auth2));
 		model.addAttribute("myreviewlist", rservice.myReviewList(clickId));
+		model.addAttribute("reviewcnt", rservice.countMyPost(clickId));
 		
 		/*
 		 * model.addAttribute("myreviewlist",
@@ -126,8 +127,8 @@ public class MyBookController {
 	
 	//알람 받을 책 등록
 	@RequestMapping("/alarm")
-	public @ResponseBody Boolean requestAlarm(BookAlarmVO vo, @RequestParam("memberEmail") String memberEmail) {
-		return aservice.requestAlarm(vo, memberEmail);
+	public @ResponseBody Boolean requestAlarm(@RequestParam("booknumber") int booknumber, @RequestParam("memberEmail") String memberEmail) {
+		return aservice.requestAlarm(booknumber, memberEmail);
 	}
 	
 	//출판 되어 알람시켜줘야 할 책 

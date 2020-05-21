@@ -43,7 +43,7 @@
 		
 		
 		<!-- 김송이 -->
-		
+		<security:intercept-url pattern="/boolist/alarm" access="hasRole('ROLE_MEMBER')"/>
 		
 		
 		
