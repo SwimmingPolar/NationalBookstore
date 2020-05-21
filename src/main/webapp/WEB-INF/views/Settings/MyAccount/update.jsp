@@ -258,7 +258,7 @@
         new daum.Postcode({
             oncomplete: function(data) {
                 $('[name=memberZipcode]').val(data.zonecode);
-                $('[name=memberaddress]').val(data.address);
+                $('[name=memberAddress]').val(data.address);
                 $('[name=memberDaddress]').val(data.buildingName);
             }
         }).open();
