@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ryan.domain.book.EBookVO;
+import com.ryan.domain.book.ReviewVO;
+import com.ryan.domain.custom.CustomReviewVO;
 import com.ryan.domain.main.FilterSearchVO;
 import com.ryan.domain.main.KeywordAutoCompletionVO;
 import com.ryan.domain.member.MemberVO;
@@ -80,6 +82,11 @@ public class MainPageServiceImpl implements MainPageService {
 			return mapper.getInterestsBook(mapper.getMemberInterests(member.getMemberEmail()));
 		}
 		
+	}
+
+	@Override
+	public ArrayList<CustomReviewVO> getLatestReview() {
+		return mapper.getLatestReview();
 	}
 	
 	
