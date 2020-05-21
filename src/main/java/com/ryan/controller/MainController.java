@@ -61,6 +61,8 @@ public class MainController {
 		model.addAttribute("bestReadBook", service.getBestReadBook());
 		model.addAttribute("disCountBook", service.getDisCountBook());
 		model.addAttribute("AlarmBook", service.getAlarmBook());
+		model.addAttribute("latestReview", service.getLatestReview());
+		model.addAttribute("lastestReview",service.getLatestReview());
 		
 		return "main";
 	}
@@ -75,7 +77,6 @@ public class MainController {
 	public @ResponseBody ArrayList<KeywordAutoCompletionVO> autoKeyword(@RequestParam("type") String type , @RequestParam("keyword") String keyword) {
 		
 		return service.getAutoKeyword(type, keyword);
-		
 	}
 	
 	@GetMapping("/myaccount")

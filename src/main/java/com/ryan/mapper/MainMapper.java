@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Param;
 
 import com.ryan.domain.book.EBookVO;
 import com.ryan.domain.book.HashtagVO;
+import com.ryan.domain.book.ReviewVO;
+import com.ryan.domain.custom.CustomReviewVO;
 import com.ryan.domain.main.FilterSearchVO;
 import com.ryan.domain.main.KeywordAutoCompletionVO;
 import com.ryan.domain.member.MemberVO;
@@ -59,5 +61,6 @@ public interface MainMapper {
 	public ArrayList<EBookVO> getInterestsBook(int[] categoryArr);
 	
 	public ArrayList<EBookVO> getAlarmBook();
+	public ArrayList<CustomReviewVO> getLatestReview();
 	
 }

@@ -17,8 +17,12 @@ import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+<<<<<<< HEAD
 @ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/root-context.xml", "file:src/main/webapp/WEB-INF/spring/security-context.xml"})
 
+=======
+@ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/security-context.xml","file:src/main/webapp/WEB-INF/spring/root-context.xml"})
+>>>>>>> branch 'master' of https://github.com/SwimmingPolar/NationalBookstore.git
 @Log4j
 public class MainMapperTests {
 	
@@ -108,6 +112,11 @@ public class MainMapperTests {
 	@Test
 	public void getAlarmBook() {
 		log.info("결과 : "+mapper.getAlarmBook());
+	}
+	@Test
+	public void getreview() {
+		
+		mapper.getLatestReview().forEach(review -> log.info(review));
 		
 	}
 }

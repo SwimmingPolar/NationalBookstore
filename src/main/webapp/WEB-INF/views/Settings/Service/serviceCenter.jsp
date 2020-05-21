@@ -37,7 +37,7 @@
                 </li>
           </ul>
       </div>
-<form action="" method="POST">
+    <form action="/board/enquiry/writeForm" method="POST">
          <div class="contentBox one" id="one">
             <div class="goQuestion">
               <div id="selectTopic">
@@ -55,19 +55,16 @@
               </div>
               <!-- selectTopic end -->
               <div class="title">
-                  <input type="text" id="titleName" placeholder="제목을 입력하세요.">
-                <textarea id="matter">어떤 문제가 있으신가요? 아래 내용을 자세히 적어주시면 문제를 더욱 빨리 처리할 수 있습니다.
-
-(*문제가 발생하는 화면 또는 영상을 첨부해주시면 문제 해결에 큰 도움이 됩니다.)
-
+                  <input type="text" id="titleName" name="boardTitle" placeholder="제목을 입력하세요.">
+                <textarea id="matter" name ="boardContent">
                 </textarea>
                </div>
             </div>
             <div class="addNotice">
                 <ul>
-                    <li>문의 [제목]과 [내용]란에는 절대 개인정보를 입력하지 마세요.</li>
-                    <li>문의에 개인정보가 포함되어 있거나, 중복 문의인 경우에는 삭제될 수 있습니다.</li>
-                    <li>문의에 욕설, 인격침해, 성희롱 등 수치심을 유발하는 표현이 있다면 상담이 중단될 수 있습니다. </li>
+                    <li> 문의 [제목]과 [내용]란에는 절대 개인정보를 입력하지 마세요.</li>
+                    <li> 문의에 개인정보가 포함되어 있거나, 중복 문의인 경우에는 삭제될 수 있습니다.</li>
+                    <li> 문의에 욕설, 인격침해, 성희롱 등 수치심을 유발하는 표현이 있다면 상담이 중단될 수 있습니다. </li>
                 </ul>
             </div>
             <label for="fileLabel">첨부파일</label>
@@ -131,7 +128,6 @@
                         <th>답변상태</th>
                         <th>삭제</th>
                     </tr>
-                   
                    <!-- foreach 시작 -->
                     <tr>
                         <td>배송 문의</td>
@@ -170,6 +166,7 @@
                         </td>
                     </tr>
                     <!-- foreach 끝 -->    
+
                 </table>            
                 <!-- otherwise 문의내역없을때 
                 <div class="what">
@@ -178,11 +175,9 @@
                 </div>
                 <span> 문의 내역이 없습니다. </span> 
               </div> -->
-    
               </div>
         </div>
 </div>
-  
 <script>
 
 $('document').ready(function(){

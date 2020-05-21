@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.apache.ibatis.annotations.Param;
 
 import com.ryan.domain.book.EBookVO;
+import com.ryan.domain.book.ReviewVO;
+import com.ryan.domain.custom.CustomReviewVO;
 import com.ryan.domain.main.FilterSearchVO;
 import com.ryan.domain.main.KeywordAutoCompletionVO;
 import com.ryan.domain.member.MemberVO;
@@ -37,5 +39,7 @@ public interface MainPageService {
 	public ArrayList<EBookVO> getinterests(MemberVO member);
 	
 	public ArrayList<EBookVO> getAlarmBook();
+	//최신 리뷰
+	public ArrayList<CustomReviewVO> getLatestReview();
 	
 }

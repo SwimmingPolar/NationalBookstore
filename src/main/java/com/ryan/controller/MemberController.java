@@ -90,7 +90,7 @@ public class MemberController {
 	public @ResponseBody Map<String, Boolean> signUpCheck(MemberVO member) {
 		
 		Map<String, Boolean> resultMap = new HashMap<String, Boolean>();
-		
+		System.out.println(member.getMemberNickName());
 		if(memberService.signUpCheck(member)) {
 			resultMap.put("result", true);
 			return resultMap;
@@ -146,12 +146,12 @@ public class MemberController {
 	
 	@PostMapping("/update")
 	public String memberInfoUpdate(MemberVO member) {
-		
-		if (memberService.memberUpdate(member)) {
-			log.info("controller member: " + member.getMemberPw());
-		} else {
-			log.info("member..!= null!");
-		}
+		log.info(member);
+//		if (memberService.memberUpdate(member)) {
+//			log.info("controller member: " + member.getMemberPw());
+//		} else {
+//			log.info("member..!= null!");
+//		}
 		return "업데이트 완료후 보여줄 페이지 경로";
 	}
 	
@@ -270,6 +270,8 @@ public class MemberController {
 		MemberVO member = ryanMember.getMember();
 		
 		KakaoPayApprovalVO kakaoPayApprovalVO = paymentService.paymentComplete(pg_token, member);
+		
+		log.info(kakaoPayApprovalVO);
 		
 		if(paymentService.insertPaymentInfo(member.getMemberEmail(), kakaoPayApprovalVO.getSid(),kakaoPayApprovalVO.getTid(),kakaoPayApprovalVO.getAmount().getTotal()+"")) {
 			if(revenueService.insertRevenue()) {

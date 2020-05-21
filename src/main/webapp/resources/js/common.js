@@ -69,6 +69,7 @@ function flexibleSlidify(sliderWindow) {
     slider.style.transform = 'translateX(' + currentX + 'px)';
   });
   document.addEventListener('mouseup', event => {
+    if (!isGrabbing) return;
     isGrabbing = false;
     mouseUpTimestamp = event.timeStamp;
     // time < 1 : add sliding effect when swing mouse to accelerate

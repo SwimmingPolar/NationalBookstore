@@ -13,6 +13,7 @@
 		<result property="memberTel" column="member_tel"/>
 		<result property="memberSignupDate" column="member_signup_date"/>
 		<result property="memberEnabled" column="member_enabled"/>
+		<result property="memberProfile" column="member_profile"/>
 		<collection property="memberAuthList" resultMap="memberAuthMap">
 		</collection>
 	</resultMap>

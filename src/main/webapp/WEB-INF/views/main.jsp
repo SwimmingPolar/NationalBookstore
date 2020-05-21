@@ -272,7 +272,7 @@
         <div class="right-section">
           <h2>
             <c:choose>
-            	<c:when test="member != null">
+            	<c:when test="${member != null }">
             		<a href="#">${member.member.memberNickName } 님에게 추천 해드리는 도서입니다.</a>
             	</c:when>
             	<c:otherwise>
@@ -624,74 +624,25 @@
         <h2 class="section-heading">최신 리뷰엉이</h2>
         <div class="content-wrapper">
           <ul>
-            <li>
+          	<c:forEach var="review" items="${lastestReview }">
+          		 <li>
               <div class="profile-thumbnail-wrapper">
-                <a href="#">
-                  <img src="https://picsum.photos/250" width="42px" height="42px" alt="">
+                <a href="/booklist/myLibList?clickId=${review.memberEmail}">
+                  <img src="${pageContext.request.contextPath}${review.memberProfile}" width="42px" height="42px" alt="">
                 </a>
               </div>
               <div class="message-bubble">
-                <a href="#" class="user-nickname">user nickname</a>
+                <a href="/booklist/myLibList?clickId=${review.memberEmail}" class="user-nickname">${review.memberNickName }</a>
                 <div class="message-wrapper">
                   <span class="message">
-                    <pre>이게 나라냐
-Ut cillum non reprehenderit eiusmod.</pre>
+                    <pre>${review.reviewContent }</pre>
                   </span>
-                  <small class="date">16:39</small>
+                  <small class="date">${review.reviewRegdate }</small>
                 </div>
               </div>
             </li>
-            <li>
-              <div class="profile-thumbnail-wrapper">
-                <a href="#">
-                  <img src="https://picsum.photos/250" width="42px" height="42px" alt="">
-                </a>
-              </div>
-              <div class="message-bubble">
-                <a href="#" class="user-nickname">user nickname</a>
-                <div class="message-wrapper">
-                  <span class="message">
-                    <pre>Dolor do laboris sit magna in incididunt officia.</pre>
-                  </span>
-                  <small class="date">16:39</small>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="profile-thumbnail-wrapper">
-                <a href="#">
-                  <img src="https://picsum.photos/250" width="42px" height="42px" alt="">
-                </a>
-              </div>
-              <div class="message-bubble">
-                <a href="#" class="user-nickname">user nickname</a>
-                <div class="message-wrapper">
-                  <span class="message">
-                    <pre>is this country?</pre>
-                  </span>
-                  <small class="date">16:39</small>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="profile-thumbnail-wrapper">
-                <a href="#">
-                  <img src="https://picsum.photos/250" width="42px" height="42px" alt="">
-                </a>
-              </div>
-              <div class="message-bubble">
-                <a href="#" class="user-nickname">user nickname</a>
-                <div class="message-wrapper">
-                  <span class="message">
-                    <pre>Ut cillum non reprehenderit eiusmod.
-Consequat nulla deserunt in sint esse magna laboris.
-Ut officia nisi voluptate officia proident velit dolore eu eiusmod do.
-Mollit et velit minim qui reprehenderit labore irure Lorem do consequat elit.</pre>
-                  </span>
-                  <small class="date">16:39</small>
-                </div>
-              </div>
-            </li>
+          	</c:forEach>
+           
           </ul>
         </div>
       </section>

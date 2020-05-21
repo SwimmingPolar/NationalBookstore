@@ -256,5 +256,22 @@
 		SELECT ebook.*, to_char(book_pb_date,'YYYYMMDD') - to_char(sysdate,'YYYYMMDD') commingBook FROM ebook WHERE to_char(book_pb_date,'YYYYMMDD') >= to_char(sysdate,'YYYYMMDD')
 	]]>
 	</select>
+	<select id="getLatestReview" resultType="com.ryan.domain.custom.CustomReviewVO">
+		SELECT * FROM
+		(
+			SELECT r.review_num,r.member_email ,r.review_title,r.review_content , TO_CHAR(r.review_regdate,'HHmmss') reviewRegdate ,m.member_nick_name , m.member_profile  FROM book_review r, member m
+			<where>
+				r.member_email = m.member_email
+			</where>
+			ORDER BY r.review_regdate DESC
+		)
+		<where>
+			<![CDATA[
+				rownum <= 13
+			]]>
+		</where>
+	</select>
+	
+	
 	
 </mapper>
