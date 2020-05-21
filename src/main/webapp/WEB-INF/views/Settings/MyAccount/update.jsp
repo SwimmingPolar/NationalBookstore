@@ -12,7 +12,7 @@
     <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
     <script src="https://kit.fontawesome.com/201657538f.js" crossorigin="anonymous"></script>
     <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
-    <link rel="stylesheet" href="../../resources/styles/reset.css" />
+    <link rel="stylesheet" href="../../../../resources/styles/reset.css" />
     <link rel="stylesheet" href="../../../../resources/styles/common.css" />
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
@@ -255,9 +255,9 @@
        function zipCodeClick() {
         new daum.Postcode({
             oncomplete: function(data) {
-                $('[name=homeZipcode]').val(data.zonecode);
-                $('[name=homeAdrs]').val(data.address);
-                $('[name=homeDetail]').val(data.buildingName);
+                $('[name=memberZipcode]').val(data.zonecode);
+                $('[name=memberaddress]').val(data.address);
+                $('[name=memberDaddress]').val(data.buildingName);
             }
         }).open();
      }
