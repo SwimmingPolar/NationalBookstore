@@ -549,7 +549,23 @@ input[type="radio"]:checked + label {
 
 }
 
-.postEndBtn button:hover {
+.postEndBtn input[type="submit"] {
+
+    width: 150px;
+    height: 40px;
+    border-radius: 20px;
+   border: 1px solid #0099FF;
+    background-color:white;
+    font-size: 16px;
+    color: #0099FF;
+    margin:10px;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer;
+    outline: none;
+
+}
+
+.postEndBtn input[type="submit"]:hover {
     font-weight:bold;
     background-color: #F3F4F6;
     /* color:#333; */
