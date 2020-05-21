@@ -33,7 +33,7 @@ function flexibleSlidify(sliderWindow) {
 
   const getCurrentX = () => Number(window.getComputedStyle(slider).transform.split(',')[4]);
   // prevent clicking on 'a' and/or 'button' tag after moving slider
-  document.addEventListener('click', event => {
+  slider.addEventListener('click', event => {
     if (!isMoved) return;
     event.stopPropagation();
     event.preventDefault();
@@ -268,7 +268,7 @@ function infiniteSlidify(sliderWindow) {
     slider.style.transform = 'translateX(' + -1 * moveTo * slideWidth + 'px)'
   });
 
-  document.addEventListener('click', event => {
+  slider.addEventListener('click', event => {
     if (!isMoved) return;
     event.stopPropagation();
     event.preventDefault();
