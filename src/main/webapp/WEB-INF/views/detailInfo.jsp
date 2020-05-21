@@ -300,7 +300,7 @@
                     		<c:if test="${count <= 5 }">
                     			<a href="/book/bookdetail?booknumber=${list.bookNum}" style="text-align: center; vertical-align: bottom;">
                     				<img src="${pageContext.request.contextPath}${list.bookThumbnail}">
-                    				${list.bookTitle }
+                    				 <p>${list.bookTitle }</p>
                     			</a>
                     		</c:if>
   						<c:set var="count" value="${count+1 }" />
