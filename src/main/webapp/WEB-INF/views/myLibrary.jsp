@@ -178,28 +178,31 @@
             
         <div class="myPostCheck" id="myPostCheck">
          <c:choose>
-          <c:when test="${myreviewlist.size() >0 }">
+          <c:when test="${myreviewlist.size() > 0}">
           <table>
           <c:forEach var="review" items="${myreviewlist}">
                 <tr>
                     <th> 도서명 </th>	
-                    <th> 내용 </th>
                     <th> 등록날짜 </th>
                 </tr>
                 <tr>
-                	<td>${review.reviewTitle}<td>
-                    <td>
-                    	<textarea name="postText" id="postText" readonly>  
+                	<td>${review.reviewTitle}</td>
+                  <td>${review.reviewRegdate}</td>
+                </tr>   
+                <tr> 
+                    <td colspan="2" style="border-bottom: 2px solid gray; padding-bottom:10px;">
+                      <input type="text" name="postTitleChk" id="postTitleChk" 
+                      value="${review.reviewTitle}" readonly>
+                      <textarea name="postText" id="postText" readonly>  
                             ${review.reviewContent}
                         </textarea>
                     </td>
-                    <td>${review.reviewRegdate}<td>
-                </tr>
-             		  </c:forEach>
-           	 		</table>
-           	 	</c:when>
-	     	 </c:choose> 
-        </div>
+                	</tr>
+           </c:forEach>
+           </table>
+         </c:when>
+	   </c:choose> 
+    </div>
 
         <form id="postRegister" action="/review/write" method="get">  
         <div class="postInsert" id="postInsert">
@@ -208,20 +211,18 @@
                 <option value="${list.bookNum}" > ${list.bookTitle} </option>
               </c:forEach>
             </select>
-            <div class ="bookStarScore">
+            <!-- <div class ="bookStarScore">
                 <b>별점 등록</b>     
-                <span><i class="fas fa-star"></i></span>
-                <span><i class="fas fa-star"></i></span>
-                <span><i class="fas fa-star"></i></span>
-                <span><i class="fas fa-star"></i></span>
-                <span><i class="fas fa-star"></i></span>
+                <span name="grade" value="1"><i class="fas fa-star"></i></span>
+                <span name="grade" value="2"><i class="fas fa-star"></i></span>
+                <span name="grade" value="3"><i class="fas fa-star"></i></span>
+                <span name="grade" value="4"><i class="fas fa-star"></i></span>
+                <span name="grade" value="5"><i class="fas fa-star"></i></span>
                 <span id=starScore> 0 </span> 점
-            </div>
+            </div> -->
 
             <input type="text" name="reviewTitle" id="postTitle" placeholder="제목을 입력하세요">
             <textarea name="reviewContent" id="post_Content" placeholder="솔직한 생각을 입력해주세요."></textarea>
-            <input type="hidden" value ="">
-           
             <div class="postEndBtn">
                 <input type="submit" id="postSave" value="저장">
                 <button type="button" id="postCancel"> 취소 </button>
@@ -280,8 +281,11 @@ $(document).ready(function(){
 			success:function(data){
 				if(data){
 					alert("팔로우 되었습니다.");
+					//팔로우 하고 나서 버튼 변경..?
+					$("#followBtn").css("backgroundColor","transparent");
 					//$("#followBtn").css("display","none");
-					$("#followBtn").text("팔로우취소");
+					$("#followBtn").text("팔로잉");
+
 				}else{
 					alert("오류가 발생하였습니다. 고객센터로 문의해주세요");
 				}
@@ -292,6 +296,7 @@ $(document).ready(function(){
 		})
 	});
 });
+
 </script>
 
 <script>
@@ -417,9 +422,11 @@ $('.bookStarScore span').click(function() {
 </script> 
 
 <script>
+
   var modal = document.getElementById('modalGo');
   var openBtn = document.getElementById('modalOpen');
-  var closeBtn = document.getElementsByClassName('modalCloseBtn'); 
+  var closeBtn = document.getElementById('modalCloseBtn'); 
+
   openBtn.onclick = function() {
      modal.style.display = "block";
   }
@@ -482,9 +489,6 @@ $('#postSave').click(function(){
 });
 
 </script> -->
-
-
-</script>
 
 
 <%@ include file="template/footer.jsp" %>
