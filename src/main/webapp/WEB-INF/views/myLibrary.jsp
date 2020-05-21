@@ -39,7 +39,10 @@
 
    	<c:if test="${checkId}">
    		<c:if test="${followCheck eq false }">
-   			<button type="button" id="followBtn"> <i class="fas fa-plus-circle"></i> 팔로우 </button>
+   			<button type="button" id="followBtn1"> <i class="fas fa-plus-circle"></i> 팔로우 </button>
+     	</c:if>
+     	<c:if test="${followCheck}">
+     		<button type="button" id="followBtn2"><i class="fas fa-minus-circle"></i>팔로우</button>
      	</c:if>
      </c:if>    
     <button type="button" id="categoryAdd" onclick="location.href='interestedBook.jsp'"> <i class="fas fa-plus"></i> 관심 카테고리 </button>
@@ -268,7 +271,7 @@
 
 <script>
 $(document).ready(function(){
-	$("#followBtn").on('click',function(){
+	$("#followBtn1").on('click',function(){
 		var followId = "${followId.memberEmail}";
 		$.ajax({
 			url:"/follow/requestFollow",
@@ -279,8 +282,7 @@ $(document).ready(function(){
 			success:function(data){
 				if(data){
 					alert("팔로우 되었습니다.");
-					//$("#followBtn").css("display","none");
-					$("#followBtn").text("팔로우취소");
+					$("#followBtn1").css("display","none");
 				}else{
 					alert("오류가 발생하였습니다. 고객센터로 문의해주세요");
 				}
@@ -289,6 +291,28 @@ $(document).ready(function(){
 				alert("오류가 발생하였습니다. 고객센터로 문의해주세요");
 			}
 		})
+	});
+	
+	$("#followBtn2").on('click',function(){
+		var followId = "${followId.memberEmail}";
+		$.ajax({
+			url:"/follow/deleteFollow",
+			type:"get",
+			data:{
+				following:followId
+			},
+			success:function(data){
+				if(data){
+					alert("팔로우가 취소되었습니다.");
+					$("#followBtn2").css("display","none");
+				}else{
+					alert("오류가 발생하였습니다. 고객센터로 문의해주세요 data : "+data);
+				}
+			},
+			error:function(){
+				alert("오류가 발생하였습니다. 고객센터로 문의해주세요 error");
+			}
+		});
 	});
 });
 </script>

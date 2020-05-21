@@ -18,7 +18,7 @@
 	<delete id="deleteFollow">
 		DELETE FROM member_follow
 		<where>
-			#{follower} and #{following}
+			fk_member_follow_1 = #{follower} and fk_member_follow_2 = #{following}
 		</where>
 	</delete>
 	

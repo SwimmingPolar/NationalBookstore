@@ -81,6 +81,13 @@ public class MainPageServiceImpl implements MainPageService {
 		}
 		
 	}
+
+	@Override
+	public ArrayList<EBookVO> getAlarmBook() {
+		// TODO Auto-generated method stub
+		log.info(mapper.getAlarmBook());
+		return mapper.getAlarmBook();
+	}
 	
 	
 	

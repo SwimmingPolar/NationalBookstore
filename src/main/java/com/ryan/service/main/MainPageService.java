@@ -36,4 +36,6 @@ public interface MainPageService {
 	
 	public ArrayList<EBookVO> getinterests(MemberVO member);
 	
+	public ArrayList<EBookVO> getAlarmBook();
+	
 }

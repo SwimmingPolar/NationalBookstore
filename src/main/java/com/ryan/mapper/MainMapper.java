@@ -58,4 +58,6 @@ public interface MainMapper {
 	
 	public ArrayList<EBookVO> getInterestsBook(int[] categoryArr);
 	
+	public ArrayList<EBookVO> getAlarmBook();
+	
 }
