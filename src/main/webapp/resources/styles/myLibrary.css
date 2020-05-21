@@ -969,7 +969,18 @@ input[type="radio"]:checked + label {
     margin-top: -10px;
 }
 
-.follow #followBtn{
+.follow #followBtn1{
+    width: 80px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: #17769c;
+    color:white;
+    border:1px solid #F3F4F6;
+    outline: none;
+    cursor: pointer;
+    font-size: 15px;
+}
+.follow #followBtn2{
     width: 80px;
     height: 40px;
     border-radius: 20px;

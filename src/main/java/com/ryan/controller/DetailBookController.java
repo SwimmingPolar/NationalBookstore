@@ -76,7 +76,6 @@ public class DetailBookController {
 	
 	@RequestMapping(value = "/inserthashtag", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody List<HashtagVO> insertHashtag(HashtagVO vo, HttpServletRequest request, HttpServletResponse response) {		
-		log.info(vo);
 		service.hashtagCookie(vo, request, response);
 		return service.hashtag(vo.getBookNum());
 	}
@@ -102,8 +101,6 @@ public class DetailBookController {
 	//찜 책장에 추가
 	@RequestMapping("/insertLibList")
 	public @ResponseBody Boolean insertList(@RequestParam("booknumber") int booknumber, @RequestParam("memberEmail") String memberEmail) {
-		log.info(memberEmail);
-		
 		
 		return mservice.insertLibBook(booknumber,memberEmail);
 	}

@@ -29,13 +29,14 @@
           </div>
         </nav>
       </header>
+      <form action="/member/update" method="post" id="updateForm">
     <div class="newMyInfo">
         <div class="imageBox">
             <img id="myFaceImage" src="${pageContext.request.contextPath}${member.member.memberProfile}" >
             <!-- 사진 넣을거임 -->
             <label for="camera">
                 <i class="fas fa-camera-retro"></i>
-                <input type="file" name="memberProfile" id="camera" onchange="uploadMyImg(this);">
+                <input type="file" name="files" id="camera" onchange="uploadMyImg(this);">
             </label>
                    <button type="button" id="deleteBtn" onclick="deletePhoto();"><i class="fas fa-times"></i></button> 
         </div>
@@ -158,6 +159,8 @@
     </div>
        </div>
         </div>
+        <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+        </form>
     <!-- 제일 큰 박스 end -->
 
  <!--이메일 주소 자동입력 &직접입력  -->
@@ -279,7 +282,9 @@
             // }
             if(infoChk.checked==false){
                     alert("개인정보 수집 및 이용에 동의해주세요.");
+                    return;
             }
+            document.getElementById('updateForm').submit();
         }
     </script>
   <script>

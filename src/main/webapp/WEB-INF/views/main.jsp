@@ -588,6 +588,8 @@
         <h2 class="section-heading">출시 예정 도서</h2>
         <div class="content-wrapper slider-wrapper flexible-slider-window">
           <ul class="slider flexible-slider">
+         
+          <c:forEach var="alarm" items="${AlarmBook}">
             <li class="flexible-slide">
               <a href="#">
                 <div class="thumbnail-wrapper">
@@ -595,374 +597,26 @@
                   <div class="overlay">
                     <div class="meta-data">
                       <span></span>
-                      <strong>D-12</strong>
+                       <strong>D - ${alarm.commingBook }</strong> 
                     </div>
                   </div>
                 </div>
                 <div class="text-wrapper">
-                  <strong>title</strong>
-                  <span>author</span>
+                  <strong>${alarm.bookTitle }</strong>
+                  <span>${alarm.bookWriter }</span>
                 </div>
               </a>
               <button>
-                <div class="button-content-wrapper">
+                <div class="button-content-wrapper" onclick="goAlarm(${alarm.bookNum})">
                   <div class="icon">
-                    <i class="far fa-bell"></i>
-                  </div>
-                  <span>알람받기</span>
+               	   <i class="far fa-bell"></i>
+               	   </div>
+                  <span>알람받기</span> 
                 </div>
               </button>
             </li>
-            <li class="flexible-slide">
-              <a href="#">
-                <div class="thumbnail-wrapper">
-                  <img src="https://via.placeholder.com/100x140" alt="">
-                  <div class="overlay">
-                    <div class="meta-data">
-                      <span></span>
-                      <strong>D-12</strong>
-                    </div>
-                  </div>
-                </div>
-                <div class="text-wrapper">
-                  <strong>title</strong>
-                  <span>author</span>
-                </div>
-              </a>
-              <button>
-                <div class="button-content-wrapper">
-                  <div class="icon">
-                    <i class="far fa-bell"></i>
-                  </div>
-                  <span>알람받기</span>
-                </div>
-              </button>
-            </li>
-            <li class="flexible-slide">
-              <a href="#">
-                <div class="thumbnail-wrapper">
-                  <img src="https://via.placeholder.com/100x140" alt="">
-                  <div class="overlay">
-                    <div class="meta-data">
-                      <span></span>
-                      <strong>D-12</strong>
-                    </div>
-                  </div>
-                </div>
-                <div class="text-wrapper">
-                  <strong>title</strong>
-                  <span>author</span>
-                </div>
-              </a>
-              <button>
-                <div class="button-content-wrapper">
-                  <div class="icon">
-                    <i class="far fa-bell"></i>
-                  </div>
-                  <span>알람받기</span>
-                </div>
-              </button>
-            </li>
-            <li class="flexible-slide">
-              <a href="#">
-                <div class="thumbnail-wrapper">
-                  <img src="https://via.placeholder.com/100x140" alt="">
-                  <div class="overlay">
-                    <div class="meta-data">
-                      <span></span>
-                      <strong>D-12</strong>
-                    </div>
-                  </div>
-                </div>
-                <div class="text-wrapper">
-                  <strong>title</strong>
-                  <span>author</span>
-                </div>
-              </a>
-              <button>
-                <div class="button-content-wrapper">
-                  <div class="icon">
-                    <i class="far fa-bell"></i>
-                  </div>
-                  <span>알람받기</span>
-                </div>
-              </button>
-            </li>
-            <li class="flexible-slide">
-              <a href="#">
-                <div class="thumbnail-wrapper">
-                  <img src="https://via.placeholder.com/100x140" alt="">
-                  <div class="overlay">
-                    <div class="meta-data">
-                      <span></span>
-                      <strong>D-12</strong>
-                    </div>
-                  </div>
-                </div>
-                <div class="text-wrapper">
-                  <strong>title</strong>
-                  <span>author</span>
-                </div>
-              </a>
-              <button>
-                <div class="button-content-wrapper">
-                  <div class="icon">
-                    <i class="far fa-bell"></i>
-                  </div>
-                  <span>알람받기</span>
-                </div>
-              </button>
-            </li>
-            <li class="flexible-slide">
-              <a href="#">
-                <div class="thumbnail-wrapper">
-                  <img src="https://via.placeholder.com/100x140" alt="">
-                  <div class="overlay">
-                    <div class="meta-data">
-                      <span></span>
-                      <strong>D-12</strong>
-                    </div>
-                  </div>
-                </div>
-                <div class="text-wrapper">
-                  <strong>title</strong>
-                  <span>author</span>
-                </div>
-              </a>
-              <button>
-                <div class="button-content-wrapper">
-                  <div class="icon">
-                    <i class="far fa-bell"></i>
-                  </div>
-                  <span>알람받기</span>
-                </div>
-              </button>
-            </li>
-            <li class="flexible-slide">
-              <a href="#">
-                <div class="thumbnail-wrapper">
-                  <img src="https://via.placeholder.com/100x140" alt="">
-                  <div class="overlay">
-                    <div class="meta-data">
-                      <span></span>
-                      <strong>D-12</strong>
-                    </div>
-                  </div>
-                </div>
-                <div class="text-wrapper">
-                  <strong>title</strong>
-                  <span>author</span>
-                </div>
-              </a>
-              <button>
-                <div class="button-content-wrapper">
-                  <div class="icon">
-                    <i class="far fa-bell"></i>
-                  </div>
-                  <span>알람받기</span>
-                </div>
-              </button>
-            </li>
-            <li class="flexible-slide">
-              <a href="#">
-                <div class="thumbnail-wrapper">
-                  <img src="https://via.placeholder.com/100x140" alt="">
-                  <div class="overlay">
-                    <div class="meta-data">
-                      <span></span>
-                      <strong>D-12</strong>
-                    </div>
-                  </div>
-                </div>
-                <div class="text-wrapper">
-                  <strong>title</strong>
-                  <span>author</span>
-                </div>
-              </a>
-              <button>
-                <div class="button-content-wrapper">
-                  <div class="icon">
-                    <i class="far fa-bell"></i>
-                  </div>
-                  <span>알람받기</span>
-                </div>
-              </button>
-            </li>
-            <li class="flexible-slide">
-              <a href="#">
-                <div class="thumbnail-wrapper">
-                  <img src="https://via.placeholder.com/100x140" alt="">
-                  <div class="overlay">
-                    <div class="meta-data">
-                      <span></span>
-                      <strong>D-12</strong>
-                    </div>
-                  </div>
-                </div>
-                <div class="text-wrapper">
-                  <strong>title</strong>
-                  <span>author</span>
-                </div>
-              </a>
-              <button>
-                <div class="button-content-wrapper">
-                  <div class="icon">
-                    <i class="far fa-bell"></i>
-                  </div>
-                  <span>알람받기</span>
-                </div>
-              </button>
-            </li>
-            <li class="flexible-slide">
-              <a href="#">
-                <div class="thumbnail-wrapper">
-                  <img src="https://via.placeholder.com/100x140" alt="">
-                  <div class="overlay">
-                    <div class="meta-data">
-                      <span></span>
-                      <strong>D-12</strong>
-                    </div>
-                  </div>
-                </div>
-                <div class="text-wrapper">
-                  <strong>title</strong>
-                  <span>author</span>
-                </div>
-              </a>
-              <button>
-                <div class="button-content-wrapper">
-                  <div class="icon">
-                    <i class="far fa-bell"></i>
-                  </div>
-                  <span>알람받기</span>
-                </div>
-              </button>
-            </li>
-            <li class="flexible-slide">
-              <a href="#">
-                <div class="thumbnail-wrapper">
-                  <img src="https://via.placeholder.com/100x140" alt="">
-                  <div class="overlay">
-                    <div class="meta-data">
-                      <span></span>
-                      <strong>D-12</strong>
-                    </div>
-                  </div>
-                </div>
-                <div class="text-wrapper">
-                  <strong>title</strong>
-                  <span>author</span>
-                </div>
-              </a>
-              <button>
-                <div class="button-content-wrapper">
-                  <div class="icon">
-                    <i class="far fa-bell"></i>
-                  </div>
-                  <span>알람받기</span>
-                </div>
-              </button>
-            </li>
-            <li class="flexible-slide">
-              <a href="#">
-                <div class="thumbnail-wrapper">
-                  <img src="https://via.placeholder.com/100x140" alt="">
-                  <div class="overlay">
-                    <div class="meta-data">
-                      <span></span>
-                      <strong>D-12</strong>
-                    </div>
-                  </div>
-                </div>
-                <div class="text-wrapper">
-                  <strong>title</strong>
-                  <span>author</span>
-                </div>
-              </a>
-              <button>
-                <div class="button-content-wrapper">
-                  <div class="icon">
-                    <i class="far fa-bell"></i>
-                  </div>
-                  <span>알람받기</span>
-                </div>
-              </button>
-            </li>
-            <li class="flexible-slide">
-              <a href="#">
-                <div class="thumbnail-wrapper">
-                  <img src="https://via.placeholder.com/100x140" alt="">
-                  <div class="overlay">
-                    <div class="meta-data">
-                      <span></span>
-                      <strong>D-12</strong>
-                    </div>
-                  </div>
-                </div>
-                <div class="text-wrapper">
-                  <strong>title</strong>
-                  <span>author</span>
-                </div>
-              </a>
-              <button>
-                <div class="button-content-wrapper">
-                  <div class="icon">
-                    <i class="far fa-bell"></i>
-                  </div>
-                  <span>알람받기</span>
-                </div>
-              </button>
-            </li>
-            <li class="flexible-slide">
-              <a href="#">
-                <div class="thumbnail-wrapper">
-                  <img src="https://via.placeholder.com/100x140" alt="">
-                  <div class="overlay">
-                    <div class="meta-data">
-                      <span></span>
-                      <strong>D-12</strong>
-                    </div>
-                  </div>
-                </div>
-                <div class="text-wrapper">
-                  <strong>title</strong>
-                  <span>author</span>
-                </div>
-              </a>
-              <button>
-                <div class="button-content-wrapper">
-                  <div class="icon">
-                    <i class="far fa-bell"></i>
-                  </div>
-                  <span>알람받기</span>
-                </div>
-              </button>
-            </li>
-            <li class="flexible-slide">
-              <a href="#">
-                <div class="thumbnail-wrapper">
-                  <img src="https://via.placeholder.com/100x140" alt="">
-                  <div class="overlay">
-                    <div class="meta-data">
-                      <span></span>
-                      <strong>D-12</strong>
-                    </div>
-                  </div>
-                </div>
-                <div class="text-wrapper">
-                  <strong>title</strong>
-                  <span>author</span>
-                </div>
-              </a>
-              <button>
-                <div class="button-content-wrapper">
-                  <div class="icon">
-                    <i class="far fa-bell"></i>
-                  </div>
-                  <span>알람받기</span>
-                </div>
-              </button>
-            </li>
+            </c:forEach>
+       
           </ul>
         </div>
       </section>
@@ -973,7 +627,7 @@
           	<c:forEach var="review" items="${lastestReview }">
           		 <li>
               <div class="profile-thumbnail-wrapper">
-                <a href="">
+                <a href="/booklist/myLibList?clickId=${review.memberEmail}">
                   <img src="${pageContext.request.contextPath}${review.memberProfile}" width="42px" height="42px" alt="">
                 </a>
               </div>
@@ -1033,6 +687,7 @@
       [ul, li].forEach(element => element.classList.add('active'));
     });
   </script>
+ 
   <%@ include file="template/footer.jsp" %>
 </body>
 </html>
