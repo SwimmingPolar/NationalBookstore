@@ -187,7 +187,7 @@
             <div class="firstBox">
                 <h2> # 해시태그 </h2>
                 <div class="hashtagDetail">
-                    <div class="hashTag">
+                    <div class="hashTag" id="hashTag">
                         <c:set var="count" value="${1 }" />
                         <c:forEach var="h" items="${hashtag}">
                             <c:if test="${count <= 5 }">
@@ -216,7 +216,7 @@
                                 <input type="button" value="등록" class="inputBtn">
                             </c:when>
                             <c:otherwise>
-                                <input type="text" name="hashTag" class="emoTag" placeholder="해시태그는 24시간에 1번만 입력 가능합니다."
+                                <input type="text" name="emoTag" class="emoTag" placeholder="해시태그는 24시간에 1번만 입력 가능합니다."
                                     readonly="readonly">
                             </c:otherwise>
                         </c:choose>
@@ -513,7 +513,7 @@
                              alert(data); */
                              $('#hashTag').html('');
                              $.each(data, function (idx, val) {
-                                 $('#hashTag').append("<label>" + val.hashTag + "</label>");
+                                $('#hashTag').append("<input type='checkbox' name='tagChkbok' class='tagChkbox' id='chk"+val.hashNum+"' value='"+val.hashTag+"' > <label for='chk"+val.hashNum+"'>" + val.hashTag + "</label>");
                                  count++;
                                  if (count == 5) {
                                      return false;
