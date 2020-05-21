@@ -37,7 +37,7 @@
                 </li>
           </ul>
       </div>
-    <form action="/board/enquiry/writeForm" method="POST">
+    <form onsubmit="/board/enquiry/writeForm" method="POST" id="inputForm">
          <div class="contentBox one" id="one">
             <div class="goQuestion">
               <div id="selectTopic">
@@ -111,7 +111,7 @@
         </div>
         <div class="btn">
             <button type="button" id="preBtn" onclick="history.back()">이전</button>
-            <button type="button" id="finishBtn">문의하기</button>
+            <button type="button" id="finishBtn" onclink="inputFinish()">문의하기</button>
         </div>
         </div>
          <!--one end  -->
@@ -239,6 +239,21 @@ $(document).ready(function(){
     });
     
     </script>
+
+<script>
+    function inputFinish(){
+        var infoChk =document.getElementById('infoChk');
+        var chkbox = document.getElementById("chkbox");
+
+        if(chkbox.checked==false){
+                alert("개인정보 수집 및 이용에 동의해주세요.");
+                return;
+        }else{
+            alert("등록 완료되었습니다.")
+        document.getElementById('inputForm').submit();
+        }
+    }
+</script>
     
 </body>
 </html>
