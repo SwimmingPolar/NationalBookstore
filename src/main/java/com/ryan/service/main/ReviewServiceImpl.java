@@ -20,16 +20,22 @@ public class ReviewServiceImpl implements ReviewService{
 	private ReviewMapper mapper;
 
 	@Override
-	public Boolean insertReview(ReviewVO review) {
+	public Boolean insertReview(ReviewVO review,int grade) {
 		int flag=0;
-		if(mapper.duplication(review)>0)
+		if(mapper.duplication(review)==1)
 			return false;
 		else {
-			flag=(int)mapper.searchOrder(review)+(int)mapper.searchRead(review);
-			if(flag>0) {
-				return mapper.insertReview(review)>1?true : false;
-			}else
+			if(mapper.searchOrder(review)==1&&mapper.searchRead(review)==1) {
 				return false;
+			}else {
+				mapper.insertReview(review);
+				BookGradeVO vo=new BookGradeVO();
+				vo.setBookNum(review.getBookNum());
+				vo.setMemberEmail(review.getMemberEmail());
+				vo.setGradeScore(grade);
+				mapper.insertGrade(vo);
+				return true;
+			}
 		}
 	}
 
@@ -50,10 +56,8 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
-	public ArrayList<ReviewVO> myReviewList(Authentication auth) {
-		RyanMember ryanmember = (RyanMember) auth.getPrincipal();
-		MemberVO member = (MemberVO) ryanmember.getMember();
-		return mapper.myReviewList(member.getMemberEmail());
+	public ArrayList<ReviewVO> myReviewList(String clickId ) {
+		return mapper.myReviewList(clickId);
 	}
 
 	@Override

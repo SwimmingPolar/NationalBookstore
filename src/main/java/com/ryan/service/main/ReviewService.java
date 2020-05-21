@@ -12,13 +12,13 @@ import com.ryan.domain.book.ReviewVO;
 
 public interface ReviewService {
 	
-	public Boolean insertReview(ReviewVO review);
+	public Boolean insertReview(ReviewVO review,int grade);
 	
 	public Boolean delecteReview(ReviewVO review);
 	
 	public Boolean updateReview(ReviewVO review);
 	
-	public ArrayList<ReviewVO> myReviewList(Authentication auth);
+	public ArrayList<ReviewVO> myReviewList(String clickId);
 	
 	public Boolean insertGrade(BookGradeVO grade);
 	
