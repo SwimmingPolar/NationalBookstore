@@ -29,7 +29,7 @@
   <div class="container">
     <div class="error fadeInUp">
       <p class="message">Error: 500 Server Error</p>
-      <h1 class="code">5<span class="icon fal fa-user-robot"></span>5</h1>
+      <h1 class="code">5<span class="icon fal fa-user-robot"></span>0</h1>
       <h4 class="description">
         서버에서 무언가가 일어나고 있네요...<br />
         믿음을 가지고 기다려주세요...!<br />
