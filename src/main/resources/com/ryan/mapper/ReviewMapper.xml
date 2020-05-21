@@ -79,6 +79,7 @@ SELECT review_num.NEXTVAL FROM book_Review
 	 JOIN EBOOK e 
 	 ON r.book_num = e.book_num
 	 WHERE r.member_email=#{memberEmail}
+	 ORDER BY r.review_regdate DESC
 	</select>
 	
 	<insert id="insertGrade">
