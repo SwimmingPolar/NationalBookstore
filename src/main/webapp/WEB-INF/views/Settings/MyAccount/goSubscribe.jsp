@@ -20,7 +20,7 @@
     
         <div class="freeStory">
         <strong> 정기구독 결제 후 <br> 첫 달 무료 </strong>
-        <img src="NationalBookstore/src/main/webapp/resources/images/myLibrary/kids.png" alt="">
+        <img src="../../resources/images/myLibrary/kids.png" alt="">
         <span> 결제일자 전까지 언제든 해지할 수 있어요. </span>
         </div>
     

@@ -220,9 +220,9 @@
 
             <input type="text" name="reviewTitle" id="postTitle" placeholder="제목을 입력하세요">
             <textarea name="reviewContent" id="post_Content" placeholder="솔직한 생각을 입력해주세요."></textarea>
-
+           
             <div class="postEndBtn">
-                <button type="button" id="postSave"> 저장 </button>
+                <input type="submit" id="postSave" value="저장">
                 <button type="button" id="postCancel"> 취소 </button>
             </div>
              </div> 
@@ -230,7 +230,8 @@
      </div>
      </c:if>
 </div>
-
+</div>
+</div>
 <!-- 팔로우 모달창 -->
 <div id ="modalGo" class="modal">
     
@@ -448,23 +449,43 @@ $('.bookStarScore span').click(function() {
   }
     
   </script>
-  <script>
-    /* var cnt=0; */
-function followClick(){
-  /* cnt++; */
-  var btn = document.getElementById('followBtn');
-  
-    btn.innerHTML="팔로잉";
-    btn.style.backgroundColor="transparent";
-    
- /*  }else {
-    btn.innerHTML="<i class='fas fa-plus-circle'></i> 팔로우";
-    btn.style.backgroundColor="#17769c";
-    
-  } */
 
-}
-  </script>
+
+<!-- <script>
+
+$('#postSave').click(function(){
+    
+    var bookSelect = document.getElementById('bookSelect').value;
+    var postTitle = document.getElementById('postTitle').value;
+    var post_Content= document.getElementById('post_Content').value;
+
+    $.ajax({
+
+            type :"POST", 
+            url : "",
+            data : {"bookSelect" : bookSelect,
+                    "postTitle" : postTitle,
+                    "post_Content" : post_Content
+            },
+            cache : false,
+            contentType : "application/json;charset=UTF-8",
+            success : function(data) {
+                alert("리뷰가 등록되었습니다.");
+
+            },
+            error:function(request, status, error) {
+                aler("code:"+request.status+"message:"+request.responseText+"error:"+error);
+            }
+    });
+
+});
+
+</script> -->
+
+
+</script>
+
+
 <%@ include file="template/footer.jsp" %>
 </body>
 </html>
