@@ -203,9 +203,9 @@
 
         <form id="postRegister" action="/review/write" method="get">  
         <div class="postInsert" id="postInsert">
-            <select name="bookSelect" id="bookSelect">
+            <select name="bookNum" id="bookSelect">
               <c:forEach var="list" items ="${libbooklist}">
-                <option value="bookChoice"> ${list.bookTitle} </option>
+                <option value="${list.bookNum}" > ${list.bookTitle} </option>
               </c:forEach>
             </select>
             <div class ="bookStarScore">
@@ -220,6 +220,7 @@
 
             <input type="text" name="reviewTitle" id="postTitle" placeholder="제목을 입력하세요">
             <textarea name="reviewContent" id="post_Content" placeholder="솔직한 생각을 입력해주세요."></textarea>
+            <input type="hidden" value ="">
            
             <div class="postEndBtn">
                 <input type="submit" id="postSave" value="저장">
