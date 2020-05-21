@@ -208,15 +208,15 @@
                 <option value="bookChoice"> ${list.bookTitle} </option>
               </c:forEach>
             </select>
-            <div class ="bookStarScore">
+            <!-- <div class ="bookStarScore">
                 <b>별점 등록</b>     
-                <span><i class="fas fa-star"></i></span>
-                <span><i class="fas fa-star"></i></span>
-                <span><i class="fas fa-star"></i></span>
-                <span><i class="fas fa-star"></i></span>
-                <span><i class="fas fa-star"></i></span>
+                <span name="grade" value="1"><i class="fas fa-star"></i></span>
+                <span name="grade" value="2"><i class="fas fa-star"></i></span>
+                <span name="grade" value="3"><i class="fas fa-star"></i></span>
+                <span name="grade" value="4"><i class="fas fa-star"></i></span>
+                <span name="grade" value="5"><i class="fas fa-star"></i></span>
                 <span id=starScore> 0 </span> 점
-            </div>
+            </div> -->
 
             <input type="text" name="reviewTitle" id="postTitle" placeholder="제목을 입력하세요">
             <textarea name="reviewContent" id="post_Content" placeholder="솔직한 생각을 입력해주세요."></textarea>
@@ -280,7 +280,9 @@ $(document).ready(function(){
 				if(data){
 					alert("팔로우 되었습니다.");
 					//팔로우 하고 나서 버튼 변경..?
-					$("#followBtn").css("display","none");
+					$("#followBtn").css("backgroundColor","transparent");
+					
+					
 				}else{
 					alert("오류가 발생하였습니다. 고객센터로 문의해주세요");
 				}
@@ -399,7 +401,7 @@ $('.bookStarScore span').click(function() {
 <script>
   var modal = document.getElementById('modalGo');
   var openBtn = document.getElementById('modalOpen');
-  var closeBtn = document.getElementsByClassName('close')[0]; 
+  var closeBtn = document.getElementById('modalCloseBtn'); 
   openBtn.onclick = function() {
      modal.style.display = "block";
   }
