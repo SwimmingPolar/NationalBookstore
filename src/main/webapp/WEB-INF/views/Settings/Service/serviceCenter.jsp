@@ -37,7 +37,7 @@
                 </li>
           </ul>
       </div>
-
+<form action="" method="POST">
          <div class="contentBox one" id="one">
             <div class="goQuestion">
               <div id="selectTopic">
@@ -83,12 +83,12 @@
             <div class="email">
                 <input type="text" name="email" id="email">
             </div>
-            <label for="tellInput">
+            <!-- <label for="tellInput">
                 연락처
             </label>
             <div class="tell">
                 <input type="text" name="tell" id="tell">
-            </div>
+            </div> -->
 
         <div class="agreeChk">
             <label for="chkbox">
@@ -113,27 +113,77 @@
 
         </div>
         <div class="btn">
-            <button type="button" id="preBtn" onclick="location.href='myAccount.jsp'">이전</button>
+            <button type="button" id="preBtn" onclick="history.back()">이전</button>
             <button type="button" id="finishBtn">문의하기</button>
         </div>
         </div>
          <!--one end  -->
-
+        </form>
 
          <div class="contentBox two" id="two">
-            <div class="what">
-            <div class="noHave">
-                <i class="fas fa-tasks"></i>
-            </div>
-            <span> 문의 내역이 없습니다. </span> 
-          </div>
-
-          </div>
+            <div class="questionTable">
+                <table class="tables">
+                    <tr>
+                        <th>문의 유형</th>
+                        <th>상품명</th>
+                        <th>제목</th>
+                        <th>문의날짜</th>
+                        <th>답변상태</th>
+                        <th>삭제</th>
+                    </tr>
+                   
+                   <!-- foreach 시작 -->
+                    <tr>
+                        <td>배송 문의</td>
+                        <td><a href="#"> 달빛 마신 소녀</a></td>
+                        <td><a href="#detailQuestion" id ="titleClick" rel="detailQuestion">언제 도착하나요?</a></td>
+                        <td>2020.05.01</td>
+                        <td>답변완료</td>
+                        <td><button type="button" id=deleteBtn><i class="fas fa-trash-alt"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td colspan="6"> 
+                        <div class="detailQuestion" id="detailQuestion">
+                            <div class="question">
+                                <strong><i class="fab fa-quora"></i></strong> 
+                                <p> 배송이 대체 언제오나요~~~~~~~~~~~~
+                                    배송이 대체 언제오나요~~~~~~~~~~~~
+                                    배송이 대체 언제오나요~~~~~~~~~~~~
+                                    배송이 대체 언제오나요~~~~~~~~~~~~
+                                    배송이 대체 언제오나요~~~~~~~~~~~~
+                                    배송이 대체 언제오나요~~~~~~~~~~~~
+    
+                                </p>
+                            </div>
+                            <div class="answer">
+                                <strong><i class="fas fa-font"></i></strong> 
+                                <p>
+                                    안녕하세요. 소중한 고객님 
+                                    2020년 4월 30일부터 2020년 5월 6일까지 연휴로 인하여 
+                                    배송이 평소보다 3~7일 정도 지연되고 있습니다.
+                                    빠른 시일 내에 고객님께 전달되도록 하겠습니다.  
+                                    불편을 드려서 죄송합니다. 감사합니다.
+    
+                                </p>
+                            </div>
+                        </div>    
+                        </td>
+                    </tr>
+                    <!-- foreach 끝 -->    
+                </table>            
+                <!-- otherwise 문의내역없을때 
+                <div class="what">
+                <div class="noHave">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <span> 문의 내역이 없습니다. </span> 
+              </div> -->
+    
+              </div>
+        </div>
 </div>
   
 <script>
-
-
 
 $('document').ready(function(){
     $('.contentBox').hide();
@@ -150,6 +200,51 @@ $('document').ready(function(){
 
 })
 
+</script>
+
+<!-- <script>
+$(document).ready(function(){
+    $('#finishBtn').click(function(){
+    
+    var titleName = document.getElementById('titleName').value;
+    var matter = document.getElementById('matter').value;
+    var email= document.getElementById('email').value;
+
+    $.ajax({
+
+            type :"POST", 
+            url : "",
+            data : {"titleName" : titleName,
+                    "matter" : matter,
+                    "email" : email
+            },
+            cache : false,
+            contentType : "application/json;charset=UTF-8",
+            success : function(data) {
+                alert("1:1문의가 등록되었습니다.");
+
+            },
+            error:function(request, status, error) {
+                aler("code:"+request.status+"message:"+request.responseText+"error:"+error);
+            }
+    });
+
+});
+});
+</script> -->
+
+<script>
+$(document).ready(function(){
+    $('.detailQuestion').hide();
+
+    $('#titleClick').click(function(){
+       $('#titleClick').removeclass("active");
+       $(this).addClass("active");
+       $('.detailQuestion').hide();
+       var open = $(this).attr('rel');
+       $('#'+open).fadeIn();
+    });
+});
 
 </script>
 </body>

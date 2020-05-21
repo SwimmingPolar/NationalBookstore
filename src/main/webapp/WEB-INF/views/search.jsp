@@ -119,7 +119,6 @@
 				if($(this).prop("checked") == true)
 					cartList.push({ bookNum : $(this).val(), bookCount : "1", memberEmail : "${member.member.memberEmail}" });
 			})
-			console.log(cartList);
 			if(cartList.length == 0)
 				alert("추가할 도서를 선택해주세요.");
 			else {

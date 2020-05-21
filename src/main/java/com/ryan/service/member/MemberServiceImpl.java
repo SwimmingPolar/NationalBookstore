@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ryan.domain.member.EmailCheckVO;
+import com.ryan.domain.member.MemberAllDataVO;
 import com.ryan.domain.member.MemberVO;
 import com.ryan.function.EmailFunction;
 import com.ryan.mapper.EmailMapper;
@@ -119,11 +120,49 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
+	@Override
+	public MemberAllDataVO getMemberAllData(MemberVO member) {	
+		int count = 0;
+		int[] orderNumArr = mapper.getMemberOrderNumber(member);
+		if(orderNumArr.length >0) {
+			count = mapper.myRealBookBuyCount(orderNumArr);
+		}
+		return new MemberAllDataVO(mapper.myLibCount(member),
+				mapper.myPostCount(member),
+				mapper.myfollowCount(member),
+				count);
+	}
 
 
+	@Override
+	public boolean memberPasswordCheck(MemberVO member) {
+		
+		if(pwencoder.matches(member.getMemberPw(), mapper.getMemberPassword(member))) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+
+	@Override
+	public boolean memberDelete(MemberVO member) {
+		try {
+			mapper.deleteMemberData(member);
+			
+			mapper.deleteMemberBookMark(mapper.getMemberReadBookNO(member));
+			mapper.deleteMemberReadBook(member);
+			mapper.deleteMemberOrderObject(mapper.getMemberOrderNumber(member));
+			mapper.deleteMemberOrderNumber(member);
+			mapper.deleteMemberCart(member);
+			mapper.deleteMember(member);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+		
+	}
 	
-
-
 	
 	
 

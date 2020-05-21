@@ -29,7 +29,7 @@ public class ReviewController {
 	
 	//리뷰를 작성하고 입력 요청하면 처리
 	@RequestMapping("/write")
-	public String insertEbookReview(@ModelAttribute("review") ReviewVO review,@ModelAttribute("grade") BookGradeVO grade,Authentication auth,Model model) {
+	public String insertEbookReview(@ModelAttribute("review") ReviewVO review,@ModelAttribute("grade") int grade,Authentication auth,Model model) {
 		//HttpServletRequest request
 		/*
 		 * HttpSession session = request.getSession(); MemberVO member = (MemberVO)
@@ -39,9 +39,8 @@ public class ReviewController {
 		MemberVO member = ryanMember.getMember();
 		String memberEmail=member.getMemberEmail();
 		
-		if(memberEmail.equals((String)review.getMemberEmail())&&grade!=null) {
-			service.insertReview(review);
-			service.insertGrade(grade);
+		if(memberEmail.equals((String)review.getMemberEmail())) {
+			service.insertReview(review,grade);
 			model.addAttribute("message", "입력 성공");
 		}else {
 			model.addAttribute("message", "본인이 작성한 리뷰가 아닙니다");

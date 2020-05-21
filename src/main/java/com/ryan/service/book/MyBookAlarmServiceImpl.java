@@ -26,10 +26,8 @@ public class MyBookAlarmServiceImpl implements MyBookAlarmService {
 	
 	//알람요청
 	@Override
-	public Boolean requestAlarm(BookAlarmVO vo, Authentication auth) {
-		RyanMember ryanmember = (RyanMember) auth.getPrincipal();
-		MemberVO member = (MemberVO) ryanmember.getMember();
-		vo.setFkMemberAlarm(member.getMemberEmail());
+	public Boolean requestAlarm(BookAlarmVO vo, String memberEmail) {
+		vo.setFkMemberAlarm(memberEmail);
 		return mapper.requestAlarm(vo)==1 ? true : false;
 	}
 

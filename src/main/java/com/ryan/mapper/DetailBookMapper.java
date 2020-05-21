@@ -52,4 +52,5 @@ public interface DetailBookMapper {
 	//조회수 증가 
 	public int updateBookLookUp(EBookVO vo);
 	
+
 }

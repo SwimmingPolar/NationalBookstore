@@ -151,13 +151,16 @@
                             <div class="likeList">
                                 <c:forEach var="p" items="${likepeople}">
                                     <ul>
-                                        <li> <span>
+                                        <li>
+                                       	 <a href="/booklist/myLibList?clickId=${p.memberEmail }"> 
+                                        	<span>
                                                 <img id="myFaceImage" src="${pageContext.request.contextPath}/resources/images/myLibrary/photoImg.png">
                                             </span>
                                             <span>
-                                                <a>${p.memberNickName } 님</a>  <button value="${p.memberEmail }" id="follow">방문하기</button><br>
-                                                <a>by ${p.memberEmail }</a>
+                                                ${p.memberNickName } 님<br>
+                                              <%--   by ${p.memberEmail } --%>
                                             </span>
+                                           </a>
                                         </li>
                                     </ul>
                                 </c:forEach>
@@ -184,7 +187,7 @@
             <div class="firstBox">
                 <h2> # 해시태그 </h2>
                 <div class="hashtagDetail">
-                    <div class="hashTag">
+                    <div class="hashTag" id="hashTag">
                         <c:set var="count" value="${1 }" />
                         <c:forEach var="h" items="${hashtag}">
                             <c:if test="${count <= 5 }">
@@ -213,7 +216,7 @@
                                 <input type="button" value="등록" class="inputBtn">
                             </c:when>
                             <c:otherwise>
-                                <input type="text" name="hashTag" class="emoTag" placeholder="해시태그는 24시간에 1번만 입력 가능합니다."
+                                <input type="text" name="emoTag" class="emoTag" placeholder="해시태그는 24시간에 1번만 입력 가능합니다."
                                     readonly="readonly">
                             </c:otherwise>
                         </c:choose>
@@ -297,7 +300,7 @@
                     		<c:if test="${count <= 5 }">
                     			<a href="/book/bookdetail?booknumber=${list.bookNum}" style="text-align: center; vertical-align: bottom;">
                     				<img src="${pageContext.request.contextPath}${list.bookThumbnail}">
-                    				${list.bookTitle }
+                    				 <p>${list.bookTitle }</p>
                     			</a>
                     		</c:if>
   						<c:set var="count" value="${count+1 }" />
@@ -311,13 +314,14 @@
         <!-- wrapper end -->
     </div>
     </div>
-    <script>
+<!--     <script>
     $("#follow").click(function(){
     	var followId = $(this).val();
+    	alert(followId);
     	location.href = "/booklist/myLibList?clickId="+followId;
     });
     
-    </script>
+    </script> -->
     <script>
         $(function () {
             var cnt = 0;
@@ -359,6 +363,7 @@
 	  var check = "${likecheck}";
             $('#heartClick').change(function () {
             	var memberId = "${member.member.memberNickName}";
+            	var memberEmail = "${member.member.memberEmail}";
             	if(memberId==""){
             		if(confirm("로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?")) {
             			location.href = "/member/signin";
@@ -369,7 +374,8 @@
                         url: "/book/insertlike",
                         type: "get",
                         data: {
-                            booknumber: '${bookdetail.bookNum}'
+                            booknumber: '${bookdetail.bookNum}',
+                            memberEmail : memberEmail
                         },
                  //       dataType:"json",
                         success: function (response) {
@@ -489,6 +495,7 @@
         $(function () {
             $('.inputBtn').click(function () {
             	var memberId = "${member.member.memberNickName}";
+            	var memberEmail = "${member.member.memberEmail}";
             	if(memberId==""){
             		if(confirm("로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?")) {
             			location.href = "/member/signin";
@@ -496,17 +503,17 @@
             	}else{
             		 $.ajax({
                          url: "/book/inserthashtag",
-                         type: 'post',
+                         type: "get",
                          data: {
                              bookNum: '${bookdetail.bookNum}',
-                             hashTag: $('#hashTag').val()
+                             hashTag: $('.emoTag').val()
                          },
                          success: function (data) {
                              /* var result = data.json;
                              alert(data); */
-                             $('.hashTag').html('');
+                             $('#hashTag').html('');
                              $.each(data, function (idx, val) {
-                                 $(".hashTag").append("<label>" + val.hashTag + "</label>");
+                                $('#hashTag').append("<input type='checkbox' name='tagChkbok' class='tagChkbox' id='chk"+val.hashNum+"' value='"+val.hashTag+"' > <label for='chk"+val.hashNum+"'>" + val.hashTag + "</label>");
                                  count++;
                                  if (count == 5) {
                                      return false;
@@ -540,12 +547,13 @@
     <script>
     function insertReadBook(){
     	var memberId = "${member.member.memberNickName}";
+    	var memberEmail= "${member.member.memberEmail}";
     	if(memberId==""){
     		if(confirm("로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?")) {
     			location.href = "/member/signin";
     		}else{         }  			
     	}else{
-    		location.href="/book/insertreadbook?booknumber=${bookdetail.bookNum}";
+    		location.href="/book/insertreadbook?booknumber=${bookdetail.bookNum}&memberEmail="+memberEmail;
     	}
     }
     function insertLibBook(){

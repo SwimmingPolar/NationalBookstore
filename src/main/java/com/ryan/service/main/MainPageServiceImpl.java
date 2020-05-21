@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ryan.domain.book.EBookVO;
 import com.ryan.domain.main.FilterSearchVO;
 import com.ryan.domain.main.KeywordAutoCompletionVO;
+import com.ryan.domain.member.MemberVO;
 import com.ryan.mapper.MainMapper;
 
 import lombok.Setter;
@@ -68,6 +69,17 @@ public class MainPageServiceImpl implements MainPageService {
 		
 		
 		return keywordList;
+	}
+
+	@Override
+	public ArrayList<EBookVO> getinterests(MemberVO member) {
+		
+		if(member == null) {
+			return mapper.getInterestsBook(mapper.getSecondCategory());
+		} else {
+			return mapper.getInterestsBook(mapper.getMemberInterests(member.getMemberEmail()));
+		}
+		
 	}
 	
 	

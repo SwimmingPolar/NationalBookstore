@@ -60,19 +60,19 @@ public class MemberMapperTests {
 //		log.info("ddsdaf");
 //	}
 	
-	//로그인 - 완료
-	@Test
-	public void signInTest() {
-		
-		MemberVO member = new MemberVO();
-		member.setMemberEmail("bbb1234@Naver.com");
-		member.setMemberPw("bbb1111");
-		
-		
-		MemberVO resultMember = mapper.getLoginMemberInfo(member);
-		log.info(resultMember);
-		resultMember.getMemberAuthList().forEach(auth -> log.info(auth));
-	}
+//	//로그인 - 완료
+//	@Test
+//	public void signInTest() {
+//		
+//		MemberVO member = new MemberVO();
+//		member.setMemberEmail("bbb1234@Naver.com");
+//		member.setMemberPw("bbb1111");
+//		
+//		
+//		MemberVO resultMember = mapper.getLoginMemberInfo(member);
+//		log.info(resultMember);
+//		resultMember.getMemberAuthList().forEach(auth -> log.info(auth));
+//	}
 	
 	//회원정보 업데이트 -완료
 //	@Test
@@ -107,5 +107,52 @@ public class MemberMapperTests {
 //		
 //		log.info("결과: " + result);
 //	}
+	
+//	@Test
+//	public void getMemberOrderNumberTests() {
+//		
+//		MemberVO member = new MemberVO();
+//		member.setMemberEmail("abc1234@naver.com");
+//		
+//		int[] orderNumber = mapper.getMemberOrderNumber(member);
+//		
+//		for(int i=0; i<orderNumber.length; i++) {
+//			log.info(orderNumber[i]);
+//		}
+//		
+//		
+//	}
+	
+//	@Test
+//	public void getReadBookCount() {
+//		
+//		MemberVO member = new MemberVO();
+//		member.setMemberEmail("pursue503@naver.com");
+//		
+//		int[] arr = mapper.getMemberOrderNumber(member);
+//		
+//		int result = mapper.myRealBookBuyCount(arr);
+//		
+//		log.info(result);
+//			
+//	}
+	
+	@Test
+	public void deleteTest() {
+		
+		MemberVO member = new MemberVO();
+		member.setMemberEmail("abc1234554@naver.com");
+		
+		mapper.deleteMemberData(member);
+		
+		mapper.deleteMemberBookMark(mapper.getMemberReadBookNO(member));
+		mapper.deleteMemberReadBook(member);
+		mapper.deleteMemberOrderObject(mapper.getMemberOrderNumber(member));
+		mapper.deleteMemberOrderNumber(member);
+		mapper.deleteMemberCart(member);
+		mapper.deleteMember(member);
+		
+		
+	}
 	
 }

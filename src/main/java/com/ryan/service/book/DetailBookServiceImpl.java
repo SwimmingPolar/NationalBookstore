@@ -124,28 +124,30 @@ public class DetailBookServiceImpl implements DetailBookService{
 	}
 */
 	@Override
-	public int insertLike(int booknumber, Authentication auth) {
+	public int insertLike(int booknumber, String memberEmail) {
 		int result = 0;
+		Boolean flag = false;
 		ArrayList<BookLikeVO> list = mapper.bookLikeList(booknumber);
-		RyanMember ryanmember = (RyanMember) auth.getPrincipal();
-		MemberVO member = (MemberVO) ryanmember.getMember();
 			if(!list.isEmpty()) {
 				for(int i=0; i<list.size(); i++) {
-					if(list.get(i).getMemberEmail().equals(member.getMemberEmail())) {
+					log.info("memberEmail : "+memberEmail);
+					log.info("getmemberEmail : "+list.get(i).getMemberEmail());
+					if(list.get(i).getMemberEmail().equals(memberEmail)) {
 						mapper.deleteLike(list.get(i).getLikeNum());
-						break;
-					}else {
-						BookLikeVO vo = new BookLikeVO();
-						vo.setBookNum(booknumber);
-						vo.setMemberEmail(member.getMemberEmail());
-						mapper.insertLike(vo);
+						flag = true;
 						break;
 					}
+				}
+				if(!flag) {
+					BookLikeVO vo = new BookLikeVO();
+					vo.setBookNum(booknumber);
+					vo.setMemberEmail(memberEmail);
+					mapper.insertLike(vo);
 				}
 			}else {
 				BookLikeVO vo = new BookLikeVO();
 				vo.setBookNum(booknumber);
-				vo.setMemberEmail(member.getMemberEmail());
+				vo.setMemberEmail(memberEmail);
 				mapper.insertLike(vo);
 			}			
 
@@ -182,28 +184,18 @@ public class DetailBookServiceImpl implements DetailBookService{
 	}
 
 	@Override
-	public boolean checkLike(int booknumber, Authentication auth) {
+	public boolean checkLike(int booknumber, String memberEmail) {
 		// TODO Auto-generated method stub
-		auth = SecurityContextHolder.getContext().getAuthentication();
 		boolean flag = false;
-		if(auth != null) {
-			try{
-				RyanMember ryanmember = (RyanMember) auth.getPrincipal();
-				if(ryanmember != null) {
-					MemberVO member = (MemberVO) ryanmember.getMember();
-					ArrayList<BookLikeVO> list = mapper.bookLikeList(booknumber);		
-					for(int i=0; i<list.size();i++) {
-						if(list.get(i).getMemberEmail().equals(member.getMemberEmail())) {
-							flag = true;
-							break;
-						}
-					}	
-					return flag;
+		if(memberEmail != null) {
+			ArrayList<BookLikeVO> list = mapper.bookLikeList(booknumber);		
+			for(int i=0; i<list.size();i++) {
+				if(list.get(i).getMemberEmail().equals(memberEmail)) {
+					flag = true;
+					break;
 				}
-			}catch (Exception e) {
-				// TODO: handle exception
-				return flag;
-			}
+			}	
+			return flag;
 		}
 		return flag;
 	}
@@ -230,7 +222,6 @@ public class DetailBookServiceImpl implements DetailBookService{
 		}
 	}
 
-	
-	
+
 	
 }

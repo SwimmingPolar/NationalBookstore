@@ -14,7 +14,7 @@ import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
+@ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/security-context.xml","file:src/main/webapp/WEB-INF/spring/root-context.xml"})
 @Log4j
 public class CartMapperTests {
 	
@@ -53,11 +53,12 @@ public class CartMapperTests {
 			CartVO cart = new CartVO();
 			cart.setBookNum(197);
 			cart.setBookCount(i+1);
+			cart.setMemberEmail("abc1234@naver.com");
 			cartArr[i] = cart;
 			log.info(cartArr[i]);
 		}
 		
-		
+		mapper.insertCart(cartArr);
 		
 	}
 	

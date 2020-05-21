@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,6 +15,7 @@
     <script src="../../../../resources/js/common.js"></script>
 </head>
 <body>
+<sec:authentication property="principal" var="member"/>
 <header class="topbar">
 	<nav>
 		<div class="container">
@@ -22,6 +24,7 @@
 		</div>
     </nav>
 </header>
+<form action="/member/delete" method="post" id="deleteForm">
     <div class="wrapper">
         <div class="inputPw">
             <h2> 비밀번호 확인 </h2> 
@@ -36,30 +39,43 @@
             </div>
         </div>
 </div>
-
+<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+</form>
 <script>
 function pwRechk() {
-var pwChk = $('#inputPW').val();
-$.ajax({
-    type: "post",
-    data: {
-        "inputPW":pwChk
-    },
-    url : "passwordRecheck.do",
-    dataType: "text",
-    success : function(result) {
-        if(result) {
-            alert("비밀번호가 틀렸습니다. 다시 입력해주세요.");
-        }else if(result) {
-        	if(confirm("정말로 회원탈퇴를 진행 하시겠습니까?")) {
-        		
-        	}
-        }
-    }
 
-});
+	var pwChk = $('#inputPW').val();
+	if(pwChk.length == 0) {
+		alert("비밀번호를 입력해주세요!")
+		return
+	}
+	
+	var member = [];
+	member.push({memberEmail : "${member.member.memberEmail}" , memberPw : pwChk});
+	$.ajax({
+    	type: "POST",
+    	dataType : "json",
+		contentType : "application/json",
+		data : JSON.stringify(member),
+    	url : "/member/deletePasswordCheck",
+    	traditional:true,
+	})
+	.done(function(response) {
+		if(response) {
+			if(confirm("정말로 회원탈퇴를 진행하시겠습니까?")) {
+				document.getElementById('deleteForm').submit();
+			} else {
+				alert("회원탈퇴 진행을 취소 하셨습니다.")
+				location.href="/";
+			}
+		} else {
+			alert("비밀번호가 일치 하지 않습니다.");
+		}
+	})
+	.fail(function(response) {
+	})
 
-}
+	}
 
 </script>
 
