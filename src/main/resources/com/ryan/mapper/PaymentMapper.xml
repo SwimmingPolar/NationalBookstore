@@ -8,14 +8,23 @@
 			member_email,
 			member_sid,
 			member_next_payment,
-			member_payment_check
+			member_payment_check,
+			member_tid
 		)
 		VALUES
 		(
 			#{memberEmail},
 			#{memberSid},
-			SYSDATE,
-			1
+			<choose>
+				<when test="flag.equals('1개월')">
+					SYSDATE + 30,
+				</when>
+				<otherwise>
+					SYSDATE + 90,
+				</otherwise>
+			</choose>
+			1,
+			#{memberTid}
 		)
 	</insert>
 	

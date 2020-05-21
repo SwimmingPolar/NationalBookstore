@@ -256,11 +256,11 @@ public class MemberController {
 	
 	//레뒤
 	@PostMapping("/paymentReady")
-	public String memberPaymentReady(Authentication auth) {
+	public String memberPaymentReady(Authentication auth, @RequestParam("price") int price) {
 		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
 		MemberVO member = ryanMember.getMember();
 		
-		return "redirect:" + paymentService.regularPaymentReady(member);
+		return "redirect:" + paymentService.regularPaymentReady(member , price);
 	}
 	
 	//성공~
@@ -271,11 +271,11 @@ public class MemberController {
 		
 		KakaoPayApprovalVO kakaoPayApprovalVO = paymentService.paymentComplete(pg_token, member);
 		
-		if(paymentService.insertPaymentInfo(member.getMemberEmail(), kakaoPayApprovalVO.getSid())) {
+		if(paymentService.insertPaymentInfo(member.getMemberEmail(), kakaoPayApprovalVO.getSid(),kakaoPayApprovalVO.getTid(),kakaoPayApprovalVO.getAmount().getTotal()+"")) {
 			if(revenueService.insertRevenue()) {
 				model.addAttribute("info", kakaoPayApprovalVO);
 				
-				return "kakaoPaySuccess"; // 결제 완료 페이지 써주세요~!
+				return "redirect:/myaccount"; // 결제 완료 페이지 써주세요~!
 			}
 			
 		}

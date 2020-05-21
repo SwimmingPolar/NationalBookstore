@@ -48,7 +48,7 @@ public class RegularPaymentServiceImpl implements RegularPaymentService {
 	
 	
 	@Override
-	public String regularPaymentReady(MemberVO member) {
+	public String regularPaymentReady(MemberVO member, int price) {
 		/*
 		 카카오페이 결제를 시작하기 위해 상세 정보를 카카오페이 서버에 전달하고 결제 고유 번호(TID)를 받는 단계입니다. 
 		 어드민 키를 헤더에 담아 파라미터 값들과 함께 POST로 요청합니다.
@@ -56,6 +56,13 @@ public class RegularPaymentServiceImpl implements RegularPaymentService {
 		요청이 성공하면 응답 바디에 JSON 객체로 다음 단계 진행을 위한 값들을 받습니다. 
 		서버(Server)는 tid를 저장하고, 클라이언트는 사용자 환경에 맞는 URL로 리다이렉트(redirect)합니다.
 		 */
+		
+		String day;
+		if(price == 9900) {
+			day = "1개월";
+		} else {
+			day = "3개월";
+		}
 		
 		log.info(member.getMemberEmail());
 		log.info(member.getMemberEmail());
@@ -71,12 +78,12 @@ public class RegularPaymentServiceImpl implements RegularPaymentService {
 		paymentParams.add("cid", "TCSUBSCRIP"); // 테스트용 cid
 		paymentParams.add("partner_order_id","80000"); // 회사 이 상품 구매시 주문번호
 		paymentParams.add("partner_user_id", member.getMemberEmail());
-		paymentParams.add("item_name", "RyanBookStore 정기 결제"); //  상품명
+		paymentParams.add("item_name", "RyanBookStore" + day + "정기결제"); //  상품명
 		paymentParams.add("quantity", "1"); //상품 수량
-		paymentParams.add("total_amount", "9900"); //상품 총액
+		paymentParams.add("total_amount", price+""); //상품 총액
 		paymentParams.add("tax_free_amount", "0"); // 비과세
 		paymentParams.add("approval_url", "http://localhost:8181/member/paymentSuccess"); //성공
-		paymentParams.add("cancel_url", "http://localhost:8181/kakaoCancel"); //취소
+		paymentParams.add("cancel_url", "http://localhost:8181/"); //취소
 		paymentParams.add("fail_url", "http://localhost:8181/kakaoFail");
 		
 		HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String,String>>(paymentParams,headers);
@@ -137,8 +144,14 @@ public class RegularPaymentServiceImpl implements RegularPaymentService {
 	}
 
 	@Override
-	public boolean insertPaymentInfo(String memberEmail, String memberSid) {
-		return mapper.insertPaymentInfo(memberEmail, memberSid) == 1 ? true : false;
+	public boolean insertPaymentInfo(String memberEmail, String memberSid, String memberTid, String flag) {
+		log.info(flag);
+		if(flag.equals("9900")) {
+			flag = "1개월";
+		} else {
+			flag = "3개월";
+		}
+		return mapper.insertPaymentInfo(memberEmail, memberSid, memberTid, flag) == 1 ? true : false;
 	}
 	
 	

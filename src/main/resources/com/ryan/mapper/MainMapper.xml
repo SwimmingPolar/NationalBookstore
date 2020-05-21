@@ -225,4 +225,30 @@
 		</where>
 	</select>	
 	
+	<select id="getMemberInterests" resultType="int">
+		SELECT category_num FROM member_interests WHERE member_email = #{memberEmail}
+	</select>
+	
+	<select id="getSecondCategory" resultType="int">
+		SELECT category_num FROM second_category ORDER BY DBMS_RANDOM.RANDOM
+	</select>
+	
+	<select id="getInterestsBook" resultType="com.ryan.domain.book.EBookVO">
+		SELECT * FROM
+		(
+			SELECT * FROM ebook
+			<where>
+				<foreach collection="array" item="no" separator="," open="category_num in(" close=")">
+					#{no}
+				</foreach>
+				ORDER BY DBMS_RANDOM.RANDOM
+			</where>
+		)
+		<where>
+			<![CDATA[
+				rownum <=4
+			]]>
+		</where>
+	</select>
+	
 </mapper>

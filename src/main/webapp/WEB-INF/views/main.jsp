@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -42,6 +43,9 @@
   <script src="../../resources/js/common.js"></script>
 </head>
 <body>
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication property="principal" var="member"/>
+</sec:authorize>
   <div class="container">
     <div class="head">
       <div class="head-upper">
@@ -267,9 +271,14 @@
         </div>
         <div class="right-section">
           <h2>
-            <a href="#">#힐링</a>
-            <a href="#">#여행</a>
-            <a href="#">#개발</a>
+            <c:choose>
+            	<c:when test="member != null">
+            		<a href="#">${member.member.memberNickName } 님에게 추천 해드리는 도서입니다.</a>
+            	</c:when>
+            	<c:otherwise>
+            		<a href="#">회원님에게 추천해드리는 추천도서~!</a>
+            	</c:otherwise>
+            </c:choose>
           </h2>
           <div class="bookshelf-wrapper">
             <div class="shelf">
@@ -277,26 +286,13 @@
               <div class="bookend-right"></div>
               <div class="reflection"></div>
               <ul>
-                <li>
-                  <a href="#">
-                    <img src="https://via.placeholder.com/65x85" width="55px" alt="">
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <img src="https://via.placeholder.com/65x85" alt="">
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <img src="https://via.placeholder.com/65x85" alt="">
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <img src="https://via.placeholder.com/65x85" alt="">
-                  </a>
-                </li>
+              	<c:forEach var="inter" items="${interests }">
+              		<li>
+                  		<a href="#">
+                    	<img src="${pageContext.request.contextPath}${inter.bookThumbnail}" width="65px" height="85px" alt="">
+                  		</a>
+                	</li>
+              	</c:forEach>
               </ul>
             </div>
             <div class="shelf">

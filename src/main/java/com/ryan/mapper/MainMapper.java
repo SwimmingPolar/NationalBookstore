@@ -8,6 +8,7 @@ import com.ryan.domain.book.EBookVO;
 import com.ryan.domain.book.HashtagVO;
 import com.ryan.domain.main.FilterSearchVO;
 import com.ryan.domain.main.KeywordAutoCompletionVO;
+import com.ryan.domain.member.MemberVO;
 
 public interface MainMapper {
 	
@@ -48,5 +49,13 @@ public interface MainMapper {
 	
 	public ArrayList<EBookVO> getFilterSearch(FilterSearchVO filterSearch); 
 	
+	//관심
+	public int[] getMemberInterests(@Param("memberEmail") String memberEmail);
+	
+	//비로그인시
+	
+	public int[] getSecondCategory();
+	
+	public ArrayList<EBookVO> getInterestsBook(int[] categoryArr);
 	
 }
