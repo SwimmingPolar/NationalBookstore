@@ -41,9 +41,46 @@
         <div class="wrapperOne">
         <p>필명</p>
         <div class="updateLists">
+            <script type="text/javascript" >
+            	document.addEventListener("DOMContentLoaded", function() {
+            		$("#nickNameChk").on("click", function() {
+            			chkNickName();
+            		});
+            		$("input[name=nickName]").on("focus blur keyup", function() {
+            			chkNickName();
+            		});
+            		
+            		function chkNickName() {
+            			var memberVO = [];
+	            		var currentNickname = $("input[name=nickName]").val().toLowerCase();
+            			memberVO.push({memberNickName : currentNickname});
+	            		$.ajax({
+	            			url : "/member/signUpCheck",
+	            			type : "POST",
+	            			data : { memberNickName : currentNickname }
+	            		})
+	            		.done(function(data) {
+	            			//true면 없는거, false면 있는거
+	            			var result = data.result;
+	            			$("button[class=chkBtn]").attr("disabled", false);
+	            			if(result == true) {
+	            				$("div.nickNameAlert").css("display",  "none");
+	            				$("button[class=chkBtn]").attr("disabled", false);
+	            			} else {
+	            				$("div.nickNameAlert").css("display",  "block");
+	            				$("button[class=chkBtn]").attr("disabled", true);
+	            			}
+	            		})
+	            		.fail(function() {
+	            			console.dir("중복체크 실패!");
+	            		});
+            		};
+            	});
+            </script>
             <input type="text" name="nickName" id="nickName ">
-            <button type="button" id="nickNameChk">중복확인</button>    
+           	<%-- <button type="button" id="nickNameChk">중복확인</button> --%>
         </div>
+        <div class="nickNameAlert" ><i class='fas fa-exclamation-circle'></i>중복된 닉네임입니다.</div>
         <span style ="color:rgb(194, 16, 16)">  <i class='fas fa-exclamation-circle'></i> 욕설, 비속어 사용 시 서비스 이용이 제한될 수 있습니다. </span>
         </div>
 <!-- wrapperOne end -->
@@ -60,7 +97,7 @@
         <div class="wrapperTwo">
             <p>핸드폰 번호</p>
             <div class="phoneUpdate">
-            <input type="text" name="phoneNum" id="phoneNum">
+            <input type="text" name="memberTel" id="phoneNum">
             <span> ※ ' - ' 없이 숫자로만 입력해주세요. </span>
             </div>
     

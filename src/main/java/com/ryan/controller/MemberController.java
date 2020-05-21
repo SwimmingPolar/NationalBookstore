@@ -90,7 +90,7 @@ public class MemberController {
 	public @ResponseBody Map<String, Boolean> signUpCheck(MemberVO member) {
 		
 		Map<String, Boolean> resultMap = new HashMap<String, Boolean>();
-		
+		System.out.println(member.getMemberNickName());
 		if(memberService.signUpCheck(member)) {
 			resultMap.put("result", true);
 			return resultMap;
