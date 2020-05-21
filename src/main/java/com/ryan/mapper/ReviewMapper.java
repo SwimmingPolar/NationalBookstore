@@ -8,7 +8,7 @@ import com.ryan.domain.book.ReviewVO;
 public interface ReviewMapper {
 	public int insertReview(ReviewVO review);
 	//throws SQLException
-	public int deleteReview(ReviewVO review);
+	public int deleteReview(int reviewNum);
 	
 	public int updateReview(ReviewVO review);
 	
