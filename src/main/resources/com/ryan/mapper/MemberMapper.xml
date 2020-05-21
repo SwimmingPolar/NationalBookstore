@@ -82,21 +82,28 @@
 		UPDATE member
 		<set>
 			<if test="memberPw != null and memberPw != ''">
-				member_pw = #{memberPw}
+				member_pw = #{memberPw},
 			</if>
 			<if test="memberZipcode != null and memberZipcode != ''">
-				member_zipcode = #{memberZipcode}
+				member_zipcode = #{memberZipcode},
 			</if>
 			<if test="memberAddress != null and memberAddress != ''">
-				member_address = #{memberAddress}
+				member_address = #{memberAddress},
 			</if>
 			<if test="memberDaddress != null and memberDaddress != ''">
-				member_daddress = #{memberDaddress}
+				member_daddress = #{memberDaddress},
 			</if>
 			<if test="memberTel != null and memberTel != ''">
-				member_tel = #{memberTel}
+				member_tel = #{memberTel},
+			</if>
+			<if test="memberProfile != null and memberProfile != ''">
+				member_profile = #{memberProfile},
+			</if>
+			<if test="memberNickName != null and memberNickName !=  ''">
+				member_nick_name = #{memberNickName},
 			</if>
 		</set>
+		
 		WHERE member_email = #{memberEmail}
 	</update>
 	
@@ -298,5 +305,19 @@
 			member_email = #{memberEmail}
 		</where>
 	</delete>
+	
+	<!-- 구독권한주기 -->
+	<insert id="subAuth">
+		INSERT INTO tbl_member_auth
+		(
+			member_email,
+			auth
+		)
+		VALUES
+		(
+			#{memberEmail},
+			'ROLE_SUB'
+		)
+	</insert>
 		
 </mapper>

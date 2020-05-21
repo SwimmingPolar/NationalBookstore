@@ -29,7 +29,7 @@ public class OrderObjectMapperTests {
 	public void orderObjectInsertTests() {
 		
 		OrderVO order = new OrderVO();
-		order.setMemberEmail("abc1234@naver.com");
+		order.setMemberEmail("pursue503@naver.com");
 		order.setOrderStatus("배송 준비중");
 		order.setOrderZipcode("123124");
 		order.setOrderAddress("서울특별시 종로구 종로종로");
@@ -40,17 +40,16 @@ public class OrderObjectMapperTests {
 		
 		ArrayList<CartVO> cartBuyList = new ArrayList<CartVO>();
 		
+		int[] arr = {441,442,443,444,445,446,447,449,722,721};
+ 		
+		for(int i=0; i<arr.length; i++) {
+			CartVO cart = new CartVO();
+			cart.setBookNum(arr[i]);
+			cart.setMemberEmail("pursue503@naver.com");
+			cart.setBookCount(i);
+			cartBuyList.add(cart);
+		}
 		
-		CartVO cart = new CartVO();
-		cart.setBookNum(210);
-		cart.setMemberEmail("abc1234@naver.com");
-		cart.setBookCount(1);
-		CartVO cart1 = new CartVO();
-		cart1.setBookNum(197);
-		cart1.setMemberEmail("abc1234@naver.com");
-		cart1.setBookCount(3);
-		cartBuyList.add(cart);
-		cartBuyList.add(cart1);
 
 		log.info("orderNumber: " + order.getOrderNumber()); 
 		int result2 = objMapper.insertOrderObject(order.getOrderNumber(), cartBuyList);

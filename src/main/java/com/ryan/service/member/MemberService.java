@@ -1,5 +1,12 @@
 package com.ryan.service.member;
 
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.http.HttpRequest;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.ryan.domain.member.MemberAllDataVO;
 import com.ryan.domain.member.MemberVO;
 
@@ -11,7 +18,7 @@ public interface MemberService {
 	public boolean signUpCheck(MemberVO member);
 	
 	//회원정보수정
-	public boolean memberUpdate(MemberVO member);
+	public boolean memberUpdate(MemberVO member , ArrayList<MultipartFile> files, HttpServletRequest request);
 	
 	//로그인 유효성 검사
 	public boolean memberSignIn(MemberVO member);
@@ -32,5 +39,7 @@ public interface MemberService {
 	public boolean memberPasswordCheck(MemberVO member);
 	
 	public boolean memberDelete(MemberVO member);
+	
+	public void memememe(MemberVO member);
 	
 }

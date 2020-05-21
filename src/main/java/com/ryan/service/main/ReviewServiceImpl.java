@@ -37,11 +37,12 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public Boolean delecteReview(ReviewVO review) {
-		if (mapper.duplication(review) > 0)
-			return mapper.deleteReview(review) == 1 ? true : false;
-		else
-			return false;
+	public Boolean delecteReview(int reviewNum) {
+		/*
+		 * if (mapper.duplication(review) > 0) return mapper.deleteReview(review) == 1 ?
+		 * true : false; else return false;
+		 */
+		return mapper.deleteReview(reviewNum)==1?true:false;
 	}
 
 	@Override

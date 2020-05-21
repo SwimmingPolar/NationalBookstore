@@ -21,12 +21,17 @@ public class MyBookAlarmMapperTests {
 	@Setter(onMethod_ = {@Autowired})
 	private MyBookAlarmMapper mapper;
 	
+//	@Test
+//	public void showAlarm() {
+//		String email = "abc1234@naver.com";
+//		ArrayList<BookAlarmVO> list = mapper.showAlarm(email);
+//		for(BookAlarmVO vo : list) {
+//			log.info(vo);
+//		}
+//	}
+	
 	@Test
-	public void showAlarm() {
-		String email = "abc1234@naver.com";
-		ArrayList<BookAlarmVO> list = mapper.showAlarm(email);
-		for(BookAlarmVO vo : list) {
-			log.info(vo);
-		}
+	public void checkAlarm() {
+		log.info(mapper.checkAlarm("loody00@naver.com"));
 	}
 }

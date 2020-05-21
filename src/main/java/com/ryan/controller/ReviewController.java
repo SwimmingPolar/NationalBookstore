@@ -51,17 +51,19 @@ public class ReviewController {
 	}
 	
 	@RequestMapping("/delete")
-	public String deleteReview(Authentication auth,@ModelAttribute("review")  ReviewVO review,Model model) {
+	public String deleteReview(Authentication auth,@ModelAttribute("reviewNum") int reviewNum,Model model) {
 		RyanMember ryanMember = (RyanMember) auth.getPrincipal();
 		MemberVO member = ryanMember.getMember();
 		String memberEmail=member.getMemberEmail();
 		
-		if(memberEmail.equals((String)review.getMemberEmail())) {
-			return service.delecteReview(review)? "정상삭제시 갈 jsp":"실패시";
-		}else {
-			model.addAttribute("message", "본인이 작성한 리뷰가 아닙니다");
-			return "";
-		}
+		service.delecteReview(reviewNum);
+		
+		return "redirect:/booklist/myLibList";
+		/*
+		 * if(memberEmail.equals((String)review.getMemberEmail())) { return
+		 * service.delecteReview(review)? "정상삭제시 갈 jsp":"실패시"; }else {
+		 * model.addAttribute("message", "본인이 작성한 리뷰가 아닙니다"); return ""; }
+		 */
 	}
 	
 	@RequestMapping("/update")

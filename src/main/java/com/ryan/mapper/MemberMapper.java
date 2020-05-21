@@ -70,4 +70,7 @@ public interface MemberMapper {
 	//마지막 회원정보 제거
 	public int deleteMember(MemberVO member);
 	
+	//구독권한주기
+	public int subAuth(MemberVO member); 
+	
 }

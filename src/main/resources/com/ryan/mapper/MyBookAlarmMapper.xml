@@ -26,4 +26,9 @@
  	delete book_alarm where alarm_no = #{alarmNo}
  </delete>
  
+ <select id="checkAlarm" resultType="com.ryan.domain.book.BookAlarmVO">
+ 	SELECT * FROM book_alarm where fk_member_alarm= #{memberEmail}
+ </select>
+
+ 
 </mapper>

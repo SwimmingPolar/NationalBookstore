@@ -1,11 +1,17 @@
 package com.ryan.service.member;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ryan.domain.member.EmailCheckVO;
 import com.ryan.domain.member.MemberAllDataVO;
@@ -76,13 +82,32 @@ public class MemberServiceImpl implements MemberService {
 
 
 	@Override
-	public boolean memberUpdate(MemberVO member) {
+	public boolean memberUpdate(MemberVO member, ArrayList<MultipartFile> files, HttpServletRequest request) {
 		
 		Pattern pw = Pattern.compile("^(?=.*?[^\\s])[\\w\\d]{4,}$");
 		Matcher pwMatcher = pw.matcher(member.getMemberPw());
 		if(!pwMatcher.find()) return false;
+		//비밀번호암호화
+		member.setMemberPw(pwencoder.encode(member.getMemberPw()));
 		
-		return mapper.memberUpdate(member) == 0 ? true : false;
+		String path = request.getSession().getServletContext().getRealPath("//") + "\\resources\\member\\profile\\";
+		log.info(path);
+		for(MultipartFile file : files) {
+			
+			log.info(file.getOriginalFilename());
+			File save = new File(path,member.getMemberEmail() + ".jpg");
+			
+			try {
+				file.transferTo(save);
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		member.setMemberProfile("/resources/member/profile/" + member.getMemberEmail() + ".jpg");
+		
+		return mapper.memberUpdate(member) == 1 ? true : false;
 	}
 
 	@Override
@@ -161,6 +186,12 @@ public class MemberServiceImpl implements MemberService {
 			return false;
 		}
 		
+	}
+
+
+	@Override
+	public void memememe(MemberVO member) {
+		mapper.subAuth(member);
 	}
 	
 	
