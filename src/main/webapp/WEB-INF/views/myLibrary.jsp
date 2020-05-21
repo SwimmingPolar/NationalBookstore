@@ -186,7 +186,7 @@
                     <th> 등록날짜 </th>
                 </tr>
                 <tr>
-                	<td>${review.reviewTitle}</td>
+                	<td>${review.bookTitle}</td>
                   <td>${review.reviewRegdate}</td>
                 </tr>   
                 <tr> 

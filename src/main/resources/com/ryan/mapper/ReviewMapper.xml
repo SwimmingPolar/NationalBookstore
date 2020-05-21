@@ -63,8 +63,22 @@ SELECT review_num.NEXTVAL FROM book_Review
 	book_num=#{bookNum}
 	</select>
 	
-	<select id="myReviewList" resultType="com.ryan.domain.book.ReviewVO">
+	<!-- <select id="myReviewList" resultType="com.ryan.domain.book.ReviewVO">
 	SELECT * FROM book_Review WHERE member_email=#{memberEmail}
+	</select> -->
+	
+	<select id="myReviewList" resultType="com.ryan.domain.book.ReviewVO">
+	SELECT 	r.review_num,
+			r.book_num,
+			r.member_email,
+			r.review_title,
+			r.review_content,
+			r.review_regdate,
+			e.book_title
+	 FROM book_Review r
+	 JOIN EBOOK e 
+	 ON r.book_num = e.book_num
+	 WHERE r.member_email=#{memberEmail}
 	</select>
 	
 	<insert id="insertGrade">
