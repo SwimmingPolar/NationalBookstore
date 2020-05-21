@@ -14,7 +14,7 @@
 /* GENERAL STYLING END */
 
 .container {
-  width: 820px;
+  max-width: 820px;
   margin: 0 auto;
 }
 
@@ -915,7 +915,6 @@
 
 .coming-soon ul {
   list-style: none;
-  display: flex;
 }
 
 .coming-soon li {
@@ -1014,9 +1013,11 @@
   border: 1px solid var(--emphasis-color);
   overflow: hidden;
   width: 100%;
+  color: var(--emphasis-color);
 }
 .coming-soon button.alarmSet {
   background-color: var(--emphasis-color);
+  color: #fff;
 }
 
 .coming-soon .button-content-wrapper {
@@ -1035,7 +1036,6 @@
 }
 .coming-soon .button-content-wrapper .icon i {
   font-size: 15px;
-  color: var(--emphasis-color);
 }
 
 .coming-soon .button-content-wrapper span {
@@ -1044,10 +1044,6 @@
   font-family: 'Roboto', 'Noto Sans KR', sans-serif;
   font-size: 13px;
   letter-spacing: 1px;
-  color: var(--emphasis-color);
-}
-.coming-soon button.alarmSet span {
-  color: #fff;
 }
 
 .recent-posts .content-wrapper {

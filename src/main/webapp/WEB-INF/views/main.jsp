@@ -41,6 +41,10 @@
   <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
   <!-- slidify sliders and fadeInUp reveal -->
   <script src="../../resources/js/common.js"></script>
+  
+  <sec:authorize access="isAuthenticated()">
+    <sec:authentication property="principal" var="member"/>
+  </sec:authorize>
 </head>
 <body>
 <sec:authorize access="isAuthenticated()">
@@ -588,9 +592,8 @@
         <h2 class="section-heading">출시 예정 도서</h2>
         <div class="content-wrapper slider-wrapper flexible-slider-window">
           <ul class="slider flexible-slider">
-         
           <c:forEach var="alarm" items="${AlarmBook}">
-            <li class="flexible-slide">
+            <li class="book flexible-slide">
               <a href="/book/bookdetail?booknumber=${alarm.bookNum }">
                 <div class="thumbnail-wrapper">
                   <img src="${pageContext.request.contextPath }${alarm.bookThumbnail}" alt="">
@@ -607,7 +610,7 @@
                 </div>
               </a>
               <button>
-                <div class="button-content-wrapper" onclick="goAlarm(${alarm.bookNum})">
+                <div class="button-content-wrapper">
                   <div class="icon">
                	   <i class="far fa-bell"></i>
                	   </div>
@@ -618,6 +621,42 @@
             </c:forEach>
           </ul>
         </div>
+        <!-- 알람 받기 AJAX -->
+        <script>
+          function requestAlarm(bookNumber, memberEmail, alarmButton) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', '/booklist/alarm?booknumber=' + bookNumber +'&memberEmail=' + memberEmail);
+            xhr.onreadystatechange = function() {
+              if (!(xhr.readyState === 4 && xhr.status === 200)) return;
+
+              const result = xhr.response.trim() === 'true' ? true : false;
+              // if result is false then return;
+              if (!result) return;
+
+              alarmButton.classList.add('alarmSet');
+            }
+            xhr.send();
+          }
+          $(document).ready(function() {
+            const bookList = [...(document.querySelectorAll('.coming-soon li.book'))];
+            bookList.forEach(book => {
+              const bookLink = book.querySelector('a');
+              const alarmButton = book.querySelector('button');
+
+              const bookNumber = bookLink.getAttribute('href').trim().split('=')[1] || undefined;
+              if (bookNumber === undefined) return;
+
+              alarmButton.addEventListener('click', () => {
+                const memberEmail = '${member.member.memberEmail}' || undefined;
+                if (memberEmail === undefined) {
+                  alert('login needed'); 
+                } else {
+                  requestAlarm(bookNumber, memberEmail, alarmButton);    
+                }
+              });
+            });
+          });
+        </script>
       </section>
       <section class="recent-posts content-area fadeInUp">
         <h2 class="section-heading">최신 리뷰엉이</h2>

@@ -37,7 +37,7 @@
 .flexible-slider,
 .infinite-slider {
   cursor: grab;
-  display: flex;
+  display: inline-flex;
 }
 
 .flexible-slider:active,
