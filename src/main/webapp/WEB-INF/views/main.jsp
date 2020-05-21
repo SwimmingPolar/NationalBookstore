@@ -591,9 +591,9 @@
          
           <c:forEach var="alarm" items="${AlarmBook}">
             <li class="flexible-slide">
-              <a href="#">
+              <a href="/book/bookdetail?booknumber=${alarm.bookNum }">
                 <div class="thumbnail-wrapper">
-                  <img src="https://via.placeholder.com/100x140" alt="">
+                  <img src="${pageContext.request.contextPath }${alarm.bookThumbnail}" alt="">
                   <div class="overlay">
                     <div class="meta-data">
                       <span></span>

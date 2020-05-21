@@ -53,7 +53,6 @@ public class MyBookAlarmServiceImpl implements MyBookAlarmService {
 			}else if(vo.getBookPbDate() >= 2) {
 				mapper.deleteAlarm(vo.getAlarmNo());
 			}else {
-				log.info("모름");
 			}
 		}
 	}
