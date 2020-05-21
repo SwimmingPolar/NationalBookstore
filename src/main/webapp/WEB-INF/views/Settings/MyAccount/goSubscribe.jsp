@@ -29,18 +29,25 @@
                 <strong>e-book 정기구독</strong>
                 <p> 1만 권의 책을 언제 어디서나 만나보세요 </p>
                 <div class="inner">
-                    <button type="button" id="innerOne">
+                <form action="/member/paymentReady" method="post">
+                <input type="hidden" name="price" value="9900">
+                    <button type="submit" id="innerOne">
                         <span> 1개월 </span>
                         <span> 9,900원 <i class="fal fa-chevron-right"></i> </span>
                     </button>
-                    
-                   
+                    <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+                </form>   
+                <form action="/member/paymentReady" method="post">
+                	
+                	<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+                   	<input type="hidden" name="price" value="26900">
                     <button type="button" id="innerTwo">
                         <span> 3개월 </span>
                         <span> 26,900원 <i class="fal fa-chevron-right"></i></span>
                     </button>
+               </form>
                 </div>
-                
+               
             </div>
     <!-- 
             <div class="secondBox">
