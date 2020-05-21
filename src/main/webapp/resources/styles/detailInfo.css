@@ -169,7 +169,7 @@ header {
 .fifthBox {
     background-color:#FFFFFF;
     /* border:2px solid blue; */
-    margin:20px;
+    
     border-radius:10px;
     padding:10px;
     box-shadow: 0 0 10px rgba(0,0,0,.05);
@@ -527,14 +527,20 @@ header {
 .similarBook {
 position: relative;
 display:flex;
-flex-wrap: wrap;
-width:100%;
 padding:0 6px;
+}
+
+.similarBook a {
+	flex-basis: 20%;
+}
+
+.similarBook p {
+	display:block;
 }
 
 .fifthBox .similarBook img {
 
-width:18%;
+width:65%;
 margin:5px;
 top:0;
 left:0;
