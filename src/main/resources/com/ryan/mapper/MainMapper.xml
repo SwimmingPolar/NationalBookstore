@@ -262,7 +262,7 @@
 		)
 		<where>
 			<![CDATA[
-				rownum <= 5
+				rownum <= 13
 			]]>
 		</where>
 	</select>

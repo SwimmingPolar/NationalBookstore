@@ -973,7 +973,7 @@
           	<c:forEach var="review" items="${lastestReview }">
           		 <li>
               <div class="profile-thumbnail-wrapper">
-                <a href="">
+                <a href="/booklist/myLibList?clickId=${review.memberEmail}">
                   <img src="${pageContext.request.contextPath}${review.memberProfile}" width="42px" height="42px" alt="">
                 </a>
               </div>
